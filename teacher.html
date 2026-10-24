@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>선생님 채점 | S영어전문학원 내신 학습</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f1f5f9; --card:#fff; --ink:#0f172a; --ink2:#334155; --muted:#64748b; --line:#e2e8f0; --brand:#0284c7; --brand2:#0369a1; --soft:#e0f2fe;
+            --ok:#15803d; --oksoft:#dcfce7; --bad:#b91c1c; --badsoft:#fee2e2; --wait:#b45309; --waitsoft:#fef3c7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; line-height:1.55; }
+    .wrap { max-width:980px; margin:0 auto; padding:20px 16px 80px; }
+    header { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+    header h1 { margin:0; font-size:22px; font-weight:900; } header .muted { color:var(--muted); font-size:13px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:0 6px 18px -14px rgba(15,23,42,.3); }
+    .stats { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+    .stat { flex:1; min-width:140px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 14px; }
+    .stat b { display:block; font-size:22px; font-weight:900; } .stat span { font-size:13px; color:var(--muted); }
+    .stat.wait b { color:var(--wait); }
+    .filters { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+    select, input[type=password], input[type=number] { font:inherit; font-size:14px; border:1px solid #cbd5e1; border-radius:8px; padding:7px 10px; background:#fff; }
+    label.chk { display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; }
+    .btn { border:0; border-radius:8px; padding:8px 14px; font:inherit; font-weight:800; font-size:14px; cursor:pointer; background:var(--brand); color:#fff; }
+    .btn.ghost { background:#fff; color:var(--brand2); border:1px solid #bae6fd; }
+    .sub { background:#fff; border:1px solid var(--line); border-radius:12px; margin-bottom:10px; overflow:hidden; }
+    .sub.pending { border-left:5px solid #f59e0b; }
+    .sub > summary { list-style:none; cursor:pointer; padding:12px 14px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .sub > summary::-webkit-details-marker { display:none; }
+    .sub .who { font-weight:900; font-size:16px; } .sub .pg { font-weight:700; color:var(--ink2); }
+    .sub .meta { color:var(--muted); font-size:13px; }
+    .badge { font-size:12px; font-weight:800; border-radius:999px; padding:2px 10px; }
+    .b-wait { background:var(--waitsoft); color:var(--wait); } .b-done { background:var(--oksoft); color:var(--ok); } .b-auto { background:#f1f5f9; color:var(--ink2); }
+    .right { margin-left:auto; display:flex; gap:6px; align-items:center; }
+    .body { padding:0 14px 14px; border-top:1px dashed var(--line); }
+    h3 { font-size:14px; margin:14px 0 6px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th, td { text-align:left; padding:6px 8px; border-top:1px solid var(--line); vertical-align:top; }
+    th { background:#f8fafc; font-size:12.5px; color:var(--muted); }
+    td.mine { color:var(--bad); } td.n { width:56px; font-weight:800; white-space:nowrap; }
+    .man { border:1px solid #fde68a; background:#fffbeb; border-radius:10px; padding:10px 12px; margin-top:8px; }
+    .man.done { border-color:#bbf7d0; background:#f0fdf4; }
+    .man .q { font-weight:700; font-size:14px; } .man .row { display:grid; grid-template-columns:72px 1fr; gap:4px 10px; margin:6px 0; font-size:14px; }
+    .man .row b { color:var(--muted); font-size:12.5px; } .man .ans { white-space:pre-wrap; }
+    .scorebtns { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+    .sb { border:1px solid #cbd5e1; background:#fff; border-radius:8px; padding:6px 12px; font:inherit; font-weight:800; font-size:13px; cursor:pointer; }
+    .sb.on { background:var(--brand); border-color:var(--brand); color:#fff; }
+    .scorebtns input { width:76px; }
+    .okline { color:var(--ok); font-size:14px; margin-top:8px; }
+    .empty { text-align:center; color:var(--muted); padding:40px 10px; }
+    .err { color:var(--bad); font-weight:700; }
+    .login { max-width:380px; margin:60px auto; }
+    @media (max-width:640px) { .right { margin-left:0; width:100%; } .man .row { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="track.js" data-no-log></script>
+<script>
+(function () {
+  'use strict';
+  const EP = window.NS_ENDPOINT || '';
+  const app = document.getElementById('app');
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmt = iso => { const d = new Date(iso); return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+  const TYPE = { mc: '객관식', choice: '양자택일', tf: 'T/F', short: '단답형', sent: '문장 쓰기', kw: '서술형', blanks: '빈칸', fix: '어법 수정' };
+  let key = ''; try { key = localStorage.getItem('ns_tkey') || ''; } catch (e) {}
+  let rows = [], open = new Set(), F = { name: '', page: '', wait: false };
+
+  async function api(params) {
+    const u = EP + '?' + new URLSearchParams(Object.assign({ key }, params)).toString();
+    const r = await fetch(u); return r.json();
+  }
+
+  function login(msg) {
+    app.innerHTML = `<div class="card login"><h1 style="margin:0 0 4px;font-size:20px">선생님 채점 페이지</h1>
+      <p class="muted" style="margin:0 0 14px">S영어전문학원 내신 학습</p>
+      ${!EP ? '<p class="err">track.js에 구글 시트 주소(NS_ENDPOINT)가 아직 없어요.</p>' : ''}
+      <form id="lf"><input type="password" id="pw" placeholder="비밀번호" style="width:100%;margin-bottom:10px">
+      <button class="btn" style="width:100%">들어가기</button></form>${msg ? `<p class="err">${esc(msg)}</p>` : ''}</div>`;
+    document.getElementById('lf').onsubmit = e => { e.preventDefault(); key = document.getElementById('pw').value; try { localStorage.setItem('ns_tkey', key); } catch (er) {} load(); };
+  }
+
+  async function load() {
+    if (!EP) return login();
+    app.innerHTML = '<div class="empty">불러오는 중…</div>';
+    try {
+      const d = await api({ action: 'list', days: 60 });
+      if (d.error === 'key') return login('비밀번호가 맞지 않아요.');
+      rows = d.rows || []; draw();
+    } catch (e) { app.innerHTML = `<div class="card empty err">기록을 불러오지 못했어요. (${esc(e.message)})<br><button class="btn ghost" onclick="location.reload()">다시 시도</button></div>`; }
+  }
+
+  function draw() {
+    const names = [...new Set(rows.map(r => r.name))].sort(), pages = [...new Set(rows.map(r => r.page))].sort();
+    const waitRows = rows.filter(r => +r.pending > 0), waitItems = waitRows.reduce((a, r) => a + +r.pending, 0);
+    const shown = rows.filter(r => (!F.name || r.name === F.name) && (!F.page || r.page === F.page) && (!F.wait || +r.pending > 0));
+    app.innerHTML = `
+      <header><h1>선생님 채점</h1><span class="muted">최근 60일 · 최신순</span>
+        <span class="right"><button class="btn ghost" id="reload">새로고침</button><button class="btn ghost" id="logout">나가기</button></span></header>
+      <div class="stats">
+        <div class="stat"><b>${rows.length}</b><span>제출</span></div>
+        <div class="stat wait"><b>${waitRows.length}건 · ${waitItems}문항</b><span>교사 채점 대기</span></div>
+        <div class="stat"><b>${names.length}명</b><span>학생</span></div>
+      </div>
+      <div class="filters">
+        <select id="fn"><option value="">학생 전체</option>${names.map(n => `<option ${n === F.name ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>
+        <select id="fp"><option value="">시험지 전체</option>${pages.map(p => `<option ${p === F.page ? 'selected' : ''}>${esc(p)}</option>`).join('')}</select>
+        <label class="chk"><input type="checkbox" id="fw" ${F.wait ? 'checked' : ''}> 채점 대기만</label>
+      </div>
+      <div id="list">${shown.length ? shown.map(sub).join('') : '<div class="card empty">해당하는 제출이 없어요.</div>'}</div>`;
+    document.getElementById('reload').onclick = load;
+    document.getElementById('logout').onclick = () => { try { localStorage.removeItem('ns_tkey'); } catch (e) {} key = ''; login(); };
+    document.getElementById('fn').onchange = e => { F.name = e.target.value; draw(); };
+    document.getElementById('fp').onchange = e => { F.page = e.target.value; draw(); };
+    document.getElementById('fw').onchange = e => { F.wait = e.target.checked; draw(); };
+    document.querySelectorAll('details.sub').forEach(d => d.ontoggle = () => { d.open ? open.add(d.dataset.id) : open.delete(d.dataset.id); });
+    bindScores();
+  }
+
+  function sub(r) {
+    const wrong = r.items.filter(i => i.status === 'wrong' || i.status === 'part');
+    const man = r.items.filter(i => i.status === 'manual'), manOk = r.items.filter(i => i.status === 'manual-ok');
+    const pend = +r.pending > 0;
+    const badge = pend ? `<span class="badge b-wait">채점 대기 ${r.pending}</span>` : man.length ? `<span class="badge b-done">채점 완료 · ${r.final} / ${r.total}</span>` : `<span class="badge b-auto">${r.auto} / ${r.total}</span>`;
+    return `<details class="sub ${pend ? 'pending' : ''}" data-id="${esc(r.id)}" ${open.has(String(r.id)) ? 'open' : ''}>
+      <summary><span class="who">${esc(r.name)}</span><span class="pg">${esc(r.page)}</span>
+        <span class="meta">${fmt(r.time)} · ${r.att}회차${r.cls ? ' · ' + esc(r.cls) : ''}</span>
+        <span class="right"><span class="meta">자동 ${r.auto} / ${r.total}</span>${badge}</span></summary>
+      <div class="body">
+        <h3>자동 채점에서 틀린 문항 (${wrong.length})</h3>
+        ${wrong.length ? `<table><tr><th>문항</th><th>학생 답</th><th>정답</th></tr>${wrong.map(i => `<tr><td class="n">${i.n}번${i.status === 'part' ? ' (부분)' : ''}</td><td class="mine">${esc(i.mine)}</td><td>${esc(i.right)}</td></tr>`).join('')}</table>` : '<div class="okline">자동 채점 문항은 모두 맞혔어요.</div>'}
+        ${man.length ? `<h3>교사 채점 문항 (${man.length})</h3>${man.map(i => manBox(r, i)).join('')}` : ''}
+        ${manOk.length ? `<h3>모범 답안과 똑같아 정답 처리된 문항</h3><div class="meta">${manOk.map(i => `${i.n}번`).join(', ')}</div>` : ''}
+      </div></details>`;
+  }
+  function manBox(r, i) {
+    const has = Object.prototype.hasOwnProperty.call(r.teacher, i.n), v = has ? r.teacher[i.n] : null;
+    return `<div class="man ${has ? 'done' : ''}" data-id="${esc(r.id)}" data-n="${i.n}">
+      <div class="q">${i.n}번 · ${esc(TYPE[i.type] || i.type)}${i.prompt ? ' · ' + esc(i.prompt) : ''}</div>
+      <div class="row"><b>학생 답</b><span class="ans">${esc(i.mine)}</span><b>모범 답안</b><span class="ans">${esc(i.right)}</span></div>
+      <div class="scorebtns">
+        ${[[1, '정답 1'], [0.5, '부분 0.5'], [0, '오답 0']].map(([s, t]) => `<button class="sb ${v === s ? 'on' : ''}" data-v="${s}">${t}</button>`).join('')}
+        <input type="number" min="0" max="1" step="0.1" placeholder="직접" value="${has && ![0, 0.5, 1].includes(v) ? v : ''}">
+        ${has ? '<button class="sb" data-v="">지우기</button>' : ''}<span class="meta saving"></span>
+      </div></div>`;
+  }
+  function bindScores() {
+    document.querySelectorAll('.man').forEach(box => {
+      const save = async val => {
+        const id = box.dataset.id, n = box.dataset.n, s = box.querySelector('.saving');
+        s.textContent = '저장 중…';
+        try {
+          const d = await api({ action: 'score', id, n, v: val });
+          if (d.error === 'key') return login('비밀번호가 바뀌었어요. 다시 들어가 주세요.');
+          if (!d.row) { s.textContent = '저장하지 못했어요'; return; }
+          rows = rows.map(r => String(r.id) === String(id) ? d.row : r); open.add(String(id)); draw();
+        } catch (e) { s.textContent = '저장하지 못했어요 (인터넷 확인)'; }
+      };
+      box.querySelectorAll('.sb').forEach(b => b.onclick = () => save(b.dataset.v));
+      const inp = box.querySelector('input'); inp.onchange = () => { if (inp.value !== '') save(Math.max(0, Math.min(1, +inp.value))); };
+    });
+  }
+
+  key ? load() : login();
+})();
+</script>
+</body>
+</html>
