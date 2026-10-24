@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S영어전문학원 내신 학습 페이지</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f1f5f9; --card:#fff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; line-height:1.6; }
+    .wrap { max-width:880px; margin:0 auto; padding:40px 16px 80px; }
+    header { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:32px 24px; text-align:center; box-shadow:0 8px 24px -14px rgba(15,23,42,.25); margin-bottom:20px; }
+    header .academy { margin:0 0 4px; font-size:14px; font-weight:800; color:#0284c7; }
+    header h1 { margin:0 0 6px; font-size:28px; font-weight:900; letter-spacing:-.01em; }
+    header p { margin:0; color:var(--muted); font-size:15px; }
+    .cats { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .cat { display:flex; align-items:center; gap:16px; background:var(--card); border:2px solid var(--c-line); border-radius:18px; padding:22px; text-decoration:none; color:inherit; box-shadow:0 6px 18px -12px rgba(15,23,42,.25); transition:background .15s, border-color .15s; }
+    .cat:hover { background:var(--c-soft); border-color:var(--c); }
+    .cat .icon { font-size:38px; line-height:1; }
+    .cat .txt { flex:1; min-width:0; }
+    .cat .name { display:block; font-size:21px; font-weight:900; color:var(--c-ink); }
+    .cat .desc { display:block; font-size:14px; color:var(--muted); margin-top:2px; }
+    .cat .arrow { font-size:26px; color:#cbd5e1; }
+    .cat:hover .arrow { color:var(--c); }
+    .soon { display:none; margin-left:6px; font-size:12px; font-weight:400; color:#94a3b8; }
+    .cat.is-missing { opacity:.5; pointer-events:none; }
+    .cat.is-missing .soon { display:inline; }
+    .c-sky     { --c:#0ea5e9; --c-line:#bae6fd; --c-soft:#f0f9ff; --c-ink:#0369a1; }
+    .c-emerald { --c:#10b981; --c-line:#a7f3d0; --c-soft:#ecfdf5; --c-ink:#047857; }
+    .c-violet  { --c:#8b5cf6; --c-line:#ddd6fe; --c-soft:#f5f3ff; --c-ink:#6d28d9; }
+    .c-amber   { --c:#f59e0b; --c-line:#fde68a; --c-soft:#fffbeb; --c-ink:#b45309; }
+    @media (max-width:600px) { .cats { grid-template-columns:1fr; } header h1 { font-size:24px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="academy">S영어전문학원</p>
+      <h1>내신 학습 페이지</h1>
+      <p>공부할 자료의 종류를 고르세요.</p>
+    </header>
+    <main class="cats" id="cats"></main>
+  </div>
+
+<script>
+/* 네 가지 분류 — 이름, 설명, 연결할 파일을 바꾸려면 여기만 고치면 됩니다. */
+const CATS = [
+  { name: '교과서',   desc: '학교 교과서 본문',         file: 'textbook.html',   color: 'sky',     icon: '📘' },
+  { name: '보조교재', desc: '학교에서 쓰는 보조교재',    file: 'supplement.html', color: 'emerald', icon: '📗' },
+  { name: '모의고사', desc: '시험 범위의 모의고사 지문', file: 'mock.html',       color: 'violet',  icon: '📝' },
+  { name: '외부지문', desc: '시험에 나오는 외부 지문',   file: 'external.html',   color: 'amber',   icon: '📄' },
+];
+document.getElementById('cats').innerHTML = CATS.map(c => `
+  <a class="cat c-${c.color}" href="${c.file}">
+    <span class="icon" aria-hidden="true">${c.icon}</span>
+    <span class="txt"><span class="name">${c.name}<span class="soon">준비 중</span></span><span class="desc">${c.desc}</span></span>
+    <span class="arrow" aria-hidden="true">›</span>
+  </a>`).join('');
+
+/* 아직 올리지 않은 분류 페이지는 '준비 중'으로 흐리게 (깃허브 페이지에서만 확인) */
+if (location.protocol !== 'file:') {
+  document.querySelectorAll('.cat').forEach(async a => {
+    try { const r = await fetch(a.getAttribute('href'), { method: 'HEAD', cache: 'no-store' }); if (!r.ok) a.classList.add('is-missing'); } catch (e) {}
+  });
+}
+</script>
+</body>
+</html>

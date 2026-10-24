@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📘 교과서 | S영어전문학원 내신 학습</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f1f5f9; --card:#fff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; line-height:1.6; }
+    .wrap { max-width:880px; margin:0 auto; padding:24px 16px 80px; }
+    .top { font-size:14px; margin-bottom:14px; } .top a { color:var(--c-ink); font-weight:800; text-decoration:none; }
+    header { background:var(--card); border:1px solid var(--line); border-top:6px solid var(--c); border-radius:18px; padding:26px 24px; box-shadow:0 8px 24px -14px rgba(15,23,42,.25); margin-bottom:18px; }
+    header .academy { margin:0; font-size:13px; font-weight:800; color:var(--muted); }
+    header h1 { margin:2px 0 4px; font-size:26px; font-weight:900; color:var(--c-ink); }
+    header p { margin:0; color:var(--muted); font-size:14px; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px; margin-bottom:14px; box-shadow:0 6px 18px -14px rgba(15,23,42,.25); }
+    section h2 { margin:0 0 12px; font-size:17px; font-weight:900; }
+    .row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:8px 0; border-top:1px dashed var(--line); }
+    .row:first-of-type { border-top:0; }
+    .row .lab { width:70px; font-weight:800; font-size:14px; color:var(--ink2,#334155); }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .btn { display:flex; align-items:center; gap:10px; background:#fff; border:2px solid var(--c-line); border-radius:12px; padding:14px 16px; text-decoration:none; color:inherit; font-weight:800; font-size:16px; transition:background .15s, border-color .15s; }
+    .btn:hover { background:var(--c-soft); border-color:var(--c); }
+    .btn .arrow { margin-left:auto; color:#cbd5e1; font-size:20px; } .btn:hover .arrow { color:var(--c); }
+    .chip { display:inline-flex; align-items:center; border:2px solid var(--c-line); border-radius:999px; padding:5px 14px; font-weight:800; font-size:14px; text-decoration:none; color:var(--c-ink); background:#fff; }
+    .chip:hover { background:var(--c-soft); border-color:var(--c); }
+    .soon { display:none; margin-left:6px; font-size:11px; font-weight:400; color:#94a3b8; }
+    .is-missing { opacity:.45; pointer-events:none; } .is-missing .soon { display:inline; }
+    .note { font-size:13px; color:var(--muted); margin:8px 2px 0; }
+    @media (max-width:600px) { .grid { grid-template-columns:1fr; } .row .lab { width:100%; } }
+
+    :root { --c:#0ea5e9; --c-line:#bae6fd; --c-soft:#f0f9ff; --c-ink:#0369a1; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top"><a href="index.html">← 메인으로</a></div>
+    <header><p class="academy">S영어전문학원 내신 학습</p><h1>📘 교과서</h1><p>공부할 교과서를 고르세요.</p></header>
+    <section><div class="grid"><a class="btn" data-check href="tb-common1.html">공통영어1<span class="soon">준비 중</span><span class="arrow">›</span></a><a class="btn" data-check href="tb-common2.html">공통영어2<span class="soon">준비 중</span><span class="arrow">›</span></a><a class="btn" data-check href="tb-english1.html">영어1<span class="soon">준비 중</span><span class="arrow">›</span></a><a class="btn" data-check href="tb-english2.html">영어2<span class="soon">준비 중</span><span class="arrow">›</span></a></div></section>
+  </div>
+<!-- 교과서 목록: 버튼을 늘리려면 <a class="btn" ...> 한 줄을 복사해 이름과 파일만 바꾸세요. -->
+<script>
+/* 아직 올리지 않은 페이지는 '준비 중'으로 흐리게 (깃허브 페이지에서만 확인) */
+if (location.protocol !== 'file:') {
+  document.querySelectorAll('a[data-check]').forEach(async a => {
+    try { const r = await fetch(a.getAttribute('href'), { method: 'HEAD', cache: 'no-store' }); if (!r.ok) a.classList.add('is-missing'); } catch (e) {}
+  });
+}
+</script>
+</body>
+</html>
