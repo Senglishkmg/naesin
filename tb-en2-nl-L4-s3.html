@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>분석지 정독 확인 문제</title>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --border: #e2e8f0;
+  --text-main: #1e293b;
+  --text-sub: #64748b;
+  --accent-correct: #16a34a;
+  --accent-wrong: #dc2626;
+  --accent-bg-correct: #dcfce7;
+  --accent-bg-wrong: #fee2e2;
+  --box-c-bg: #f1f5f9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  padding: 20px 10px;
+}
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+}
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+header .subtitle {
+  font-size: 0.95rem;
+  color: var(--text-sub);
+}
+.passage-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.passage-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.passage-title::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+.passage-content {
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: #334155;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #edf2f7;
+}
+.passage-sentence {
+  margin-bottom: 10px;
+}
+.sentence-num {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.85rem;
+  background: #eff6ff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
+  border: 1px solid #bfdbfe;
+}
+.section-tag {
+  display: inline-block;
+  background: #e0e7ff;
+  color: #4338ca;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+.q-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  position: relative;
+}
+.q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.q-num-part {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.q-num {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+.q-part {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.q-stem {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.box-c {
+  background: var(--box-c-bg);
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.box-c small {
+  color: var(--text-sub);
+  display: inline-block;
+  margin-top: 4px;
+}
+/* Options */
+.options-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 0.95rem;
+}
+.option-item:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+.option-item input[type="radio"] {
+  margin-right: 10px;
+  accent-color: var(--primary);
+}
+/* Choice buttons */
+.choice-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.choice-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.15s ease;
+  font-size: 0.95rem;
+}
+.choice-btn:hover {
+  border-color: var(--primary);
+  background: #eff6ff;
+  color: var(--primary);
+}
+.choice-btn.selected {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+/* TF list */
+.tf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tf-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  gap: 12px;
+}
+.tf-text {
+  font-size: 0.92rem;
+  flex: 1;
+}
+.tf-buttons {
+  display: flex;
+  gap: 6px;
+}
+.tf-btn {
+  padding: 6px 14px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.tf-btn.selected {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+/* Inputs */
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
+}
+.fix-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fix-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fix-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  width: 50px;
+}
+.blanks-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.blank-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.blank-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  min-width: 40px;
+}
+/* Explanation */
+.expl-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border-left: 4px solid var(--primary);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9rem;
+  color: #334155;
+  display: none;
+}
+.expl-box.show {
+  display: block;
+}
+.result-status {
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: none;
+}
+.result-status.correct {
+  color: var(--accent-correct);
+  display: block;
+}
+.result-status.wrong {
+  color: var(--accent-wrong);
+  display: block;
+}
+.result-status.manual {
+  color: #d97706;
+  display: block;
+}
+/* Actions */
+.action-area {
+  margin-top: 30px;
+  text-align: center;
+}
+.btn-submit {
+  padding: 14px 40px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);
+  transition: all 0.2s ease;
+}
+.btn-submit:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+.score-banner {
+  display: none;
+  background: #1e293b;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 24px;
+  text-align: center;
+}
+.score-banner.show {
+  display: block;
+}
+.score-val {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #38bdf8;
+  margin: 6px 0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="section-tag" id="meta-section"></div>
+    <h1 id="meta-title"></h1>
+    <div class="subtitle">지문 분석지 정독 확인 및 내신 대비 평가</div>
+  </header>
+
+  <section class="passage-card">
+    <div class="passage-title">지문 본문 (Passage)</div>
+    <div class="passage-content" id="passage-container"></div>
+  </section>
+
+  <div id="questions-container"></div>
+
+  <div class="action-area">
+    <button class="btn-submit" id="btn-grade" onclick="gradeAll()">채점 및 정답 확인하기</button>
+  </div>
+
+  <div class="score-banner" id="score-banner">
+    <h2>채점 결과</h2>
+    <div class="score-val" id="score-text"></div>
+    <p id="score-detail" style="font-size:0.9rem; color:#cbd5e1;"></p>
+  </div>
+</div>
+
+<script>
+// ===== DATA START (이 블록만 교체) =====
+const META = {
+  title: "수리할 권리 운동과 소비자 권한 강화 분석지 정독 확인 문항 (#18~#32)",
+  section: "Section 3",
+  passage: [
+    [18, "Right-to-Repair Movement: Empowering Consumers"],
+    [19, "One reason many people dispose of their damaged devices is that they are too difficult to repair."],
+    [20, "For example, a device may be difficult to disassemble, or its manufacturer may require that it be brought to an official service center to be fixed."],
+    [21, "Many companies do not allow their customers to take their damaged items to third-party repair shops."],
+    [22, "What is more, some products are intentionally designed to be difficult to repair."],
+    [23, "It is common for consumers to be unable to acquire the instructions for how to fix their items or the parts needed to complete repairs."],
+    [24, "The right-to-repair movement is trying to solve these problems by promoting legislation that states the following: If you own a product, you have the right to fix it yourself or bring it to a technician of your choice."],
+    [25, "To protect the rights of consumers, the right-to-repair movement demands four things."],
+    [26, "First, companies must make information about their products available to everyone."],
+    [27, "Second, third parties, including individuals, should be able to obtain the parts and tools required to make repairs."],
+    [28, "Third, the practice of preventing consumers from installing custom software on their own devices should be prohibited by law."],
+    [29, "Finally, it demands that manufacturers design devices in a way that makes repairs as easy as possible."],
+    [30, "Advocates of the movement say that if all these goals are accomplished, far less e-waste will be generated."],
+    [31, "Thanks to their efforts, more than 40 states in the U.S. have begun working on right-to-repair legislation."],
+    [32, "This movement is gaining a growing influence in Europe as well, with more and more countries joining the cause."]
+  ]
+};
+
+const Q = [
+  {
+    n: 1,
+    p: "A",
+    t: "mc",
+    s: "[Section 3 Summary] 및 본문의 내용과 일치하지 않는 것은?",
+    o: [
+      "많은 소비자들이 손상된 기기를 처분하는 주요 이유 중 하나는 수리가 너무 어렵기 때문이다.",
+      "수리할 권리 운동은 소비자가 스스로 고치거나 원하는 기술자에게 맡길 권리의 법제화를 추진한다.",
+      "수리할 권리 운동이 제시하는 4가지 요구 중 하나는 모든 수리를 무료로 제공하라는 것이다.",
+      "운동의 옹호자들은 4가지 목표가 달성될 경우 전자 쓰레기 발생량이 훨씬 줄어들 것으로 본다.",
+      "미국 40개 이상의 주에서 관련 입법 작업이 시작되었고 유럽 전역에서도 영향력이 커지고 있다."
+    ],
+    a: 3,
+    e: "[Summary & #25~#29] 수리권 운동의 4가지 요구는 정보 공개, 부품·도구 접근 허용, 맞춤 소프트웨어 설치 차단 금지, 수리 친화적 설계이며, '무료 수리 제공'은 포함되지 않습니다."
+  },
+  {
+    n: 2,
+    p: "A",
+    t: "mc",
+    s: "#20과 #21에 언급된 소비자의 자가 수리를 방해하는 구체적 사례로 알맞지 않은 것은?",
+    o: [
+      "기기 자체가 분해하기 어렵게 만들어진 점",
+      "제조사가 제품을 공식 서비스 센터로만 가져오도록 요구하는 점",
+      "사설 수리점으로 손상된 물품을 가져가지 못하도록 금지하는 점",
+      "정부 기관이 공식 인증 기기 외의 사용을 일괄적으로 제한하는 점",
+      "소비자의 외부 업체(third-party) 이용을 차단하는 기업의 방침"
+    ],
+    a: 4,
+    e: "[#20, #21] 기기 분해의 난해함, 제조사의 공식 센터 입고 요구, 사설 수리점 이용 불허가 제시되어 있으며, 정부 기관의 기기 사용 제한 언급은 없습니다."
+  },
+  {
+    n: 3,
+    p: "A",
+    t: "mc",
+    s: "#25~#29에서 밝힌 '수리할 권리 운동이 요구하는 네 가지 사항'에 해당하지 않는 것은?",
+    o: [
+      "기업이 제품에 대한 정보를 모든 사람에게 공개할 것",
+      "개인을 포함한 제3자가 수리에 필요한 부품과 도구를 구할 수 있게 할 것",
+      "소비자가 맞춤형 소프트웨어를 설치하지 못하게 막는 관행을 법으로 금지할 것",
+      "모든 제조사가 제품 판매 수익의 일부를 소비자 수리 기금으로 환원할 것",
+      "제조업체들이 가능한 한 수리가 쉬운 방식으로 기기를 설계할 것"
+    ],
+    a: 4,
+    e: "[#26~#29] 4대 요구 사항은 정보 공개, 부품/도구 획득 보장, 맞춤 소프트웨어 설치 차단 금지, 수리 용이 설계이며, 수익 환원은 언급되지 않았습니다."
+  },
+  {
+    n: 4,
+    p: "A",
+    t: "mc",
+    s: "#31과 #32에 나타난 수리할 권리 운동의 확산 현황에 대한 설명으로 옳은 것은?",
+    o: [
+      "미국 40개 주 전체에서 이미 법안 통과가 완료되었다.",
+      "유럽 국가들은 미국과 달리 해당 법률 제정에 동참하지 않고 있다.",
+      "미국의 40개 이상의 주에서 수리할 권리 법률 제정에 착수해 왔다.",
+      "유럽에서는 오직 단일 국가만이 유일하게 이 대의에 참여하고 있다.",
+      "미국에서는 입법 노력이 중단되었으나 유럽에서만 새롭게 확산 중이다."
+    ],
+    a: 3,
+    e: "[#31, #32] #31에서 more than 40 states in the U.S. have begun working on right-to-repair legislation이라고 명시되어 있습니다."
+  },
+  {
+    n: 5,
+    p: "A",
+    t: "tf",
+    s: "분석지 내용에 근거하여 각 진술이 맞으면 T, 틀리면 F를 고르시오.",
+    items: [
+      ["#19에 따르면 손상된 기기를 처분하는 한 가지 이유는 수리하기 너무 어렵기 때문이다.", "T"],
+      ["#22에 따르면 일부 제품은 우연한 결함으로 인해 수리가 어려워진 것일 뿐 고의로 설계된 것은 아니다.", "F"],
+      ["#24에 따르면 제품을 소유한 소비자는 스스로 고치거나 원하는 기술자에게 맡길 권리가 입법안에 명시된다.", "T"],
+      ["#30의 옹호자들은 이러한 목표들이 달성되면 전자 쓰레기 배출량이 오히려 더 늘어날 것이라고 본다.", "F"]
+    ],
+    e: "[#19, #22, #24, #30] #22는 의도적으로(intentionally) 어렵게 설계되었다고 했으며, #30은 far less e-waste(훨씬 더 적은 전자 쓰레기)가 발생할 것이라 했습니다."
+  },
+  {
+    n: 6,
+    p: "B",
+    t: "mc",
+    s: "#18의 empower와 문맥상 의미가 통하는 동의어(syn.)로 분석지에 제시되지 않은 것은?",
+    c: "Right-to-Repair Movement: <u>Empowering</u> Consumers",
+    o: [
+      "authorize",
+      "enable",
+      "entitle",
+      "emancipate",
+      "disempower"
+    ],
+    a: 5,
+    e: "[단어 #18] empower의 동의어는 authorize, enable, entitle, emancipate이며, disempower는 반의어(ant.)입니다."
+  },
+  {
+    n: 7,
+    p: "B",
+    t: "mc",
+    s: "#19의 밑줄 친 dispose of의 반의어(ant.)로 분석지에 짝지어진 것은?",
+    c: "One reason many people <u>dispose of</u> their damaged devices...",
+    o: [
+      "discard, throw out",
+      "get rid of, dump",
+      "retain, keep",
+      "repair, mend",
+      "dismantle, build"
+    ],
+    a: 3,
+    e: "[단어 #19] dispose of의 syn.은 get rid of, discard, throw out, dump이며 ant.는 retain, keep입니다."
+  },
+  {
+    n: 8,
+    p: "B",
+    t: "mc",
+    s: "#20의 밑줄 친 disassemble의 동의어(syn.)와 반의어(ant.)가 바르게 짝지어진 것은?",
+    c: "For example, a device may be difficult to <u>disassemble</u>...",
+    o: [
+      "동의어: assemble — 반의어: dismantle",
+      "동의어: dismantle — 반의어: assemble",
+      "동의어: build — 반의어: deconstruct",
+      "동의어: take apart — 반의어: dismantle",
+      "동의어: construct — 반의어: take apart"
+    ],
+    a: 2,
+    e: "[단어 #20] disassemble: syn. dismantle, take apart, deconstruct / ant. assemble, build"
+  },
+  {
+    n: 9,
+    p: "B",
+    t: "mc",
+    s: "#22의 밑줄 친 intentionally의 반의어(ant.)만을 <보기>에서 있는 대로 고른 것은?",
+    c: "some products are <u>intentionally</u> designed to be difficult to repair.<br>[보기] a. deliberately   b. accidentally   c. knowingly   d. unintentionally   e. on purpose",
+    o: [
+      "a, c",
+      "b, d",
+      "b, e",
+      "a, c, e",
+      "b, d, e"
+    ],
+    a: 2,
+    e: "[단어 #22] intentionally: syn. deliberately, on purpose, knowingly / ant. accidentally, unintentionally"
+  },
+  {
+    n: 10,
+    p: "B",
+    t: "mc",
+    s: "#28의 밑줄 친 prevent와 prohibit의 반의어(ant.)로 공통 제시된 단어는?",
+    c: "preventing consumers from installing ... should be prohibited by law.",
+    o: [
+      "permit",
+      "ban",
+      "outlaw",
+      "hinder",
+      "stop"
+    ],
+    a: 1,
+    e: "[단어 #28] prevent의 ant.는 allow, permit / prohibit의 ant.는 permit, authorize이므로 공통 반의어는 permit입니다."
+  },
+  {
+    n: 11,
+    p: "B",
+    t: "mc",
+    s: "#30의 밑줄 친 advocate의 분석지 상 반의어(ant.)로 가장 알맞은 것은?",
+    c: "<u>Advocates</u> of the movement say that if all these goals are accomplished...",
+    o: [
+      "supporter",
+      "proponent",
+      "champion",
+      "backer",
+      "opponent"
+    ],
+    a: 5,
+    e: "[단어 #30] advocate: syn. supporter, proponent, champion, backer / ant. opponent, critic"
+  },
+  {
+    n: 12,
+    p: "B",
+    t: "mc",
+    s: "#32의 밑줄 친 cause의 본문 속 문맥적 의미로 가장 알맞은 것은?",
+    c: "with more and more countries joining the <u>cause</u>.",
+    o: [
+      "원인",
+      "이유",
+      "대의명분, 이상",
+      "소송 사건",
+      "초래하다"
+    ],
+    a: 3,
+    e: "[단어 #32] cause: (n) 대의명분, 이상 (syn. principle, ideal, mission); (n) 원인, 이유; (v) 초래하다. 본문에서는 대의명분으로 쓰였습니다."
+  },
+  {
+    n: 13,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "One reason many people dispose of their damaged devices (is / are) that they are too difficult to repair.",
+    o: ["is", "are"],
+    a: "is",
+    e: "[구문 분석 #19 ★] 주어는 단수 명사인 One reason이므로 본동사는 단수형 is가 와야 합니다."
+  },
+  {
+    n: 14,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "its manufacturer may require that it (is / be) brought to an official service center.",
+    o: ["is", "be"],
+    a: "be",
+    e: "[구문 분석 #20 ★★★] 요구 동사 require 뒤의 that절에는 당위성을 나타내는 「(should) + 동사원형」이 와야 하므로 should가 생략된 be가 정답입니다."
+  },
+  {
+    n: 15,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "it be brought to an official service center to (fix / be fixed).",
+    o: ["fix", "be fixed"],
+    a: "be fixed",
+    e: "[구문 분석 #20] 기기가 수리되는 대상이므로 수동태 to부정사 to be fixed가 목적(~하기 위해)을 나타냅니다."
+  },
+  {
+    n: 16,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "Many companies do not allow their customers (taking / to take) their damaged items to third-party repair shops.",
+    o: ["taking", "to take"],
+    a: "to take",
+    e: "[구문 분석 #21 ★] 5형식 동사 allow는 목적격 보어로 to부정사를 취하므로 to take가 알맞습니다."
+  },
+  {
+    n: 17,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "It is common (for / of) consumers to be unable to acquire the instructions.",
+    o: ["for", "of"],
+    a: "for",
+    e: "[구문 분석 #23 ★★★] to부정사의 일반적인 의미상 주어를 나타내는 전치사는 for이므로 for consumers가 알맞습니다."
+  },
+  {
+    n: 18,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "... acquire the instructions for how to fix their items or the parts (needing / needed) to complete repairs.",
+    o: ["needing", "needed"],
+    a: "needed",
+    e: "[구문 분석 #23] the parts를 뒤에서 수식하는 과거분사로 '필요로 되는'의 수동 관계이므로 needed가 쓰입니다."
+  },
+  {
+    n: 19,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "The right-to-repair movement is trying to solve these problems by (promoting / promote) legislation.",
+    o: ["promoting", "promote"],
+    a: "promoting",
+    e: "[구문 분석 #24] 전치사 by의 목적어 자리이므로 동명사 promoting이 알맞습니다."
+  },
+  {
+    n: 20,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "... by promoting legislation that (state / states) the following.",
+    o: ["state", "states"],
+    a: "states",
+    e: "[구문 분석 #24] 선행사가 단수 명사인 legislation이므로 주격 관계대명사 뒤의 동사는 단수형 states가 알맞습니다."
+  },
+  {
+    n: 21,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "First, companies must make information about their products (available / availably) to everyone.",
+    o: ["available", "availably"],
+    a: "available",
+    e: "[구문 분석 #26 ★★★] make의 5형식 구조에서 목적격 보어 자리이므로 부사가 아닌 형용사 available이 와야 합니다."
+  },
+  {
+    n: 22,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "the practice of preventing consumers from (install / installing) custom software on their own devices should be prohibited by law.",
+    o: ["install", "installing"],
+    a: "installing",
+    e: "[구문 분석 #28 ★★★] 「prevent + 목적어 + from + -ing」 구문이므로 전치사 from 뒤에는 동명사 installing이 와야 합니다."
+  },
+  {
+    n: 23,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "the practice of preventing consumers from installing custom software (should prohibit / should be prohibited) by law.",
+    o: ["should prohibit", "should be prohibited"],
+    a: "should be prohibited",
+    e: "[구문 분석 #28 ★] 주어 the practice는 금지되는 대상이므로 수동태 조동사구 should be prohibited가 알맞습니다."
+  },
+  {
+    n: 24,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "Finally, it demands that manufacturers (design / designs) devices in a way that makes repairs as easy as possible.",
+    o: ["design", "designs"],
+    a: "design",
+    e: "[구문 분석 #29 ★★★] 요구 동사 demands 뒤의 that절에는 당위성을 뜻하는 「(should) + 동사원형」이 와야 하므로 원형 design이 정답입니다."
+  },
+  {
+    n: 25,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "... in a way that makes repairs as (easy / easily) as possible.",
+    o: ["easy", "easily"],
+    a: "easy",
+    e: "[구문 분석 #29 ★] make + 목적어(repairs) + 목적격보어 구조에 as ~ as possible이 결합된 것이므로 형용사 easy가 쓰여야 합니다."
+  },
+  {
+    n: 26,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "... if all these goals are accomplished, (far / very) less e-waste will be generated.",
+    o: ["far", "very"],
+    a: "far",
+    e: "[구문 분석 #30 ★★★] less는 비교급이므로 비교급을 수식·강조할 수 있는 far가 와야 하며 very는 비교급을 수식할 수 없습니다."
+  },
+  {
+    n: 27,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "This movement is gaining a growing influence in Europe as well, with more and more countries (joining / joined) the cause.",
+    o: ["joining", "joined"],
+    a: "joining",
+    e: "[구문 분석 #32 ★★★] 「with + 명사 + 분사」 부대상황 구문으로, 국가들이 능동적으로 대의에 동참하는 주체이므로 현재분사 joining이 알맞습니다."
+  },
+  {
+    n: 28,
+    p: "C",
+    t: "short",
+    s: "#24의 'to fix it yourself'에서 밑줄 친 yourself의 분석지 상 어법 용법을 쓰시오.",
+    ans: ["강조", "강조용법", "부사적", "부사적용법"],
+    show: "강조 용법 (부사적 용법)",
+    e: "[구문 분석 #24 ★] 주어 you를 강조하기 위해 문맥상 덧붙여진 부사적(강조) 용법으로 생략이 가능합니다."
+  },
+  {
+    n: 29,
+    p: "C",
+    t: "short",
+    s: "#29의 'as easy as possible'을 같은 의미의 절 형태인 5단어로 바꾸어 쓸 때 빈칸에 알맞은 말을 쓰시오.",
+    c: "as easy as ________________",
+    ans: ["theycan"],
+    show: "they can",
+    e: "[구문 분석 #29] as ~ as possible은 as easy as they can으로 바꾸어 쓸 수 있습니다."
+  },
+  {
+    n: 30,
+    p: "D",
+    t: "mc",
+    s: "[연결어 분석]에 근거하여, #20의 'For example'이 사용된 이유와 앞뒤 문장의 관계를 가장 바르게 설명한 것은?",
+    o: [
+      "앞 문장의 세부 원인에 대해 본문장에서 일반적인 해결책을 결론으로 제시하기 위해 쓰였다.",
+      "앞 문장과 본문장이 상반된 대조 관계를 이루며 역접으로 반박함을 나타내기 위해 쓰였다.",
+      "손상된 기기를 처분하는 포괄적 원인(추상적 진술)에 대해 기기 분해의 난해함과 제조사의 공식 센터 입고 요구라는 구체적 실례를 열거하기 위해 쓰였다.",
+      "앞 문장의 구체적 사례를 바탕으로 본문장에서 수리할 권리의 포괄적 정의를 이끌어내기 위해 쓰였다.",
+      "앞 문장의 입법 현황에 대한 부연 설명으로 유럽 국가들의 동참 사례를 순차적으로 열거하기 위해 쓰였다."
+    ],
+    a: 3,
+    e: "[연결어 분석 #20] 앞 문장은 손상된 기기 처분의 주된 원인(수리의 극심한 난이도)이라는 포괄적·추상적 진술이고, 본문장은 분해 난해함 및 공식 센터 입고 요구라는 구체적 세부 사례를 제시하므로 실례 연결어 For example이 사용되었습니다."
+  },
+  {
+    n: 31,
+    p: "D",
+    t: "mc",
+    s: "[연결어 분석]에 근거하여, #29의 'Finally'가 나타내는 기능과 앞선 문장들(#26~#28)과의 관계에 대한 설명으로 옳은 것은?",
+    o: [
+      "앞선 세 문장의 구체적 내용들을 하나로 묶어 가장 추상적인 결론을 도출하는 연결어이다.",
+      "앞선 세 요구 사항에 반대되는 새로운 예외 조항을 역접으로 도입하는 연결어이다.",
+      "수리권 운동의 4대 요구 사항 중 마지막 항목으로 순차 매김 하며, 앞선 세 문장들과 추상적·구체적 정도가 동일하다.",
+      "앞선 조항들보다 훨씬 구체적이고 세부적인 규제 지침으로 단계를 격하시켜 제시하는 연결어이다.",
+      "미국 40개 주의 입법 절차가 완료되었음을 선언하는 시간적 최종 단계를 나타낸다."
+    ],
+    a: 3,
+    e: "[연결어 분석 #29] 4가지 구체적 입법 요구 조항들을 순서대로 나열하는 완결 단계이므로, 앞선 세 문장들과 본문장의 추상적·구체적 정도는 동일하다고 분석지에 제시되어 있습니다."
+  },
+  {
+    n: 32,
+    p: "E",
+    t: "blanks",
+    s: "English Summary를 바탕으로 빈칸 (A)와 (B)에 들어갈 알맞은 단어를 본문에서 찾아 쓰시오. (필요시 어형 변화)",
+    c: "Thwarted by deliberate repair obstacles, consumers often discard functional gadgets. In response, the movement advocates for legal mandates to ensure universal parts access and prevent companies from (A) p________ consumers from installing (B) c________ software.",
+    blanks: [
+      ["(A)", ["preventing"]],
+      ["(B)", ["custom"]]
+    ],
+    show: "(A) preventing (B) custom",
+    e: "[Summary & #28] #28 the practice of preventing consumers from installing custom software on their own devices"
+  },
+  {
+    n: 33,
+    p: "E",
+    t: "fix",
+    s: "다음 글에서 분석지의 내신 출제 포인트(★)에 어긋난 어법상 오류 4개를 찾아 바르게 고치시오. (순서 무관)",
+    c: "For example, its manufacturer may require that it is brought to an official service center to be fixed. First, companies must make information about their products availably to everyone. Second, the practice of preventing consumers to install custom software should be prohibited by law. Advocates say that if all these goals are accomplished, very less e-waste will be generated.",
+    keys: [
+      { k: "be", show: "is → be" },
+      { k: "available", show: "availably → available" },
+      { k: "frominstalling", show: "to install → from installing" },
+      { k: "far", show: "very → far" }
+    ],
+    e: "[구문 분석 #20, #26, #28, #30 ★] ① require that절 내부 (should) be brought ② make의 목적격 보어 형용사 available ③ prevent A from -ing 구문의 from installing ④ 비교급 less를 강조하는 far"
+  },
+  {
+    n: 34,
+    p: "E",
+    t: "kw",
+    s: "#20의 that it be brought 문장에서 주어가 3인칭 단수인 it임에도 불구하고 is나 was가 아닌 원형 'be'가 쓰인 이유를 [동사], [당위성], [생략] 키워드를 사용하여 서술하시오.",
+    groups: [
+      ["동사", "require"],
+      ["당위성"],
+      ["생략", "should"]
+    ],
+    show: "주절의 동사 require가 요구를 나타내는 동사여서 that절에 당위성을 나타내는 'should + 동사원형'이 쓰여야 하는데, 이때 should가 생략되어 원형 be가 쓰였기 때문이다.",
+    e: "[구문 분석 #20 ★★★] require와 같은 제안/요구/주장/명령 동사 뒤의 that절에는 당위성을 뜻하는 (should) + 동사원형이 오며 should가 생략된 구조입니다."
+  },
+  {
+    n: 35,
+    p: "E",
+    t: "sent",
+    s: "분석지 #32의 구문 분석에 근거하여, <조건>에 맞게 주어진 우리말을 알맞게 영작하시오.",
+    c: "점점 더 많은 국가들이 그 대의에 동참하면서<br><small>&lt;조건&gt; with, more and more, join, the cause 활용 (어형 변화 주의)</small>",
+    ans: [
+      "with more and more countries joining the cause"
+    ],
+    show: "with more and more countries joining the cause",
+    e: "[구문 분석 #32 ★★★] with + 목적어(more and more countries) + 분사(joining) the cause (부대상황 구문)"
+  }
+];
+// ===== DATA END =====
+
+// Render logic
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("meta-section").innerText = META.section || "분석 지문";
+  document.getElementById("meta-title").innerText = META.title || "지문 분석지 확인 평가";
+
+  const pContainer = document.getElementById("passage-container");
+  META.passage.forEach(item => {
+    const pDiv = document.createElement("div");
+    pDiv.className = "passage-sentence";
+    pDiv.innerHTML = `<span class="sentence-num">#${item[0]}</span>${item[1]}`;
+    pContainer.appendChild(pDiv);
+  });
+
+  const qContainer = document.getElementById("questions-container");
+  Q.forEach(q => {
+    const card = document.createElement("div");
+    card.className = "q-card";
+    card.id = `card-q-${q.n}`;
+
+    let html = `
+      <div class="q-header">
+        <div class="q-num-part">
+          <span class="q-num">Q${q.n}</span>
+          <span class="q-part">Part ${q.p}</span>
+        </div>
+      </div>
+      <div class="q-stem">${q.s}</div>
+    `;
+
+    if (q.c) {
+      html += `<div class="box-c">${q.c}</div>`;
+    }
+
+    if (q.t === "mc") {
+      html += `<ul class="options-list">`;
+      q.o.forEach((opt, idx) => {
+        html += `
+          <label class="option-item">
+            <input type="radio" name="ans-${q.n}" value="${idx+1}">
+            <span>${idx+1}. ${opt}</span>
+          </label>
+        `;
+      });
+      html += `</ul>`;
+    } else if (q.t === "choice") {
+      html += `<div class="choice-group">`;
+      q.o.forEach(opt => {
+        html += `<button type="button" class="choice-btn" onclick="selectChoice(${q.n}, '${opt}', this)">${opt}</button>`;
+      });
+      html += `</div><input type="hidden" id="ans-${q.n}">`;
+    } else if (q.t === "tf") {
+      html += `<div class="tf-list">`;
+      q.items.forEach((item, idx) => {
+        html += `
+          <div class="tf-row">
+            <div class="tf-text">(${idx+1}) ${item[0]}</div>
+            <div class="tf-buttons">
+              <button type="button" class="tf-btn" onclick="selectTF(${q.n}, ${idx}, 'T', this)">T</button>
+              <button type="button" class="tf-btn" onclick="selectTF(${q.n}, ${idx}, 'F', this)">F</button>
+            </div>
+            <input type="hidden" id="ans-${q.n}-${idx}">
+          </div>
+        `;
+      });
+      html += `</div>`;
+    } else if (q.t === "short") {
+      html += `<input type="text" id="ans-${q.n}" placeholder="정답을 입력하세요">`;
+    } else if (q.t === "sent") {
+      html += `<input type="text" id="ans-${q.n}" placeholder="영작 문장을 입력하세요 (구두점 제외 가능)">`;
+    } else if (q.t === "fix") {
+      html += `<div class="fix-inputs">`;
+      q.keys.forEach((k, idx) => {
+        html += `
+          <div class="fix-row">
+            <span class="fix-label">수정 ${idx+1}</span>
+            <input type="text" id="ans-${q.n}-${idx}" placeholder="고친 어휘/어구 입력">
+          </div>
+        `;
+      });
+      html += `</div>`;
+    } else if (q.t === "kw") {
+      html += `<input type="text" id="ans-${q.n}" placeholder="이유 서술 내용을 입력하세요">`;
+    } else if (q.t === "blanks") {
+      html += `<div class="blanks-group">`;
+      q.blanks.forEach((b, idx) => {
+        html += `
+          <div class="blank-row">
+            <span class="blank-label">${b[0]}</span>
+            <input type="text" id="ans-${q.n}-${idx}" placeholder="단어 입력">
+          </div>
+        `;
+      });
+      html += `</div>`;
+    }
+
+    html += `
+      <div class="result-status" id="res-${q.n}"></div>
+      <div class="expl-box" id="expl-${q.n}">
+        <strong>[해설 및 근거]</strong> ${q.e}
+        ${q.show ? `<br><strong>[모범 답안]</strong> ${q.show}` : ''}
+      </div>
+    `;
+
+    card.innerHTML = html;
+    qContainer.appendChild(card);
+  });
+});
+
+function selectChoice(qn, val, btn) {
+  document.getElementById(`ans-${qn}`).value = val;
+  const parent = btn.parentElement;
+  parent.querySelectorAll(".choice-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+}
+
+function selectTF(qn, idx, val, btn) {
+  document.getElementById(`ans-${qn}-${idx}`).value = val;
+  const parent = btn.parentElement;
+  parent.querySelectorAll(".tf-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+}
+
+function cleanStr(s) {
+  return (s || "").toString().toLowerCase().replace(/[\s\p{P}]/gu, "");
+}
+
+function gradeAll() {
+  let score = 0;
+  let autoCount = 0;
+  let manualCount = 0;
+
+  Q.forEach(q => {
+    const resEl = document.getElementById(`res-${q.n}`);
+    const explEl = document.getElementById(`expl-${q.n}`);
+    explEl.classList.add("show");
+
+    if (q.t === "mc") {
+      autoCount++;
+      const checked = document.querySelector(`input[name="ans-${q.n}"]:checked`);
+      const userVal = checked ? parseInt(checked.value, 10) : null;
+      if (userVal === q.a) {
+        score++;
+        resEl.className = "result-status correct";
+        resEl.innerText = "정답입니다! (O)";
+      } else {
+        resEl.className = "result-status wrong";
+        resEl.innerText = `오답입니다. (X) 정답: ${q.a}번`;
+      }
+    } else if (q.t === "choice") {
+      autoCount++;
+      const userVal = document.getElementById(`ans-${q.n}`).value;
+      if (userVal === q.a) {
+        score++;
+        resEl.className = "result-status correct";
+        resEl.innerText = "정답입니다! (O)";
+      } else {
+        resEl.className = "result-status wrong";
+        resEl.innerText = `오답입니다. (X) 정답: ${q.a}`;
+      }
+    } else if (q.t === "tf") {
+      autoCount++;
+      let allCorrect = true;
+      let answers = [];
+      q.items.forEach((item, idx) => {
+        const u = document.getElementById(`ans-${q.n}-${idx}`).value;
+        answers.push(`(${idx+1}) ${item[1]}`);
+        if (u !== item[1]) allCorrect = false;
+      });
+      if (allCorrect) {
+        score++;
+        resEl.className = "result-status correct";
+        resEl.innerText = "정답입니다! (O)";
+      } else {
+        resEl.className = "result-status wrong";
+        resEl.innerText = `오답입니다. (X) 정답: ${answers.join(", ")}`;
+      }
+    } else if (q.t === "short") {
+      manualCount++;
+      const userVal = cleanStr(document.getElementById(`ans-${q.n}`).value);
+      const isOk = q.ans.some(a => cleanStr(a) === userVal);
+      resEl.className = isOk ? "result-status correct" : "result-status manual";
+      resEl.innerText = isOk ? "일치 (정답 인정)" : `[교사 채점 요망] 모범답안: ${q.show}`;
+    } else if (q.t === "sent") {
+      manualCount++;
+      const userVal = cleanStr(document.getElementById(`ans-${q.n}`).value);
+      const isOk = q.ans.some(a => cleanStr(a) === userVal);
+      resEl.className = isOk ? "result-status correct" : "result-status manual";
+      resEl.innerText = isOk ? "완전 일치 (정답 인정)" : `[교사 채점 요망] 모범답안: ${q.show}`;
+    } else if (q.t === "fix") {
+      manualCount++;
+      let entered = [];
+      q.keys.forEach((_, idx) => {
+        const v = cleanStr(document.getElementById(`ans-${q.n}-${idx}`).value);
+        if (v) entered.push(v);
+      });
+      resEl.className = "result-status manual";
+      resEl.innerText = `[교사 채점 요망] 모범 답안: ${q.keys.map(k=>k.show).join(" / ")}`;
+    } else if (q.t === "kw") {
+      manualCount++;
+      resEl.className = "result-status manual";
+      resEl.innerText = `[교사 채점 요망] 모범 답안: ${q.show}`;
+    } else if (q.t === "blanks") {
+      manualCount++;
+      let allMatch = true;
+      q.blanks.forEach((b, idx) => {
+        const u = cleanStr(document.getElementById(`ans-${q.n}-${idx}`).value);
+        if (!b[1].some(val => cleanStr(val) === u)) allMatch = false;
+      });
+      resEl.className = allMatch ? "result-status correct" : "result-status manual";
+      resEl.innerText = allMatch ? "일치 (정답 인정)" : `[교사 채점 요망] 모범 답안: ${q.show}`;
+    }
+  });
+
+  const banner = document.getElementById("score-banner");
+  banner.classList.add("show");
+  document.getElementById("score-text").innerText = `객관식/양자택일/TF 점수: ${score} / ${autoCount}`;
+  document.getElementById("score-detail").innerText = `(서술형·단답형·오류수정 ${manualCount}문항은 교사 채점 기준으로 확인하세요)`;
+  banner.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

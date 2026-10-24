@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>분석지 정독 확인 문제</title>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --border: #e2e8f0;
+  --text-main: #1e293b;
+  --text-sub: #64748b;
+  --accent-correct: #16a34a;
+  --accent-wrong: #dc2626;
+  --accent-bg-correct: #dcfce7;
+  --accent-bg-wrong: #fee2e2;
+  --box-c-bg: #f1f5f9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  padding: 20px 10px;
+}
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+}
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+header .subtitle {
+  font-size: 0.95rem;
+  color: var(--text-sub);
+}
+.passage-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.passage-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.passage-title::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+.passage-content {
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: #334155;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #edf2f7;
+}
+.passage-sentence {
+  margin-bottom: 10px;
+}
+.sentence-num {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.85rem;
+  background: #eff6ff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
+  border: 1px solid #bfdbfe;
+}
+.section-tag {
+  display: inline-block;
+  background: #e0e7ff;
+  color: #4338ca;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+.q-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  position: relative;
+}
+.q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.q-num-part {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.q-num {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+.q-part {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.q-stem {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.box-c {
+  background: var(--box-c-bg);
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.box-c small {
+  color: var(--text-sub);
+  display: inline-block;
+  margin-top: 4px;
+}
+/* Options */
+.options-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 0.95rem;
+}
+.option-item:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+.option-item input[type="radio"] {
+  margin-right: 10px;
+  accent-color: var(--primary);
+}
+/* Choice buttons */
+.choice-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.choice-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.15s ease;
+  font-size: 0.95rem;
+}
+.choice-btn:hover {
+  border-color: var(--primary);
+  background: #eff6ff;
+  color: var(--primary);
+}
+.choice-btn.selected {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+/* TF list */
+.tf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tf-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  gap: 12px;
+}
+.tf-text {
+  font-size: 0.92rem;
+  flex: 1;
+}
+.tf-buttons {
+  display: flex;
+  gap: 6px;
+}
+.tf-btn {
+  padding: 6px 14px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.tf-btn.selected {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+/* Inputs */
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
+}
+.fix-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fix-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fix-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  width: 50px;
+}
+.blanks-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.blank-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.blank-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  min-width: 40px;
+}
+/* Explanation */
+.expl-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border-left: 4px solid var(--primary);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9rem;
+  color: #334155;
+  display: none;
+}
+.expl-box.show {
+  display: block;
+}
+.result-status {
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: none;
+}
+.result-status.correct {
+  color: var(--accent-correct);
+  display: block;
+}
+.result-status.wrong {
+  color: var(--accent-wrong);
+  display: block;
+}
+.result-status.manual {
+  color: #d97706;
+  display: block;
+}
+/* Actions */
+.action-area {
+  margin-top: 30px;
+  text-align: center;
+}
+.btn-submit {
+  padding: 14px 40px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);
+  transition: all 0.2s ease;
+}
+.btn-submit:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+.score-banner {
+  display: none;
+  background: #1e293b;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 24px;
+  text-align: center;
+}
+.score-banner.show {
+  display: block;
+}
+.score-val {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #38bdf8;
+  margin: 6px 0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="section-tag" id="meta-section"></div>
+    <h1 id="meta-title"></h1>
+    <div class="subtitle">지문 분석지 정독 확인 및 내신 대비 평가</div>
+  </header>
+
+  <section class="passage-card">
+    <div class="passage-title">지문 본문 (Passage)</div>
+    <div class="passage-content" id="passage-container"></div>
+  </section>
+
+  <div id="questions-container"></div>
+
+  <div class="action-area">
+    <button class="btn-submit" id="btn-grade" onclick="gradeAll()">채점 및 정답 확인하기</button>
+  </div>
+
+  <div class="score-banner" id="score-banner">
+    <h2>채점 결과</h2>
+    <div class="score-val" id="score-text"></div>
+    <p id="score-detail" style="font-size:0.9rem; color:#cbd5e1;"></p>
+  </div>
+</div>
+
+<script>
+// ===== DATA START (이 블록만 교체) =====
+const META = {
+  title: "전자 쓰레기의 개념과 급증하는 위기 분석지 정독 확인 문항 (#10~#17)",
+  section: "Section 2",
+  passage: [
+    [10, "What exactly is e-waste?"],
+    [11, "The term refers to discarded electronic devices and electrical appliances."],
+    [12, "Due to toxic materials contained in these products, such as lead, e-waste is a serious health and environmental hazard."],
+    [13, "To make matters worse, the amount of e-waste produced each year is increasing at an alarming rate."],
+    [14, "In 2021, a total of 57.4 million metric tons of e-waste was generated worldwide, which was a 37% increase from 2014, the year when data about e-waste was first collected."],
+    [15, "Experts predict that by 2030, the amount of e-waste generated annually will have doubled in just 16 years."],
+    [16, "For this reason, efforts are being made to address this problem, most of which are focused on making products easier to repair."],
+    [17, "Let's take a look at some practical approaches from around the world."]
+  ]
+};
+
+const Q = [
+  {
+    n: 1,
+    p: "A",
+    t: "mc",
+    s: "[Section 2 Summary] 및 본문의 내용과 일치하지 않는 것은?",
+    o: [
+      "전자 쓰레기에는 납과 같은 유해 물질이 들어 있다.",
+      "2021년 한 해 동안 발생한 전 세계 전자 쓰레기는 5,740만 메트릭톤이다.",
+      "전자 쓰레기에 관한 데이터는 2014년에 처음으로 수집되기 시작했다.",
+      "전문가들은 2030년까지 전자 쓰레기 발생량이 2021년 배출량의 두 배가 될 것으로 예측한다.",
+      "전자 쓰레기 문제를 해결하기 위한 노력 중 대부분은 제품을 수리하기 쉽게 만드는 데 집중된다."
+    ],
+    a: 4,
+    e: "[Summary & #15] 2030년에 두 배가 되는 것은 2014년 데이터 수집 이후 '16년 만에(in just 16 years)' 두 배가 되는 것이므로 2014년 기준의 두 배입니다."
+  },
+  {
+    n: 2,
+    p: "A",
+    t: "mc",
+    s: "#11에서 정의한 '전자 쓰레기(e-waste)'에 포함되는 대상으로 분석지에 언급된 것은?",
+    o: [
+      "재활용 가능한 플라스틱 용기류",
+      "버려진 전자 장치들과 전기 가전제품들",
+      "공장에서 배출되는 산업 폐수",
+      "유효기간이 지난 화학 약품들",
+      "사용하지 않고 방치된 수동 기계 공구류"
+    ],
+    a: 2,
+    e: "#11 The term refers to discarded electronic devices and electrical appliances."
+  },
+  {
+    n: 3,
+    p: "A",
+    t: "mc",
+    s: "#12에서 전자 쓰레기에 포함된 대표적인 유독성 물질의 구체적 사례로 제시된 것은?",
+    o: [
+      "수은 (mercury)",
+      "카드뮴 (cadmium)",
+      "납 (lead)",
+      "비소 (arsenic)",
+      "다이옥신 (dioxin)"
+    ],
+    a: 3,
+    e: "#12 such as lead (납과 같은 유독성 물질의 구체적 예시)"
+  },
+  {
+    n: 4,
+    p: "A",
+    t: "mc",
+    s: "#14에 제시된 통계 수치에 대한 설명으로 옳은 것은?",
+    o: [
+      "2014년 전자 쓰레기 배출량은 5,740만 톤이었다.",
+      "2021년 전자 쓰레기 배출량은 2014년 대비 37% 증가한 양이다.",
+      "전자 쓰레기 데이터는 16년 전부터 공식 집계되었다.",
+      "2021년 발생량은 16년 만에 이미 두 배로 늘어난 수치이다.",
+      "2030년까지 매년 37%씩 지속적으로 증가할 예정이다."
+    ],
+    a: 2,
+    e: "#14 In 2021, a total of 57.4 million metric tons ... which was a 37% increase from 2014"
+  },
+  {
+    n: 5,
+    p: "A",
+    t: "tf",
+    s: "분석지 내용에 근거하여 각 진술이 맞으면 T, 틀리면 F를 고르시오.",
+    items: [
+      ["#10의 의문문은 독자의 주의를 환기하고 개념 정의를 유도하는 직접의문문이다.", "T"],
+      ["#13에 따르면 매년 생산되는 전자 쓰레기의 양은 안심할 만한 속도로 조절되고 있다.", "F"],
+      ["#16에 따르면 전자 쓰레기 문제 해결을 위한 대부분의 노력은 제품 폐기 비용을 높이는 데 초점이 있다.", "F"],
+      ["#17은 독자에게 전 세계의 실용적인 접근법들을 살펴보자고 제안하며 다음 본문으로 화제를 전환한다.", "T"]
+    ],
+    e: "[구문 분석 #10, #13, #16, #17] #13은 alarming rate(걱정스러운 속도), #16은 making products easier to repair(수리하기 쉽게 만드는 것)에 집중됨."
+  },
+  {
+    n: 6,
+    p: "B",
+    t: "mc",
+    s: "#11의 밑줄 친 term의 본문 속 의미로 가장 알맞은 것은?",
+    c: "The <u>term</u> refers to discarded electronic devices and electrical appliances.",
+    o: [
+      "학기",
+      "기간",
+      "용어, 말",
+      "조건",
+      "협정"
+    ],
+    a: 3,
+    e: "[단어 #11] term: (n) 용어, 말 (syn. expression, phrase, word, designation). 다의어 중 본문에서는 '용어'로 쓰임."
+  },
+  {
+    n: 7,
+    p: "B",
+    t: "mc",
+    s: "#11의 밑줄 친 discarded의 동의어(syn.)로 분석지에 제시되지 않은 것은?",
+    c: "The term refers to <u>discarded</u> electronic devices and electrical appliances.",
+    o: [
+      "abandoned",
+      "thrown away",
+      "disposed of",
+      "dumped",
+      "retained"
+    ],
+    a: 5,
+    e: "[단어 #11] discard의 동의어는 abandon, throw away, dispose of, dump이며, retain은 반의어(ant.)입니다."
+  },
+  {
+    n: 8,
+    p: "B",
+    t: "mc",
+    s: "#12의 toxic과 문맥상 바꾸어 쓸 수 있는 반의어(ant.)와 동의어(syn.)의 연결이 바른 것은?",
+    o: [
+      "반의어: harmless — 동의어: poisonous",
+      "반의어: lethal — 동의어: nontoxic",
+      "반의어: hazardous — 동의어: ecological",
+      "반의어: harmful — 동의어: domestic",
+      "반의어: safe — 동의어: practical"
+    ],
+    a: 1,
+    e: "[단어 #12] toxic의 syn.은 poisonous, hazardous, harmful, lethal / ant.는 nontoxic, harmless"
+  },
+  {
+    n: 9,
+    p: "B",
+    t: "mc",
+    s: "#13의 밑줄 친 alarming과 뜻이 반대되는 반의어(ant.)만을 <보기>에서 있는 대로 고른 것은?",
+    c: "[보기] a. worrying   b. comforting   c. shocking   d. reassuring   e. disturbing",
+    o: [
+      "a, c",
+      "b, d",
+      "c, e",
+      "a, b, d",
+      "b, c, e"
+    ],
+    a: 2,
+    e: "[단어 #13] alarming의 syn.은 worrying, disturbing, frightening, shocking이며, ant.는 reassuring, comforting입니다."
+  },
+  {
+    n: 10,
+    p: "B",
+    t: "mc",
+    s: "#16의 밑줄 친 address의 본문 속 문맥적 의미로 가장 알맞은 것은?",
+    c: "efforts are being made to <u>address</u> this problem",
+    o: [
+      "주소",
+      "연설하다",
+      "(문제를) 다루다, 고심하다",
+      "호칭을 부르다",
+      "발송하다"
+    ],
+    a: 3,
+    e: "[단어 #16] address: (v) (문제를) 다루다, 고심하다 (syn. tackle, deal with, handle, resolve). 다의어 출제."
+  },
+  {
+    n: 11,
+    p: "B",
+    t: "mc",
+    s: "#14의 밑줄 친 collect의 반의어(ant.)로 분석지에 제시된 것은?",
+    c: "the year when data about e-waste was first <u>collected</u>.",
+    o: [
+      "assemble",
+      "accumulate",
+      "compile",
+      "distribute",
+      "gather"
+    ],
+    a: 4,
+    e: "[단어 #14] collect의 syn.은 gather, assemble, accumulate, compile이며 ant.는 distribute, disperse입니다."
+  },
+  {
+    n: 12,
+    p: "B",
+    t: "mc",
+    s: "#17의 practical의 동의어(syn.)와 반의어(ant.)가 바르게 짝지어진 것은?",
+    o: [
+      "동의어: pragmatic — 반의어: sensible",
+      "동의어: useful — 반의어: functional",
+      "동의어: sensible — 반의어: pragmatic",
+      "동의어: pragmatic — 반의어: impractical",
+      "동의어: idealistic — 반의어: impractical"
+    ],
+    a: 4,
+    e: "[단어 #17] practical: syn. pragmatic, functional, useful, sensible / ant. impractical, idealistic"
+  },
+  {
+    n: 13,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "The term refers to (discarding / discarded) electronic devices and electrical appliances.",
+    o: ["discarding", "discarded"],
+    a: "discarded",
+    e: "[구문 분석 #11 ★] 뒤따르는 명사구를 수식하여 '버려진'이라는 수동/완료 의미를 나타내는 과거분사 discarded가 알맞습니다."
+  },
+  {
+    n: 14,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "Due to toxic materials (containing / contained) in these products, such as lead, e-waste is a hazard.",
+    o: ["containing", "contained"],
+    a: "contained",
+    e: "[구문 분석 #12 ★] toxic materials를 뒤에서 수식하는 과거분사구로 수동 관계(포함된)이므로 contained가 알맞습니다."
+  },
+  {
+    n: 15,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "Due to toxic materials, e-waste is a serious health (and / but) environmental hazard.",
+    o: ["and", "but"],
+    a: "and",
+    e: "[본문 문장 #12] health and environmental hazard"
+  },
+  {
+    n: 16,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "(To make matters worse / Making matters worse), the amount of e-waste produced each year is increasing.",
+    o: ["To make matters worse", "Making matters worse"],
+    a: "To make matters worse",
+    e: "[구문 분석 #13 ★] '설상가상으로'의 의미를 지닌 독립부정사 관용 표현은 To make matters worse입니다."
+  },
+  {
+    n: 17,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "The amount of e-waste produced each year (is / are) increasing at an alarming rate.",
+    o: ["is", "are"],
+    a: "is",
+    e: "[구문 분석 #13 ★] 주어는 단수 명사인 the amount이므로 단수 동사 is가 알맞습니다."
+  },
+  {
+    n: 18,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "The amount of e-waste (producing / produced) each year is increasing at an alarming rate.",
+    o: ["producing", "produced"],
+    a: "produced",
+    e: "[구문 분석 #13 ★] e-waste를 뒤에서 수식하며 '매년 생산되는'의 수동 관계이므로 과거분사 produced가 알맞습니다."
+  },
+  {
+    n: 19,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "In 2021, a total of 57.4 million metric tons of e-waste (was / were) generated worldwide.",
+    o: ["was", "were"],
+    a: "was",
+    e: "[구문 분석 #14 ★] 'a total of + 복수명사'에서 물질 명사 e-waste의 양적 개념에 초점이 맞춰져 단수 동사 was generated가 쓰입니다."
+  },
+  {
+    n: 20,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "... 57.4 million metric tons of e-waste was generated worldwide, (, which / , that) was a 37% increase from 2014.",
+    o: [", which", ", that"],
+    a: ", which",
+    e: "[구문 분석 #14 ★] 계속적 용법의 관계대명사 앞 콤마 뒤에는 that을 쓸 수 없으므로 which가 알맞습니다."
+  },
+  {
+    n: 21,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "... from 2014, the year (when / which) data about e-waste was first collected.",
+    o: ["when", "which"],
+    a: "when",
+    e: "[구문 분석 #14 ★] 선행사 the year 뒤에 완전한 수동태 절(data about e-waste was first collected)이 이어지므로 관계부사 when이 알맞습니다."
+  },
+  {
+    n: 22,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "Experts predict that by 2030, the amount of e-waste generated annually (will double / will have doubled) in just 16 years.",
+    o: ["will double", "will have doubled"],
+    a: "will have doubled",
+    e: "[구문 분석 #15 ★★★] 미래 특정 시점까지의 완료를 나타내는 부사구 by 2030과 호응하는 미래완료 시제 will have doubled가 알맞습니다."
+  },
+  {
+    n: 23,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "For this reason, efforts are (being made / making) to address this problem.",
+    o: ["being made", "making"],
+    a: "being made",
+    e: "[구문 분석 #16] '노력이 이루어지고 있는 중이다'라는 현재진행 수동태(be + being + p.p.) 표현입니다."
+  },
+  {
+    n: 24,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "efforts are being made to address this problem, most of (which / them) are focused on making products easier to repair.",
+    o: ["which", "them"],
+    a: "which",
+    e: "[구문 분석 #16 ★★★] 앞 절과 뒷 절을 연결하는 접속사가 없으므로 접속사와 대명사 역할을 겸하는 관계대명사 which가 알맞습니다."
+  },
+  {
+    n: 25,
+    p: "C",
+    t: "choice",
+    s: "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    c: "most of which are focused on making products (easier / more easily) to repair.",
+    o: ["easier", "more easily"],
+    a: "easier",
+    e: "[구문 분석 #16] make + 목적어(products) + 목적격보어 구조이므로 목적격보어 자리에 형용사 비교급 easier가 알맞습니다."
+  },
+  {
+    n: 26,
+    p: "C",
+    t: "short",
+    s: "#11의 주어 The term이 가리키는 대상(단어)을 #10 본문에서 찾아 한 단어로 쓰시오.",
+    ans: ["ewaste", "e-waste"],
+    show: "e-waste",
+    e: "[구문 분석 #10, #11] The term은 앞 문장(#10)에서 언급된 e-waste를 가리킵니다."
+  },
+  {
+    n: 27,
+    p: "C",
+    t: "short",
+    s: "#14의 계속적 용법 관계대명사 ', which'를 접속사와 대명사 2단어로 바꾸어 쓰시오.",
+    ans: ["and it"],
+    show: "and it",
+    e: "[구문 분석 #14 ★] 계속적 용법의 관계대명사 ', which'는 앞 절의 사실을 선행사로 받아 'and it'으로 바꿀 수 있습니다."
+  },
+  {
+    n: 28,
+    p: "E",
+    t: "blanks",
+    s: "English Summary를 바탕으로 빈칸 (A)와 (B)에 들어갈 알맞은 단어를 본문에서 찾아 쓰시오. (필요시 어형 변화)",
+    c: "E-waste comprises (A) d________ electronics and electrical appliances that pose serious hazards. The amount (B) g________ annually is projected to double by 2030.",
+    blanks: [
+      ["(A)", ["discarded"]],
+      ["(B)", ["generated"]]
+    ],
+    show: "(A) discarded (B) generated",
+    e: "[Summary & #11, #15] #11 discarded electronic devices / #15 e-waste generated annually"
+  },
+  {
+    n: 29,
+    p: "E",
+    t: "fix",
+    s: "다음 글에서 분석지의 내신 출제 포인트(★)에 어긋난 어법상 오류 4개를 찾아 바르게 고치시오. (순서 무관)",
+    c: "To make matters worse, the amount of e-waste produce each year are increasing at an alarming rate. In 2021, a total of 57.4 million metric tons of e-waste was generated worldwide, that was a 37% increase from 2014. Experts predict that by 2030, the amount of e-waste generated annually will double in just 16 years.",
+    keys: [
+      { k: "produced", show: "produce → produced" },
+      { k: "is", show: "are → is" },
+      { k: "which", show: "that → which" },
+      { k: "willhavedoubled", show: "will double → will have doubled" }
+    ],
+    e: "[구문 분석 #13, #14, #15 ★] ① e-waste 수식 과거분사 produced ② the amount에 대한 단수 동사 is ③ 계속적 용법 콤마 뒤 which ④ by 2030과 호응하는 미래완료 will have doubled"
+  },
+  {
+    n: 30,
+    p: "E",
+    t: "kw",
+    s: "#16의 'most of which' 자리에 대명사 'most of them'을 단독으로 쓰면 어법상 틀리는 이유를 [접속사], [절] 키워드를 사용하여 서술하시오.",
+    groups: [
+      ["접속사"],
+      ["절", "문장"]
+    ],
+    show: "두 개의 절을 연결해 주는 접속사가 없으므로, 접속사 없이 대명사 them만 쓰면 문법상 성립하지 않기 때문이다. (접속사와 대명사 역할을 동시에 하는 관계대명사 which가 필요함)",
+    e: "[구문 분석 #16 ★★★] 두 개의 절을 연결하는 접속사가 없으므로 대명사인 most of them을 쓰면 틀리며 관계대명사 which를 써야 합니다."
+  },
+  {
+    n: 31,
+    p: "E",
+    t: "sent",
+    s: "분석지 #16의 구문을 바탕으로 <조건>에 맞추어 주어진 우리말을 바르게 영작하시오.",
+    c: "그것들 중 대부분은 제품들을 수리하기 더 쉽게 만드는 것에 집중된다.<br><small>&lt;조건&gt; most of which, focus, make, easy, repair를 반드시 활용할 것 (필요시 어형 변화)</small>",
+    ans: [
+      "most of which are focused on making products easier to repair"
+    ],
+    show: "most of which are focused on making products easier to repair",
+    e: "[구문 분석 #16 ★] most of which are focused on making products easier to repair"
+  }
+];
+// ===== DATA END =====
+
+// Render logic
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("meta-section").innerText = META.section || "분석 지문";
+  document.getElementById("meta-title").innerText = META.title || "지문 분석지 확인 평가";
+
+  const pContainer = document.getElementById("passage-container");
+  META.passage.forEach(item => {
+    const pDiv = document.createElement("div");
+    pDiv.className = "passage-sentence";
+    pDiv.innerHTML = `<span class="sentence-num">#${item[0]}</span>${item[1]}`;
+    pContainer.appendChild(pDiv);
+  });
+
+  const qContainer = document.getElementById("questions-container");
+  Q.forEach(q => {
+    const card = document.createElement("div");
+    card.className = "q-card";
+    card.id = `card-q-${q.n}`;
+
+    let html = `
+      <div class="q-header">
+        <div class="q-num-part">
+          <span class="q-num">Q${q.n}</span>
+          <span class="q-part">Part ${q.p}</span>
+        </div>
+      </div>
+      <div class="q-stem">${q.s}</div>
+    `;
+
+    if (q.c) {
+      html += `<div class="box-c">${q.c}</div>`;
+    }
+
+    if (q.t === "mc") {
+      html += `<ul class="options-list">`;
+      q.o.forEach((opt, idx) => {
+        html += `
+          <label class="option-item">
+            <input type="radio" name="ans-${q.n}" value="${idx+1}">
+            <span>${idx+1}. ${opt}</span>
+          </label>
+        `;
+      });
+      html += `</ul>`;
+    } else if (q.t === "choice") {
+      html += `<div class="choice-group">`;
+      q.o.forEach(opt => {
+        html += `<button type="button" class="choice-btn" onclick="selectChoice(${q.n}, '${opt}', this)">${opt}</button>`;
+      });
+      html += `</div><input type="hidden" id="ans-${q.n}">`;
+    } else if (q.t === "tf") {
+      html += `<div class="tf-list">`;
+      q.items.forEach((item, idx) => {
+        html += `
+          <div class="tf-row">
+            <div class="tf-text">(${idx+1}) ${item[0]}</div>
+            <div class="tf-buttons">
+              <button type="button" class="tf-btn" onclick="selectTF(${q.n}, ${idx}, 'T', this)">T</button>
+              <button type="button" class="tf-btn" onclick="selectTF(${q.n}, ${idx}, 'F', this)">F</button>
+            </div>
+            <input type="hidden" id="ans-${q.n}-${idx}">
+          </div>
+        `;
+      });
+      html += `</div>`;
+    } else if (q.t === "short") {
+      html += `<input type="text" id="ans-${q.n}" placeholder="정답을 입력하세요">`;
+    } else if (q.t === "sent") {
+      html += `<input type="text" id="ans-${q.n}" placeholder="영작 문장을 입력하세요 (구두점 제외 가능)">`;
+    } else if (q.t === "fix") {
+      html += `<div class="fix-inputs">`;
+      q.keys.forEach((k, idx) => {
+        html += `
+          <div class="fix-row">
+            <span class="fix-label">수정 ${idx+1}</span>
+            <input type="text" id="ans-${q.n}-${idx}" placeholder="고친 어휘/어구 입력">
+          </div>
+        `;
+      });
+      html += `</div>`;
+    } else if (q.t === "kw") {
+      html += `<input type="text" id="ans-${q.n}" placeholder="이유 서술 내용을 입력하세요">`;
+    } else if (q.t === "blanks") {
+      html += `<div class="blanks-group">`;
+      q.blanks.forEach((b, idx) => {
+        html += `
+          <div class="blank-row">
+            <span class="blank-label">${b[0]}</span>
+            <input type="text" id="ans-${q.n}-${idx}" placeholder="단어 입력">
+          </div>
+        `;
+      });
+      html += `</div>`;
+    }
+
+    html += `
+      <div class="result-status" id="res-${q.n}"></div>
+      <div class="expl-box" id="expl-${q.n}">
+        <strong>[해설 및 근거]</strong> ${q.e}
+        ${q.show ? `<br><strong>[모범 답안]</strong> ${q.show}` : ''}
+      </div>
+    `;
+
+    card.innerHTML = html;
+    qContainer.appendChild(card);
+  });
+});
+
+function selectChoice(qn, val, btn) {
+  document.getElementById(`ans-${qn}`).value = val;
+  const parent = btn.parentElement;
+  parent.querySelectorAll(".choice-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+}
+
+function selectTF(qn, idx, val, btn) {
+  document.getElementById(`ans-${qn}-${idx}`).value = val;
+  const parent = btn.parentElement;
+  parent.querySelectorAll(".tf-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+}
+
+function cleanStr(s) {
+  return (s || "").toString().toLowerCase().replace(/[\s\p{P}]/gu, "");
+}
+
+function gradeAll() {
+  let score = 0;
+  let autoCount = 0;
+  let manualCount = 0;
+
+  Q.forEach(q => {
+    const resEl = document.getElementById(`res-${q.n}`);
+    const explEl = document.getElementById(`expl-${q.n}`);
+    explEl.classList.add("show");
+
+    if (q.t === "mc") {
+      autoCount++;
+      const checked = document.querySelector(`input[name="ans-${q.n}"]:checked`);
+      const userVal = checked ? parseInt(checked.value, 10) : null;
+      if (userVal === q.a) {
+        score++;
+        resEl.className = "result-status correct";
+        resEl.innerText = "정답입니다! (O)";
+      } else {
+        resEl.className = "result-status cd-wrong wrong";
+        resEl.innerText = `오답입니다. (X) 정답: ${q.a}번`;
+      }
+    } else if (q.t === "choice") {
+      autoCount++;
+      const userVal = document.getElementById(`ans-${q.n}`).value;
+      if (userVal === q.a) {
+        score++;
+        resEl.className = "result-status correct";
+        resEl.innerText = "정답입니다! (O)";
+      } else {
+        resEl.className = "result-status wrong";
+        resEl.innerText = `오답입니다. (X) 정답: ${q.a}`;
+      }
+    } else if (q.t === "tf") {
+      autoCount++;
+      let allCorrect = true;
+      let answers = [];
+      q.items.forEach((item, idx) => {
+        const u = document.getElementById(`ans-${q.n}-${idx}`).value;
+        answers.push(`(${idx+1}) ${item[1]}`);
+        if (u !== item[1]) allCorrect = false;
+      });
+      if (allCorrect) {
+        score++;
+        resEl.className = "result-status correct";
+        resEl.innerText = "정답입니다! (O)";
+      } else {
+        resEl.className = "result-status wrong";
+        resEl.innerText = `오답입니다. (X) 정답: ${answers.join(", ")}`;
+      }
+    } else if (q.t === "short") {
+      manualCount++;
+      const userVal = cleanStr(document.getElementById(`ans-${q.n}`).value);
+      const isOk = q.ans.some(a => cleanStr(a) === userVal);
+      resEl.className = isOk ? "result-status correct" : "result-status manual";
+      resEl.innerText = isOk ? "일치 (정답 인정)" : `[교사 채점 요망] 모범답안: ${q.show}`;
+    } else if (q.t === "sent") {
+      manualCount++;
+      const userVal = cleanStr(document.getElementById(`ans-${q.n}`).value);
+      const isOk = q.ans.some(a => cleanStr(a) === userVal);
+      resEl.className = isOk ? "result-status correct" : "result-status manual";
+      resEl.innerText = isOk ? "완전 일치 (정답 인정)" : `[교사 채점 요망] 모범답안: ${q.show}`;
+    } else if (q.t === "fix") {
+      manualCount++;
+      let entered = [];
+      q.keys.forEach((_, idx) => {
+        const v = cleanStr(document.getElementById(`ans-${q.n}-${idx}`).value);
+        if (v) entered.push(v);
+      });
+      resEl.className = "result-status manual";
+      resEl.innerText = `[교사 채점 요망] 모범 답안: ${q.keys.map(k=>k.show).join(" / ")}`;
+    } else if (q.t === "kw") {
+      manualCount++;
+      resEl.className = "result-status manual";
+      resEl.innerText = `[교사 채점 요망] 모범 답안: ${q.show}`;
+    } else if (q.t === "blanks") {
+      manualCount++;
+      let allMatch = true;
+      q.blanks.forEach((b, idx) => {
+        const u = cleanStr(document.getElementById(`ans-${q.n}-${idx}`).value);
+        if (!b[1].some(val => cleanStr(val) === u)) allMatch = false;
+      });
+      resEl.className = allMatch ? "result-status correct" : "result-status manual";
+      resEl.innerText = allMatch ? "일치 (정답 인정)" : `[교사 채점 요망] 모범 답안: ${q.show}`;
+    }
+  });
+
+  const banner = document.getElementById("score-banner");
+  banner.classList.add("show");
+  document.getElementById("score-text").innerText = `객관식/양자택일/TF 점수: ${score} / ${autoCount}`;
+  document.getElementById("score-detail").innerText = `(서술형·단답형·오류수정 ${manualCount}문항은 교사 채점 기준으로 확인하세요)`;
+  banner.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
