@@ -8,7 +8,7 @@
    ===================================================================== */
 
 /* ▼▼ 구글 시트 웹 앱 주소 (…/exec) 를 따옴표 안에 붙여 넣으세요 ▼▼ */
-var NS_ENDPOINT = '';
+var NS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBNM5j8YykQe6VEDAngq5uFo-nsbFCPZoLjKFGo6LirdeXZXhiWoD8XbfiJxYUCdUI/exec';
 /* ▲▲ 여기만 고치면 됩니다 ▲▲ */
 
 (function () {
