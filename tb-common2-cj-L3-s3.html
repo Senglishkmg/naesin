@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "정원사들의 새로운 필수품, K-호미 (Homi) 정독 확인 문항 (#26~#49)",
+ "section": "교과서 본문 · 섹션 3 (#26~#49)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [26, "Homi, Gardeners’ New Favorite"],
+  [27, "Search for “Korean homi” on any online platform, and you can find reviews like these:"],
+  [28, "Lina: This is the best gardening tool I have ever had."],
+  [29, "Oliver: If you enjoy gardening, this will for sure give you extra pleasure."],
+  [30, "Benjamin: Whatever you may expect, this is beyond your imagination."],
+  [31, "Also, there are many videos praising the homi and showing how to use it."],
+  [32, "The Korean homi is becoming the hot new tool gardeners around the world must have."],
+  [33, "What is a homi and why is it so popular?"],
+  [34, "The Korean homi is a traditional farming tool that has gotten a lot of attention, not in Korea but in countries like the United States and Australia."],
+  [35, "In 2019, a video of how to use a homi spread quickly and widely on the Internet."],
+  [36, "Suddenly, the homi had become one of the top selling gardening tools on the largest online shopping site in the world."],
+  [37, "The homi became so popular because it can be used for a wide range of gardening tasks."],
+  [38, "In fact, people in Europe and the U.S. use separate gardening tools to weed, dig, and firm the ground."],
+  [39, "However, a homi has an ideal shape that makes all those activities possible with one tool."],
+  [40, "Its thinnest blade is used for weeding, and the sharp point is used to dig the ground."],
+  [41, "The flat side is used to firm the ground."],
+  [42, "Next, a homi has a comfortable design."],
+  [43, "The Korean homi is usually handmade by blacksmiths."],
+  [44, "From decades of experience, they have found the best angles between the handle and the blade so that users can tend gardens without pain in their arms and hands."],
+  [45, "During the manufacturing process, a homi is hammered several times by hand, which makes it stronger and more elaborate."],
+  [46, "This is what differentiates the handmade Korean homi from gardening tools made by machine."],
+  [47, "As you see above, the reputation of Korean heritage is spreading throughout the world."],
+  [48, "This proves that the world is discovering its value and potential."],
+  [49, "What do you think will be the next Korean heritage item that will be recognized abroad?"]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 서양(유럽과 미국) 원예인들이 일반적으로 작업을 수행하는 방식으로 옳은 것은?",
+  "o": [
+   "전통적으로 호미와 유사한 일체형 다기능 수공구를 애용해 왔다.",
+   "잡초 제거, 땅 파기, 흙 다지기마다 각각 분리된 별개의 도구를 사용한다.",
+   "원예 도구를 직접 손으로 두드려 단조하여 제작해 쓴다.",
+   "대장장이에게 맞춤 주문한 인체공학적 도구만을 고집한다.",
+   "흙을 다지는 작업에는 일체의 금속 도구를 사용하지 않는다"
+  ],
+  "a": 2,
+  "e": "#38 In fact, people in Europe and the U.S. use separate gardening tools to weed, dig, and firm the ground."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "호미는 한국 국내에서 먼저 선풍적인 인기를 얻은 뒤 그 인기가 미국과 호주 등지로 전파되었다.",
+  "a": "X",
+  "e": "#34 호미는 한국이 아니라 미국과 호주 같은 국가들에서 많은 주목을 받아온 도구라고 명시되어 있습니다 (not in Korea but in countries...)."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["2019년에 호미 사용법을 보여주는 영상이 인터넷에 빠르고 널리 확산되었다.", "T"],
+   ["호미의 가장 얇은 날은 땅을 깊게 파는 굴착 용도로 주로 쓰인다.", "F"],
+   ["호미의 평평한 면은 땅의 흙을 단단하게 다지는 데 사용된다.", "T"]
+  ],
+  "e": "#35, #40, #41 가장 얇은 날은 잡초 제거(weeding), 뾰족한 끝은 땅 파기(dig), 평평한 면은 흙 다지기(firm)에 쓰입니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "호미의 제조 과정 및 디자인상 특징에 대한 설명으로 옳은 것은?",
+  "o": [
+   "대량 생산 기계 공정을 통해 균일한 각도를 유지한다.",
+   "대장장이들이 손으로 여러 번 두드려 제작하여 더 강하고 정교하다.",
+   "손잡이와 날이 직선 형태로 일치되어 손목에 강한 힘을 전달한다.",
+   "제조 공정을 단순화하기 위해 단조 과정을 전면 배제하였다.",
+   "사용자의 손과 팔에 통증을 유발하여 장시간 사용이 제한된다"
+  ],
+  "a": 2,
+  "e": "#43, #44, #45 대장장이의 수작업 단조(hammered several times by hand)를 통해 더 강하고 정교해지며 피로를 줄여줍니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "48번 문장의 지시대명사 its가 가리키는 대상은 '한국 유산(Korean heritage)'이다.",
+  "a": "O",
+  "e": "#48 구문 분석: its는 앞서 언급된 '한국 유산(Korean heritage)'을 가리킵니다."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "look for, scour",
+   "compliment, applaud",
+   "circulate, diffuse",
+   "distinct, individual",
+   "care for, look after"
+  ],
+  "rows": [
+   ["search", 1],
+   ["praise", 2],
+   ["spread", 3],
+   ["separate", 4],
+   ["tend", 5]
+  ],
+  "e": "분석지 #27, #31, #35, #38, #44 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "pain, sorrow",
+   "criticize, condemn",
+   "combined, united",
+   "blunt, dull",
+   "crude, simple"
+  ],
+  "rows": [
+   ["pleasure", 1],
+   ["praise", 2],
+   ["separate", 3],
+   ["sharp", 4],
+   ["elaborate", 5]
+  ],
+  "e": "분석지 #29, #31, #38, #40, #45 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #38의 firm이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "회사, 상사",
+   "다지다, 단단하게 하다",
+   "확고한, 결연한",
+   "단단한, 딱딱한"
+  ],
+  "a": 2,
+  "e": "#38 어휘 및 구문: firm은 본문에서 '땅을 단단하게 다지다'라는 동사로 쓰였습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #40의 point가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "뾰족한 끝, 첨단",
+   "요점, 핵심",
+   "점수, 득점",
+   "가리키다, 지목하다"
+  ],
+  "a": 1,
+  "e": "#40 어휘: the sharp point는 '날카로운 끝'을 의미합니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #44의 tend가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "돌보다, 가꾸다",
+   "~하는 경향이 있다",
+   "기울다, 쏠리다",
+   "시중들다, 간호하다"
+  ],
+  "a": 1,
+  "e": "#44 어휘: tend gardens는 '정원들을 가꾸다/돌보다'의 의미로 쓰였습니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #46의 differentiate와 바꾸어 쓸 수 있는 분석지상 동의어를 쓰시오.",
+  "ans": [
+   "distinguish",
+   "discriminate",
+   "separate"
+  ],
+  "show": "distinguish (또는 discriminate, separate)",
+  "e": "#46 어휘: differentiate (syn. distinguish, discriminate, separate)"
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #35에서 동사 spread의 과거형 형태를 본문에 근거하여 쓰시오.",
+  "ans": [
+   "spread"
+  ],
+  "show": "spread",
+  "e": "#35 구문 분석: spread의 과거형은 형태가 같은 spread입니다 (spread - spread - spread)."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Search for “Korean homi” on any online platform, (and / or) you can find reviews like these.",
+  "o": [
+   "and",
+   "or"
+  ],
+  "a": "and",
+  "e": "#27 구문 분석 ★: '명령문, and ~'는 '~해라, 그러면 …할 것이다'라는 뜻을 이룹니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "If you (enjoy / will enjoy) gardening, this will for sure give you extra pleasure.",
+  "o": [
+   "enjoy",
+   "will enjoy"
+  ],
+  "a": "enjoy",
+  "e": "#29 구문 분석 ★: 조건 부사절에서는 현재시제(enjoy)가 미래시제를 대신합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Whatever / However) you may expect, this is beyond your imagination.",
+  "o": [
+   "Whatever",
+   "However"
+  ],
+  "a": "Whatever",
+  "e": "#30 구문 분석 ★: expect의 목적어 역할을 하며 양보 부사절을 이끄는 복합관계대명사는 Whatever입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "There are many videos praising the homi and (show / showing) how to use it.",
+  "o": [
+   "showing",
+   "show"
+  ],
+  "a": "showing",
+  "e": "#31 구문 분석 ★: praising과 and로 대등하게 병렬 연결되어 many videos를 수식하는 현재분사 자리입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The Korean homi is a traditional farming tool that has gotten a lot of attention, not in Korea (and / but) in countries like the United States.",
+  "o": [
+   "but",
+   "and"
+  ],
+  "a": "but",
+  "e": "#34 구문 분석 ★: 'A가 아니라 B'를 나타내는 상관접속사 not A but B 구문입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Suddenly, the homi (had become / has been become) one of the top selling gardening tools.",
+  "o": [
+   "had become",
+   "has been become"
+  ],
+  "a": "had become",
+  "e": "#36 구문 분석 ★: 과거 기준 시점에 이미 베스트셀러 반열에 올라선 상태를 나타내는 과거완료 능동태(had become)가 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The homi became one of the top selling gardening (tool / tools) in the world.",
+  "o": [
+   "tools",
+   "tool"
+  ],
+  "a": "tools",
+  "e": "#36 구문 분석: one of the + 최상급 뒤에는 반드시 복수명사(tools)가 와야 합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "People use separate gardening tools to weed, dig, and (firm / firming) the ground.",
+  "o": [
+   "firm",
+   "firming"
+  ],
+  "a": "firm",
+  "e": "#38 구문 분석 ★: to부정사의 to에 걸리는 원형 동사들이 병렬 연결된 구조입니다 (to weed, dig, and firm)."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A homi has an ideal shape that makes all those activities (possible / possibly) with one tool.",
+  "o": [
+   "possible",
+   "possibly"
+  ],
+  "a": "possible",
+  "e": "#39 구문 분석 ★: 5형식 동사 makes의 목적격 보어 자리이므로 형용사 possible이 와야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The flat side is used (to firm / to firming) the ground.",
+  "o": [
+   "to firm",
+   "to firming"
+  ],
+  "a": "to firm",
+  "e": "#41 구문 분석 ★: 땅을 다지기 위해 사용된다는 목적을 나타내므로 'be used to + 동사원형' 구문이 알맞습니다."
+ },
+ {
+  "n": 23,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They have found the best angles between the handle and the blade (so that / in order) users can tend gardens without pain.",
+  "o": [
+   "so that",
+   "in order"
+  ],
+  "a": "so that",
+  "e": "#44 구문 분석 ★: 뒤에 주어(users)와 조동사(can)를 갖춘 절이 이어지므로 목적의 접속사 so that이 알맞습니다."
+ },
+ {
+  "n": 24,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(During / While) the manufacturing process, a homi is hammered several times by hand.",
+  "o": [
+   "During",
+   "While"
+  ],
+  "a": "During",
+  "e": "#45 구문 분석 ★: 특정 기간을 나타내는 명사구(the manufacturing process) 앞에는 전치사 During을 씁니다."
+ },
+ {
+  "n": 25,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A homi is hammered several times by hand, (which / that) makes it stronger.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "#45 구문 분석 ★: 앞 절 전체를 선행사로 받는 계속적 용법의 관계대명사 자리에는 that을 쓸 수 없고 which를 씁니다."
+ },
+ {
+  "n": 26,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This is (what / that) differentiates the handmade Korean homi from gardening tools made by machine.",
+  "o": [
+   "what",
+   "that"
+  ],
+  "a": "what",
+  "e": "#46 구문 분석 ★: is의 보어 역할을 하며 선행사를 포함하는 관계대명사는 what입니다."
+ },
+ {
+  "n": 27,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(What do you think / Do you think what) will be the next Korean heritage item that will be recognized abroad?",
+  "o": [
+   "What do you think",
+   "Do you think what"
+  ],
+  "a": "What do you think",
+  "e": "#49 구문 분석 ★: 의문문 안에 생각 동사 do you think가 결합되면 의문사(What)가 반드시 문장 맨 앞으로 이동합니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "앞서 언급된 텍스트 리뷰에 동영상 리뷰라는 동일하게 구체적인 호평 사례를 대등하게 추가",
+   "호미가 광범위한 작업에 쓰인다는 일반적 설명에 대해 서양의 실제 원예 환경을 보여주며 상세히 보강",
+   "별개의 도구를 번거롭게 쓰는 서양의 비효율적 현실과 단일 도구로 해결하는 호미의 기능을 대비"
+  ],
+  "rows": [
+   ["Also (#31)", 1],
+   ["In fact (#38)", 2],
+   ["However (#39)", 3]
+  ],
+  "e": "분석지 #31, #38, #39 [연결어 분석]"
+ },
+ {
+  "n": 29,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #43 앞의 Next에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "앞 문장에서 제시된 호미의 단점에 대한 반론을 제기한다.",
+   "호미의 첫 번째 장점(다채로운 기능성)에 이어 두 번째 장점(편안한 디자인)이 전개됨을 알리는 순서상의 추가 관계를 나타낸다.",
+   "대장장이의 수작업 단조 방식이 기계 생산 방식보다 뛰어난 원인을 규명한다.",
+   "호미가 해외에서 인기를 끌게 된 역사적 배경을 시간 역순으로 설명한다"
+  ],
+  "a": 2,
+  "e": "#43 앞 [연결어 분석]: 첫 번째 장점이었던 다목적 효율성에 뒤이어 두 번째 장점인 디자인적 편안함으로 전개되는 순서상의 추가를 안내합니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그러나 호미는 그 모든 활동들을 단 하나의 도구로 가능하게 만드는 이상적인 형태를 지니고 있다.<br><small>「조건」 an ideal shape, makes, possible 활용 (총 14단어)</small>",
+  "ans": [
+   "However a homi has an ideal shape that makes all those activities possible with one tool"
+  ],
+  "show": "However, a homi has an ideal shape that makes all those activities possible with one tool.",
+  "e": "#39 주격 관계대명사 that 및 5형식 make + O + 형용사 보어(possible)"
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Search for “Korean homi” on any online platform, <u>or</u> you can find reviews. A homi has an ideal shape that makes all those activities <u>possibly</u> with one tool. In addition, a homi is hammered several times by hand, <u>that</u> makes it stronger and more elaborate.",
+  "keys": [
+   {
+    "k": "and",
+    "show": "or → and"
+   },
+   {
+    "k": "possible",
+    "show": "possibly → possible"
+   },
+   {
+    "k": "which",
+    "show": "that → which"
+   }
+  ],
+  "e": "#27 명령문, and ~, #39 5형식 make의 목적격 보어 형용사(possible), #45 계속적 용법의 관계대명사 which"
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "kw",
+  "s": "29번 문장의 If절에서 미래의 의미임에도 will enjoy가 아닌 enjoy를 쓴 어법적 이유를 쓰시오.",
+  "groups": [
+   [
+    "조건",
+    "조건의 부사절",
+    "조건 부사절"
+   ],
+   [
+    "현재시제",
+    "현재"
+   ],
+   [
+    "미래시제",
+    "미래"
+   ]
+  ],
+  "show": "조건의 부사절에서는 현재시제가 미래시제를 대신하기 때문이다.",
+  "e": "#29 구문 분석 ★"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Korean homi replaces multiple western tools by allowing users to weed, dig, and (A) f________ soil simultaneously. Crafted with hand-forged curves by skilled blacksmiths, it eliminates wrist (B) f________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "flatten"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "fatigue"
+    ]
+   ]
+  ],
+  "show": "(A) flatten (B) fatigue",
+  "e": "Section 3 English Summary"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

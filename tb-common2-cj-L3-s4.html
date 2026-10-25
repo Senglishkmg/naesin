@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "온돌(Ondol) 분석지 정독 확인 문항 (#50~#59)",
+ "section": "교과서 본문 · 섹션 4 (#50~#59)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [50, "Ondol: A Unique and Scientific Heating System"],
+  [51, "Ondol is a traditional Korean heating system that has been used for thousands of years to warm rooms."],
+  [52, "It is quite different from the heating systems commonly found in other countries."],
+  [53, "While most other countries warm their rooms using heating devices in the room, ondol warms the floor and the entire room using heat that is created outside the room."],
+  [54, "This is made possible through its unique and scientific structure."],
+  [55, "A fire is lit in an agungi, which is a kind of stove usually found in traditional Korean kitchens."],
+  [56, "The hot air then travels through an area, which runs under the room’s floor."],
+  [57, "On top of the area are flat and wide stones, which are covered with a layer of red mud clay."],
+  [58, "As the hot air passes through the area under the room’s floor, it heats up the stones."],
+  [59, "The heated stones raise the temperature of the floor, and this warmth spreads and warms the entire room."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 온돌과 다른 국가 난방 방식의 결정적인 차이점으로 옳은 것은?",
+  "o": [
+   "다른 나라는 바닥을 데우지만, 온돌은 실내 공기만을 데운다.",
+   "다른 나라는 방 안의 난방 장치를 쓰지만, 온돌은 방 밖에서 생성된 열을 이용한다.",
+   "온돌은 열기를 보존하기 위해 방바닥 밑의 통로를 완전히 밀폐한다.",
+   "다른 나라는 황토를 이용해 열을 보존하지만, 온돌은 철제 난로를 이용한다.",
+   "온돌은 방 안의 난로에서 직접 불을 지펴 공기를 덥힌다"
+  ],
+  "a": 2,
+  "e": "#53 다른 나라는 방 안의 장치(heating devices in the room)를 쓰는 반면, 온돌은 방 밖에서 생성된 열(heat created outside the room)로 바닥과 방 전체를 덥힙니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "온돌의 아궁이는 방 한가운데에 설치되어 실내의 공기를 직접 데우는 장치이다.",
+  "a": "X",
+  "e": "#53, #55 아궁이는 방 밖인 전통 한국 부엌에서 주로 발견되는 일종의 화덕(stove)으로, 방 밖에서 열을 생성합니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["온돌은 수천 년 동안 방을 따뜻하게 하는 데 사용되어 왔다.", "T"],
+   ["방바닥 밑의 통로 위에는 평평하고 넓은 돌들이 놓여 있고, 그 돌들은 붉은 황토 흙 한 층으로 덮여 있다.", "T"],
+   ["달궈진 돌은 바닥의 온도를 낮추고, 차가운 공기가 방 전체로 퍼지게 한다.", "F"]
+  ],
+  "e": "#51, #57, #59 돌은 바닥 온도를 높이고(raise the temperature), 온기가 방 전체로 퍼집니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "58번 문장의 주절 주어 it이 가리키는 것으로 분석지에 명시된 것은?",
+  "o": [
+   "the hot air",
+   "the room’s floor",
+   "an agungi",
+   "the traditional kitchen",
+   "a kind of stove"
+  ],
+  "a": 1,
+  "e": "#58 구문 분석: it은 앞 부사절의 the hot air(뜨거운 공기)를 단수로 가리킵니다."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "singular, distinctive",
+   "systematic, methodical",
+   "gadget, appliance",
+   "construction, framework",
+   "broad, expansive"
+  ],
+  "rows": [
+   ["unique", 1],
+   ["scientific", 2],
+   ["device", 3],
+   ["structure", 4],
+   ["wide", 5]
+  ],
+  "e": "분석지 #50, #53, #54, #57 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "common, ordinary",
+   "cool, chill",
+   "identical, similar",
+   "destroy",
+   "narrow"
+  ],
+  "rows": [
+   ["unique", 1],
+   ["warm", 2],
+   ["different", 3],
+   ["create", 4],
+   ["wide", 5]
+  ],
+  "e": "분석지 #50, #51, #52, #53, #57 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #56의 run이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "달리다, 질주하다",
+   "운영하다, 경영하다",
+   "뻗어 있다, 이어지다",
+   "출마하다, 입후보하다"
+  ],
+  "a": 3,
+  "e": "#56 구문 분석: 통로가 방바닥 아래로 '뻗어 있다, 이어져 있다'라는 의미로 사용되었습니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #59의 raise에 대한 설명으로 옳은 것은?",
+  "o": [
+   "목적어 없이 쓰이는 자동사로 rise와 같은 형태이다.",
+   "목적어를 직접 취하는 완전타동사이다.",
+   "과거형이 rose - risen으로 불규칙 변화한다.",
+   "본문에서는 아이를 기르다라는 양육의 의미로 쓰였다"
+  ],
+  "a": 2,
+  "e": "#59 구문 분석 ★: raise는 목적어(the temperature of the floor)를 직접 취하는 완전타동사입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #55의 light의 과거분사형으로 본문에 쓰인 단어를 쓰시오.",
+  "ans": [
+   "lit"
+  ],
+  "show": "lit",
+  "e": "#55 단어: light - lit - lit"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #57의 layer와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "sheet",
+   "coating",
+   "stratum"
+  ],
+  "show": "sheet (또는 coating, stratum)",
+  "e": "#57 어휘: layer (syn. sheet, coating, stratum)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Ondol is a heating system that (has used / has been used) for thousands of years.",
+  "o": [
+   "has been used",
+   "has used"
+  ],
+  "a": "has been used",
+  "e": "#51 구문 분석 ★: 난방 시스템이 수천 년 동안 사용되어 온 수동의 대상이므로 현재완료 수동태가 알맞습니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It is quite different from the heating systems commonly (found / finding) in other countries.",
+  "o": [
+   "found",
+   "finding"
+  ],
+  "a": "found",
+  "e": "#52 구문 분석 ★: 난방 시스템은 사람들에 의해 발견되는 수동 관계이므로 과거분사 found가 명사를 후치 수식합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(While / During) most other countries warm their rooms using heating devices, ondol warms the entire room.",
+  "o": [
+   "While",
+   "During"
+  ],
+  "a": "While",
+  "e": "#53 구문 분석 ★: 뒤에 주어와 동사를 갖춘 절이 오며 대조(~인 반면에)를 나타내는 접속사 While이 와야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Ondol warms the entire room (used / using) heat that is created outside the room.",
+  "o": [
+   "using",
+   "used"
+  ],
+  "a": "using",
+  "e": "#53 구문 분석: 수단과 동시동작을 나타내는 능동의 현재분사구문 using이 알맞습니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This is made (possible / possibly) through its unique and scientific structure.",
+  "o": [
+   "possible",
+   "possibly"
+  ],
+  "a": "possible",
+  "e": "#54 구문 분석 ★: 5형식 문장이 수동태로 전환된 구조로 목적격 보어였던 형용사 possible이 보어로 남아야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A fire is (lighted / lit) in an agungi, which is a kind of stove.",
+  "o": [
+   "lit",
+   "lighted"
+  ],
+  "a": "lit",
+  "e": "#55 본문 및 어휘: 본문에서는 light의 불규칙 과거분사형인 lit이 사용되었습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A fire is lit in an agungi, (which / that) is a kind of stove.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "#55 구문 분석: 콤마 뒤의 계속적 용법 관계대명사 자리에는 that을 쓸 수 없습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The hot air travels through an area, which (run / runs) under the room’s floor.",
+  "o": [
+   "runs",
+   "run"
+  ],
+  "a": "runs",
+  "e": "#56 구문 분석: which의 선행사가 단수명사 an area이므로 동사에 -s가 붙은 runs가 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "On top of the area (is / are) flat and wide stones.",
+  "o": [
+   "are",
+   "is"
+  ],
+  "a": "are",
+  "e": "#57 구문 분석 ★: 장소 부사구가 문두로 나간 도치 구문이며, 주어가 복수명사인 flat and wide stones이므로 복수동사 are가 맞습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The (heating / heated) stones raise the temperature of the floor.",
+  "o": [
+   "heated",
+   "heating"
+  ],
+  "a": "heated",
+  "e": "#59 구문 분석: 돌은 열에 의해 달궈진 수동의 대상이므로 과거분사 heated가 수식합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The heated stones (raise / rise) the temperature of the floor.",
+  "o": [
+   "raise",
+   "rise"
+  ],
+  "a": "raise",
+  "e": "#59 구문 분석 ★: the temperature of the floor라는 목적어를 취하므로 타동사 raise가 와야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This warmth spreads and (warm / warms) the entire room.",
+  "o": [
+   "warms",
+   "warm"
+  ],
+  "a": "warms",
+  "e": "#59 구문 분석: 단수 주어 this warmth에 걸려 spreads와 and로 병렬 연결되는 단수동사 warms가 맞습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #53의 While에 대한 설명으로 가장 적절한 것은?",
+  "o": [
+   "시간의 경과를 나타내는 '~하는 동안에'라는 시간 부사절 접속사이다.",
+   "원인과 결과를 나타내는 '~하기 때문에'라는 이유 접속사이다.",
+   "다른 나라의 난방 방식과 온돌의 특성을 대비하는 대조의 접속사이다.",
+   "조건을 나타내는 '만약 ~라면'의 의미로 쓰인 조건 접속사이다"
+  ],
+  "a": 3,
+  "e": "#53 구문 분석 ★: While은 시간(~하는 동안)이 아니라 '~인 반면에'를 나타내는 대조 접속사로 쓰였습니다 (=Whereas)."
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 내용의 논리 흐름상, 온돌의 열 전달 과정으로 올바른 순서는?",
+  "o": [
+   "아궁이에 불 지피기 → 바닥 아래 공간 통과 → 돌 달구기 → 바닥 온도 상승 및 방 전체 확산",
+   "돌 달구기 → 아궁이에 불 지피기 → 방바닥 전체 온도 상승 → 통로로 열기 배출",
+   "실내 난방 기기 작동 → 황토 흙 가열 → 구들 통로로 열기 전달 → 온기 순환",
+   "아궁이 가열 → 방 실내 공기 직접 가열 → 황토 층 통과 → 바닥 돌 냉각"
+  ],
+  "a": 1,
+  "e": "#55~#59 아궁이에서 불을 지핌 → 뜨거운 공기가 바닥 아래 통로를 이동 → 돌을 데움 → 돌이 바닥 온도를 높이고 온기가 방 전체로 퍼짐."
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그 공간 위에는 평평하고 넓은 돌들이 있다.<br><small>「조건」 On top of the area로 시작하여 도치 구문으로 작성할 것 (총 9단어)</small>",
+  "ans": [
+   "On top of the area are flat and wide stones"
+  ],
+  "show": "On top of the area are flat and wide stones.",
+  "e": "#57 장소 부사구 도치 구문 [On top of the area + are + flat and wide stones]"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "This is made <u>possibly</u> through its unique structure. On top of the area <u>is</u> flat and wide stones. The heated stones <u>rise</u> the temperature of the floor.",
+  "keys": [
+   {
+    "k": "possible",
+    "show": "possibly → possible"
+   },
+   {
+    "k": "are",
+    "show": "is → are"
+   },
+   {
+    "k": "raise",
+    "show": "rise → raise"
+   }
+  ],
+  "e": "#54 5형식 수동태의 형용사 보어, #57 장소 부사구 도치에 따른 복수 수 일치, #59 목적어를 취하는 타동사 raise"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "kw",
+  "s": "57번 문장에서 stones 앞에 is가 아닌 are를 쓴 어법적 이유를 주어와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "도치",
+    "부사구 도치",
+    "장소 부사구"
+   ],
+   [
+    "주어",
+    "flat and wide stones"
+   ],
+   [
+    "복수",
+    "복수명사"
+   ]
+  ],
+  "show": "장소 부사구 도치 구문으로, 실제 주어가 복수명사인 flat and wide stones이기 때문이다.",
+  "e": "#57 장소 부사구 도치 구문 수 일치 ★"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Heat created in the agungi travels through flues to warm stones covered with red mud (A) c________. This system warms the living space and exemplifies brilliant scientific (B) e________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "clay"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "efficiency"
+    ]
+   ]
+  ],
+  "show": "(A) clay (B) efficiency",
+  "e": "Section 4 English Summary 및 본문 #57"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

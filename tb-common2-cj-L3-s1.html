@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "한류를 넘어 한국의 전통문화로 정독 확인 문항 (#2~#6)",
+ "section": "교과서 본문 · 섹션 1 (#2~#6)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [2, "Korean pop culture is loved all over the world under the name “Korean Wave.”"],
+  [3, "Korean pop music has topped global music charts."],
+  [4, "Korean films and TV shows attract fans from across the globe."],
+  [5, "Now, beyond pop culture, the world is starting to pay attention to Korea’s traditional culture."],
+  [6, "Let’s take a look at some Korean heritage recognized abroad."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 본 단원에서 다루고자 하는 핵심 주제로 가장 적절한 것은?",
+  "o": [
+   "한국 현대 대중문화의 경제적 파급 효과",
+   "전 세계적인 인기를 얻고 있는 K-pop 스타들의 성공 비결",
+   "세계 음악 차트를 석권한 한국 영화와 드라마의 역사",
+   "현대 대중문화를 넘어 해외에서 인정받고 있는 한국의 전통 유산",
+   "한국 전통문화를 현대적 대중음악으로 재해석하는 방법"
+  ],
+  "a": 4,
+  "e": "Section 1 Summary 및 #5, #6 현대 대중문화를 넘어 해외에서 인정받고 있는 전통 유산들을 탐구하는 내용입니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "한국 대중문화는 전 세계에서 Korean Wave라는 이름으로 사랑받고 있다.",
+  "a": "O",
+  "e": "#2 Korean pop culture is loved all over the world under the name “Korean Wave.”"
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["한국 대중음악은 세계 음악 차트의 정상을 차지해 왔다.", "T"],
+   ["한국 영화와 TV 쇼는 오직 아시아 지역의 팬들만을 끌어모으고 있다.", "F"],
+   ["세계는 이제 대중문화를 넘어 한국의 전통문화에 주목하기 시작하고 있다.", "T"]
+  ],
+  "e": "#3, #4, #5 한국 영화와 TV 쇼는 전 세계(from across the globe) 팬들을 끌어모으고 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary에 언급된 내용과 일치하지 않는 것은?",
+  "o": [
+   "한국에 대한 국제적 감상은 현대 대중문화에서 시작되었다.",
+   "Korean Wave는 세계적으로 찬사를 받는 대중문화를 뜻한다.",
+   "세계적인 관심이 오락에서 전통적 보물로 확장 및 이동하고 있다.",
+   "한국의 전통문화는 국내에서만 보존되고 해외에는 전혀 알려지지 않았다"
+  ],
+  "a": 4,
+  "e": "Section 1 English Summary: traditional treasures recognized worldwide(전 세계적으로 인정받는 전통 보물)라고 명시되어 있습니다."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "adore, cherish",
+   "lead, surpass",
+   "draw, captivate",
+   "earth, world",
+   "notice, heed"
+  ],
+  "rows": [
+   ["love", 1],
+   ["top", 2],
+   ["attract", 3],
+   ["globe", 4],
+   ["attention", 5]
+  ],
+  "e": "분석지 #2, #3, #4, #5 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "hate, detest",
+   "bottom",
+   "local, regional",
+   "repel, distract",
+   "modern, contemporary"
+  ],
+  "rows": [
+   ["love", 1],
+   ["top", 2],
+   ["global", 3],
+   ["attract", 4],
+   ["traditional", 5]
+  ],
+  "e": "분석지 #2, #3, #4, #5 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #3의 top이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "꼭대기, 정상",
+   "상의, 윗옷",
+   "정상을 차지하다, 1위에 오르다",
+   "뚜껑, 마개"
+  ],
+  "a": 3,
+  "e": "#3 어휘 및 구문: top은 목적어(global music charts)를 취해 '정상을 차지하다, 1위에 오르다'라는 동사로 쓰였습니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #2의 pop이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "펑 터지다",
+   "대중적인, 유행하는",
+   "불쑥 나타나다",
+   "탄산음료"
+  ],
+  "a": 2,
+  "e": "#2 어휘: Korean pop culture에서 pop은 '대중적인, 유행하는(syn. popular)'이라는 형용사로 쓰였습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #6의 take a look at과 바꾸어 쓸 수 있는 분석지상 동의어 표현을 쓰시오.",
+  "ans": [
+   "examine",
+   "inspect",
+   "check out"
+  ],
+  "show": "examine (또는 inspect, check out)",
+  "e": "#6 어휘: take a look at (syn. examine, inspect, check out)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #5의 beyond와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "past",
+   "exceeding"
+  ],
+  "show": "past (또는 exceeding)",
+  "e": "#5 어휘: beyond (syn. past, exceeding)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Korean pop culture (loves / is loved) all over the world under the name “Korean Wave.”",
+  "o": [
+   "is loved",
+   "loves"
+  ],
+  "a": "is loved",
+  "e": "#2 구문 분석: 한국 대중문화는 전 세계 사람들에게 사랑받는 대상이므로 수동태 is loved가 쓰여야 합니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Korean pop music (has topped / have topped) global music charts.",
+  "o": [
+   "has topped",
+   "have topped"
+  ],
+  "a": "has topped",
+  "e": "#3 구문 분석: 주어 Korean pop music은 3인칭 단수이므로 has topped가 와야 합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Korean films and TV shows (attract / attracts) fans from across the globe.",
+  "o": [
+   "attract",
+   "attracts"
+  ],
+  "a": "attract",
+  "e": "#4 구문 분석 ★: 주어가 Korean films and TV shows로 복수 명사구이므로 복수형 동사 attract가 와야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The world is starting to pay attention (to / for) Korea’s traditional culture.",
+  "o": [
+   "to",
+   "for"
+  ],
+  "a": "to",
+  "e": "#5 구문 분석: '~에 주목하다, 주의를 기울이다'는 pay attention to 구문입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Let’s take a look at some Korean heritage (recognizing / recognized) abroad.",
+  "o": [
+   "recognized",
+   "recognizing"
+  ],
+  "a": "recognized",
+  "e": "#6 구문 분석 ★: 한국 유산(Korean heritage)은 해외에서 인정받는 수동의 대상이므로 과거분사 recognized가 후치 수식해야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "분석지 #5의 동사 start의 어법적 특성으로 옳은 것은?",
+  "o": [
+   "오직 to부정사만을 목적어로 취할 수 있다.",
+   "오직 동명사(-ing)만을 목적어로 취할 수 있다.",
+   "to부정사와 동명사를 둘 다 목적어로 취할 수 있다.",
+   "목적어를 전혀 취할 수 없는 완전자동사이다"
+  ],
+  "a": 3,
+  "e": "#5 구문 분석: start는 to부정사(to pay)와 동명사(paying)를 둘 다 목적어로 취할 수 있습니다."
+ },
+ {
+  "n": 17,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 방식으로 가장 적절한 것은?",
+  "o": [
+   "전통문화의 쇠퇴 원인을 제시하고 그 해결책으로 대중문화를 소개한다.",
+   "한국 대중문화의 세계적 성공 사례를 구체적으로 든 뒤, 관심의 대상이 전통문화로 확장되는 흐름을 제시한다.",
+   "세계 음악 차트와 영화 산업 간의 치열한 경쟁 구도를 대조한다.",
+   "대중문화의 문제점을 지적하며 전통문화로의 전면적 회귀를 촉구한다"
+  ],
+  "a": 2,
+  "e": "#2~#4에서 대중문화(음악, 영화, 방송)의 세계적 성공을 나열하고, #5~#6에서 그 관심이 전통문화로 확장됨을 자연스럽게 도입합니다."
+ },
+ {
+  "n": 18,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "한국 대중문화는 \"한류\"라는 이름으로 전 세계에서 사랑받는다.<br><small>「조건」 Korean pop culture, is loved, all over the world, under the name 활용 (총 13단어)</small>",
+  "ans": [
+   "Korean pop culture is loved all over the world under the name Korean Wave"
+  ],
+  "show": "Korean pop culture is loved all over the world under the name “Korean Wave.”",
+  "e": "#2 수동태 구문 및 전치사구 수식"
+ },
+ {
+  "n": 19,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Korean films and TV shows <u>attracts</u> fans from across the globe. Let’s take a look at some Korean heritage <u>recognizing</u> abroad.",
+  "keys": [
+   {
+    "k": "attract",
+    "show": "attracts → attract"
+   },
+   {
+    "k": "recognized",
+    "show": "recognizing → recognized"
+   }
+  ],
+  "e": "#4 복수 주어(films and TV shows)에 따른 수 일치, #6 수동 관계의 과거분사 수식(recognized)"
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "kw",
+  "s": "4번 문장에서 동사 attract에 -s를 붙이지 않고 복수형으로 쓴 어법적 이유를 주어와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "주어",
+    "Korean films and TV shows"
+   ],
+   [
+    "복수",
+    "복수명사",
+    "복수 명사구"
+   ],
+   [
+    "수 일치"
+   ]
+  ],
+  "show": "주어가 Korean films and TV shows로 복수 명사구이므로 복수 동사 attract를 써야 한다.",
+  "e": "#4 구문 분석 ★"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Beginning with modern pop culture, international appreciation for Korea has now expanded toward its rich traditional (A) h________. This section introduces the shift of global attention toward traditional (B) t________ recognized worldwide.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "heritage"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "treasures"
+    ]
+   ]
+  ],
+  "show": "(A) heritage (B) treasures",
+  "e": "Section 1 English Summary"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
