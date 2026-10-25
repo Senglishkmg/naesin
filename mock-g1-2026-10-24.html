@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "24번 제목추론 분석지 확인 문제",
+ "section": "수능 영어 · 24번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 24번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Unfortunately, sometimes the idea of a goal is disconnected from the daily reality of what it will take to achieve it."],
+  [2, "We fall in love with the idea of a goal, pushing out of mind how different our day-to-day will need to be for us to make it happen."],
+  [3, "In fact, research even suggests that positive fantasies about our future can lead us to put less effort into our goals because our fantasies provide us with a false and premature sense of accomplishment."],
+  [4, "We romanticize a goal—falling in love with the idea of a change."],
+  [5, "In the process, we gloss over the intricacies and challenges of integrating a complex new behavior into our life."],
+  [6, "As one study nicely summed it up, fantasizing about a positive future \"seduces a person to mentally enjoy the desired future in the here and now,\" and because we don't reflect on why our fantasy is not yet our future, \"a necessity to act is not induced.\""]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "목표에 대한 관념은 때때로 그것을 달성하기 위해 필요한 일상적인 현실과 단절되곤 한다.",
+  "a": "O",
+  "e": "1번 문장의 the idea of a goal is disconnected from the daily reality of what it will take to achieve it과 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "사람들은 목표를 실현하기 위해 일상이 얼마나 달라져야 하는지를 항상 마음속에 깊이 새기며 살아간다.",
+  "a": "X",
+  "e": "2번 문장에서 pushing out of mind how different our day-to-day will need to be라 하여 일상이 얼마나 달라져야 하는지는 마음 밖으로 밀어내어 잊어버린다고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "미래에 대한 긍정적인 환상은 우리에게 잘못되고 때이른 성취감을 안겨줄 수 있다.",
+  "a": "O",
+  "e": "3번 문장의 our fantasies provide us with a false and premature sense of accomplishment와 일치합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "연구에 따르면 긍정적 환상은 사람들로 하여금 목표 달성을 위해 훨씬 더 많은 노력을 쏟도록 유도한다.",
+  "a": "X",
+  "e": "3번 문장에서 lead us to put less effort into our goals라 하여 목표에 더 적은 노력을 쏟도록 이끈다고 했습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "사람들은 새로운 복잡한 행동을 삶에 통합하는 데 따르는 세세한 난관과 복잡성을 철저히 분석하고 대비한다.",
+  "a": "X",
+  "e": "5번 문장에서 we gloss over the intricacies and challenges라 하여 복잡함과 도전 과제들을 대충 얼버무리고 넘어간다고 했습니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "긍정적인 미래를 공상하는 것은 사람을 현혹하여 지금 여기에서 바라는 미래를 정신적으로 미리 즐기게 만든다.",
+  "a": "O",
+  "e": "6번 문장의 seduces a person to mentally enjoy the desired future in the here and now와 일치합니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "사람들은 자신의 환상이 왜 아직 미래가 되지 못했는지를 끊임없이 성찰하기 때문에 즉각적인 행동을 시작한다.",
+  "a": "X",
+  "e": "6번 문장에서 because we don't reflect on why our fantasy is not yet our future라고 하여 성찰하지 않는다고 했습니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "환상에 도취되어 성찰하지 않을 때 현실에서 행동해야 할 필요성은 유도되지 않는다.",
+  "a": "O",
+  "e": "6번 문장의 a necessity to act is not induced와 일치합니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "얼버무리고 넘어가다",
+   "때이른, 시기상조의",
+   "유혹하다, 현혹시키다",
+   "복잡함, 얽히고설킴"
+  ],
+  "rows": [
+   ["premature", 2],
+   ["gloss over", 1],
+   ["intricacy", 4],
+   ["seduce", 3]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "... and because we don't reflect on why our fantasy is not yet our future, a necessity to act is not (induced / reduced).",
+  "o": [
+   "induced",
+   "reduced"
+  ],
+  "a": "induced",
+  "e": "분석지 5번 혼동 어휘: induce는 '유도하다, 야기하다'이고 reduce는 '줄이다'입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 seduce의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["tempt", "lure", "entice"]],
+   ["②", ["tempt", "lure", "entice"]]
+  ],
+  "show": "tempt, lure, entice 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 sum up의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["summarize", "encapsulate", "condense"]],
+   ["②", ["summarize", "encapsulate", "condense"]]
+  ],
+  "show": "summarize, encapsulate, condense 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "short",
+  "s": "2번 문장에서 「마음 밖으로 밀어내다, 잊어버리려 하다」의 뜻으로 쓰인 네 단어의 구동사를 찾아 쓰시오.",
+  "ans": [
+   "push out of mind",
+   "pushing out of mind"
+  ],
+  "show": "push out of mind",
+  "e": "2번 문장 pushing out of mind"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "mc",
+  "s": "3번 문장의 연결어 In fact가 글에서 수행하는 논리적 기능으로 옳은 것은?",
+  "o": [
+   "앞서 제기된 주장을 전면적으로 반박하고 새로운 화제를 연다.",
+   "앞선 주장을 학술 연구 결과를 통해 뒷받침하며 논지를 심화·강조한다.",
+   "두 연구 집단 간의 상반된 실험 결과를 대조한다.",
+   "시간의 흐름에 따른 사건의 연대기적 순서를 나타낸다."
+  ],
+  "a": 2,
+  "e": "분석지 2번 어휘 및 연결어: In fact는 앞선 주장을 학술적 연구 결과를 통해 뒷받침하며 논지를 심화·강조하는 연결어입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Unfortunately, sometimes the idea of a goal is disconnected from the daily reality of (what / that) it will take to achieve it.",
+  "o": [
+   "what",
+   "that"
+  ],
+  "a": "what",
+  "e": "1번 문장: 전치사 of의 목적어로 쓰인 명사절이며 take의 목적어 역할을 해야 하므로 관계대명사 what이 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 형태를 고르시오.",
+  "c": "We fall in love with the idea of a goal, (pushing / pushed) out of mind how different our day-to-day will need to be...",
+  "o": [
+   "pushing",
+   "pushed"
+  ],
+  "a": "pushing",
+  "e": "2번 문장: 주어 We가 능동적으로 마음 밖으로 밀어내는 부대상황의 분사구문이므로 현재분사 pushing이 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 사역동사 make의 목적격 보어로 알맞은 형태를 고르시오.",
+  "c": "... how different our day-to-day will need to be for us to make it (happen / happening).",
+  "o": [
+   "happen",
+   "happening"
+  ],
+  "a": "happen",
+  "e": "2번 문장: 사역동사 make + 목적어(it) + 목적격 보어 자리에 동사원형 happen이 옵니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "2번 문장 for us to make it happen에서 for us의 문법적 명칭으로 옳은 것은?",
+  "o": [
+   "전치사 for의 독립적인 이유 부사구",
+   "to make it happen의 의미상 주어",
+   "need to be의 진주어",
+   "make의 직접목적어"
+  ],
+  "a": 2,
+  "e": "분석지 2번 문장 구문 분석: for us는 to부정사(to make it happen)의 의미상 주어입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 5형식 동사 lead의 목적격 보어로 알맞은 것을 고르시오.",
+  "c": "... positive fantasies about our future can lead us (put / to put) less effort into our goals...",
+  "o": [
+   "put",
+   "to put"
+  ],
+  "a": "to put",
+  "e": "3번 문장: lead + 목적어 + to-v 구문이므로 to put이 올바릅니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어와의 수 일치상 알맞은 형태를 고르시오.",
+  "c": "As one study nicely summed it up, fantasizing about a positive future (seduces / seduce) a person to mentally enjoy...",
+  "o": [
+   "seduces",
+   "seduce"
+  ],
+  "a": "seduces",
+  "e": "6번 문장: 주어가 동명사구 fantasizing about a positive future이므로 3인칭 단수 취급하여 seduces가 옳습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장의 a necessity to act is not induced에서 to act의 to부정사 용법으로 옳은 것은?",
+  "o": [
+   "목적을 나타내는 부사적 용법",
+   "결과를 나타내는 부사적 용법",
+   "명사 a necessity를 수식하는 형용사적 용법",
+   "동사 is의 주격 보어로 쓰인 명사적 용법"
+  ],
+  "a": 3,
+  "e": "분석지 6번 문장 구문 분석: to act는 명사 a necessity를 뒤에서 수식하는 형용사적 용법입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "ox",
+  "s": "6번 문장의 to mentally enjoy는 to와 동사원형 사이에 부사 mentally가 삽입된 분리부정사 구문이다.",
+  "a": "O",
+  "e": "분석지 6번 문장 구문 분석: to와 동사원형 사이에 부사 mentally가 삽입된 분리부정사입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "장기적 목표 설정을 통한 일상의 시간 낭비 방지책",
+   "미래에 대한 긍정적 환상이 현실의 실천과 노력을 가로막는 역효과",
+   "자존감 향상이 뇌의 성취감 유도 메커니즘에 미치는 긍정적 영향",
+   "복잡한 일상 습관을 단순화하기 위한 체계적인 행동 지침"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 미래에 대한 긍정적 환상이 현실의 실천과 노력을 가로막는 역효과"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 긍정적 환상과 노력 감소 사이의 핵심 인과관계를 가장 뚜렷하게 밝혀 중심 문장으로 선정한 것은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "2번 문장",
+   "3번 문장",
+   "4번 문장"
+  ],
+  "a": 3,
+  "e": "분석지 1번 중심 문장: 3번 문장 In fact, research even suggests that positive fantasies about our future can lead us to put less effort into our goals because our fantasies provide us with a false and premature sense of accomplishment."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (미래에 대한 긍정적 환상과 낭만화)",
+   "키워드 B (실제 행동과 노력의 차단)"
+  ],
+  "rows": [
+   ["positive fantasies about our future", 1],
+   ["put less effort", 2],
+   ["romanticize a goal", 1],
+   ["necessity to act is not induced", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 정리한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "문제 제기 - 원인 분석 - 연구 인용을 통한 결론 제시",
+   "통념 반박 - 역사적 사실 열거 - 교훈 도출",
+   "실험 가설 설정 - 반례 제시 - 절충안 도출",
+   "상반된 이론 소개 - 현장 관찰 - 후속 과제 제언"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 문제 제기 - 원인 분석 - 연구 인용을 통한 결론 제시"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 세 개 부분(Chunk)과 그 역할을 연결하세요.",
+  "box": [
+   "문제 현상 제시 및 목표에 대한 환상과 실행 현실 간의 괴리 묘사",
+   "연구 결과를 바탕으로 한 인과관계의 심층적 분석",
+   "연구 인용문을 통한 글의 최종 결론 도출 및 경고"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~2번 문장)", 1],
+   ["두 번째 부분 (3~5번 문장)", 2],
+   ["세 번째 부분 (6번 문장)", 3]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "4번 문장의 대시(—)는 앞 절의 romanticize a goal이 구체적으로 어떤 심리적 행위인지 직관적으로 해설해 주는 재진술 기능을 한다.",
+  "a": "O",
+  "e": "분석지 4번 문장 구문 및 어휘 분석과 일치합니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 도출한 24번 제목 문제의 정답 선택지는?",
+  "o": [
+   "Love Yourself to Better Your Future!",
+   "When an Ambitious Goal Brings Stress",
+   "How Can We Plan Good Daily Routines?",
+   "Fantasizing About the Future: A Barrier to Action",
+   "Too Many Goals, Too Little Time: A Recipe for Failure"
+  ],
+  "a": 4,
+  "e": "분석지 4번 문제 풀이: 정답은 Fantasizing About the Future: A Barrier to Action입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지에서 오답 When an Ambitious Goal Brings Stress를 소거한 이유로 옳은 것은?",
+  "o": [
+   "스트레스 해소법을 지나치게 상세히 설명했기 때문에",
+   "목표로 인한 심리적 스트레스가 아니라 공상으로 인한 노력 부족과 나태함이 핵심이므로",
+   "야심 찬 목표가 아니라 현실적인 목표만을 다루었기 때문에",
+   "연구 결과의 신뢰성이 부족하다는 점을 지적하지 않았기 때문에"
+  ],
+  "a": 2,
+  "e": "분석지 4번 오답 분석: 목표로 인한 심리적 스트레스가 아니라, 공상으로 인한 '노력 부족과 나태함'이 핵심이므로 오답입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지에서 오답 Too Many Goals, Too Little Time: A Recipe for Failure를 소거한 근거는?",
+  "o": [
+   "목표의 개수가 아니라 목표의 난이도에 집중한 글이기 때문에",
+   "시간 부족이나 과다한 목표 설정에 대한 언급은 전혀 없으므로",
+   "실패의 원인을 외부 환경 탓으로 돌리고 있기 때문에",
+   "시간 관리 앱의 효용성에 대해 다루지 않았기 때문에"
+  ],
+  "a": 2,
+  "e": "분석지 4번 오답 분석: 시간 부족이나 과다한 목표 설정에 대한 언급은 전혀 없으므로 오답입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "3번 문장에서 미래에 대한 긍정적 환상이 우리에게 제공하여 덜 노력하게 만드는 원인이 되는 일곱 단어의 명사구를 찾아 쓰시오.",
+  "ans": [
+   "a false and premature sense of accomplishment"
+  ],
+  "show": "a false and premature sense of accomplishment",
+  "e": "3번 문장 a false and premature sense of accomplishment"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 3번 문장을 바탕으로, 미래에 대한 긍정적 환상이 왜 역설적으로 목표에 더 적은 노력을 기울이게 만드는지 그 구체적인 심리학적 이유를 서술하세요.",
+  "show": "긍정적인 환상이 사람들에게 아직 이루어지지 않은 잘못되고 때이른 성취감(a false and premature sense of accomplishment)을 미리 제공하기 때문이다.",
+  "crit": "① '환상이 제공하는 것' 명시 (1점) ② '잘못되고 때이른 성취감' 또는 '가짜 성취감' 표현 포함 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 6번 문장과 「6. 마무리」를 바탕으로, 연구에서 밝힌 '긍정적 미래에 대한 공상'이 인간을 어떻게 현혹하며, 왜 최종적으로 '행동해야 할 필요성'이 유도되지 않는지 두 단계로 나누어 서술하세요.",
+  "show": "첫째, 바라는 미래를 지금 여기에서 정신적으로 미리 맛보고 즐기도록 현혹하며, 둘째, 자신의 환상이 왜 아직 미래가 되지 못했는지 성찰하지 않기 때문에 행동해야 할 필요성이 유도되지 않는다.",
+  "crit": "① '바라는 미래를 지금 여기에서 미리 즐기게 함' 서술 (2점) ② '환상이 왜 미래가 되지 못했는지 성찰하지 않음' 서술 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
