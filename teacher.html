@@ -52,6 +52,10 @@
     .empty { text-align:center; color:var(--muted); padding:40px 10px; }
     .err { color:var(--bad); font-weight:700; }
     .login { max-width:380px; margin:60px auto; }
+    .cmt { margin-top:14px; border:1px solid #bae6fd; background:#f0f9ff; border-radius:10px; padding:10px 12px; }
+    .cmt textarea { width:100%; min-height:62px; font:inherit; font-size:14px; border:1px solid #cbd5e1; border-radius:8px; padding:8px 10px; resize:vertical; background:#fff; }
+    .cmt .bar { display:flex; gap:8px; align-items:center; margin-top:6px; }
+    .b-cmt { background:#e0f2fe; color:var(--brand2); }
     @media (max-width:640px) { .right { margin-left:0; width:100%; } .man .row { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -67,7 +71,7 @@
   const fmt = iso => { const d = new Date(iso); return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
   const TYPE = { mc: '객관식', choice: '양자택일', tf: 'T/F', short: '단답형', sent: '문장 쓰기', kw: '서술형', blanks: '빈칸', fix: '어법 수정', ox: 'O/X', pick: '보기 고르기', text: '단답형', multi: '짝짓기', self: '서술형', match: '짝짓기', essay: '서술형' };
   let key = ''; try { key = localStorage.getItem('ns_tkey') || ''; } catch (e) {}
-  let rows = [], open = new Set(), F = { name: '', page: '', wait: false };
+  let rows = [], open = new Set(), drafts = {}, F = { name: '', page: '', wait: false };
 
   async function api(params) {
     const u = EP + '?' + new URLSearchParams(Object.assign({ key }, params)).toString();
@@ -128,12 +132,15 @@
     return `<details class="sub ${pend ? 'pending' : ''}" data-id="${esc(r.id)}" ${open.has(String(r.id)) ? 'open' : ''}>
       <summary><span class="who">${esc(r.name)}</span><span class="pg">${esc(r.page)}</span>
         <span class="meta">${fmt(r.time)} · ${r.att}회차${r.cls ? ' · ' + esc(r.cls) : ''}</span>
-        <span class="right"><span class="meta">자동 ${r.auto} / ${r.total}</span>${badge}</span></summary>
+        <span class="right"><span class="meta">자동 ${r.auto} / ${r.total}</span>${r.comment ? '<span class="badge b-cmt">한마디 ✓</span>' : ''}${badge}</span></summary>
       <div class="body">
         <h3>자동 채점에서 틀린 문항 (${wrong.length})</h3>
         ${wrong.length ? `<table><tr><th>문항</th><th>학생 답</th><th>정답</th></tr>${wrong.map(i => `<tr><td class="n">${esc(String(i.n))}${/^\d+$/.test(String(i.n)) ? '번' : ''}${i.status === 'part' ? ' (부분)' : ''}</td><td class="mine">${esc(i.mine)}</td><td>${esc(i.right)}</td></tr>`).join('')}</table>` : '<div class="okline">자동 채점 문항은 모두 맞혔어요.</div>'}
         ${man.length ? `<h3>교사 채점 문항 (${man.length})</h3>${man.map(i => manBox(r, i)).join('')}` : ''}
         ${manOk.length ? `<h3>모범 답안과 똑같아 정답 처리된 문항</h3><div class="meta">${manOk.map(i => `${i.n}번`).join(', ')}</div>` : ''}
+        <div class="cmt" data-id="${esc(r.id)}"><h3 style="margin:0 0 6px">학생에게 한마디 <span class="meta" style="font-weight:400">· 채점이 끝나면 학생의 '내 결과'에 보여요</span></h3>
+          <textarea placeholder="예) 주제문 찾기는 좋아요. 빈칸 문제는 근거 문장을 한 번 더 확인해 보세요.">${esc(r.id in drafts ? drafts[r.id] : (r.comment || ''))}</textarea>
+          <div class="bar"><button class="btn">한마디 저장</button><span class="meta saving">${r.id in drafts ? '저장 안 됨' : ''}</span></div></div>
       </div></details>`;
   }
   function manBox(r, i) {
@@ -161,6 +168,19 @@
       };
       box.querySelectorAll('.sb').forEach(b => b.onclick = () => save(b.dataset.v));
       const inp = box.querySelector('input'); inp.onchange = () => { if (inp.value !== '') save(Math.max(0, Math.min(1, +inp.value))); };
+    });
+    document.querySelectorAll('.cmt').forEach(box => {
+      const ta = box.querySelector('textarea'), s = box.querySelector('.saving'), id = box.dataset.id;
+      ta.oninput = () => { drafts[id] = ta.value; s.textContent = '저장 안 됨'; };
+      box.querySelector('button').onclick = async () => {
+        s.textContent = '저장 중…';
+        try {
+          const d = await api({ action: 'comment', id, text: ta.value.trim() });
+          if (d.error === 'key') return login('비밀번호가 바뀌었어요. 다시 들어가 주세요.');
+          if (!d.row) { s.textContent = '저장하지 못했어요'; return; }
+          delete drafts[id]; rows = rows.map(r => String(r.id) === String(id) ? d.row : r); open.add(String(id)); draw();
+        } catch (e) { s.textContent = '저장하지 못했어요 (인터넷 확인)'; }
+      };
     });
   }
 

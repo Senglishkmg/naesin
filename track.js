@@ -1,7 +1,7 @@
 /* =====================================================================
    S영어전문학원 내신 학습 · 기록 파일 (track.js)
    모든 페이지 맨 아래에 <script src="track.js"></script> 한 줄만 넣으면
-   - 처음 들어올 때 이름을 한 번 받고
+   - 처음 들어올 때 학년·반·이름과 비번(숫자 4자리)을 한 번 받고 (다른 기기에서는 비번만)
    - 어느 페이지를 열었는지, 몇 분 머물렀는지
    - 시험지에서 채점하면 문항별 결과(학생 답 / 정답 / 맞음·틀림 / 교사 채점 필요)
    를 구글 시트로 보냅니다.
@@ -25,17 +25,20 @@ var NS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBNM5j8YykQe6VEDAngq
 
   /* ---------- 파일 이름 → 알아보기 쉬운 이름 ---------- */
   var SUBJ = { common1: '공통영어1', common2: '공통영어2', english1: '영어1', en1: '영어1', english2: '영어2', en2: '영어2' };
-  var PUB = { nl: '능률 오선영', mr: '미래앤 김성연' };
+  var PUB = {   // 교과목별 출판사 약자
+    en2: { nl: '능률 오선영', mr: '미래앤 김성연' },
+    common2: { cj: '천재 조수경', ss1: '시사 박준언', ss2: '시사 김은형', bs: '비상 홍민표', nl: '능률 민병천' }
+  };
   var SUP = { olympus1: '올림포스 영어독해의 기본 1', olympus2: '올림포스 영어독해의 기본 2', 'rp-type-basic': '리딩파워 유형편 기본',
     'rp-type-complete': '리딩파워 유형편 완성', 'rp-topic-complete': '리딩파워 주제별 독해 완성', 'nsnr-basic': '능수능란 기본편', 'sst-light': '수능특강 라이트' };
   var EXT = { mokyeogo: '목여고' };
-  var FIXED = { index: '메인', textbook: '교과서 목록', supplement: '보조교재 목록', mock: '모의고사 목록', external: '외부지문 목록' };
+  var FIXED = { index: '메인', my: '내 결과', textbook: '교과서 목록', supplement: '보조교재 목록', mock: '모의고사 목록', external: '외부지문 목록' };
   function label(f) {
     if (FIXED[f]) return FIXED[f];
     var m;
-    if ((m = f.match(/^tb-([a-z0-9]+)(?:-([a-z]+))?(?:-(L\d+|SL))?(?:-s(\d+))?$/))) {
+    if ((m = f.match(/^tb-([a-z0-9]+)(?:-([a-z][a-z0-9]*))?(?:-(L\d+|SL))?(?:-s(\d+))?$/))) {
       var out = [SUBJ[m[1]] || m[1]];
-      if (m[2]) out.push(PUB[m[2]] || m[2]);
+      if (m[2]) out.push((PUB[m[1]] || {})[m[2]] || m[2]);
       if (m[3]) out.push(m[3] === 'SL' ? 'Special Lesson' : m[3].slice(1) + '과');
       if (m[4]) out.push('섹션 ' + m[4]);
       return out.join(' · ');
@@ -48,7 +51,9 @@ var NS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBNM5j8YykQe6VEDAngq
   var PAGE = label(file);
 
   /* ---------- 보내기 ---------- */
-  var student = store.get('ns_student', null);   // {name, cls}
+  var student = store.get('ns_student', null);   // {sid, name, cls, pin}
+  if (student && !student.sid) student = null;      // 비번 도입 전 기록 → 비번을 새로 정하게
+  window.NS_STUDENT = student;
   function send(obj) {
     if (!NS_ENDPOINT) { console.log('[기록 — 시트 주소 미설정]', obj); return; }
     var body = JSON.stringify(obj);
@@ -57,29 +62,99 @@ var NS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBNM5j8YykQe6VEDAngq
     try { if (navigator.sendBeacon) navigator.sendBeacon(NS_ENDPOINT, body); } catch (e) { }
   }
   function base(event) {
-    return { event: event, clientTime: new Date().toISOString(), student: student ? student.name : '', cls: student ? student.cls : '', page: PAGE, file: file + '.html' };
+    return { event: event, clientTime: new Date().toISOString(), student: student ? student.name : '', cls: student ? student.cls : '', sid: student ? student.sid : '', page: PAGE, file: file + '.html' };
   }
 
-  /* ---------- 이름 입력 ---------- */
-  function askName(done) {
+  /* ---------- 학생 확인 (처음: 학년·반·이름·비번 / 다음부터: 비번만) ---------- */
+  function api(params) {
+    return fetch(NS_ENDPOINT + '?' + new URLSearchParams(params).toString()).then(function (r) { return r.json(); });
+  }
+  var MSG = {
+    taken: '이 번호는 다른 학생이 쓰고 있어요. 다른 숫자 4개를 골라 주세요.',
+    exists: '이미 등록한 학생이에요. 위의 「비번이 있어요」를 눌러 비번으로 들어오세요. 비번이 기억나지 않으면 선생님께 물어보세요.',
+    pin: '맞는 비번이 없어요. 다시 확인해 주세요. 기억나지 않으면 선생님께 물어보세요.',
+    input: '빈칸을 모두 채워 주세요.',
+    net: '연결이 안 됐어요. 인터넷을 확인하고 다시 눌러 주세요.'
+  };
+  function askStudent(done, old) {
     var wrap = document.createElement('div');
-    wrap.setAttribute('style', 'position:fixed;inset:0;z-index:99999;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;padding:16px;font-family:"Noto Sans KR",-apple-system,"Malgun Gothic",sans-serif');
-    wrap.innerHTML = '<form style="background:#fff;border-radius:16px;padding:24px;max-width:360px;width:100%;box-shadow:0 20px 40px -10px rgba(0,0,0,.4)">'
+    var F = 'width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:10px;padding:11px 12px;font:inherit;font-size:16px;margin-bottom:8px;background:#fff';
+    var T = 'flex:1;border:0;border-radius:8px;padding:9px;font:inherit;font-weight:800;font-size:14px;cursor:pointer;';
+    wrap.setAttribute('style', 'position:fixed;inset:0;z-index:99999;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;font-family:"Noto Sans KR",-apple-system,"Malgun Gothic",sans-serif');
+    wrap.innerHTML = '<div style="background:#fff;border-radius:16px;padding:22px;max-width:360px;width:100%;box-shadow:0 20px 40px -10px rgba(0,0,0,.4);margin:auto">'
       + '<div style="font-size:13px;font-weight:800;color:#0284c7">S영어전문학원 내신 학습</div>'
-      + '<div style="font-size:20px;font-weight:900;margin:4px 0 6px;color:#0f172a">이름을 입력하세요</div>'
-      + '<div style="font-size:13px;color:#64748b;margin-bottom:14px">공부한 기록과 채점 결과가 이 이름으로 선생님께 전달돼요.</div>'
-      + '<input name="n" placeholder="이름" required style="width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:10px;padding:11px 12px;font:inherit;font-size:16px;margin-bottom:8px">'
-      + '<input name="c" placeholder="학교 / 반 / 번호 (선택)" style="width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:10px;padding:11px 12px;font:inherit;font-size:15px;margin-bottom:14px">'
-      + '<button style="width:100%;border:0;border-radius:10px;padding:12px;font:inherit;font-weight:800;font-size:16px;background:#0284c7;color:#fff;cursor:pointer">시작하기</button></form>';
+      + '<div style="display:flex;gap:6px;background:#f1f5f9;border-radius:10px;padding:4px;margin:10px 0 14px">'
+      + '<button type="button" data-tab="new" style="' + T + '">처음이에요</button><button type="button" data-tab="have" style="' + T + '">비번이 있어요</button></div>'
+      + '<form data-form="new">'
+      + '<div style="font-size:19px;font-weight:900;margin:0 0 4px;color:#0f172a">나를 등록해요</div>'
+      + '<div style="font-size:13px;color:#64748b;margin-bottom:12px">한 번만 하면 돼요. 다른 기기에서는 비번만 넣으면 들어올 수 있어요.</div>'
+      + '<div style="display:flex;gap:8px"><select name="g" required style="' + F + '"><option value="">학년</option><option value="1">1학년</option><option value="2">2학년</option><option value="3">3학년</option></select>'
+      + '<input name="b" placeholder="반 (숫자)" inputmode="numeric" required style="' + F + '"></div>'
+      + '<input name="n" placeholder="이름" required style="' + F + '">'
+      + '<input name="p" type="password" placeholder="비번 (숫자 4자리)" inputmode="numeric" maxlength="4" autocomplete="new-password" required style="' + F + '">'
+      + '<input name="p2" type="password" placeholder="비번 한 번 더" inputmode="numeric" maxlength="4" autocomplete="new-password" required style="' + F + '">'
+      + '<div style="font-size:12.5px;color:#64748b;margin:0 2px 12px">비번은 꼭 기억해 두세요. 내 결과를 볼 때도 써요.</div>'
+      + '<div data-err style="display:none;color:#b91c1c;font-size:13.5px;font-weight:700;margin-bottom:10px"></div>'
+      + '<button style="width:100%;border:0;border-radius:10px;padding:12px;font:inherit;font-weight:800;font-size:16px;background:#0284c7;color:#fff;cursor:pointer">등록하고 시작하기</button></form>'
+      + '<form data-form="have" style="display:none">'
+      + '<div style="font-size:19px;font-weight:900;margin:0 0 4px;color:#0f172a">비번을 넣어 주세요</div>'
+      + '<div style="font-size:13px;color:#64748b;margin-bottom:12px">처음 등록할 때 정한 숫자 4자리예요.</div>'
+      + '<input name="p" type="password" placeholder="비번 (숫자 4자리)" inputmode="numeric" maxlength="4" autocomplete="current-password" required style="' + F + 'font-size:20px;letter-spacing:.3em;text-align:center">'
+      + '<div data-err style="display:none;color:#b91c1c;font-size:13.5px;font-weight:700;margin:4px 0 10px"></div>'
+      + '<button style="width:100%;border:0;border-radius:10px;padding:12px;font:inherit;font-weight:800;font-size:16px;background:#0284c7;color:#fff;cursor:pointer;margin-top:6px">들어가기</button></form>'
+      + '</div>';
     document.body.appendChild(wrap);
-    var f = wrap.querySelector('form');
-    setTimeout(function () { f.n.focus(); }, 50);
-    f.onsubmit = function (e) {
-      e.preventDefault();
-      var n = f.n.value.trim(); if (!n) return;
-      student = { name: n, cls: f.c.value.trim() }; store.set('ns_student', student);
+    var fNew = wrap.querySelector('[data-form=new]'), fHave = wrap.querySelector('[data-form=have]');
+    function tab(t) {
+      fNew.style.display = t === 'new' ? '' : 'none'; fHave.style.display = t === 'have' ? '' : 'none';
+      wrap.querySelectorAll('[data-tab]').forEach(function (b) { var on = b.getAttribute('data-tab') === t; b.style.background = on ? '#fff' : 'transparent'; b.style.color = on ? '#0369a1' : '#64748b'; b.style.boxShadow = on ? '0 1px 3px rgba(0,0,0,.15)' : 'none'; });
+      setTimeout(function () { (t === 'new' ? (old ? fNew.p : fNew.g) : fHave.p).focus(); }, 50);
+    }
+    wrap.querySelectorAll('[data-tab]').forEach(function (b) { b.onclick = function () { tab(b.getAttribute('data-tab')); }; });
+    if (old && old.name) fNew.n.value = old.name;
+    tab('new');
+    function err(f, k) { var e = f.querySelector('[data-err]'); e.textContent = MSG[k] || k; e.style.display = k ? 'block' : 'none'; }
+    function busy(f, on) { var b = f.querySelector('button:not([type])'); b.disabled = on; b.style.opacity = on ? '.6' : '1'; }
+    function finish(f, s, pin) {
+      if (!s || !s.student) { busy(f, false); return err(f, (s && s.error) || 'net'); }
+      student = { sid: s.student.sid, name: s.student.name, cls: s.student.cls, pin: pin };
+      store.set('ns_student', student); window.NS_STUDENT = student;
       wrap.remove(); done();
+      try { window.dispatchEvent(new CustomEvent('ns-student', { detail: student })); } catch (e) { }
+    }
+    fNew.onsubmit = function (e) {
+      e.preventDefault(); err(fNew, '');
+      var p = fNew.p.value.trim(), b = fNew.b.value.replace(/[^0-9]/g, ''), n = fNew.n.value.trim();
+      if (!fNew.g.value || !b || !n) return err(fNew, 'input');
+      if (!/^\d{4}$/.test(p)) return err(fNew, '비번은 숫자 4자리로 정해 주세요.');
+      if (p !== fNew.p2.value.trim()) return err(fNew, '두 번 넣은 비번이 달라요. 다시 확인해 주세요.');
+      busy(fNew, true);
+      api({ action: 'register', grade: fNew.g.value, ban: b, name: n, pin: p }).then(function (d) { finish(fNew, d, p); }, function () { finish(fNew, null); });
     };
+    fHave.onsubmit = function (e) {
+      e.preventDefault(); err(fHave, '');
+      var p = fHave.p.value.trim();
+      if (!/^\d{4}$/.test(p)) return err(fHave, '비번은 숫자 4자리예요.');
+      busy(fHave, true);
+      api({ action: 'login', pin: p }).then(function (d) { finish(fHave, d, p); }, function () { finish(fHave, null); });
+    };
+  }
+  /* 다른 학생으로 바꾸기 (같은 기기를 여럿이 쓸 때) */
+  window.NS_SWITCH = function () {
+    try { localStorage.removeItem('ns_student'); } catch (e) { }
+    student = null; window.NS_STUDENT = null; location.reload();
+  };
+
+  /* 메인 화면에 「OOO 학생으로 공부 중」 줄 */
+  function whoBar() {
+    if (file !== 'index' || !student) return;
+    var h = document.querySelector('header'); if (!h) return;
+    var d = document.createElement('div');
+    d.setAttribute('style', 'text-align:center;font-size:14px;color:#64748b;margin:-8px 0 16px');
+    d.innerHTML = '<b style="color:#0f172a"></b> 학생으로 공부 중 · <a href="#" style="color:#0369a1;font-weight:700">내가 아니에요</a>';
+    d.querySelector('b').textContent = student.name + ' (' + student.cls + ')';
+    d.querySelector('a').onclick = function (e) { e.preventDefault(); window.NS_SWITCH(); };
+    h.parentNode.insertBefore(d, h.nextSibling);
   }
 
   /* ---------- 접속 · 머문 시간 ---------- */
@@ -169,13 +244,17 @@ var NS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBNM5j8YykQe6VEDAngq
 
   /* ---------- 시험지에 「← 단원으로」 버튼 ---------- */
   function backBar() {
-    var m = file.match(/^(tb-[a-z0-9]+-[a-z]+-(?:L\d+|SL))-s\d+$/) || file.match(/^(mock-g\d-\d{4}-\d{2})-.+$/) || file.match(/^(ext-[a-z]+)-.+$/) || file.match(/^(sup-[a-z0-9-]+?)-(?:u|L|s)\d+.*$/);
+    var m = file.match(/^(tb-[a-z0-9]+-[a-z][a-z0-9]*-(?:L\d+|SL))-s\d+$/) || file.match(/^(mock-g\d-\d{4}-\d{2})-.+$/) || file.match(/^(ext-[a-z]+)-.+$/) || file.match(/^(sup-[a-z0-9-]+?)-(?:u|L|s)\d+.*$/);
     if (!m) return;
-    var parent = m[1], a = document.createElement('a');
+    var parent = m[1], bar = document.createElement('div'), a = document.createElement('a'), my = document.createElement('a');
+    bar.setAttribute('style', 'display:flex;align-items:center;gap:10px;padding:10px 16px;background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-weight:800;font-size:14px;font-family:"Noto Sans KR",-apple-system,"Malgun Gothic",sans-serif');
     a.href = parent + '.html';
     a.textContent = '← ' + label(parent).split(' · ').pop() + '(으)로 돌아가기';
-    a.setAttribute('style', 'display:block;padding:10px 16px;background:#f1f5f9;border-bottom:1px solid #e2e8f0;color:#0369a1;font-weight:800;font-size:14px;text-decoration:none;font-family:"Noto Sans KR",-apple-system,"Malgun Gothic",sans-serif');
-    document.body.insertBefore(a, document.body.firstChild);
+    a.setAttribute('style', 'color:#0369a1;text-decoration:none');
+    my.href = 'my.html'; my.textContent = '내 결과';
+    my.setAttribute('style', 'margin-left:auto;color:#0369a1;text-decoration:none;border:1px solid #bae6fd;background:#fff;border-radius:999px;padding:3px 12px;font-size:13px');
+    bar.appendChild(a); bar.appendChild(my);
+    document.body.insertBefore(bar, document.body.firstChild);
   }
 
   /* ---------- 시작 ---------- */
@@ -185,9 +264,10 @@ var NS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBNM5j8YykQe6VEDAngq
       var s1 = document.getElementById('sname'), s2 = document.getElementById('sclass');   // 섹션 1 시험지의 이름 칸 자동 채움
       if (s1 && !s1.value) s1.value = student.name;
       if (s2 && !s2.value) s2.value = student.cls || '';
+      whoBar();
       send(base('open'));
     };
-    if (!student) askName(go); else go();
+    if (!student) askStudent(go, store.get('ns_student', null)); else go();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
