@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "루브르의 떠오르는 별, 한지 (Hanji) 정독 확인 문항 (#7~#25)",
+ "section": "교과서 본문 · 섹션 2 (#7~#25)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [7, "Hanji, a Rising Star of the Louvre"],
+  [8, "In Europe, paper is used for the restoration of cultural assets."],
+  [9, "For example, paper can be used to repair the damaged areas of paintings and other things made of paper."],
+  [10, "It can also bring new life to decaying furniture and sculptures by filling in the cracks."],
+  [11, "For such purposes, the Japanese paper called washi has been widely used."],
+  [12, "The Louvre Museum in France was no exception."],
+  [13, "However, a Korean who was working at the Louvre in 2014 wanted to let the world know the value of hanji, traditional handmade Korean paper."],
+  [14, "He convinced the head of the museum’s restoration team to read his study on the comparison of traditional papers from Korea and Japan."],
+  [15, "After reading his study, the Louvre became interested in hanji and carried out an experiment to see whether it would be suitable for use in restoration."],
+  [16, "They wet both washi and hanji to compare their durability."],
+  [17, "Ultimately, hanji was found to be more durable than washi."],
+  [18, "Unlike washi, which has its fibers lined up in one direction, hanji is made with both horizontal and vertical fibers."],
+  [19, "This means that the fibers in hanji are more closely woven, making the paper stronger."],
+  [20, "This also allows hanji to maintain its original size and shape better when there is a change in its moisture content."],
+  [21, "Because of its durability, hanji was proven to be excellent material for restoration."],
+  [22, "Thus, in 2017, the Louvre used hanji for the first time to restore a relic from its collection."],
+  [23, "Since then, hanji has been used more and more to restore various cultural assets of the museum."],
+  [24, "Who knows?"],
+  [25, "Maybe someday the Mona Lisa, one of the museum’s most famous paintings, will be restored with hanji."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 유럽에서 종이가 문화재 복원에 활용되는 방식으로 언급되지 않은 것은?",
+  "o": [
+   "손상된 그림 부위의 수리",
+   "종이로 제작된 유물의 복원",
+   "부식되어 가는 가구의 틈 메우기",
+   "오래된 조각상의 균열 메우기",
+   "박물관 건물의 외벽 균열 보강"
+  ],
+  "a": 5,
+  "e": "#9, #10 손상된 그림, 종이로 된 물건, 낡아가는 가구와 조각상의 틈을 메우는 용도로 쓰인다고 명시되어 있습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "루브르 박물관은 2014년 이전에도 일본 종이 와시를 배제하고 전통 한지만을 사용하고 있었다.",
+  "a": "X",
+  "e": "#11, #12, #13 와시가 널리 사용되어 왔고 루브르도 예외가 아니었으며, 2014년에야 한지의 가치를 알리는 시도가 있었습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["루브르 박물관은 한국 직원의 연구를 읽은 뒤 한지의 복원 적합성을 검증하기 위한 실험을 수행했다.", "T"],
+   ["내구성 비교 실험에서 와시와 한지를 물에 적셔 테스트하였다.", "T"],
+   ["루브르 박물관이 최초로 한지를 사용해 소장 유물을 복원한 해는 2014년이다.", "F"]
+  ],
+  "e": "#15, #16, #22 한국 직원이 알리고자 한 해는 2014년이지만, 루브르가 최초로 유물 복원에 한지를 사용한 것은 2017년입니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지에서 설명하는 한지의 구조적 특징과 장점으로 옳은 것은?",
+  "o": [
+   "섬유가 오직 한 방향으로만 나란히 정렬되어 있다.",
+   "수평 섬유와 수직 섬유가 교차되어 직조 구조가 더 촘촘하다.",
+   "수분 함량이 변하면 크기와 모양이 유연하게 늘어난다.",
+   "와시보다 섬유가 덜 촘촘하여 건조 속도가 훨씬 빠르다",
+   "대량 생산에 최적화된 기계식 제조 공정을 지닌다"
+  ],
+  "a": 2,
+  "e": "#18, #19 한지는 수평과 수직 섬유 둘 다로 만들어져 더 촘촘하게 짜여 종이가 더 강합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "24번 문장의 수사의문문 Who knows?는 모나리자가 한지로 복원될 가능성이 전혀 없다는 비관적 단정을 나타낸다.",
+  "a": "X",
+  "e": "#24 구문 분석: 아무도 모르는 일이라며 언젠가 실제로 일어날지도 모른다는 강한 긍정적 가능성을 암시하는 수사적 표현입니다."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "repair, renewal",
+   "fissure, split",
+   "conduct, execute",
+   "endurance, sturdiness",
+   "persuade, assure"
+  ],
+  "rows": [
+   ["restoration", 1],
+   ["crack", 2],
+   ["carry out", 3],
+   ["durability", 4],
+   ["convince", 5]
+  ],
+  "e": "분석지 #8, #10, #14, #15, #16 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "destruction, demolition",
+   "flourish, grow",
+   "fragile, delicate",
+   "unsuitable, inappropriate",
+   "horizontal"
+  ],
+  "rows": [
+   ["restoration", 1],
+   ["decay", 2],
+   ["durable", 3],
+   ["suitable", 4],
+   ["vertical", 5]
+  ],
+  "e": "분석지 #8, #10, #15, #17, #18 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #10의 명사 furniture에 대한 설명으로 옳은 것은?",
+  "o": [
+   "복수형 furnitures로만 사용되는 명사이다.",
+   "단수 취급과 복수 취급이 모두 가능한 집합명사이다.",
+   "셀 수 없는 불가산 명사이다.",
+   "반드시 부정관사 a와 결합해야 하는 가산명사이다"
+  ],
+  "a": 3,
+  "e": "#10 어휘: furniture는 셀 수 없는 불가산 명사입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #16의 동사 wet에 대한 설명으로 옳은 것은?",
+  "o": [
+   "과거형과 과거분사형이 wetted로 규칙 변화한다.",
+   "과거형이 wet - wetted - wet으로 불규칙 변화한다.",
+   "과거형도 형태 변화 없이 그대로 wet이다.",
+   "동사로는 사용되지 않으며 오직 형용사로만 쓰인다"
+  ],
+  "a": 3,
+  "e": "#16 구문 분석: 동사 wet의 과거형은 형태 변화 없이 그대로 wet입니다 (wet - wet - wet)."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 본문 속 의미를 「보기」에서 고르시오.",
+  "box": [
+   "자산, 재산",
+   "수장, 책임자",
+   "연구, 조사 보고서",
+   "함유량, 함량",
+   "유물, 유적"
+  ],
+  "rows": [
+   ["asset", 1],
+   ["head", 2],
+   ["study", 3],
+   ["content", 4],
+   ["relic", 5]
+  ],
+  "e": "분석지 #8, #14, #20, #22 어휘"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #13의 handmade와 바꾸어 쓸 수 있는 분석지상 동의어를 쓰시오.",
+  "ans": [
+   "handcrafted"
+  ],
+  "show": "handcrafted",
+  "e": "#13 어휘: handmade (syn. handcrafted)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In Europe, paper is used (for / to) the restoration of cultural assets.",
+  "o": [
+   "for",
+   "to"
+  ],
+  "a": "for",
+  "e": "#8 구문 분석: 명사구(the restoration ~)가 목적어로 이어지므로 전치사 for가 적절합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Paper can be used to repair the (damaging / damaged) areas of paintings.",
+  "o": [
+   "damaged",
+   "damaging"
+  ],
+  "a": "damaged",
+  "e": "#9 구문 분석: 손상된 부위를 의미하므로 수동의 과거분사 damaged가 명사 areas를 수식합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It can also bring new life to decaying furniture by (fill / filling) in the cracks.",
+  "o": [
+   "filling",
+   "fill"
+  ],
+  "a": "filling",
+  "e": "#10 구문 분석 ★: 전치사 by의 목적어로 수단/방법을 나타내는 동명사(-ing)가 와야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "For such purposes, the Japanese paper called washi (has widely used / has been widely used).",
+  "o": [
+   "has been widely used",
+   "has widely used"
+  ],
+  "a": "has been widely used",
+  "e": "#11 구문 분석 ★: 일본 종이가 널리 사용되어 온 수동적 상태이므로 현재완료 수동태(has been p.p.)를 써야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A Korean working at the Louvre wanted to let the world (know / to know) the value of hanji.",
+  "o": [
+   "know",
+   "to know"
+  ],
+  "a": "know",
+  "e": "#13 구문 분석 ★: 사역동사 let의 목적격 보어 자리에는 동사원형이 와야 합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He convinced the head of the museum’s restoration team (read / to read) his study.",
+  "o": [
+   "to read",
+   "read"
+  ],
+  "a": "to read",
+  "e": "#14 구문 분석 ★: convince는 목적격 보어로 반드시 to부정사를 취합니다 (convince + O + to-v)."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The Louvre carried out an experiment to see (whether / that) it would be suitable for use in restoration.",
+  "o": [
+   "whether",
+   "that"
+  ],
+  "a": "whether",
+  "e": "#15 구문 분석 ★: 복원에 적절할지 아닐지 불확실성을 나타내어 동사 see의 목적어로 쓰인 명사절 접속사는 whether입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Unlike washi, (which / that) has its fibers lined up in one direction, hanji is made with horizontal and vertical fibers.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "#18 구문 분석: 계속적 용법의 관계대명사 자리이므로 콤마 뒤에 that을 쓸 수 없습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Washi has its fibers (line / lined) up in one direction.",
+  "o": [
+   "lined",
+   "line"
+  ],
+  "a": "lined",
+  "e": "#18 구문 분석 ★: 섬유(fibers)가 한 방향으로 줄지어 세워지는 수동의 대상이므로 과거분사 lined가 와야 합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The fibers in hanji are more closely woven, (making / made) the paper stronger.",
+  "o": [
+   "making",
+   "made"
+  ],
+  "a": "making",
+  "e": "#19 구문 분석 ★: 앞 절의 내용을 받아 종이를 더 강하게 만드는 능동의 결과 분사구문입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The fibers in hanji are more closely woven, making the paper (stronger / strongly).",
+  "o": [
+   "stronger",
+   "strongly"
+  ],
+  "a": "stronger",
+  "e": "#19 구문 분석: 5형식 making의 목적격 보어 자리이므로 부사가 아닌 형용사(비교급) stronger가 와야 합니다."
+ },
+ {
+  "n": 23,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This allows hanji (maintain / to maintain) its original size and shape better.",
+  "o": [
+   "to maintain",
+   "maintain"
+  ],
+  "a": "to maintain",
+  "e": "#20 구문 분석 ★: allow는 목적격 보어로 to부정사를 취합니다 (allow + O + to-v)."
+ },
+ {
+  "n": 24,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Because / Because of) its durability, hanji was proven to be excellent material for restoration.",
+  "o": [
+   "Because of",
+   "Because"
+  ],
+  "a": "Because of",
+  "e": "#21 구문 분석 ★: 뒤에 절이 아니라 명사구(its durability)가 왔으므로 전치사구 Because of가 맞습니다."
+ },
+ {
+  "n": 25,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Someday the Mona Lisa, one of the museum’s most famous (painting / paintings), will be restored with hanji.",
+  "o": [
+   "paintings",
+   "painting"
+  ],
+  "a": "paintings",
+  "e": "#25 구문 분석 ★: one of the + 최상급 뒤에는 복수 명사가 와야 합니다."
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "앞 문장의 일반적이고 포괄적인 내용에 대한 구체적 적용 사례 제시",
+   "기존의 관행적 상황과 정반대되는 새로운 흐름 간의 역접 대조",
+   "내구성 검증 결과로부터 도출된 실제 복원 작업 채택이라는 인과 관계"
+  ],
+  "rows": [
+   ["For example (#9)", 1],
+   ["However (#13)", 2],
+   ["Thus (#22)", 3]
+  ],
+  "e": "분석지 #9, #13, #22 [연결어 분석]"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #10의 also에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "종이가 문화재 복원에 쓰이지 않는 예외적 상황을 지적한다.",
+   "종이가 가구와 조각상의 틈을 메워 새 생명을 준다는 추가적 기능을 대등하게 덧붙인다.",
+   "앞 문장의 그림 복원 용도가 지닌 한계점을 반박한다.",
+   "앞 문장의 추상적인 진술에 대해 구체적인 원인과 결과를 설명한다"
+  ],
+  "a": 2,
+  "e": "#10 [연결어 분석]: also는 종이의 복원 용도를 나열하는 동일하게 구체적인 층위에서 추가적 기능을 덧붙입니다."
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그것은 균열을 메움으로써 서서히 낡아가는 가구와 조각상에 새로운 생명을 불어넣을 수 있다.<br><small>「조건」 bring new life to, decaying, by filling in 활용 (총 14단어)</small>",
+  "ans": [
+   "It can also bring new life to decaying furniture and sculptures by filling in the cracks"
+  ],
+  "show": "It can also bring new life to decaying furniture and sculptures by filling in the cracks.",
+  "e": "#10 bring new life to 관용구 및 by + -ing 수단 전치사구"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "He convinced the head of the museum’s restoration team <u>reading</u> his study. The Louvre carried out an experiment to see <u>that</u> it would be suitable for use. Ultimately, washi has its fibers <u>lining</u> up in one direction, while hanji is made with crisscrossing fibers.",
+  "keys": [
+   {
+    "k": "to read",
+    "show": "reading → to read"
+   },
+   {
+    "k": "whether",
+    "show": "that → whether (또는 if)"
+   },
+   {
+    "k": "lined",
+    "show": "lining → lined"
+   }
+  ],
+  "e": "#14 convince + O + to-v, #15 see 뒤의 명사절 접속사 whether, #18 have + O + p.p.(lined up)"
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "kw",
+  "s": "21번 문장에서 Because 대신 Because of가 쓰인 어법적 이유를 쓰시오.",
+  "groups": [
+   [
+    "전치사",
+    "전치사구"
+   ],
+   [
+    "명사",
+    "명사구",
+    "절"
+   ]
+  ],
+  "show": "Because of는 전치사이므로 뒤에 절이 아닌 명사구(its durability)가 와야 하기 때문이다.",
+  "e": "#21 구문 분석 ★"
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "In art restoration, France's Louvre Museum discovered hanji's superior (A) d________. Woven with crisscrossing fibers, hanji withstands (B) m________ changes without deforming.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "durability"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "moisture"
+    ]
+   ]
+  ],
+  "show": "(A) durability (B) moisture",
+  "e": "Section 2 English Summary 및 본문 #16, #20"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
