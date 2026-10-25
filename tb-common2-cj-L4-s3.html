@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "정수기(Water Purifier)의 우주적 기원 정독 확인 문항 (#11~#16)",
+ "section": "교과서 본문 · 섹션 3 (#11~#16)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [11, "Today’s water purifier also originated from space technology."],
+  [12, "While planning their human space exploration program, NASA scientists realized that it was impossible to load a sufficient amount of clean water into a spacecraft."],
+  [13, "Then, they hit upon an idea that wastewater could be recycled once harmful bacteria were removed."],
+  [14, "So they developed a water purification system that could successfully kill off bacteria."],
+  [15, "Continued research led to the invention of a better water purification system that uses cartridges for longer missions that did not need to be replaced frequently."],
+  [16, "This water purifying technique was developed for several decades and then marketed for domestic use."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, NASA 과학자들이 폐수 정수 시스템을 개발하게 된 직접적인 계기로 가장 적절한 것은?",
+  "o": [
+   "지구 환경 오염으로 인한 식수 부족 문제를 해결하기 위하여",
+   "우주선이라는 한정된 공간에 충분한 양의 깨끗한 물을 싣는 것이 불가능했기 때문에",
+   "우주선 냉각 장치에 주입할 특수 정제수가 대량으로 필요했기 때문에",
+   "기존 가정용 정수기의 과도한 필터 교체 비용을 절감하기 위하여",
+   "우주선 내부의 공기 정화 시스템과 수자원 시스템을 일원화하기 위하여"
+  ],
+  "a": 2,
+  "e": "#12 NASA scientists realized that it was impossible to load a sufficient amount of clean water into a spacecraft."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "NASA 과학자들은 유해 박테리아를 제거하면 폐수를 재활용할 수 있다는 생각을 떠올렸다.",
+  "a": "O",
+  "e": "#13 they hit upon an idea that wastewater could be recycled once harmful bacteria were removed."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["우주선용 정수 시스템은 장기 임무를 위해 자주 교체할 필요가 없는 카트리지 기술로 고도화되었다.", "T"],
+   ["우주선(spacecraft)은 단수형과 복수형의 형태가 서로 다르다.", "F"],
+   ["정수 기술은 수십 년간의 연구 개발을 거쳐 가정용으로 시판되었다.", "T"]
+  ],
+  "e": "#12, #15, #16 단어 정리: spacecraft는 단수와 복수의 형태가 동일합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "15번 문장의 두 번째 that절(that did not need to be replaced frequently)이 직접 수식하는 선행사로 분석지에 명시된 것은?",
+  "o": [
+   "cartridges",
+   "longer missions",
+   "continued research",
+   "the invention",
+   "a spacecraft"
+  ],
+  "a": 1,
+  "e": "#15 구문 분석: 두 번째 주격 관계대명사절은 빈번하게 교체될 필요가 없었던 cartridges(카트리지들)를 수식합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, NASA 기술자들은 밀폐된 우주선에 무한한 물을 적재하는 것이 물리적으로 가능함을 입증했다.",
+  "a": "X",
+  "e": "Section 3 English Summary: Facing the impossibility of payloading endless water supplies into confined spacecrafts(밀폐된 우주선에 끝없는 물을 싣는 것이 불가능함에 직면하여)라고 명시되어 있습니다."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "cleanse, sanitize",
+   "enough, adequate",
+   "come up with, discover",
+   "exterminate, destroy",
+   "household, home"
+  ],
+  "rows": [
+   ["purify", 1],
+   ["sufficient", 2],
+   ["hit upon", 3],
+   ["kill off", 4],
+   ["domestic", 5]
+  ],
+  "e": "분석지 #11, #12, #13, #14, #16 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "contaminate, pollute",
+   "possible, feasible",
+   "insufficient, lacking",
+   "harmless, beneficial",
+   "foreign, commercial"
+  ],
+  "rows": [
+   ["purify", 1],
+   ["impossible", 2],
+   ["sufficient", 3],
+   ["harmful", 4],
+   ["domestic", 5]
+  ],
+  "e": "분석지 #11, #12, #13, #16 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #13의 bacteria에 대한 설명으로 옳은 것은?",
+  "o": [
+   "단수형 명사이며 복수형은 bacteriums이다.",
+   "복수형 명사이며 단수형은 bacterium이다.",
+   "셀 수 없는 순수 물질명사로 단복수 구분이 없다.",
+   "항상 정관사 the와 함께 쓰이는 고유명사이다"
+  ],
+  "a": 2,
+  "e": "#13 단어 정리: bacteria는 복수형 명사이며, 단수형은 bacterium입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #16의 market이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "시장, 장터",
+   "증권 거래소",
+   "시장에 출시하다, 시판하다",
+   "수요, 구매력"
+  ],
+  "a": 3,
+  "e": "#16 and then marketed for domestic use에서 market은 '시장에 출시하다, 시판하다(syn. commercialize, sell)'라는 동사로 쓰였습니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #15의 lead to와 바꾸어 쓸 수 있는 분석지상 동의어 표현을 두 단어로 쓰시오.",
+  "ans": [
+   "result in",
+   "bring about"
+  ],
+  "show": "result in (또는 bring about)",
+  "e": "#15 어휘: lead to (syn. result in, cause, bring about, trigger)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #15의 continued와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "ongoing",
+   "continuous",
+   "uninterrupted",
+   "sustained"
+  ],
+  "show": "ongoing (또는 continuous, uninterrupted, sustained)",
+  "e": "#15 어휘: continued (syn. ongoing, continuous, uninterrupted, sustained)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Today’s water purifier also (originated / was originated) from space technology.",
+  "o": [
+   "originated",
+   "was originated"
+  ],
+  "a": "originated",
+  "e": "#11 구문 분석: originate는 대표적인 자동사이므로 수동태로 쓰지 않고 전치사 from과 함께 능동 형태로 씁니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "While (planned / planning) their human space exploration program, NASA scientists realized the problem.",
+  "o": [
+   "planning",
+   "planned"
+  ],
+  "a": "planning",
+  "e": "#12 구문 분석 ★: 주어인 과학자들이 탐사 프로그램을 능동적으로 계획한 주체이므로 While 뒤에 능동의 현재분사 planning이 와야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "NASA scientists realized that (it / this) was impossible to load a sufficient amount of clean water into a spacecraft.",
+  "o": [
+   "it",
+   "this"
+  ],
+  "a": "it",
+  "e": "#12 구문 분석: 뒤에 오는 to load ~ 이하의 진주어를 대신하는 가주어 자리이므로 it이 올바릅니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They hit upon an idea (that / which) wastewater could be recycled once harmful bacteria were removed.",
+  "o": [
+   "that",
+   "which"
+  ],
+  "a": "that",
+  "e": "#13 구문 분석 ★: an idea 뒤에 빠진 성분이 없는 완전한 절이 이어지므로 동격의 접속사 that이 와야 하며 which로 대체할 수 없습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Wastewater could be recycled once harmful bacteria (removed / were removed).",
+  "o": [
+   "were removed",
+   "removed"
+  ],
+  "a": "were removed",
+  "e": "#13 구문 분석: 유해 박테리아는 사람이나 정수 시스템에 의해 제거되는 대상이므로 수동태 were removed가 알맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They developed a water purification system that could successfully kill (off / out) bacteria.",
+  "o": [
+   "off",
+   "out"
+  ],
+  "a": "off",
+  "e": "#14 본문 및 어휘: '모두 죽이다, 전멸시키다'라는 의미의 동사구는 kill off입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Continued research led (to / for) the invention of a better water purification system.",
+  "o": [
+   "to",
+   "for"
+  ],
+  "a": "to",
+  "e": "#15 구문 분석: lead to의 to는 명사(the invention)를 목적어로 취하는 전치사입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A better system uses cartridges for longer missions that did not need (to replace / to be replaced) frequently.",
+  "o": [
+   "to be replaced",
+   "to replace"
+  ],
+  "a": "to be replaced",
+  "e": "#15 구문 분석 ★: 카트리지(cartridges)는 교체되는 수동적 입장이므로 수동형 to부정사 to be replaced가 와야 합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This water purifying technique was developed for several decades and then (marketed / marketing) for domestic use.",
+  "o": [
+   "marketed",
+   "marketing"
+  ],
+  "a": "marketed",
+  "e": "#16 구문 분석 ★: was developed와 and then으로 대등하게 연결되는 수동태 과거분사 병렬 자리(was marketed)입니다."
+ },
+ {
+  "n": 21,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "우주 기술이 일상 제품이 된 메모리폼 사례에 정수기라는 새로운 실례를 대등한 층위에서 덧붙임",
+   "우주선에 많은 물을 실을 수 없다는 문제 인식 직후에 폐수 재활용 아이디어를 떠올린 시간적·논리적 순서 연결",
+   "폐수 재활용 아이디어 착안을 바탕으로 실제 정수 시스템 개발을 도출하는 인과 관계"
+  ],
+  "rows": [
+   ["also (#11)", 1],
+   ["Then (#13)", 2],
+   ["So (#14)", 3]
+  ],
+  "e": "분석지 #11, #13 [연결어 분석] 및 본문 #14"
+ },
+ {
+  "n": 22,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "정수기의 일상 출시 → 우주선 내 수자원 한계 봉착 → 카트리지 개량 → 박테리아 발견",
+   "우주 탐사 계획 중 식수 탑재 불가 인식 → 폐수 재활용 아이디어 착안 → 세균 박멸 시스템 개발 → 장기 임무용 카트리지 개발 → 가정용 출시",
+   "가정용 정수기의 결함 분석 → 폐수 처리장 건립 → 우주선 필터 역수출 → NASA의 상용화 승인",
+   "박테리아의 위험성 경고 → 우주비행사 선발 기준 강화 → 수자원 감축 정책 수립 → 정수기 발명"
+  ],
+  "a": 2,
+  "e": "#12 우주선 적재 불가 인식 → #13 재활용 착안 → #14 정수 시스템 개발 → #15 교체형 카트리지 개발 → #16 수십 년 연구 후 가정용 상용화 순서입니다."
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "지속된 연구는 빈번하게 교체될 필요가 없었던 카트리지를 사용하는 더 나은 정수 시스템의 발명으로 이어졌다.<br><small>「조건」 led to the invention, that uses, did not need to be replaced 활용 (총 24단어)</small>",
+  "ans": [
+   "Continued research led to the invention of a better water purification system that uses cartridges for longer missions that did not need to be replaced frequently"
+  ],
+  "show": "Continued research led to the invention of a better water purification system that uses cartridges for longer missions that did not need to be replaced frequently.",
+  "e": "#15 관계대명사의 이중 수식 및 수동형 to부정사 to be replaced"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "While <u>planned</u> their human space exploration program, NASA scientists realized the issue. They hit upon an idea <u>which</u> wastewater could be recycled once harmful bacteria were removed. This technique uses cartridges that did not need to <u>replace</u> frequently.",
+  "keys": [
+   {
+    "k": "planning",
+    "show": "planned → planning"
+   },
+   {
+    "k": "that",
+    "show": "which → that"
+   },
+   {
+    "k": "be replaced",
+    "show": "replace → be replaced"
+   }
+  ],
+  "e": "#12 능동 분사구문 planning, #13 동격의 접속사 that, #15 수동형 to부정사 to be replaced"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "kw",
+  "s": "13번 문장의 an idea 뒤에 which 대신 that을 써야 하는 어법적 이유를 뒤따르는 문장 구조와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "동격",
+    "동격의 접속사",
+    "접속사"
+   ],
+   [
+    "완전한 절",
+    "완전한 문장",
+    "완전"
+   ]
+  ],
+  "show": "뒤에 빠진 문장 성분이 없는 완전한 문장이 이어지는 동격의 접속사 that 자리이기 때문이다.",
+  "e": "#13 구문 분석 ★"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "NASA engineers devised closed-loop filtration mechanisms capable of eliminating harmful (A) p________ to recycle wastewater. Subsequent innovations produced long-lasting (B) c________ designed for prolonged missions.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "pathogens"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "cartridges"
+    ]
+   ]
+  ],
+  "show": "(A) pathogens (B) cartridges",
+  "e": "Section 3 English Summary 및 본문 #15"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

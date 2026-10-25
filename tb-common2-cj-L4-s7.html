@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "하늘의 혁신, 드론 (Drones in Our Lives) 정독 확인 문항 (#41~#53)",
+ "section": "교과서 본문 · 섹션 7 (#41~#53)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [41, "Drones are planes that can fly without a pilot."],
+  [42, "They were first developed for military purposes in the U.K."],
+  [43, "The first one was called Queen Bee."],
+  [44, "The U.S. then created their own version and named it “Drone,” after male, worker bees."],
+  [45, "Since then, the term “drone” has represented all unmanned flying vehicles."],
+  [46, "These days, drones are used to make our lives more convenient and prosperous."],
+  [47, "Drones are used to conduct difficult tasks instead of people."],
+  [48, "They deliver essential items to remote areas, rescue people injured in extreme places, and even put out fire in hazardous locations where there is a risk of explosion."],
+  [49, "Drones also help farmers to manage their crops more efficiently."],
+  [50, "They can monitor the condition of the farm regularly, track the growth of crops, and maintain the health of crops."],
+  [51, "In addition, drones are considered a powerful tool in monitoring our natural environment."],
+  [52, "They can provide crucial information by keeping track of endangered species, marine life, and so on in real time."],
+  [53, "With technological advancements, the possibilities for using drones are limitless."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 드론의 역사적 기원과 명칭에 대한 설명으로 옳은 것은?",
+  "o": [
+   "미국에서 여왕벌의 비행 방식을 모방하여 최초로 퀸비(Queen Bee)를 개발했다.",
+   "영국에서 군사적 목적으로 최초 개발한 무인 비행체는 퀸비(Queen Bee)라고 불렸다.",
+   "드론이라는 명칭은 영국의 기술진이 수벌의 윙윙거리는 소리에서 직접 착안했다.",
+   "처음부터 민간의 농업 및 생태 모니터링을 전담하기 위한 목적으로 설계되었다.",
+   "수벌의 이름을 딴 드론이라는 용어는 개발 초기부터 유인 비행기만을 지칭했다"
+  ],
+  "a": 2,
+  "e": "#42, #43 드론은 영국에서 군사적 목적으로 최초 개발되었으며 첫 기체는 Queen Bee라 불렸습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "오늘날 드론은 폭발 위험이 있는 위험한 장소에서 불을 끄는 화재 진압 작업에는 투입되지 않는다.",
+  "a": "X",
+  "e": "#48 and even put out fire in hazardous locations where there is a risk of explosion이라고 명시되어 있습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["미국은 독자적인 버전을 제작한 후 수컷 일벌의 이름을 따서 Drone이라 명명했다.", "T"],
+   ["드론은 정기적으로 농장 상태를 관찰하고 작물의 성장을 추적할 수 있다.", "T"],
+   ["자연환경 모니터링에서 드론은 멸종 위기종이나 해양 생물을 실시간으로 추적하는 데 한계가 있다.", "F"]
+  ],
+  "e": "#44, #50, #52 실시간으로 멸종 위기종과 해양 생물을 추적하여 결정적인 정보를 제공할 수 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "48번 문장에서 드론이 사람 대신 수행하는 어려운 과업으로 언급되지 않은 것은?",
+  "o": [
+   "외딴 지역으로 필수 물품 배송",
+   "극한의 장소에서 부상당한 사람들의 구조",
+   "폭발 위험이 도사리는 위험한 장소의 화재 진압",
+   "도심지 고층 빌딩의 건축용 자재 인양 및 시공"
+  ],
+  "a": 4,
+  "e": "#48 험지 배송, 인명 구조, 위험 구역 화재 진압이 언급되어 있습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 드론은 조립 라인의 기계 장치로만 쓰이며 극한 지형에서의 수색 구조 작업에는 활용되지 못한다.",
+  "a": "X",
+  "e": "Section 7 English Summary: conducting search-and-rescue operations in treacherous terrain이라고 명시되어 있습니다."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "armed, martial",
+   "thriving, flourishing",
+   "carry out, execute",
+   "extinguish, quench",
+   "infinite, boundless"
+  ],
+  "rows": [
+   ["military", 1],
+   ["prosperous", 2],
+   ["conduct", 3],
+   ["put out", 4],
+   ["limitless", 5]
+  ],
+  "e": "분석지 #42, #46, #47, #48, #53 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "civilian",
+   "manned",
+   "inconvenient",
+   "safe, secure",
+   "limited, finite"
+  ],
+  "rows": [
+   ["military", 1],
+   ["unmanned", 2],
+   ["convenient", 3],
+   ["hazardous", 4],
+   ["limitless", 5]
+  ],
+  "e": "분석지 #42, #45, #46, #48, #53 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #52의 information에 대한 설명으로 옳은 것은?",
+  "o": [
+   "복수형 informations로만 쓰이는 명사이다.",
+   "단수형과 복수형의 형태가 완전히 일치하는 가산명사이다.",
+   "셀 수 없는 불가산 명사이다.",
+   "반드시 부정관사 an과 결합하여 쓰여야 한다"
+  ],
+  "a": 3,
+  "e": "#52 어휘: information은 셀 수 없는 불가산 명사입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #52의 species에 대한 어휘적 특징으로 분석지에 제시된 것은?",
+  "o": [
+   "단수와 복수의 형태가 동일하다.",
+   "항상 단수 취급만 하는 명사이다.",
+   "복수형 어미가 -es로 불규칙하게 바뀐다.",
+   "동사로만 쓰이며 명사형이 없다"
+  ],
+  "a": 1,
+  "e": "#52 어휘: species는 단수와 복수 형태가 동일합니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #44의 name A after B의 분석지상 숙어 뜻을 한글로 쓰시오.",
+  "ans": [
+   "B의 이름을 따서 A에게 이름을 짓다",
+   "B의 이름을 따서 A에게 이름을 붙이다",
+   "B의 이름을 따서 A의 이름을 짓다"
+  ],
+  "show": "B의 이름을 따서 A에게 이름을 짓다",
+  "e": "#44 구문 분석 ★: name A after B 숙어 표현"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #52의 keep track of와 바꾸어 쓸 수 있는 분석지상 숙어의 의미를 포함하여 '~을 추적하다'를 뜻하는 동사를 한 단어로 쓰시오.",
+  "ans": [
+   "track",
+   "monitor",
+   "follow",
+   "trace"
+  ],
+  "show": "track (또는 trace, monitor, follow)",
+  "e": "#50, #52 어휘 및 구문: keep track of (syn. track, trace, follow)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The first one was called Queen Bee, and the U.S. named it “Drone,” (after / for) male, worker bees.",
+  "o": [
+   "after",
+   "for"
+  ],
+  "a": "after",
+  "e": "#44 구문 분석 ★: '~의 이름을 따서 이름을 짓다'를 나타내는 숙어는 name A after B입니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Since then, the term “drone” (represented / has represented) all unmanned flying vehicles.",
+  "o": [
+   "has represented",
+   "represented"
+  ],
+  "a": "has represented",
+  "e": "#45 구문 분석 ★: 'Since then(그때 이래로)' 시간 표현과 호응하여 현재완료 시제 has represented가 와야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "These days, drones are used (to make / to making) our lives more convenient and prosperous.",
+  "o": [
+   "to make",
+   "to making"
+  ],
+  "a": "to make",
+  "e": "#46 구문 분석 ★: '~하기 위해 사용되다'라는 수동태 목적 표현이므로 be used to + 동사원형(to make)이 와야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Drones are used to make our lives more convenient and (prosperous / prosperously).",
+  "o": [
+   "prosperous",
+   "prosperously"
+  ],
+  "a": "prosperous",
+  "e": "#46 구문 분석 ★: 5형식 make의 목적격 보어 자리이므로 형용사 prosperous가 와야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Drones rescue people (injuring / injured) in extreme places.",
+  "o": [
+   "injured",
+   "injuring"
+  ],
+  "a": "injured",
+  "e": "#48 구문 분석: 사람들은 부상을 당한 수동의 입장이므로 과거분사 injured가 people을 후치 수식합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They even put out fire in hazardous locations (where / which) there is a risk of explosion.",
+  "o": [
+   "where",
+   "which"
+  ],
+  "a": "where",
+  "e": "#48 구문 분석 ★: 선행사가 장소이고 뒤에 완전한 문장(there is a risk of explosion)이 이어지므로 관계부사 where가 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Drones also help farmers (to manage / managing) their crops more efficiently.",
+  "o": [
+   "to manage",
+   "managing"
+  ],
+  "a": "to manage",
+  "e": "#49 구문 분석 ★: 준사역동사 help의 목적격 보어로는 to부정사 또는 동사원형이 와야 합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They can monitor the farm regularly, track the growth, and (maintaining / maintain) the health of crops.",
+  "o": [
+   "maintain",
+   "maintaining"
+  ],
+  "a": "maintain",
+  "e": "#50 구문 분석: 조동사 can에 걸려 monitor, track과 and로 병렬 연결되는 동사원형 maintain 자리입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Drones (consider / are considered) a powerful tool in monitoring our natural environment.",
+  "o": [
+   "are considered",
+   "consider"
+  ],
+  "a": "are considered",
+  "e": "#51 구문 분석: 드론은 사람들에 의해 강력한 도구로 여겨지는 대상이므로 수동태 are considered가 쓰입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They can provide crucial information by (keep / keeping) track of endangered species.",
+  "o": [
+   "keeping",
+   "keep"
+  ],
+  "a": "keeping",
+  "e": "#52 구문 분석: 수단을 나타내는 전치사 by의 목적어로 동명사 keeping이 와야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "With technological advancements, the possibilities for using drones (is / are) limitless.",
+  "o": [
+   "are",
+   "is"
+  ],
+  "a": "are",
+  "e": "#53 구문 분석 ★: 주어의 핵이 복수명사 the possibilities이므로 복수 be동사 are가 와야 합니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "영국의 퀸비 제작 직후 미국이 독자적 버전을 제작하여 명명한 역사적 사실의 시간적 순차 연결",
+   "위험한 과업 수행 사례에 농부들의 농작물 관리 효율화라는 추가적 활용 분야를 대등하게 덧붙임",
+   "농업 생산성 향상 쓰임에 자연 생태계 감시 및 보존이라는 부가적 적용 영역을 열거"
+  ],
+  "rows": [
+   ["then (#44)", 1],
+   ["also (#49)", 2],
+   ["In addition (#51)", 3]
+  ],
+  "e": "분석지 #44, #49, #51 [연결어 분석]"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "드론의 정의 및 군사적 기원과 명칭 유래 → 위험한 임무 수행(배송·구조·화재 진압) → 농업 분야 활용 → 자연환경 및 생태계 모니터링 → 무한한 미래 확장성 전망",
+   "농업용 드론의 한계 분석 → 영국과 미국의 군비 경쟁 → 무인 비행체 금지 조약 체결 → 결론",
+   "생태계 파괴 실태 고발 → 멸종 위기종 지정 → 드론 배송 중단 조치 → 드론 명칭 개정",
+   "무선 통신 기술의 발전 → 드론의 소방 전담 기구 창설 → 농장 자동화 포기 → 군사용 전환"
+  ],
+  "a": 1,
+  "e": "#41~#45 군사적 기원 및 명칭 → #46~#48 위험 과업 대행 → #49, #50 농업 활용 → #51, #52 자연환경 모니터링 → #53 미래 가능성 전망 순서입니다."
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "요즘에는 드론들이 우리의 삶을 더 편리하고 번영하게 만들기 위해 사용된다.<br><small>「조건」 are used to make, more convenient and prosperous 활용 (총 12단어)</small>",
+  "ans": [
+   "These days drones are used to make our lives more convenient and prosperous"
+  ],
+  "show": "These days, drones are used to make our lives more convenient and prosperous.",
+  "e": "#46 be used to + 동사원형 및 5형식 make + 목적어 + 형용사 보어 병렬"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Since then, the term “drone” <u>represented</u> all unmanned flying vehicles. These days, drones are used to <u>making</u> our lives more convenient. Drones put out fire in hazardous locations <u>which</u> there is a risk of explosion.",
+  "keys": [
+   {
+    "k": "has represented",
+    "show": "represented → has represented"
+   },
+   {
+    "k": "make",
+    "show": "making → make"
+   },
+   {
+    "k": "where",
+    "show": "which → where (또는 in which)"
+   }
+  ],
+  "e": "#45 Since then 호응 현재완료 시제, #46 be used to + 동사원형, #48 장소 선행사 뒤 완전한 절을 이끄는 관계부사 where"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "kw",
+  "s": "48번 문장의 locations 뒤에 which 대신 where를 쓴 어법적 이유를 뒤따르는 문장 구조와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "관계부사",
+    "where"
+   ],
+   [
+    "완전한 절",
+    "완전한 문장",
+    "완전"
+   ],
+   [
+    "선행사",
+    "장소"
+   ]
+  ],
+  "show": "선행사가 장소의 명사구(hazardous locations)이며, 뒤에 주어와 동사를 온전히 갖춘 완전한 절(there is a risk of explosion)이 이어지기 때문이다.",
+  "e": "#48 구문 분석 ★"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Originating as military target aircraft, drones evolved to replace humans in hazardous logistics and conduct search-and-rescue operations in treacherous (A) t________. Furthermore, drones empower precision agriculture and real-time environmental (B) c________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "terrain"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "conservation"
+    ]
+   ]
+  ],
+  "show": "(A) terrain (B) conservation",
+  "e": "Section 7 English Summary 및 본문 #48, #51"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

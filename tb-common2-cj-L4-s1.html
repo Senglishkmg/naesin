@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "우주 기술의 일상화와 도입 정독 확인 문항 (#2~#4)",
+ "section": "교과서 본문 · 섹션 1 (#2~#4)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [2, "Did you know that many technologies around us originated from space technology?"],
+  [3, "You may not have realized it, but we have been enjoying the enormous benefits of space technology in our daily lives for a long time."],
+  [4, "Let’s see how some examples of it have been invented and integrated into our daily lives already."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 본문에서 다루고자 하는 핵심 내용으로 가장 적절한 것은?",
+  "o": [
+   "우주 탐사선 개발에 필요한 첨단 신소재의 종류",
+   "우주 기술에서 유래하여 일상생활에 통합된 기술들의 발명과 활용 사례",
+   "우주 비행사들의 우주 정거장 내 일상생활 수칙",
+   "우주 산업에 대한 각국 정부의 막대한 재정 투자 현황",
+   "일상의 편리한 기기들을 우주 탐사용으로 개조하는 기술"
+  ],
+  "a": 2,
+  "e": "Section 1 Summary 및 #2, #4 우리 주변의 많은 기술들이 우주 기술에서 유래하여 일상에 통합된 구체적 사례를 다루고 있습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "인류는 오랜 시간 동안 일상생활에서 우주 기술이 주는 거대한 혜택을 누려오고 있다.",
+  "a": "O",
+  "e": "#3 we have been enjoying the enormous benefits of space technology in our daily lives for a long time."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["우리가 일상에서 누리는 많은 편리한 기술들은 본래 우주 탐사 및 비행 프로그램을 위해 고안된 것에서 유래했다.", "T"],
+   ["사람들은 일상에서 우주 기술의 혜택을 누리고 있다는 사실을 처음부터 명확히 인지해 왔다.", "F"],
+   ["4번 문장의 it이 가리키는 대상은 '우주 기술(space technology)'이다.", "T"]
+  ],
+  "e": "#3 You may not have realized it에서 알 수 있듯 사람들은 의식적으로 깨닫지 못했을 수도 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하지 않는 것은?",
+  "o": [
+   "우리가 일상에서 당연하게 여기는 많은 현대 기술들은 우주 탐사 프로그램에서 비롯되었다.",
+   "인류는 의식하지 못하는 사이에도 우주 혁신으로부터 실질적인 혜택을 누려왔다.",
+   "본 섹션은 우주 기원의 기술들이 어떻게 개발되어 일상 편의 속으로 통합되었는지를 탐구하도록 안내한다.",
+   "우주 기술은 일상생활과의 융합에 실패하여 현재는 오직 우주 비행사들만 독점적으로 사용하고 있다"
+  ],
+  "a": 4,
+  "e": "English Summary: successfully integrated into our daily conveniences라고 명시되어 있습니다."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "derive, stem",
+   "recognize, notice",
+   "huge, immense",
+   "instance, sample",
+   "combine, incorporate"
+  ],
+  "rows": [
+   ["originate", 1],
+   ["realize", 2],
+   ["enormous", 3],
+   ["example", 4],
+   ["integrate", 5]
+  ],
+  "e": "분석지 #2, #3, #4 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "terminate, end",
+   "misunderstand, overlook",
+   "tiny, minute",
+   "drawback, disadvantage",
+   "separate, isolate"
+  ],
+  "rows": [
+   ["originate", 1],
+   ["realize", 2],
+   ["enormous", 3],
+   ["benefit", 4],
+   ["integrate", 5]
+  ],
+  "e": "분석지 #2, #3, #4 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #3의 realize가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "깨닫다, 알아차리다",
+   "실현하다, 달성하다",
+   "자산이나 주식을 현금화하다",
+   "수익을 창출하다"
+  ],
+  "a": 1,
+  "e": "#3 어휘 및 구문: 문맥상 '깨닫다, 알아차리다(syn. recognize, notice)'의 의미로 쓰였습니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #3의 benefit이 본문에서 쓰인 품사와 의미로 옳은 것은?",
+  "o": [
+   "동사 - 이익을 주다",
+   "동사 - 이익을 얻다",
+   "명사 - 혜택, 이점",
+   "형용사 - 유익한"
+  ],
+  "a": 3,
+  "e": "#3 the enormous benefits of ~에서 목적어로 쓰인 명사(혜택, 이점)입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #4의 invent와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "create",
+   "devise",
+   "originate",
+   "coin"
+  ],
+  "show": "create (또는 devise, originate, coin)",
+  "e": "#4 어휘: invent (syn. create, devise, originate, coin)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #3의 daily와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "everyday",
+   "routine"
+  ],
+  "show": "everyday (또는 routine)",
+  "e": "#3 어휘: daily (syn. everyday, routine)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Did you know that many technologies around us (originated / were originated) from space technology?",
+  "o": [
+   "originated",
+   "were originated"
+  ],
+  "a": "originated",
+  "e": "#2 구문 분석: originate는 '~에서 유래하다'라는 뜻의 대표적 자동사이므로 수동태로 쓰지 않습니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "You (may not realize / may not have realized) it, but we have been enjoying the benefits.",
+  "o": [
+   "may not have realized",
+   "may not realize"
+  ],
+  "a": "may not have realized",
+  "e": "#3 구문 분석 ★: '과거에 깨닫지 못했을지도 모른다'라는 과거 사실에 대한 추측이므로 「조동사 + have p.p.」를 씁니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "We (have been enjoying / have been enjoyed) the enormous benefits of space technology.",
+  "o": [
+   "have been enjoying",
+   "have been enjoyed"
+  ],
+  "a": "have been enjoying",
+  "e": "#3 구문 분석: 우리가 혜택을 능동적으로 계속 누려오고 있는 것이므로 현재완료 진행형(have been -ing)을 씁니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "We have been enjoying the enormous benefits of space technology (for / during) a long time.",
+  "o": [
+   "for",
+   "during"
+  ],
+  "a": "for",
+  "e": "#3 구문 분석: a long time처럼 시간의 길이를 나타내는 표현 앞에는 전치사 for를 씁니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Let’s see (how some examples of it have been invented / how have some examples of it been invented) and integrated.",
+  "o": [
+   "how some examples of it have been invented",
+   "how have some examples of it been invented"
+  ],
+  "a": "how some examples of it have been invented",
+  "e": "#4 구문 분석 ★: see의 목적어로 쓰인 간접의문문은 [의문사 + 주어 + 동사] 어순을 따라야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Let’s see how some examples of it have been invented and (integrating / integrated) into our daily lives.",
+  "o": [
+   "integrated",
+   "integrating"
+  ],
+  "a": "integrated",
+  "e": "#4 구문 분석 ★: have been 뒤에 결합하여 invented와 and로 병렬 연결되는 과거분사 자리입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "mc",
+  "s": "2번 문장의 명사절 접속사 that에 대한 설명으로 옳은 것은?",
+  "o": [
+   "전치사 뒤에만 올 수 있는 한정적 접속사이다.",
+   "동사 know의 목적어로 쓰였으므로 생략이 가능하다.",
+   "뒤에 불완전한 문장이 이어지는 주격 관계대명사이다.",
+   "선행사를 포함하는 관계대명사 what으로 반드시 교체해야 한다"
+  ],
+  "a": 2,
+  "e": "#2 구문 분석: 목적어 자리에 쓰인 명사절 접속사 that은 생략이 가능합니다."
+ },
+ {
+  "n": 18,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 방식으로 가장 적절한 것은?",
+  "o": [
+   "우주 기술의 한계를 지적하고 대체 기술의 필요성을 역설한다.",
+   "질문으로 독자의 호기심을 유발한 뒤, 일상 속 혜택을 상기시키며 구체적 사례 탐구로 안내한다.",
+   "우주 기술의 성공 사례와 실패 사례를 대등한 비율로 비교 분석한다.",
+   "과거의 우주 기술과 미래의 우주 기술의 발전 속도를 연대기순으로 나열한다"
+  ],
+  "a": 2,
+  "e": "#2에서 질문으로 화두를 던지고, #3에서 일상 속 혜택을 제시한 뒤, #4에서 구체적 발명 및 통합 사례를 살펴보자며 도입을 맺습니다."
+ },
+ {
+  "n": 19,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "당신은 그것을 깨닫지 못했을지도 모르지만, 우리는 오랜 시간 동안 우리의 일상생활에서 우주 기술의 엄청난 혜택들을 누려오고 있다.<br><small>「조건」 may not have realized, have been enjoying, the enormous benefits 활용 (총 26단어)</small>",
+  "ans": [
+   "You may not have realized it but we have been enjoying the enormous benefits of space technology in our daily lives for a long time"
+  ],
+  "show": "You may not have realized it, but we have been enjoying the enormous benefits of space technology in our daily lives for a long time.",
+  "e": "#3 조동사+have p.p. 및 현재완료 진행형"
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Did you know that many technologies around us <u>were originated</u> from space technology? You may not <u>realize</u> it in the past, but we have been enjoying the benefits. Let’s see how <u>have some examples of it been</u> invented and integrated into our daily lives.",
+  "keys": [
+   {
+    "k": "originated",
+    "show": "were originated → originated"
+   },
+   {
+    "k": "have realized",
+    "show": "realize → have realized"
+   },
+   {
+    "k": "some examples of it have been",
+    "show": "have some examples of it been → some examples of it have been"
+   }
+  ],
+  "e": "#2 자동사 originate(수동태 불가), #3 과거 사실 추측(may not have realized), #4 간접의문문 어순(의문사+주어+동사)"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "kw",
+  "s": "2번 문장에서 originated 앞에 were를 쓰지 않는 어법적 이유를 쓰시오.",
+  "groups": [
+   [
+    "자동사"
+   ],
+   [
+    "수동태",
+    "수동"
+   ]
+  ],
+  "show": "originate는 자동사이므로 원칙적으로 수동태로 쓰지 않기 때문이다.",
+  "e": "#2 구문 분석 ★"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Many technologies we take for granted originally (A) s________ from space exploration programs. This section explores how these technologies were developed and successfully (B) i________ into our daily conveniences.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "stemmed"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "integrated"
+    ]
+   ]
+  ],
+  "show": "(A) stemmed (B) integrated",
+  "e": "Section 1 English Summary 및 본문 #2, #4"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

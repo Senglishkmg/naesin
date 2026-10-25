@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "우주 기술의 무한한 미래 확장성 정독 확인 문항 (#38~#40)",
+ "section": "교과서 본문 · 섹션 6 (#38~#40)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [38, "In our daily lives, there are many other inventions that have their origins in space technology including the smartphone camera and the computer mouse."],
+  [39, "Private firms as well as government organizations have invested heavily in space technology for space exploration."],
+  [40, "Therefore, we can expect that our future lives will be significantly influenced by space technology that has not yet been invented."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "38번 문장에서 우주 기술에 기원을 둔 일상 속 발명품의 예시로 직접 언급된 두 가지는?",
+  "o": [
+   "스마트폰 카메라와 컴퓨터 마우스",
+   "스마트폰 카메라와 무선 헤드셋",
+   "컴퓨터 마우스와 가정용 공기청정기",
+   "메모리폼 침대와 정수기 카트리지",
+   "구조용 헬멧과 블루투스 스피커"
+  ],
+  "a": 1,
+  "e": "#38 including the smartphone camera and the computer mouse"
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "우주 탐사를 위한 우주 기술 투자는 민간 기업의 참여 없이 오직 정부 기관에 의해서만 독점적으로 이루어져 왔다.",
+  "a": "X",
+  "e": "#39 Private firms as well as government organizations have invested heavily in space technology라고 명시되어 있어 민간 기업도 함께 막대한 투자를 해왔습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["우리의 미래 삶은 아직 발명되지 않은 우주 기술에 의해서도 상당한 영향을 받을 것으로 기대할 수 있다.", "T"],
+   ["우주 기술에서 비롯된 일상 발명품은 스마트폰 카메라와 컴퓨터 마우스 두 가지가 유일하다.", "F"],
+   ["우주 탐사를 목적으로 한 우주 기술에 막대한 자본 투자가 지속되고 있다.", "T"]
+  ],
+  "e": "#38, #39, #40 38번 문장에 many other inventions(많은 다른 발명품들)라고 명시되어 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하지 않는 것은?",
+  "o": [
+   "스마트폰 센서부터 광학 마우스에 이르는 수많은 전자기기가 항공우주 프로젝트에 기원을 두고 있다.",
+   "국가 우주 기관과 민간 상업 기업 모두로부터 우주 개척지에 상당한 자본이 유입되고 있다.",
+   "미래 문명은 아직 발명되지 않은 혁신적인 우주 기술들에 의해 크게 변혁될 운명이다.",
+   "우주 기술 투자의 경제성이 부족하여 각국 정부는 우주 기술의 민간 기술 이전을 전면 금지하고 있다"
+  ],
+  "a": 4,
+  "e": "Section 6 English Summary: 상당한 자본이 유입되고 미래 문명이 혁신될 것이라고 설명합니다."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "source, root",
+   "incorporate, contain",
+   "company, enterprise",
+   "anticipate, foresee",
+   "affect, impact"
+  ],
+  "rows": [
+   ["origin", 1],
+   ["include", 2],
+   ["firm", 3],
+   ["expect", 4],
+   ["influence", 5]
+  ],
+  "e": "분석지 #38, #39, #40 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "exclude",
+   "lightly",
+   "past",
+   "insignificantly, slightly"
+  ],
+  "rows": [
+   ["include", 1],
+   ["heavily", 2],
+   ["future", 3],
+   ["significantly", 4]
+  ],
+  "e": "분석지 #38, #39, #40 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #39의 firm이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "회사, 기업",
+   "단단한, 딱딱한",
+   "확고한, 결연한",
+   "다지다, 단단하게 하다"
+  ],
+  "a": 1,
+  "e": "#39 Private firms에서 firm은 '회사, 기업(syn. company, enterprise)'이라는 명사로 쓰였습니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #39의 heavily와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "immensely",
+   "substantially",
+   "excessively",
+   "deeply"
+  ],
+  "show": "substantially (또는 immensely, excessively, deeply)",
+  "e": "#39 어휘: heavily (syn. immensely, substantially, excessively, deeply)"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #40의 significantly와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "considerably",
+   "substantially",
+   "remarkably",
+   "profoundly"
+  ],
+  "show": "considerably (또는 substantially, remarkably, profoundly)",
+  "e": "#40 어휘: significantly (syn. considerably, substantially, remarkably, profoundly)"
+ },
+ {
+  "n": 10,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In our daily lives, there (is / are) many other inventions that have their origins in space technology.",
+  "o": [
+   "are",
+   "is"
+  ],
+  "a": "are",
+  "e": "#38 구문 분석 ★: 유도부사 there 뒤의 실제 주어가 복수명사구 many other inventions이므로 복수동사 are가 알맞습니다."
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "There are many other inventions that (has / have) their origins in space technology.",
+  "o": [
+   "have",
+   "has"
+  ],
+  "a": "have",
+  "e": "#38 구문 분석: 주격 관계대명사 that의 선행사가 복수명사 many other inventions이므로 관계사절 동사도 복수형인 have가 와야 합니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Private firms as well as government organizations (has invested / have invested) heavily in space technology.",
+  "o": [
+   "have invested",
+   "has invested"
+  ],
+  "a": "have invested",
+  "e": "#39 구문 분석 ★: B as well as A 구문에서는 앞의 B(Private firms)에 동사의 수를 일치시키므로 복수 동사인 have invested가 맞습니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Organizations have invested heavily (in / for) space technology for space exploration.",
+  "o": [
+   "in",
+   "for"
+  ],
+  "a": "in",
+  "e": "#39 구문 분석: '~에 투자하다'를 나타내는 표현은 invest in + 명사입니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "We can expect that our future lives (will influence / will be influenced) significantly by space technology.",
+  "o": [
+   "will be influenced",
+   "will influence"
+  ],
+  "a": "will be influenced",
+  "e": "#40 구문 분석: 우리의 미래 삶은 우주 기술에 의해 영향을 받게 되는 수동적 입장이므로 미래 수동태 will be influenced가 맞습니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Our future lives will be influenced by space technology that has not yet (invented / been invented).",
+  "o": [
+   "been invented",
+   "invented"
+  ],
+  "a": "been invented",
+  "e": "#40 구문 분석 ★: 우주 기술은 아직 발명되지 않은 수동의 상태이므로 현재완료 수동태인 has not yet been invented가 올바릅니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Space technology that (has / have) not yet been invented will influence our lives.",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "has",
+  "e": "#40 구문 분석: 선행사 space technology가 단수이므로 주격 관계대명사절의 동사는 단수형 has가 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #40의 Therefore에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "민간 기업과 정부 기관의 투자 실패 사례를 열거한다.",
+   "우주 기술 투자가 지속되고 있다는 현실적 사실로부터 미래 삶의 획기적 변화라는 논리적 결론을 도출한다.",
+   "스마트폰 카메라 기술의 한계점을 지적하며 과거 기술로 회귀할 것을 주장한다.",
+   "우주 탐사 프로젝트가 겪고 있는 예산 부족 문제에 대한 대안을 제시한다"
+  ],
+  "a": 2,
+  "e": "#40 [연결어 분석]: 현실의 막대한 투자 사실(39번)로부터 미래 삶 역시 지대한 영향을 받을 것이라는 포괄적 결론(40번)을 이끌어내는 인과/귀결 연결어입니다."
+ },
+ {
+  "n": 18,
+  "p": "D",
+  "t": "mc",
+  "s": "38번 문장부터 40번 문장까지의 논리 전개 방식으로 가장 적절한 것은?",
+  "o": [
+   "일상 속 우주 발명품 예시 제시 → 정부와 기업의 막대한 투자 언급 → 아직 발명되지 않은 우주 기술이 미칠 미래 영향 전망",
+   "스마트폰의 문제점 진단 → 컴퓨터 마우스의 기원 규명 → 민간 기업의 투자 철회 → 결론",
+   "우주 탐사의 위험성 경고 → 정부 단독 투자 촉구 → 기술 개발 중단 발표",
+   "미래 기술의 부작용 예측 → 발명품 회수 조치 → 우주 산업 축소 전망"
+  ],
+  "a": 1,
+  "e": "#38 일상 속 우주 발명품 소개 → #39 정부와 민간 기업의 막대한 기술 투자 → #40 미래 삶에 미칠 지대한 영향에 대한 기대와 전망 순서로 귀결됩니다."
+ },
+ {
+  "n": 19,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "따라서 우리는 우리의 미래 삶이 아직 발명되지 않은 우주 기술에 의해 상당하게 영향받을 것이라고 기대할 수 있다.<br><small>「조건」 expect that, will be significantly influenced by, has not yet been invented 활용 (총 21단어)</small>",
+  "ans": [
+   "Therefore we can expect that our future lives will be significantly influenced by space technology that has not yet been invented"
+  ],
+  "show": "Therefore, we can expect that our future lives will be significantly influenced by space technology that has not yet been invented.",
+  "e": "#40 미래 수동태 및 주격 관계대명사절 현재완료 수동태 구문"
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "In our daily lives, there <u>is</u> many other inventions. Private firms as well as government organizations <u>has</u> invested heavily in space technology. Therefore, our future lives will be influenced by space technology that has not yet <u>invented</u>.",
+  "keys": [
+   {
+    "k": "are",
+    "show": "is → are"
+   },
+   {
+    "k": "have",
+    "show": "has → have"
+   },
+   {
+    "k": "been invented",
+    "show": "invented → been invented"
+   }
+  ],
+  "e": "#38 유도부사 수 일치(are), #39 B as well as A의 주어 수 일치(have), #40 현재완료 수동태(been invented)"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "kw",
+  "s": "39번 문장에서 organizations 뒤에 has invested가 아닌 have invested를 쓴 어법적 이유를 주어의 핵과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "B as well as A",
+    "as well as"
+   ],
+   [
+    "Private firms",
+    "앞 명사",
+    "B"
+   ],
+   [
+    "복수",
+    "수 일치"
+   ]
+  ],
+  "show": "B as well as A 구문에서는 동사의 수를 앞에 있는 B(Private firms)에 일치시키는데, Private firms가 복수명사이므로 복수 동사인 have invested를 써야 한다.",
+  "e": "#39 구문 분석 ★"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "With substantial financial capital pouring into space frontiers, future civilization is destined to be profoundly (A) r________ by innovative space technologies yet to be (B) i________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "revolutionized"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "invented"
+    ]
+   ]
+  ],
+  "show": "(A) revolutionized (B) invented",
+  "e": "Section 6 English Summary 및 본문 #40"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
