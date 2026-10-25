@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "23번 주제추론 분석지 확인 문제",
+ "section": "수능 영어 · 23번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 23번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "In recent years, the number of illegal actions in particular at the corporate level has grown, or at least the number of cases that came to light, increased."],
+  [2, "Such misconduct has often only been exposed because brave informants have risked a great deal in order to put an end to it."],
+  [3, "Hence, it is no surprise that whistleblower protection has come into focus."],
+  [4, "If violations of law and order go undetected and unpunished for years because employees of a company fear to report illegal activities for fear of reprisals or consequences, it can have several negative effects."],
+  [5, "It can harm the company itself, but also third-parties, the economy in general, the general public, and even the rule of law could be affected."],
+  [6, "Protecting those who would assist in reducing unlawful or even criminal behaviour has two main functions: Protecting the individual's actions as well as protecting the public good."],
+  [7, "A well-balanced whistleblower protection may have positive effects on both of these."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "최근 몇 년 동안 기업 차원의 불법 행위 건수가 증가했거나 적어도 세상에 드러난 사건의 수는 늘어났다.",
+  "a": "O",
+  "e": "1번 문장 the number of illegal actions... has grown, or at least the number of cases that came to light, increased와 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "기업의 위법 행위는 통상 내부 제보자의 위험 감수 없이도 정부 규제 기관에 의해 저절로 쉽게 밝혀져 왔다.",
+  "a": "X",
+  "e": "2번 문장에서 용감한 제보자들이 많은 위험을 무릅썼기 때문에 비로소 드러나는 경우가 많았다고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "내부 고발자 보호 제도가 주목받게 된 것은 지문의 필자 입장에서 매우 이례적이고 놀라운 일이다.",
+  "a": "X",
+  "e": "3번 문장에서 it is no surprise that whistleblower protection has come into focus라 하여 전혀 놀라운 일이 아니라고 밝혔습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "회사 직원들이 불법 활동을 신고하기를 두려워하는 주된 이유는 보복이나 뒤따를 불이익에 대한 두려움 때문이다.",
+  "a": "O",
+  "e": "4번 문장의 for fear of reprisals or consequences와 일치합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "법과 질서의 위반이 방치될 경우 오직 해당 기업 내부 구성원에게만 피해가 국한되며 외부 사회에는 아무런 영향이 없다.",
+  "a": "X",
+  "e": "5번 문장에서 회사 자체뿐 아니라 제3자, 전반적 경제, 일반 대중, 법치주의까지 영향을 받을 수 있다고 명시했습니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "불법적이거나 범죄적인 행위를 줄이는 데 도움을 주는 사람들을 보호하는 것은 두 가지 주된 기능을 갖는다.",
+  "a": "O",
+  "e": "6번 문장의 Protecting those who would assist... has two main functions와 일치합니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "제보자 보호의 두 가지 기능은 개인의 행동 보호와 공공의 이익 보호이다.",
+  "a": "O",
+  "e": "6번 문장의 Protecting the individual's actions as well as protecting the public good과 일치합니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "잘 균형 잡힌 내부 고발자 보호 제도는 개인 보호에는 긍정적이지만 공공의 이익 수호에는 부정적 영향을 미친다.",
+  "a": "X",
+  "e": "7번 문장에서 have positive effects on both of these라 하여 두 가지 측면 모두에 긍정적인 영향을 미칠 수 있다고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "비행, 위법 행위",
+   "보복, 앙갚음",
+   "공익, 공공의 이익",
+   "제보자, 고발자"
+  ],
+  "rows": [
+   ["misconduct", 1],
+   ["reprisal", 2],
+   ["public good", 3],
+   ["informant", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "지문의 밑줄 친 관용구의 올바른 의미를 고르시오.",
+  "c": "... or at least the number of cases that <u>came to light</u>, increased.",
+  "o": [
+   "세상에 알려지다, 밝혀지다",
+   "빛을 잃고 은폐되다"
+  ],
+  "a": "세상에 알려지다, 밝혀지다",
+  "e": "분석지 2번 어휘: come to light는 비밀 따위가 밝혀지다, 세상에 알려지다라는 관용구입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에서 제시한 unlawful의 유의어로 옳지 않은 것은?",
+  "o": [
+   "illegal",
+   "illicit",
+   "illegitimate",
+   "legitimate"
+  ],
+  "a": 4,
+  "e": "분석지 5번에 legitimate는 lawful, legal과 함께 unlawful의 반의어로 정리되어 있습니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "employees of a company fear to report illegal activities for fear of (reprisals / appraisals)",
+  "o": [
+   "reprisals",
+   "appraisals"
+  ],
+  "a": "reprisals",
+  "e": "분석지 5번 혼동 어휘: reprisal은 보복·앙갚음이고, appraisal은 평가·감정입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 misconduct의 동의어 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["wrongdoing", "malpractice"]],
+   ["②", ["wrongdoing", "malpractice"]]
+  ],
+  "show": "wrongdoing, malpractice",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "2번 문장에서 「~을 끝내다, 종식시키다」의 뜻으로 쓰인 세 단어의 관용구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "put an end to"
+  ],
+  "show": "put an end to",
+  "e": "2번 문장 put an end to"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어와의 수 일치상 알맞은 것을 고르시오.",
+  "c": "In recent years, the number of illegal actions in particular at the corporate level (has / have) grown...",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "has",
+  "e": "1번 문장: 주어의 핵심 명사가 단수명사인 the number이므로 단수동사 has가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 that came to light에서 관계대명사 that에 대한 설명으로 옳은 것은?",
+  "o": [
+   "선행사 corporate level을 수식하는 목적격 관계대명사이다.",
+   "선행사 cases를 수식하며 관계사절 내에서 주어 역할을 하는 주격 관계대명사이다.",
+   "동격의 접속사 that이며 뒤에 완전한 절이 이어진다.",
+   "the number를 선행사로 받는 소유격 관계대명사이다."
+  ],
+  "a": 2,
+  "e": "분석지 1번 문장 구문 분석: that은 선행사 cases를 수식하는 주격 관계대명사입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 형태를 고르시오.",
+  "c": "Such misconduct has often only (exposed / been exposed) because brave informants have risked a great deal...",
+  "o": [
+   "exposed",
+   "been exposed"
+  ],
+  "a": "been exposed",
+  "e": "2번 문장: 주어인 비위 행위(misconduct)가 외부로 폭로되는 수동의 관계이므로 현재완료 수동태 been exposed가 맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "3번 문장 It is no surprise that whistleblower protection has come into focus의 구문적 특성으로 옳은 것은?",
+  "o": [
+   "It은 날씨나 상황을 가리키는 비인칭 주어이다.",
+   "It은 시간을 나타내는 강조 구문의 주어이다.",
+   "It은 가주어이며 that 이하 명사절이 문장의 진주어이다.",
+   "that은 surprise를 직접 수식하는 관계부사이다."
+  ],
+  "a": 3,
+  "e": "분석지 3번 문장 구문 분석: It은 가주어, that절이 진주어입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 보어로 쓰인 알맞은 분사 형태를 고르시오.",
+  "c": "If violations of law and order go (undetected / undetecting) and unpunished for years...",
+  "o": [
+   "undetected",
+   "undetecting"
+  ],
+  "a": "undetected",
+  "e": "4번 문장: 불완전자동사 go 뒤에 과거분사 보어 undetected와 unpunished가 병렬 연결된 구조입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어와의 수 일치상 알맞은 것을 고르시오.",
+  "c": "Protecting those who would assist in reducing unlawful or even criminal behaviour (has / have) two main functions...",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "has",
+  "e": "6번 문장: 주어가 동명사구 Protecting those who ~이므로 단수 취급하여 has가 옳습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "short",
+  "s": "5번 문장에서 the company 바로 뒤에 쓰인 itself의 문법적 용법을 네 글자로 쓰시오.",
+  "ans": [
+   "강조용법",
+   "강조 용법"
+  ],
+  "show": "강조 용법",
+  "e": "분석지 5번 문장 구문 분석: the company를 강조하기 위해 덧붙은 재귀대명사의 강조 용법입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장의 콜론(:) 뒤에 쓰인 상관접속사 as well as를 중심으로 대등하게 병렬 연결된 두 어구는?",
+  "o": [
+   "reducing unlawful과 criminal behaviour",
+   "Protecting the individual's actions와 protecting the public good",
+   "those who would assist와 two main functions",
+   "the company itself와 the rule of law"
+  ],
+  "a": 2,
+  "e": "분석지 6번 문장 구문 분석: B as well as A 구조로 두 동명사구 Protecting the individual's actions와 protecting the public good이 대등하게 연결되었습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "기업의 준법 감시 체계 강화를 통한 회계 부정 예방책",
+   "제보자 보호와 공익 수호를 위한 내부 고발자 보호의 필요성",
+   "전문 경영인의 도덕적 해이가 거시 경제에 미치는 파급 효과",
+   "내부 고발자의 개인적 보상 강화를 위한 입법 과제"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 제보자 보호와 공익 수호를 위한 내부 고발자 보호의 필요성"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 키워드 A와 키워드 B를 총체적으로 집약하여 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "3번 문장",
+   "5번 문장",
+   "6번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 1번 중심 문장: 6번 문장 Protecting those who would assist in reducing unlawful or even criminal behaviour has two main functions: Protecting the individual's actions as well as protecting the public good."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (내부 고발자 보호)",
+   "키워드 B (개인의 행동과 공공의 이익 수호)"
+  ],
+  "rows": [
+   ["brave informants", 1],
+   ["protecting the public good", 2],
+   ["whistleblower protection", 1],
+   ["protecting the individual's actions", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "3번 문장의 연결부사 Hence가 지문 내에서 수행하는 논리적 역할로 가장 적절한 것은?",
+  "o": [
+   "앞 문장의 사실에 대한 구체적인 반례를 도입한다.",
+   "제보자들의 위험 감수 상황에서 제보자 보호의 대두라는 필연적 결론을 이끌어낸다.",
+   "기업 비리의 역대 통계 수치를 요약 정리한다.",
+   "앞서 언급된 기업 측의 입장을 대변하며 대조를 형성한다."
+  ],
+  "a": 2,
+  "e": "분석지 2번 어휘 및 연결어: Hence는 앞선 위험 감수 상황에서 제보자 보호의 대두라는 필연적 결론을 이끌어내는 인과 접속부사입니다."
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 정리한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "문제 제기 - 방치 시의 폐해 설명 - 보호의 핵심 기능 및 가치 제시",
+   "통념 반박 - 실험 결과 분석 - 절충안 도출",
+   "역사적 사례 열거 - 원인 규명 - 미래 전망 제시",
+   "가설 설정 - 현장 관찰 - 후속 연구 과제 제언"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 문제 제기 - 방치 시의 폐해 설명 - 보호의 핵심 기능 및 가치 제시"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 두 개 부분(Chunk)과 그 역할을 연결하세요.",
+  "box": [
+   "문제 상황과 현상 원인 규명 및 핵심 화제(내부 고발자 보호)의 제시",
+   "비리 방치에 따른 구체적 폐해 열거 및 고발자 보호 제도의 필수적 가치 규명"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~3번 문장)", 1],
+   ["두 번째 부분 (4~7번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 도출한 23번 주제 문제의 정답 선택지는?",
+  "o": [
+   "difficulties in protecting whistleblowers' rights",
+   "importance of punishment for unlawful corporate activities",
+   "causes of individuals' hesitation to become a whistleblower",
+   "effects of raising public awareness on reducing corporate corruption",
+   "need of whistleblower protection to guard their actions and the public good"
+  ],
+  "a": 5,
+  "e": "분석지 4번 문제 풀이: 정답은 need of whistleblower protection to guard their actions and the public good입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지에서 오답 causes of individuals' hesitation to become a whistleblower를 소거한 이유로 옳은 것은?",
+  "o": [
+   "지문에서 보복에 대한 두려움이 전혀 언급되지 않았기 때문에",
+   "제보 주저 원인은 보호 제도의 필요성을 역설하기 위한 논리적 배경일 뿐 궁극적 주제가 아니기 때문에",
+   "개인의 망설임이 아니라 법원의 처벌 수위 부족이 주된 문제이기 때문에",
+   "제보자들의 경제적 보상 요구만을 지나치게 다루었기 때문에"
+  ],
+  "a": 2,
+  "e": "분석지 4번 오답 분석: 제보를 주저하는 원인은 보호 제도의 필요성을 역설하기 위한 논리적 배경일 뿐 궁극적 주제가 될 수 없습니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지에서 오답 effects of raising public awareness on reducing corporate corruption을 소거한 주된 이유 2가지는?",
+  "o": [
+   "대중 인식 제고가 중심 화제가 아니며 핵심어인 내부 고발자 보호가 누락되었기 때문에",
+   "기업의 처벌 조항이 너무 가볍다고 주장했기 때문에",
+   "언론의 자유에 대한 논의가 빠져 있기 때문에",
+   "해외 선진국의 사례만을 다루고 있기 때문에"
+  ],
+  "a": 1,
+  "e": "분석지 4번 오답 분석: 대중의 인식 제고가 중심 화제가 아니며 핵심어인 내부 고발자 보호가 누락되어 오답입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "7번 문장의 both of these가 구체적으로 가리키는 6번 문장의 두 가지 대상을 지문에서 찾아 동명사구 두 개로 쓰시오. (and로 연결할 것)",
+  "ans": [
+   "Protecting the individual's actions and protecting the public good",
+   "protecting the individual's actions and protecting the public good"
+  ],
+  "show": "Protecting the individual's actions and protecting the public good",
+  "e": "분석지 7번 문장 구문 분석: both of these는 앞 문장의 '개인의 행동 보호'와 '공익 보호'를 가리킵니다."
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 4번 문장과 5번 문장을 바탕으로, 회사 직원들이 불법 활동 신고를 두려워하는 구체적 원인이 무엇이며, 그로 인해 비리가 방치될 때 발생하는 사회적 피해 4가지를 서술하세요.",
+  "show": "원인은 보복이나 뒤따를 불이익에 대한 두려움(fear of reprisals or consequences) 때문이며, 방치 시 회사 자체, 제3자, 전반적인 경제, 일반 대중 및 법치주의에 부정적인 해를 끼치게 된다.",
+  "crit": "① 두려움의 원인(보복 또는 불이익/결과) 언급 (1점) ② 피해 대상 중 회사 외 3가지 이상(제3자, 경제, 대중, 법치주의) 언급 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 「1. 키워드 분석」 및 6번 문장의 콜론(:) 뒤 내용을 바탕으로, 내부 고발자 보호가 수행하는 <b>두 가지 핵심 기능</b>을 우리말로 구체적으로 서술하세요.",
+  "show": "첫째는 위법 행위를 줄이려 나선 그 개인의 행동을 보호하는 것이고, 둘째는 사회 전체의 공공의 이익(공익)을 보호하는 것이다.",
+  "crit": "① '개인의 행동 보호' 명시 (2점) ② '공익(공공의 이익) 보호' 명시 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
