@@ -139,9 +139,13 @@ var NS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBNM5j8YykQe6VEDAngq
   var lastSig = store.get('ns_lastsig_' + file, '');
   function onGrade() {
     setTimeout(function () {
-      var QS = getQ(); if (!QS || !student) return;
-      var items;
-      try { items = (typeof window.gradeQ === 'function' || document.getElementById('grade')) ? readA(QS) : readB(QS); }
+      if (!student) return;
+      var items, QS = getQ();
+      try {
+        if (typeof window.NS_RESULT === 'function') items = window.NS_RESULT();   // 엔진이 직접 결과를 주는 시험지 (analysis.js 등)
+        else if (!QS) return;
+        else items = (typeof window.gradeQ === 'function' || document.getElementById('grade')) ? readA(QS) : readB(QS);
+      }
       catch (e) { console.warn('채점 결과를 읽지 못했어요', e); return; }
       var sig = JSON.stringify(items.map(function (i) { return [i.n, i.mine]; }));
       if (sig === lastSig) return;                       // 같은 답으로 채점 버튼을 또 누른 경우는 한 번만
@@ -150,7 +154,7 @@ var NS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBNM5j8YykQe6VEDAngq
       var meta = getMeta(), auto = 0;
       items.forEach(function (i) { if (i.status === 'manual-ok') auto += 1; else if (i.score != null) auto += i.score; });
       var o = base('grade');
-      o.sheetTitle = meta.title || document.title; o.section = meta.section || '';
+      o.sheetTitle = meta.title || window.NS_TITLE || document.title; o.section = meta.section || '';
       o.attempt = att; o.total = items.length; o.autoScore = Math.round(auto * 100) / 100;
       o.manualCount = items.filter(function (i) { return i.status === 'manual'; }).length;
       o.items = items;

@@ -65,7 +65,7 @@
   const app = document.getElementById('app');
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const fmt = iso => { const d = new Date(iso); return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
-  const TYPE = { mc: '객관식', choice: '양자택일', tf: 'T/F', short: '단답형', sent: '문장 쓰기', kw: '서술형', blanks: '빈칸', fix: '어법 수정' };
+  const TYPE = { mc: '객관식', choice: '양자택일', tf: 'T/F', short: '단답형', sent: '문장 쓰기', kw: '서술형', blanks: '빈칸', fix: '어법 수정', ox: 'O/X', pick: '보기 고르기', text: '단답형', multi: '짝짓기', self: '서술형', match: '짝짓기', essay: '서술형' };
   let key = ''; try { key = localStorage.getItem('ns_tkey') || ''; } catch (e) {}
   let rows = [], open = new Set(), F = { name: '', page: '', wait: false };
 
@@ -131,7 +131,7 @@
         <span class="right"><span class="meta">자동 ${r.auto} / ${r.total}</span>${badge}</span></summary>
       <div class="body">
         <h3>자동 채점에서 틀린 문항 (${wrong.length})</h3>
-        ${wrong.length ? `<table><tr><th>문항</th><th>학생 답</th><th>정답</th></tr>${wrong.map(i => `<tr><td class="n">${i.n}번${i.status === 'part' ? ' (부분)' : ''}</td><td class="mine">${esc(i.mine)}</td><td>${esc(i.right)}</td></tr>`).join('')}</table>` : '<div class="okline">자동 채점 문항은 모두 맞혔어요.</div>'}
+        ${wrong.length ? `<table><tr><th>문항</th><th>학생 답</th><th>정답</th></tr>${wrong.map(i => `<tr><td class="n">${esc(String(i.n))}${/^\d+$/.test(String(i.n)) ? '번' : ''}${i.status === 'part' ? ' (부분)' : ''}</td><td class="mine">${esc(i.mine)}</td><td>${esc(i.right)}</td></tr>`).join('')}</table>` : '<div class="okline">자동 채점 문항은 모두 맞혔어요.</div>'}
         ${man.length ? `<h3>교사 채점 문항 (${man.length})</h3>${man.map(i => manBox(r, i)).join('')}` : ''}
         ${manOk.length ? `<h3>모범 답안과 똑같아 정답 처리된 문항</h3><div class="meta">${manOk.map(i => `${i.n}번`).join(', ')}</div>` : ''}
       </div></details>`;
@@ -139,8 +139,8 @@
   function manBox(r, i) {
     const has = Object.prototype.hasOwnProperty.call(r.teacher, i.n), v = has ? r.teacher[i.n] : null;
     return `<div class="man ${has ? 'done' : ''}" data-id="${esc(r.id)}" data-n="${i.n}">
-      <div class="q">${i.n}번 · ${esc(TYPE[i.type] || i.type)}${i.prompt ? ' · ' + esc(i.prompt) : ''}</div>
-      <div class="row"><b>학생 답</b><span class="ans">${esc(i.mine)}</span><b>모범 답안</b><span class="ans">${esc(i.right)}</span></div>
+      <div class="q">${esc(String(i.n))}${/^\d+$/.test(String(i.n)) ? '번' : ''} · ${esc(TYPE[i.type] || i.type)}${i.prompt ? ' · ' + esc(i.prompt) : ''}</div>
+      <div class="row"><b>학생 답</b><span class="ans">${esc(i.mine)}</span><b>모범 답안</b><span class="ans">${esc(i.right)}</span>${i.self === true || i.self === false ? `<b>학생 자가채점</b><span class="ans">${i.self ? '맞음' : '틀림'} (참고)</span>` : ''}</div>
       <div class="scorebtns">
         ${[[1, '정답 1'], [0.5, '부분 0.5'], [0, '오답 0']].map(([s, t]) => `<button class="sb ${v === s ? 'on' : ''}" data-v="${s}">${t}</button>`).join('')}
         <input type="number" min="0" max="1" step="0.1" placeholder="직접" value="${has && ![0, 0.5, 1].includes(v) ? v : ''}">

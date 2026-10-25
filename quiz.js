@@ -1,143 +1,257 @@
 /* =====================================================================
-   S영어전문학원 · 분석지 정독 확인 문항 엔진 (quiz.js)
-   시험지 파일에는 META 와 Q(문항 데이터)만 들어 있고,
-   화면 모양과 채점은 모두 이 파일이 맡습니다.
-   시험지 파일보다 '뒤에' 불러야 합니다:
-     <script> const META = ...; const Q = [...]; </script>
-     <script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+   S영어전문학원 · 분석지 확인 문제 통합 엔진 (quiz.js)
+   교과서 · 보조교재 · 모의고사 · 외부지문 시험지가 모두 이 파일 하나를 씁니다.
+   시험지 파일에는 META 와 Q (문항 데이터)만 있고,
+   화면, 선지 섞기, 채점, 결과표, 선생님께 보내는 기록은 이 파일이 맡습니다.
+   시험지 파일의 데이터보다 '뒤에' 불러야 합니다.
    ===================================================================== */
-document.head.insertAdjacentHTML('beforeend', '<style>' + ":root{\n  --bg:#f7f6f2; --card:#ffffff; --ink:#1d1d1b; --muted:#6b6a64; --line:#e3e1d9;\n  --accent:#2f5d50; --accent-soft:#e3eee9; --ok:#1f7a4a; --ok-soft:#e4f3ea;\n  --bad:#b23a2e; --bad-soft:#f8e6e3; --warn:#9a6a00; --warn-soft:#fbf1d8;\n}\n@media (prefers-color-scheme: dark){\n  :root{\n    --bg:#161714; --card:#1f201c; --ink:#ecebe5; --muted:#a3a29a; --line:#34352f;\n    --accent:#7fbfa8; --accent-soft:#233630; --ok:#6fcf97; --ok-soft:#1d3427;\n    --bad:#f08b7e; --bad-soft:#3a2220; --warn:#e8c167; --warn-soft:#3a3120;\n  }\n}\n*{box-sizing:border-box}\nbody{margin:0;background:var(--bg);color:var(--ink);\n  font-family:\"Pretendard\",\"Apple SD Gothic Neo\",\"Noto Sans KR\",system-ui,sans-serif;line-height:1.6}\n.wrap{max-width:820px;margin:0 auto;padding:24px 16px 80px}\nheader h1{font-size:1.5rem;margin:0 0 4px}\nheader p{margin:0;color:var(--muted);font-size:.95rem}\n.who{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 8px}\n.who input{flex:1;min-width:160px}\ninput[type=text],textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;\n  background:var(--card);color:var(--ink);font:inherit}\ntextarea{min-height:64px;resize:vertical}\nh2{font-size:1.1rem;margin:32px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--accent)}\n.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}\n.q.ok{border-color:var(--ok);background:linear-gradient(var(--ok-soft),var(--card) 60%)}\n.q.bad{border-color:var(--bad);background:linear-gradient(var(--bad-soft),var(--card) 60%)}\n.q.part{border-color:var(--warn);background:linear-gradient(var(--warn-soft),var(--card) 60%)}\n.stem{font-weight:600;margin-bottom:6px}\n.num{display:inline-block;min-width:2.2em;color:var(--accent)}\n.ctx{background:var(--accent-soft);border-radius:8px;padding:8px 12px;margin:6px 0 10px;font-family:Georgia,serif}\n.opts label{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:8px;cursor:pointer}\n.opts label:hover{background:var(--accent-soft)}\n.opts input{margin-top:5px}\n.tfrow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:6px 0;border-top:1px dashed var(--line)}\n.tfrow:first-child{border-top:none}\n.tfbtns{display:flex;gap:6px;flex-shrink:0}\n.tfbtns label{border:1px solid var(--line);border-radius:6px;padding:2px 10px;cursor:pointer}\n.tfbtns input{display:none}\n.tfbtns input:checked+span{font-weight:700;color:var(--accent)}\n.tfbtns label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}\n.blank{display:flex;gap:8px;align-items:center;margin:6px 0}\n.blank span{min-width:2.5em;color:var(--muted)}\ntable.fix{width:100%;border-collapse:collapse;margin-top:8px}\ntable.fix td,table.fix th{border:1px solid var(--line);padding:6px;text-align:left;font-size:.95rem}\ntable.fix th{background:var(--accent-soft)}\n.fb{display:none;margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--bg);font-size:.95rem}\n.graded .fb{display:block}\n.fb b.ok{color:var(--ok)} .fb b.bad{color:var(--bad)} .fb b.part{color:var(--warn)}\n.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);\n  padding:12px 16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;z-index:5}\nbutton{font:inherit;border:1px solid var(--accent);background:var(--accent);color:var(--card);\n  padding:8px 18px;border-radius:999px;cursor:pointer;font-weight:600}\nbutton.ghost{background:transparent;color:var(--accent)}\n#result{display:none;background:var(--card);border:2px solid var(--accent);border-radius:14px;padding:18px;margin:20px 0}\n#result .big{font-size:2rem;font-weight:800;color:var(--accent)}\n#result table{width:100%;border-collapse:collapse;margin-top:10px}\n#result td,#result th{border-bottom:1px solid var(--line);padding:6px;text-align:left}\n.passage{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:16px 18px;margin:16px 0 8px}\n.passage h2{margin:0 0 8px;border:none;padding:0}\n.passage .ptext{font-family:Georgia,\"Times New Roman\",serif;font-size:1.05rem;line-height:1.9;margin:0}\n.passage sup{color:var(--accent);font-weight:700;font-family:system-ui,sans-serif;font-size:.7rem;margin-right:2px}\n.hide-ok .passage{display:none}\n.hide-ok .q.ok{display:none}\n.q.wait{border-color:var(--accent);border-style:dashed}\n.fb b.wait{color:var(--accent)}\n.muted{color:var(--muted);font-size:.9rem}\n.tscore{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}\n.tscore label{border:1px solid var(--line);border-radius:6px;padding:2px 10px;cursor:pointer}\n.tscore input[type=radio]{display:none}\n.tscore label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);font-weight:700}\n.tscore input[type=number]{width:80px;padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);font:inherit}\n@media print{.tscore label:not(:has(input:checked)){display:none}}\n@media print{.bar{display:none}}" + '</style>');
+(function () {
+'use strict';
+
+/* ---------- 화면 모양 ---------- */
+const CSS = `
+:root{--bg:#f7f6f2;--card:#ffffff;--ink:#1d1d1b;--muted:#6b6a64;--line:#e3e1d9;--accent:#2f5d50;--accent-soft:#e3eee9;
+--ok:#1f7a4a;--ok-soft:#e4f3ea;--bad:#b23a2e;--bad-soft:#f8e6e3;--warn:#9a6a00;--warn-soft:#fbf1d8}
+@media (prefers-color-scheme: dark){:root{--bg:#161714;--card:#1f201c;--ink:#ecebe5;--muted:#a3a29a;--line:#34352f;--accent:#7fbfa8;
+--accent-soft:#233630;--ok:#6fcf97;--ok-soft:#1d3427;--bad:#f08b7e;--bad-soft:#3a2220;--warn:#e8c167;--warn-soft:#3a3120}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding:24px 16px 96px}
+header .sec{margin:0 0 2px;color:var(--accent);font-size:.85rem;font-weight:700}
+header h1{font-size:1.5rem;margin:0 0 4px;line-height:1.35}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+.who{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 8px}.who input{flex:1;min-width:160px}
+input[type=text],textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit}
+textarea{min-height:72px;resize:vertical}
+h2{font-size:1.1rem;margin:32px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.q.ok{border-color:var(--ok);background:linear-gradient(var(--ok-soft),var(--card) 60%)}
+.q.bad{border-color:var(--bad);background:linear-gradient(var(--bad-soft),var(--card) 60%)}
+.q.part{border-color:var(--warn);background:linear-gradient(var(--warn-soft),var(--card) 60%)}
+.q.wait{border-color:var(--accent);border-style:dashed}
+.stem{font-weight:600;margin-bottom:6px}.num{display:inline-block;min-width:2.2em;color:var(--accent)}
+.ctx{background:var(--accent-soft);border-radius:8px;padding:8px 12px;margin:6px 0 10px;font-family:Georgia,"Times New Roman",serif;overflow-wrap:anywhere}
+.ctx small{font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--muted)}
+.boxv{border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin:6px 0 10px;font-size:.95rem;color:var(--muted)}
+.boxv span{display:inline-block;margin-right:14px}
+.opts label{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:8px;cursor:pointer}
+.opts label:hover{background:var(--accent-soft)}.opts input{margin-top:5px}
+.opts.row{display:flex;gap:8px;flex-wrap:wrap}
+.opts.row label{border:1px solid var(--line);padding:4px 18px}
+.opts.row label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+.tfrow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:6px 0;border-top:1px dashed var(--line)}
+.tfrow:first-child{border-top:none}
+.tfbtns{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.tfbtns label{border:1px solid var(--line);border-radius:6px;padding:2px 10px;cursor:pointer}
+.tfbtns input{display:none}
+.tfbtns label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);font-weight:700;color:var(--accent)}
+.blank{display:flex;gap:8px;align-items:center;margin:6px 0}.blank span{min-width:2.5em;color:var(--muted)}
+table.fix{width:100%;border-collapse:collapse;margin-top:8px}
+table.fix td,table.fix th{border:1px solid var(--line);padding:6px;text-align:left;font-size:.95rem}table.fix th{background:var(--accent-soft)}table.fix td:first-child,table.fix th:first-child{white-space:nowrap;width:1%}
+.fb{display:none;margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--bg);font-size:.95rem}
+.graded .fb{display:block}
+.fb b.ok{color:var(--ok)}.fb b.bad{color:var(--bad)}.fb b.part{color:var(--warn)}.fb b.wait{color:var(--accent)}
+.fb .model{margin-top:6px;padding:8px 10px;border-radius:6px;background:var(--card);border:1px solid var(--line)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;z-index:5}
+.bar .prog{color:var(--muted);font-size:.9rem;margin-right:6px}
+button{font:inherit;border:1px solid var(--accent);background:var(--accent);color:var(--card);padding:8px 18px;border-radius:999px;cursor:pointer;font-weight:600}
+button.ghost{background:transparent;color:var(--accent)}
+#result{display:none;background:var(--card);border:2px solid var(--accent);border-radius:14px;padding:18px;margin:20px 0}
+#result .big{font-size:2rem;font-weight:800;color:var(--accent)}
+#result table{width:100%;border-collapse:collapse;margin-top:10px}#result td,#result th{border-bottom:1px solid var(--line);padding:6px;text-align:left}
+.passage{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:16px 18px;margin:16px 0 8px}
+.passage h2{margin:0 0 8px;border:none;padding:0}
+.passage .ptext{font-family:Georgia,"Times New Roman",serif;font-size:1.05rem;line-height:1.9;margin:0}
+.passage sup{color:var(--accent);font-weight:700;font-family:system-ui,sans-serif;font-size:.7rem;margin-right:2px}
+.passage u{text-underline-offset:4px}
+.hide-ok .passage,.hide-ok .q.ok{display:none}
+.muted{color:var(--muted);font-size:.9rem}
+@media (max-width:560px){.tfrow{flex-direction:column;align-items:flex-start}.tfbtns{justify-content:flex-start}}
+@media print{.bar{display:none}}`;
+
+const SKELETON = `
+<div class="wrap">
+  <header><p class="sec" id="sec"></p><h1 id="ttl"></h1><p id="sub"></p></header>
+  <div class="who"><input type="text" id="sname" placeholder="이름"><input type="text" id="sclass" placeholder="학교 / 반 / 번호"></div>
+  <div id="result"></div>
+  <section id="passage" class="passage"></section>
+  <div id="quiz"></div>
+</div>
+<div class="bar"><span class="prog" id="prog"></span>
+  <button id="grade">채점하기</button>
+  <button class="ghost" id="toggle" style="display:none">오답만 보기</button>
+  <button class="ghost" id="reset">다시 풀기</button>
+</div>`;
+
+document.head.insertAdjacentHTML('beforeend', '<style>' + CSS + '</style>');
 if (!document.querySelector('meta[name=viewport]')) document.head.insertAdjacentHTML('beforeend', '<meta name="viewport" content="width=device-width, initial-scale=1">');
-document.body.insertAdjacentHTML('afterbegin', "<div class=\"wrap\">\n  <header>\n    <h1 id=\"ttl\"></h1>\n    <p id=\"sub\"></p>\n  </header>\n  <div class=\"who\">\n    <input type=\"text\" id=\"sname\" placeholder=\"이름\">\n    <input type=\"text\" id=\"sclass\" placeholder=\"반 / 번호\">\n  </div>\n  <div id=\"result\"></div>\n  <section id=\"passage\" class=\"passage\"></section>\n  <div id=\"quiz\"></div>\n</div>\n<div class=\"bar\">\n  <button id=\"grade\">채점하기</button>\n  <button class=\"ghost\" id=\"toggle\" style=\"display:none\">오답만 보기</button>\n  <button class=\"ghost\" id=\"reset\">다시 풀기</button>\n</div>\n");
-const PARTS = {A:"Part A. 내용 이해",B:"Part B. 어휘",C:"Part C. 구문·어법",D:"Part D. 연결어",E:"Part E. 서술형"};
+document.body.insertAdjacentHTML('afterbegin', SKELETON);
 
-const norm = s => (s||"").toLowerCase().replace(/[^a-z0-9가-힣]/g,"");
-const normSent = s => (s||"").toLowerCase().replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim();
-const circ = ["①","②","③","④","⑤"];
-const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+/* ---------- 데이터 ---------- */
+const M = (typeof META !== 'undefined') ? META : {};          // eslint-disable-line no-undef
+const QS = (typeof Q !== 'undefined') ? Q : [];                // eslint-disable-line no-undef
+const PARTS = Object.assign({ A: 'Part A. 내용 이해', B: 'Part B. 어휘', C: 'Part C. 구문·어법', D: 'Part D. 연결어·논리 흐름', E: 'Part E. 서술형' }, M.parts || {});
+const HINTS = M.hints || {};                                  // 파트 제목 아래 작은 안내 (예: 근거: 2. 구문 분석)
+const TEACHER = { essay: 1, kw: 1 };                           // 언제나 선생님 채점
+const MAYBE = { short: 1, blanks: 1, sent: 1, fix: 1 };        // 정답 목록과 같으면 자동 정답, 다르면 선생님 채점
+const CIRC = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧'];
+const LET = ['ⓐ', 'ⓑ', 'ⓒ', 'ⓓ', 'ⓔ', 'ⓕ', 'ⓖ', 'ⓗ', 'ⓘ', 'ⓙ'];
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+/* 발문·제시문·지문에는 <b> <u> <i> <em> <br> <small> <sup> 만 허용 */
+const rich = s => esc(s).replace(/&lt;(\/?)(b|u|i|em|br|small|sup)\s*\/?&gt;/gi, '<$1$2>');
+const plain = s => { const d = document.createElement('div'); d.innerHTML = rich(s); return d.textContent.replace(/\s+/g, ' ').trim(); };
+const norm = s => (s || '').toLowerCase().replace(/[^a-z0-9가-힣]/g, '');
+const normSent = s => (s || '').toLowerCase().replace(/[^a-z0-9가-힣 ]/g, ' ').replace(/\s+/g, ' ').trim();
+const r2 = x => Math.round(x * 100) / 100;
+function perm(n) { const p = [...Array(n).keys()]; for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [p[i], p[j]] = [p[j], p[i]]; } return p; }
 
-function render(){
-  const root = document.getElementById("quiz"); let html="", cur="";
-  for(const q of Q){
-    if(q.p!==cur){cur=q.p; html+=`<h2>${PARTS[cur]}</h2>`;}
-    html+=`<div class="q" id="q${q.n}"><div class="stem"><span class="num">${q.n}.</span>${esc(q.s)}</div>`;
-    if(q.c) html+=`<div class="ctx">${q.t==="sent"?q.c:esc(q.c)}</div>`;
-    if(q.t==="mc") html+=`<div class="opts">`+q.o.map((o,i)=>`<label><input type="radio" name="a${q.n}" value="${i+1}"><span>${circ[i]} ${esc(o)}</span></label>`).join("")+`</div>`;
-    if(q.t==="choice") html+=`<div class="opts">`+q.o.map(o=>`<label><input type="radio" name="a${q.n}" value="${o}"><span>${o}</span></label>`).join("")+`</div>`;
-    if(q.t==="tf") html+=q.items.map((it,i)=>`<div class="tfrow"><span>(${"abcdefgh"[i]}) ${esc(it[0])}</span><span class="tfbtns">
-      <label><input type="radio" name="a${q.n}_${i}" value="T"><span>T</span></label>
-      <label><input type="radio" name="a${q.n}_${i}" value="F"><span>F</span></label></span></div>`).join("");
-    if(q.t==="short") html+=`<input type="text" id="a${q.n}" placeholder="답 입력">`;
-    if(q.t==="sent"||q.t==="kw") html+=`<textarea id="a${q.n}" placeholder="답 입력"></textarea>`;
-    if(q.t==="blanks") html+=q.blanks.map((b,i)=>`<div class="blank"><span>${b[0]}</span><input type="text" id="a${q.n}_${i}"></div>`).join("");
-    if(q.t==="fix") html+=`<table class="fix"><tr><th>번호</th><th>틀린 부분</th><th>고친 것</th></tr>`+
-      q.keys.map((_,i)=>`<tr><td>(${i+1})</td><td><input type="text" id="w${q.n}_${i}"></td><td><input type="text" id="a${q.n}_${i}"></td></tr>`).join("")+`</table>`;
-    html+=`<div class="fb" id="fb${q.n}"></div></div>`;
-  }
-  root.innerHTML=html;
+/* 선지·보기 섞기 (매번 새로 섞음) */
+let ORD = {};
+function shuffleAll() {
+  ORD = {};
+  QS.forEach(q => {
+    if (q.t === 'mc' || q.t === 'choice') ORD[q.n] = perm(q.o.length);
+    if (q.t === 'match') ORD[q.n] = perm(q.box.length);
+  });
 }
+const mcText = (q, orig) => { const pos = ORD[q.n].indexOf(orig); return CIRC[pos] + ' ' + plain(q.o[orig]); };
+const matchText = (q, orig) => { const pos = ORD[q.n].indexOf(orig); return LET[pos] + ' ' + plain(q.box[orig]); };
 
-function val(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:"";}
-
-function gradeQ(q){
-  let score=0, mine="", right="";
-  if(q.t==="mc"){const v=val("a"+q.n); score=+v===q.a?1:0; mine=v?circ[v-1]:"(무응답)"; right=circ[q.a-1];}
-  else if(q.t==="choice"){const v=val("a"+q.n); score=v===q.a?1:0; mine=v||"(무응답)"; right=q.a;}
-  else if(q.t==="tf"){let c=0, m=[]; q.items.forEach((it,i)=>{const v=val(`a${q.n}_${i}`); if(v===it[1])c++; m.push(`(${"abcdefgh"[i]}) ${v||"-"}`);});
-    score=c/q.items.length; mine=m.join(" "); right=q.items.map((it,i)=>`(${"abcdefgh"[i]}) ${it[1]}`).join(" ");}
-  else if(q.t==="short"){const v=document.getElementById("a"+q.n).value; score=q.ans.includes(norm(v))?1:0; mine=v||"(무응답)"; right=q.show;}
-  else if(q.t==="sent"){const v=document.getElementById("a"+q.n).value; score=q.ans.includes(normSent(v))?1:0; mine=v||"(무응답)"; right=q.show;}
-  else if(q.t==="kw"){const v=document.getElementById("a"+q.n).value; score=q.groups.every(g=>g.some(k=>v.includes(k)))?1:0; mine=v||"(무응답)"; right=q.show;}
-  else if(q.t==="blanks"){let c=0,m=[]; q.blanks.forEach((b,i)=>{const v=document.getElementById(`a${q.n}_${i}`).value; if(b[1].includes(norm(v)))c++; m.push(`${b[0]} ${v||"-"}`);});
-    score=c/q.blanks.length; mine=m.join(" "); right=q.show;}
-  else if(q.t==="fix"){const got=new Set(); const m=[];
-    for(let i=0;i<q.keys.length;i++){const v=document.getElementById(`a${q.n}_${i}`).value; const w=document.getElementById(`w${q.n}_${i}`).value;
-      const nv=norm(v); const hit=q.keys.find(k=>nv.includes(k.k)); if(hit)got.add(hit.k); if(v||w)m.push(`${w||"?"} → ${v||"?"}`);}
-    score=got.size/q.keys.length; mine=m.join(", ")||"(무응답)"; right=q.keys.map(k=>k.show).join(", ");}
-  return {score,mine,right};
+/* ---------- 문항 그리기 ---------- */
+function header() {
+  const man = QS.filter(q => TEACHER[q.t]).map(q => q.n), maybe = QS.filter(q => MAYBE[q.t]).map(q => q.n);
+  document.title = M.title || '분석지 확인 문제';
+  $('sec').textContent = M.section || '';
+  $('ttl').textContent = M.title || '분석지 확인 문제';
+  $('sub').textContent = `${QS.length}문항 · 문항당 1점 · 객관식은 자동 채점` +
+    (man.length || maybe.length ? ` · 직접 쓰는 문항(${man.concat(maybe).sort((a, b) => a - b).join(", ")}번)은 정답과 다르면 선생님이 채점` : '');
 }
-
-const MANUAL = new Set(["short","sent","kw","blanks","fix"]);
-let autoScores = {}, teacher = {};
-const r2 = x => Math.round(x*100)/100;
-
-function setBox(n, score){
-  const box=document.getElementById("q"+n);
-  box.classList.remove("ok","bad","part","wait");
-  box.classList.add("graded", score==null?"wait":score===1?"ok":score===0?"bad":"part");
+function renderPassage() {
+  const box = $('passage');
+  if (!M.passage || !M.passage.length) { box.style.display = 'none'; return; }
+  box.innerHTML = '<h2>본문</h2><p class="ptext">' + M.passage.map(([n, t]) => `<sup>#${esc(n)}</sup>${rich(t)}`).join(' ') + '</p>';
 }
-
-function grade(){
-  autoScores={}; teacher={};
-  for(const q of Q){
-    const r=gradeQ(q);
-    if(MANUAL.has(q.t)){
-      setBox(q.n,null);
-      document.getElementById("fb"+q.n).innerHTML=
-        `<b class="wait">교사 채점</b><br>학생 답: ${esc(r.mine)}<br>모범 답안: ${esc(r.right)}<br>근거: ${esc(q.e)}
-         <div class="tscore">점수:
-           <label><input type="radio" name="t${q.n}" value="1"><span>정답 1</span></label>
-           <label><input type="radio" name="t${q.n}" value="0.5"><span>부분 0.5</span></label>
-           <label><input type="radio" name="t${q.n}" value="0"><span>오답 0</span></label>
-           <input type="number" min="0" max="1" step="0.1" placeholder="직접" id="tn${q.n}">
-         </div>`;
-      document.querySelectorAll(`input[name="t${q.n}"]`).forEach(el=>el.onchange=()=>{
-        document.getElementById("tn"+q.n).value=""; teacher[q.n]=+el.value; setBox(q.n,teacher[q.n]); summary();});
-      document.getElementById("tn"+q.n).oninput=e=>{
-        const v=e.target.value; document.querySelectorAll(`input[name="t${q.n}"]`).forEach(x=>x.checked=false);
-        if(v===""){delete teacher[q.n]; setBox(q.n,null);}
-        else{teacher[q.n]=Math.max(0,Math.min(1,+v)); setBox(q.n,teacher[q.n]);}
-        summary();};
-    } else {
-      autoScores[q.n]=r.score; setBox(q.n,r.score);
-      const tag=r.score===1?'<b class="ok">정답</b>':r.score===0?'<b class="bad">오답</b>':`<b class="part">부분 정답 (${r2(r.score)}점)</b>`;
-      document.getElementById("fb"+q.n).innerHTML=`${tag}<br>내 답: ${esc(r.mine)}<br>정답: ${esc(r.right)}<br>근거: ${esc(q.e)}`;
+function render() {
+  let html = '', cur = '';
+  for (const q of QS) {
+    if (q.p !== cur) { cur = q.p; html += `<h2>${esc(PARTS[cur] || 'Part ' + cur)}</h2>` + (HINTS[cur] ? `<p class="muted" style="margin:-4px 0 4px">${esc(HINTS[cur])}</p>` : ''); }
+    html += `<div class="q" id="q${q.n}"><div class="stem"><span class="num">${esc(q.n)}.</span>${rich(q.s)}</div>`;
+    if (q.c) html += `<div class="ctx">${rich(q.c)}</div>`;
+    if (q.t === 'mc') html += `<div class="opts">` + ORD[q.n].map((o, i) => `<label><input type="radio" name="a${q.n}" value="${o}"><span>${CIRC[i]} ${rich(q.o[o])}</span></label>`).join('') + `</div>`;
+    if (q.t === 'choice') html += `<div class="opts row">` + ORD[q.n].map(o => `<label><input type="radio" name="a${q.n}" value="${o}"><span>${rich(q.o[o])}</span></label>`).join('') + `</div>`;
+    if (q.t === 'ox') html += `<div class="opts row">` + ['O', 'X'].map(v => `<label><input type="radio" name="a${q.n}" value="${v}"><span>${v}</span></label>`).join('') + `</div>`;
+    if (q.t === 'tf') html += q.items.map((it, i) => `<div class="tfrow"><span>(${'abcdefgh'[i]}) ${rich(it[0])}</span><span class="tfbtns">
+      <label><input type="radio" name="a${q.n}_${i}" value="T"><span>T</span></label><label><input type="radio" name="a${q.n}_${i}" value="F"><span>F</span></label></span></div>`).join('');
+    if (q.t === 'match') {
+      html += `<div class="boxv">[보기] ` + ORD[q.n].map((o, i) => `<span>${LET[i]} ${rich(q.box[o])}</span>`).join('') + `</div>`;
+      html += q.rows.map((r, i) => `<div class="tfrow"><span>${rich(r[0])}</span><span class="tfbtns">` +
+        ORD[q.n].map((o, k) => `<label><input type="radio" name="a${q.n}_${i}" value="${o}"><span>${LET[k]}</span></label>`).join('') + `</span></div>`).join('');
     }
+    if (q.t === 'short') html += `<input type="text" id="a${q.n}" placeholder="답 입력" autocomplete="off" spellcheck="false">`;
+    if (q.t === 'sent' || q.t === 'kw' || q.t === 'essay') html += `<textarea id="a${q.n}" placeholder="답 입력"></textarea>`;
+    if (q.t === 'blanks') html += q.blanks.map((b, i) => `<div class="blank"><span>${esc(b[0])}</span><input type="text" id="a${q.n}_${i}" autocomplete="off" spellcheck="false"></div>`).join('');
+    if (q.t === 'fix') html += `<table class="fix"><tr><th>번호</th><th>틀린 부분</th><th>고친 것</th></tr>` +
+      q.keys.map((_, i) => `<tr><td>(${i + 1})</td><td><input type="text" id="w${q.n}_${i}"></td><td><input type="text" id="a${q.n}_${i}"></td></tr>`).join('') + `</table>`;
+    html += `<div class="fb" id="fb${q.n}"></div></div>`;
   }
+  $('quiz').innerHTML = html;
+  $('quiz').addEventListener('input', prog); $('quiz').addEventListener('change', prog);
+  prog();
+}
+
+/* ---------- 답 읽기 · 채점 ---------- */
+const val = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
+const txt = id => { const el = $(id); return el ? el.value.trim() : ''; };
+function answered(q) {
+  if (q.t === 'mc' || q.t === 'choice' || q.t === 'ox') return !!val('a' + q.n);
+  if (q.t === 'tf') return q.items.some((_, i) => val(`a${q.n}_${i}`));
+  if (q.t === 'match') return q.rows.some((_, i) => val(`a${q.n}_${i}`));
+  if (q.t === 'blanks') return q.blanks.some((_, i) => txt(`a${q.n}_${i}`));
+  if (q.t === 'fix') return q.keys.some((_, i) => txt(`a${q.n}_${i}`) || txt(`w${q.n}_${i}`));
+  return !!txt('a' + q.n);
+}
+function prog() { $('prog').textContent = `답한 문항 ${QS.filter(answered).length} / ${QS.length}`; }
+
+/* 문항 하나 채점 → {status, score, mine, right} */
+function gradeQ(q) {
+  let score = 0, mine = '', right = '', status;
+  if (q.t === 'mc') { const v = val('a' + q.n); score = v !== '' && +v === q.a - 1 ? 1 : 0; mine = v === '' ? '' : mcText(q, +v); right = mcText(q, q.a - 1); }
+  else if (q.t === 'choice') { const v = val('a' + q.n); score = v !== '' && q.o[+v] === q.a ? 1 : 0; mine = v === '' ? '' : plain(q.o[+v]); right = plain(q.a); }
+  else if (q.t === 'ox') { const v = val('a' + q.n); score = v === q.a ? 1 : 0; mine = v; right = q.a; }
+  else if (q.t === 'tf') { let c = 0; const m = []; q.items.forEach((it, i) => { const v = val(`a${q.n}_${i}`); if (v === it[1]) c++; m.push(`(${'abcdefgh'[i]}) ${v || '-'}`); });
+    score = c / q.items.length; mine = m.join(' '); right = q.items.map((it, i) => `(${'abcdefgh'[i]}) ${it[1]}`).join(' '); }
+  else if (q.t === 'match') { let c = 0; const m = [], r = [];
+    q.rows.forEach((row, i) => { const v = val(`a${q.n}_${i}`); if (v !== '' && +v === row[1] - 1) c++;
+      m.push(`${plain(row[0])} → ${v === '' ? '-' : matchText(q, +v)}`); r.push(`${plain(row[0])} → ${matchText(q, row[1] - 1)}`); });
+    score = c / q.rows.length; mine = m.join(' | '); right = r.join(' | '); }
+  else if (q.t === 'short') { const v = txt('a' + q.n); score = (q.ans || []).map(norm).includes(norm(v)) ? 1 : 0; mine = v; right = q.show || (q.ans || [])[0] || ''; }
+  else if (q.t === 'sent') { const v = txt('a' + q.n); score = (q.ans || []).map(normSent).includes(normSent(v)) ? 1 : 0; mine = v; right = q.show || ''; }
+  else if (q.t === 'blanks') { let c = 0; const m = [], used = new Set();
+    q.blanks.forEach((b, i) => { const v = txt(`a${q.n}_${i}`), k = norm(v);
+      /* any: true 이면 순서 상관없이, 같은 답을 두 번 쓰면 한 번만 인정 */
+      if (k && b[1].map(norm).includes(k) && !(q.any && used.has(k))) { c++; used.add(k); } m.push(`${b[0]} ${v || '-'}`); });
+    score = c === q.blanks.length ? 1 : 0; mine = m.join(' '); right = q.show || q.blanks.map(b => `${b[0]} ${b[1][0]}`).join(' '); }
+  else if (q.t === 'fix') { const got = new Set(), m = [];
+    q.keys.forEach((_, i) => { const v = txt(`a${q.n}_${i}`), w = txt(`w${q.n}_${i}`); const hit = q.keys.find(k => norm(v).includes(norm(k.k))); if (hit) got.add(hit.k); if (v || w) m.push(`${w || '?'} → ${v || '?'}`); });
+    score = got.size === q.keys.length ? 1 : 0; mine = m.join(', '); right = q.keys.map(k => k.show).join(', '); }
+  else if (q.t === 'kw' || q.t === 'essay') { mine = txt('a' + q.n); right = q.show || ''; }
+  if (TEACHER[q.t]) status = 'manual';
+  else if (MAYBE[q.t]) status = score === 1 ? 'manual-ok' : 'manual';
+  else status = score === 1 ? 'correct' : score === 0 ? 'wrong' : 'part';
+  return { status, score: status === 'manual' ? null : status === 'manual-ok' ? 1 : score, mine: mine || '(무응답)', right };
+}
+
+let LAST = [];
+function grade() {
+  LAST = QS.map(q => {
+    const r = gradeQ(q), box = $('q' + q.n), fb = $('fb' + q.n);
+    box.classList.remove('ok', 'bad', 'part', 'wait');
+    box.classList.add(r.status === 'correct' || r.status === 'manual-ok' ? 'ok' : r.status === 'wrong' ? 'bad' : r.status === 'part' ? 'part' : 'wait');
+    const ex = q.e ? `<div class="muted" style="margin-top:4px">근거: ${rich(q.e)}</div>` : '';
+    if (r.status === 'manual') {
+      fb.innerHTML = `<b class="wait">선생님 채점</b> · 제출하면 선생님이 채점해요.<div class="model"><b>모범 답안</b> ${rich(r.right)}${q.crit ? `<div class="muted">채점 기준: ${rich(q.crit)}</div>` : ''}</div>${ex}`;
+    } else {
+      const tag = r.status === 'correct' ? '<b class="ok">정답</b>' : r.status === 'manual-ok' ? '<b class="ok">정답 (모범 답안과 일치)</b>' :
+        r.status === 'wrong' ? '<b class="bad">오답</b>' : `<b class="part">부분 정답 (${r2(r.score)}점)</b>`;
+      fb.innerHTML = `${tag}<br>내 답: ${esc(r.mine)}<br>정답: ${esc(r.right)}${ex}`;
+    }
+    return Object.assign({ n: q.n, part: q.p || '', type: q.t, prompt: plain(q.s) }, r);
+  });
+  document.body.classList.add('graded'); $('quiz').classList.add('graded');
   summary();
-  document.getElementById("result").style.display="block";
-  document.getElementById("toggle").style.display="inline-block";
-  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+  $('result').style.display = 'block'; $('toggle').style.display = 'inline-block';
+  $('result').scrollIntoView({ behavior: 'smooth' });
 }
-
-function summary(){
-  const tally={}; let auto=0, man=0; const wrong=[], pending=[];
-  for(const q of Q){
-    tally[q.p]=tally[q.p]||{s:0,n:0,w:0}; tally[q.p].n++;
-    let s;
-    if(MANUAL.has(q.t)){ if(q.n in teacher){s=teacher[q.n]; man+=s;} else {pending.push(q.n); tally[q.p].w++;} }
-    else { s=autoScores[q.n]; auto+=s; }
-    if(s!=null){ tally[q.p].s+=s; if(s<1) wrong.push(q.n); }
-  }
-  const total=auto+man, name=document.getElementById("sname").value, cls=document.getElementById("sclass").value;
-  const rows=Object.keys(PARTS).filter(k=>tally[k]).map(k=>`<tr><td>${PARTS[k]}</td><td>${r2(tally[k].s)} / ${tally[k].n}${tally[k].w?` <span class="muted">(채점 대기 ${tally[k].w})</span>`:""}</td></tr>`).join("");
-  document.getElementById("result").innerHTML=`<div>${esc(name||"")} ${esc(cls||"")}</div>
-    <div class="big">${r2(total)} / ${Q.length}점 (${Math.round(total/Q.length*100)}%)</div>
-    <div class="muted">자동 채점 ${r2(auto)}점 + 교사 채점 ${r2(man)}점${pending.length?` · 채점 대기: ${pending.join(", ")}번`:" · 채점 완료"}</div>
+function summary() {
+  const tally = {}; let auto = 0; const wrong = [], pending = [];
+  LAST.forEach(r => {
+    const t = tally[r.part] = tally[r.part] || { s: 0, n: 0, w: 0 }; t.n++;
+    if (r.status === 'manual') { pending.push(r.n); t.w++; } else { auto += r.score; t.s += r.score; if (r.score < 1) wrong.push(r.n); }
+  });
+  const name = $('sname').value, cls = $('sclass').value;
+  const rows = Object.keys(tally).map(k => `<tr><td>${esc(PARTS[k] || k)}</td><td>${r2(tally[k].s)} / ${tally[k].n}${tally[k].w ? ` <span class="muted">(선생님 채점 ${tally[k].w})</span>` : ''}</td></tr>`).join('');
+  $('result').innerHTML = `<div>${esc(name)} ${esc(cls)}</div>
+    <div class="big">${r2(auto)} / ${QS.length}점</div>
+    <div class="muted">자동 채점 ${r2(auto)}점${pending.length ? ` · 선생님 채점 ${pending.length}문항 (${pending.join(', ')}번)` : ''}</div>
     <table><tr><th>영역</th><th>점수</th></tr>${rows}</table>
-    <p>${wrong.length?`다시 볼 문항: ${wrong.join(", ")}`:(pending.length?"":"모든 문항을 맞혔습니다.")}</p>`;
+    <p>${wrong.length ? `다시 볼 문항: ${wrong.join(', ')}` : '자동 채점 문항은 모두 맞혔어요.'}</p>`;
+}
+function reset() {
+  if (!confirm('입력한 답을 모두 지울까요?')) return;
+  shuffleAll(); render(); LAST = [];
+  document.body.classList.remove('graded', 'hide-ok'); $('quiz').classList.remove('graded');
+  $('result').style.display = 'none'; $('toggle').style.display = 'none'; $('toggle').textContent = '오답만 보기';
+  window.scrollTo({ top: 0 });
 }
 
-document.getElementById("grade").onclick=grade;
-document.getElementById("toggle").onclick=e=>{
-  const on=document.body.classList.toggle("hide-ok"); e.target.textContent=on?"전체 보기":"오답만 보기";};
-document.getElementById("reset").onclick=()=>{
-  if(!confirm("입력한 답을 모두 지울까요?"))return;
-  render(); document.getElementById("result").style.display="none";
-  document.getElementById("toggle").style.display="none"; document.body.classList.remove("hide-ok");
-  window.scrollTo({top:0});
-};
-function header(){
-  const man=Q.filter(q=>MANUAL.has(q.t)).map(q=>q.n);
-  document.title=META.title;
-  document.getElementById("ttl").textContent=META.title;
-  document.getElementById("sub").textContent=`${META.section} · ${Q.length}문항 · 문항당 1점 · 객관식·T/F는 자동 채점`+(man.length?`, 주관식(${man.join(", ")}번)은 교사 채점`:"");
-}
-function renderPassage(){
-  const box=document.getElementById("passage");
-  if(!META.passage||!META.passage.length){box.style.display="none";return;}
-  box.innerHTML=`<h2>본문</h2><p class="ptext">`+META.passage.map(([n,t])=>`<sup>#${n}</sup>${esc(t)}`).join(" ")+`</p>`;
-}
-header();
-renderPassage();
-render();
+/* ---------- 기록용 (track.js가 읽음) ---------- */
+window.NS_TITLE = (M.section ? M.section + ' · ' : '') + (M.title || '');
+window.NS_RESULT = () => (LAST.length ? LAST : QS.map(q => Object.assign({ n: q.n, part: q.p || '', type: q.t, prompt: plain(q.s) }, gradeQ(q))));
+
+/* ---------- 시작 ---------- */
+$('grade').onclick = grade;
+$('toggle').onclick = e => { const on = document.body.classList.toggle('hide-ok'); e.target.textContent = on ? '전체 보기' : '오답만 보기'; };
+$('reset').onclick = reset;
+shuffleAll(); header(); renderPassage(); render();
+})();
