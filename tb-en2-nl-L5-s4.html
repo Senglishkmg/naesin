@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "과학적 반전과 다색채색의 복원 정독 확인 문항 (#40~#47)",
+ "section": "교과서 본문 · 섹션 4 (#40~#47)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [40, "However, since the 1980s, thanks to the development of new methods of scientific analysis and the work of scholars such as Vinzenz Brinkmann and Ulrike Koch-Brinkmann, the bias about white marble sculptures has been changing."],
+  [41, "As research has progressed, it has become increasingly clear that polychromy was not only present but also common among ancient Greek and Roman sculptures."],
+  [42, "The fact that Greek and Roman artists normally decorated their sculptures with vivid colors is now widely acknowledged."],
+  [43, "Brinkmann and Koch-Brinkmann have gathered sufficient evidence of the colorful past of many sculptures."],
+  [44, "They have also created new, colored versions of some of these great works of art, both to benefit research and to enlighten the public."],
+  [45, "These colorful recreations have been displayed in an exhibition called Gods in Color, which has traveled to over 20 different cities around the world and has expanded the understanding of millions of museum visitors since 2008."],
+  [46, "The colorful replicas are displayed next to white plaster versions made to look like the marble originals, and in some cases the originals themselves."],
+  [47, "The contrast has provided an eye-opening experience for the public, challenging artistic biases and deeply rooted misconceptions."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "1980년대 이후 흰 대리석 조각상에 대한 오랜 편견이 변화하기 시작한 직접적인 요인으로 분석지에 언급된 것은?",
+  "o": [
+   "고대 그리스 조각가들의 개인 일기가 발견되어서",
+   "새로운 과학적 분석 방법의 발전과 브링크만 부부와 같은 학자들의 연구 덕분에",
+   "흰 대리석 조각상의 풍화 속도를 늦추는 화학 코팅제가 개발되어서",
+   "순백 조각상의 인기가 떨어지며 박물관 관람객 수가 급감해서",
+   "고대 로마 신전의 벽화가 완벽한 원형 상태로 출토되어서"
+  ],
+  "a": 2,
+  "e": "#40 thanks to the development of new methods of scientific analysis and the work of scholars such as Vinzenz Brinkmann and Ulrike Koch-Brinkmann"
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "Gods in Color 전시회에서는 채색 복제품만을 단독으로 전시하여 흰 석고 모형이나 원작과의 비교를 전면 차단했다.",
+  "a": "X",
+  "e": "#46 채색 복제품들은 대리석 원작처럼 보이도록 만들어진 흰 석고 버전 옆에, 그리고 일부 경우에는 원작들 자체 옆에 함께 전시되었습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["고대 그리스와 로마 조각상들 사이에서 다색채색은 매우 드문 예외적 현상에 불과했다.", "F"],
+   ["브링크만 부부는 학술 연구에 기여할 뿐만 아니라 대중을 계몽하기 위해 채색 복원판을 제작했다.", "T"],
+   ["Gods in Color 전시회는 2008년 이래로 전 세계 20개가 넘는 도시들을 순회했다.", "T"]
+  ],
+  "e": "#41 다색채색은 존재했을 뿐만 아니라 흔하기도 했습니다(not only present but also common)."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "채색 복제품과 흰 석고 버전의 대비가 대중에게 제공한 영향으로 옳은 것은?",
+  "o": [
+   "고대 그리스 예술에 대한 학술적 무관심을 불러일으켰다.",
+   "예술적 편견과 깊이 뿌리박힌 오해들에 도전하며 눈이 번쩍 뜨이는 경험을 제공했다.",
+   "현대 조각가들에게 순백 대리석만을 사용하도록 강제하는 계기가 되었다.",
+   "박물관 소장품의 진위 논란을 촉발하여 전시가 조기 종료되었다",
+   "순백 조각상이 채색 모형보다 더 우아하다는 기존 편견을 재확인시켰다"
+  ],
+  "a": 2,
+  "e": "#47 The contrast has provided an eye-opening experience for the public, challenging artistic biases and deeply rooted misconceptions."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 비침습적 과학 기술의 적용과 브링크만 부부의 독창적 연구는 고전주의적 편견을 결정적으로 해체했다.",
+  "a": "O",
+  "e": "Section 4 English Summary: the application of non-invasive scientific technologies coupled with the seminal research of the Brinkmanns definitively dismantled centuries of entrenched classical bias."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "examination, investigation",
+   "widespread, ubiquitous",
+   "recognize, accept",
+   "educate, illuminate",
+   "broaden, enlarge"
+  ],
+  "rows": [
+   ["analysis", 1],
+   ["common", 2],
+   ["acknowledge", 3],
+   ["enlighten", 4],
+   ["expand", 5]
+  ],
+  "e": "분석지 #40, #41, #42, #44, #45 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "unscientific",
+   "absent",
+   "rare, uncommon",
+   "deny, reject",
+   "scatter, disperse"
+  ],
+  "rows": [
+   ["scientific", 1],
+   ["present", 2],
+   ["common", 3],
+   ["acknowledge", 4],
+   ["gather", 5]
+  ],
+  "e": "분석지 #40, #41, #42, #43 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #41의 present가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "선물",
+   "현재, 지금",
+   "존재하는, 참석한",
+   "제시하다, 제출하다"
+  ],
+  "a": 3,
+  "e": "#41 polychromy was not only present but also common에서 present는 '존재하는(syn. existing)'이라는 형용사입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #45의 recreation이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "휴양, 기분 전환",
+   "재현물, 재창작",
+   "취미 활동, 오락",
+   "체육 시설"
+  ],
+  "a": 2,
+  "e": "#45 These colorful recreations have been displayed에서 recreation은 '재현물, 재창작(syn. replica, reproduction)'의 뜻입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #43의 sufficient와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "adequate",
+   "ample"
+  ],
+  "show": "adequate (또는 ample)",
+  "e": "#43 어휘: sufficient (syn. adequate, ample, plenty of)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #47의 eye-opening과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "revelatory",
+   "astonishing",
+   "illuminating"
+  ],
+  "show": "revelatory (또는 astonishing, illuminating)",
+  "e": "#47 어휘: eye-opening (syn. revelatory, astonishing, illuminating)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Since the 1980s, the bias about white marble sculptures (has been changing / changed).",
+  "o": [
+   "has been changing",
+   "changed"
+  ],
+  "a": "has been changing",
+  "e": "#40 구문 분석 ★★★: 'since the 1980s'와 호응하여 현재까지 변화가 역동적으로 이어지고 있으므로 현재완료진행형을 씁니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "As research has progressed, (it / that) has become increasingly clear that polychromy was common.",
+  "o": [
+   "it",
+   "that"
+  ],
+  "a": "it",
+  "e": "#41 구문 분석 ★: 뒤의 that절 이하를 진주어로 받는 가주어 자리이므로 it이 올바릅니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Polychromy was not only present (and / but) also common among ancient sculptures.",
+  "o": [
+   "but",
+   "and"
+  ],
+  "a": "but",
+  "e": "#41 구문 분석 ★: 'A뿐만 아니라 B도'를 나타내는 상관접속사는 not only A but also B입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The fact (that / which) Greek and Roman artists decorated sculptures with colors is widely acknowledged.",
+  "o": [
+   "that",
+   "which"
+  ],
+  "a": "that",
+  "e": "#42 구문 분석 ★★★: 뒤에 빠진 성분이 없는 완전한 3형식 절이 이어지므로 The fact를 보충하는 동격의 접속사 that이 와야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The fact that artists normally decorated their sculptures with vivid colors (is / are) now widely acknowledged.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "#42 구문 분석 ★: 문장의 진짜 주어가 단수 명사인 The fact이므로 단수동사 is가 와야 합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They created colored versions of these works, both to benefit research and (enlightening / to enlighten) the public.",
+  "o": [
+   "to enlighten",
+   "enlightening"
+  ],
+  "a": "to enlighten",
+  "e": "#44 구문 분석 ★: both A and B 구문에서 to benefit research와 대등하게 병렬 연결되는 to부정사 to enlighten 자리입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "These colorful recreations (have displayed / have been displayed) in an exhibition called Gods in Color.",
+  "o": [
+   "have been displayed",
+   "have displayed"
+  ],
+  "a": "have been displayed",
+  "e": "#45 구문 분석 ★: 재현물들(recreations)은 전시되는 수동의 대상이므로 현재완료 수동태 have been displayed가 맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In an exhibition called Gods in Color, (which / that) has traveled to over 20 different cities.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "#45 구문 분석 ★★★: 콤마 뒤에서 전시회를 부연 설명하는 계속적 용법의 관계대명사 자리에는 that을 쓸 수 없습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "An exhibition which has traveled to over 20 cities and (has expanded / expanding) the understanding of visitors.",
+  "o": [
+   "has expanded",
+   "expanding"
+  ],
+  "a": "has expanded",
+  "e": "#45 구문 분석 ★★★: 관계사절 내부에서 has traveled와 and로 병렬 연결되는 현재완료 동사 자리입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "White plaster versions (made / making) to look like the marble originals.",
+  "o": [
+   "made",
+   "making"
+  ],
+  "a": "made",
+  "e": "#46 구문 분석: 석고 버전은 그렇게 보이도록 만들어진 수동 관계이므로 과거분사 made가 수식합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The contrast has provided an eye-opening experience for the public, (challenging / challenged) artistic biases.",
+  "o": [
+   "challenging",
+   "challenged"
+  ],
+  "a": "challenging",
+  "e": "#47 구문 분석 ★★★: 주절의 주어(The contrast)가 예술적 편견에 능동적으로 맞서고 이의를 제기하는 능동의 분사구문 자리이므로 challenging이 맞습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #40의 However에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "새로운 안료 제조 기술이 기존 유물들을 손상시켰음을 지적한다.",
+   "20세기까지 끈질기게 지속되었던 오랜 정체 상태에서 벗어나 과학적 분석을 통해 편견이 바뀌기 시작한 패러다임 전환을 나타낸다.",
+   "브링크만 부부의 연구가 학계에서 인정받지 못하고 거부당한 사실을 밝힌다.",
+   "순백 조각상의 발굴 건수가 1980년대 이후 급감한 원인을 설명한다"
+  ],
+  "a": 2,
+  "e": "#40 [연결어 분석]: 르네상스에 형성된 오해가 20세기까지 이어진 정체 상태와 대비하여 과학적 진실 규명으로 편견이 변화하기 시작한 대조/역접을 나타냅니다."
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #44의 also에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "연구진이 충분한 학술 증거를 수집한 이론적 성과에 이어, 채색 복원판을 직접 제작했다는 실천적 작업을 대등하게 추가한다.",
+   "대중을 계몽하는 데 실패하여 연구를 전면 중단하게 된 계기를 서술한다.",
+   "다색채색설에 반대하는 보수파 학자들의 주장을 열거한다.",
+   "석고 모형 제작 과정에서 발생한 결함을 앞선 연구와 비교한다"
+  ],
+  "a": 1,
+  "e": "#44 [연결어 분석]: 증거 수집 단계(#43)에 이어 구체적인 재현물 제작 단계(#44)로 확장하여 연구 성과를 대등한 층위에서 덧붙입니다."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리적 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "과학적 분석 기법 도입과 브링크만 부부의 연구로 편견 변화 시작 → 다색채색의 보편성 입증 및 정설 수용 → 충분한 학술 증거 수집 → 채색 복원판 제작 → Gods in Color 순회전을 통한 대중의 편견 타파",
+   "Gods in Color 전시회의 전 세계 순회 → 석고 모형의 훼손 → 과학적 분석 기법 중단 → 다색채색 학설의 퇴조",
+   "채색 복제품 제작 실패 → 학술 증거의 폐기 → 1980년대 이전 학설로의 복귀 → 순백 조각상의 절대화",
+   "대중 계몽 캠페인의 한계 → 브링크만 부부의 단독 전시회 취소 → 고대 그리스 유물의 재봉인 → 결론"
+  ],
+  "a": 1,
+  "e": "#40 편견 변화 시작 → #41, #42 다색채색 보편성 확인 및 정설 수용 → #43 증거 수집 → #44 복원판 제작 → #45~#47 Gods in Color 전시 및 대중 편견 타파 순서입니다."
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그리스와 로마 예술가들이 보통 그들의 조각상들을 생생한 색들로 장식했다는 사실은 이제 널리 인정받는다.<br><small>「조건」 The fact that, normally decorated, with vivid colors, is now widely acknowledged 활용 (총 18단어)</small>",
+  "ans": [
+   "The fact that Greek and Roman artists normally decorated their sculptures with vivid colors is now widely acknowledged"
+  ],
+  "show": "The fact that Greek and Roman artists normally decorated their sculptures with vivid colors is now widely acknowledged.",
+  "e": "#42 동격의 접속사 that 및 주어-동사 원거리 수 일치 수동태 구문"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "The fact <u>which</u> Greek and Roman artists normally decorated their sculptures with vivid colors is now widely acknowledged. These recreations have been displayed in an exhibition, <u>that</u> has traveled to over 20 different cities. The contrast has provided an experience, <u>challenged</u> deeply rooted misconceptions.",
+  "keys": [
+   {
+    "k": "that",
+    "show": "which → that"
+   },
+   {
+    "k": "which",
+    "show": "that → which"
+   },
+   {
+    "k": "challenging",
+    "show": "challenged → challenging"
+   }
+  ],
+  "e": "#42 동격의 접속사 that, #45 계속적 용법 관계대명사 which, #47 능동 분사구문 challenging"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "kw",
+  "s": "42번 문장에서 decorated 앞의 that을 which로 바꾸어 쓸 수 없는 어법적 이유를 뒤따르는 절의 구조와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "동격",
+    "동격의 접속사",
+    "동격 that"
+   ],
+   [
+    "완전한 절",
+    "완전한 문장",
+    "완전"
+   ]
+  ],
+  "show": "The fact 뒤에 빠진 문장 성분이 없는 완전한 절이 이어지는 동격의 접속사 that 자리이기 때문이다.",
+  "e": "#42 구문 분석 ★★★"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Empirical spectroscopic data confirmed that polychromy was (A) u________, transforming academic consensus. Their global traveling exhibition displays vibrant polychromatic (B) r________ juxtaposed against stark white casts.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "ubiquitous"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "replicas"
+    ]
+   ]
+  ],
+  "show": "(A) ubiquitous (B) replicas",
+  "e": "Section 4 English Summary 및 본문 #41, #46"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

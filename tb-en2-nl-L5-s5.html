@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "객관적 시선과 고정관념의 탈피 정독 확인 문항 (#48~#51)",
+ "section": "교과서 본문 · 섹션 5 (#48~#51)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [48, "Brinkmann believes that we need to transform our eyes into objective tools in order to overcome widespread misconceptions."],
+  [49, "There is an important lesson to be learned from this story."],
+  [50, "Shouldn’t we pause to ask ourselves if some of our long-held beliefs are the results of stereotypes and biases?"],
+  [51, "Perhaps there is more to the world than meets the eye."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "고대 조각상의 채색 역사(다색채색의 발견)가 우리에게 던지는 궁극적인 교훈으로 가장 적절한 것은?",
+  "o": [
+   "고대 예술 작품은 원작의 재료적 특성만을 고스란히 복원해야 한다.",
+   "오래 품어온 신념조차 편견의 산물일 수 있음을 성찰하고 눈에 보이는 것 너머의 진실을 탐구해야 한다.",
+   "과학적 분석 기법보다 고고학자의 주관적 직관이 역사적 사실 규명에 더 결정적이다.",
+   "대중적 인기를 얻지 못한 예술 작품은 박물관에 보존할 가치가 없다.",
+   "색채 복제품 제작을 중단하고 대리석 원작 본연의 모습을 영구 보존해야 한다"
+  ],
+  "a": 2,
+  "e": "Section 5 Summary 및 #50, #51 우리가 자명하다고 믿어온 통념조차 고정관념과 편견의 산물일 수 있음을 성찰하고 표면 너머의 진실을 탐구해야 한다는 점입니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "브링크만은 만연한 오해들을 극복하기 위해 우리의 눈을 주관적인 감정의 도구로 전환해야 한다고 믿는다.",
+  "a": "X",
+  "e": "#48 transform our eyes into objective tools라고 명시되어 있어 주관적이 아닌 객관적인(objective) 도구로 변화시켜야 한다고 믿습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["우리가 오랜 기간 품어온 믿음들 중 일부는 고정관념과 편견의 결과물일 수 있다.", "T"],
+   ["51번 문장의 there is more to the world than meets the eye는 눈에 보이는 겉모습이 세상의 모든 진실을 온전히 대변한다는 뜻이다.", "F"],
+   ["브링크만은 널리 퍼진 오해를 극복하기 위한 자기반성과 성찰의 필요성을 강조한다.", "T"]
+  ],
+  "e": "#48, #50, #51 51번 문장은 눈에 보이는 겉모습 이상의 무언가(심오한 진실)가 세상에 존재한다는 격언적 관용구입니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하지 않는 것은?",
+  "o": [
+   "오래된 오해를 극복하기 위해서는 우리의 인식을 객관적인 분석 도구로 전환해야 한다.",
+   "고대 다색채색의 역사는 심오한 철학적 교훈을 우리에게 전달한다.",
+   "우리는 오랜 기간 지녀온 전제들 속에 잠재된 편견이 있는지 끊임없이 질문해야 한다.",
+   "현실 세계는 즉각적으로 눈에 보이는 것보다 결코 더 깊은 진실을 담고 있지 않다"
+  ],
+  "a": 4,
+  "e": "Section 5 English Summary: reality invariably holds deeper truths than what immediately meets the eye(현실은 즉각 눈에 보이는 것보다 항상 더 깊은 진실을 지니고 있다)라고 명시되어 있습니다."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "convert, alter",
+   "unbiased, impartial",
+   "prevalent, pervasive",
+   "moral, takeaway",
+   "conviction, notion"
+  ],
+  "rows": [
+   ["transform", 1],
+   ["objective", 2],
+   ["widespread", 3],
+   ["lesson", 4],
+   ["belief", 5]
+  ],
+  "e": "분석지 #48, #49, #50 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "subjective, biased",
+   "rare, localized",
+   "disbelief, skepticism",
+   "cause"
+  ],
+  "rows": [
+   ["objective", 1],
+   ["widespread", 2],
+   ["belief", 3],
+   ["result", 4]
+  ],
+  "e": "분석지 #48, #50 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #48의 objective가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "목표, 목적",
+   "(현미경 등의) 대물렌즈",
+   "객관적인, 편견 없는",
+   "실재하는, 물질적인"
+  ],
+  "a": 3,
+  "e": "#48 objective tools에서 objective는 '객관적인, 편견 없는(syn. unbiased, impartial, neutral)'이라는 형용사로 쓰였습니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #51의 meet the eye의 분석지상 숙어 뜻을 한글로 쓰시오.",
+  "ans": [
+   "눈에 띄다",
+   "겉으로 보이다",
+   "눈에 보이다"
+  ],
+  "show": "눈에 띄다 (또는 겉으로 보이다)",
+  "e": "#51 어휘: meet the eye (숙어: 눈에 띄다, 겉으로 보이다)"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #50의 stereotype과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "cliché",
+   "preconception"
+  ],
+  "show": "preconception (또는 cliché)",
+  "e": "#50 어휘: stereotype (syn. cliché, preconception, generalized view)"
+ },
+ {
+  "n": 10,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "We need to transform our eyes (into / for) objective tools in order to overcome misconceptions.",
+  "o": [
+   "into",
+   "for"
+  ],
+  "a": "into",
+  "e": "#48 구문 분석: 'A를 B로 바꾸다'를 나타내는 표현은 transform A into B입니다."
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "There is an important lesson to (learn / be learned) from this story.",
+  "o": [
+   "be learned",
+   "learn"
+  ],
+  "a": "be learned",
+  "e": "#49 구문 분석 ★: 교훈(lesson)은 사람에 의해 배워지는 수동의 대상이므로 to be learned 수동태 부정사가 쓰여야 합니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Shouldn’t we pause to ask (us / ourselves) if some of our beliefs are biased?",
+  "o": [
+   "ourselves",
+   "us"
+  ],
+  "a": "ourselves",
+  "e": "#50 구문 분석 ★: 주어 we와 동사 ask의 간접목적어가 동일하므로 재귀대명사 ourselves를 써야 합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Shouldn’t we pause to ask ourselves (if / that) some of our long-held beliefs are the results of stereotypes?",
+  "o": [
+   "if",
+   "that"
+  ],
+  "a": "if",
+  "e": "#50 구문 분석 ★★★: ask의 직접목적어로 쓰여 '~인지 아닌지(=whether)'라는 불확실성의 의문 내용을 나타내는 명사절 접속사이므로 if가 올바릅니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Perhaps there is more to the world than (meets / meeting) the eye.",
+  "o": [
+   "meets",
+   "meeting"
+  ],
+  "a": "meets",
+  "e": "#51 구문 분석 ★★★: 'there is more to A than meets the eye'라는 정형화된 관용 표현으로 동사 meets가 옵니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "mc",
+  "s": "50번 문장의 pause 뒤에 쓰인 to ask의 어법적 기능으로 옳은 것은?",
+  "o": [
+   "명사적 용법으로 pause의 목적어 역할을 한다.",
+   "결과를 나타내는 독립부정사이다.",
+   "물어보기 위해 잠시 멈춘다는 목적을 나타내는 부사적 용법이다.",
+   "앞의 주어 we를 수식하는 형용사적 용법이다"
+  ],
+  "a": 3,
+  "e": "#50 구문 분석: pause to ask는 '물어보기 위해 잠시 멈추다'라는 목적을 나타내는 to부정사의 부사적 용법입니다."
+ },
+ {
+  "n": 16,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 방식으로 가장 적절한 것은?",
+  "o": [
+   "오해를 극복하기 위한 객관적 시선 촉구 → 이야기에서 얻을 수 있는 교훈 제시 → 기존 신념에 대한 성찰적 질문 → 표면 너머의 진실을 암시하는 격언으로 결론",
+   "새로운 광학 장비의 성능 비교 → 연구 실패의 원인 분석 → 대중의 무관심 비판 → 결론",
+   "고대 조각상의 미적 가치 찬양 → 과학적 분석 기법의 오류 지적 → 순백의 미학 재수용",
+   "고정관념이 형성되는 뇌과학적 원인 설명 → 인지 편향의 실험적 입증 → 대체 가설 제시"
+  ],
+  "a": 1,
+  "e": "#48 객관적 도구로의 시선 전환 촉구 → #49 교훈 제시 → #50 신념에 대한 자기반성 질문 → #51 격언을 통한 시적 집약 순서로 전개됩니다."
+ },
+ {
+  "n": 17,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "우리는 우리 오래 품어온 신념들 중 몇몇이 고정관념들과 편견들의 결과들인지 아닌지를 우리 자신에게 물어보기 위해 멈추어야 하지 않는가?<br><small>「조건」 Shouldn’t we pause to ask ourselves if, long-held beliefs, results of 활용 (총 18단어)</small>",
+  "ans": [
+   "Shouldnt we pause to ask ourselves if some of our long-held beliefs are the results of stereotypes and biases",
+   "Shouldn't we pause to ask ourselves if some of our long-held beliefs are the results of stereotypes and biases"
+  ],
+  "show": "Shouldn’t we pause to ask ourselves if some of our long-held beliefs are the results of stereotypes and biases?",
+  "e": "#50 부정의문문, 재귀대명사 ourselves 및 명사절 접속사 if 구문"
+ },
+ {
+  "n": 18,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "There is an important lesson to <u>learn</u> from this story. Shouldn’t we pause to ask <u>us</u> if some of our long-held beliefs are the results of stereotypes and biases?",
+  "keys": [
+   {
+    "k": "be learned",
+    "show": "learn → be learned"
+   },
+   {
+    "k": "ourselves",
+    "show": "us → ourselves"
+   }
+  ],
+  "e": "#49 수동태 to부정사 to be learned, #50 주어와 목적어가 동일할 때 쓰는 재귀대명사 ourselves"
+ },
+ {
+  "n": 19,
+  "p": "E",
+  "t": "kw",
+  "s": "50번 문장에서 ask 뒤의 if를 that으로 바꿀 수 없는 어법적 이유를 if절의 의미와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "~인지 아닌지",
+    "whether",
+    "불확실성",
+    "의문"
+   ],
+   [
+    "명사절 접속사",
+    "접속사"
+   ]
+  ],
+  "show": "ask의 직접목적어로 쓰여 확실한 사실(that)이 아니라 '~인지 아닌지'라는 불확실한 내용을 나타내는 명사절 접속사 자리이기 때문이다.",
+  "e": "#50 구문 분석 ★★★"
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Overcoming misconceptions requires transforming perception into objective tools. We must interrogate our long-held assumptions for latent bias, recognizing that reality holds deeper truths than what immediately (A) m________ the (B) e________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "meets"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "eye"
+    ]
+   ]
+  ],
+  "show": "(A) meets (B) eye",
+  "e": "Section 5 English Summary 및 본문 #51"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

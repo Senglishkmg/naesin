@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "백색 신화의 교조화와 다색채색의 탄압 정독 확인 문항 (#31~#39)",
+ "section": "교과서 본문 · 섹션 3 (#31~#39)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [31, "Over time, the association of whiteness with artistic beauty grew strong in people’s minds, and it became deeply rooted in Western art and culture."],
+  [32, "A German scholar who was one of the founders of art history in the West even remarked, “the whiter the body is, the more beautiful it is.”"],
+  [33, "Despite the excavation of ancient Greek and Roman artifacts with traces of color in the 18th and 19th centuries, the bias toward white marble sculpture was so firmly established that people’s perceptions did not alter."],
+  [34, "Many scholars simply refused to believe that polychromy was used, while those who did were publicly criticized."],
+  [35, "Sculptures painted with bright colors and patterns were regarded as inferior works created by immature artists."],
+  [36, "Some insisted that Greek and Roman artifacts bearing obvious traces of color were in fact from other civilizations that existed before ancient Greece."],
+  [37, "Until the 1960s, sculptures with noticeable color were largely ignored."],
+  [38, "Some of them even had their colors wiped off so that the bare white surface beneath could be seen."],
+  [39, "For these reasons, the misconception that formed during the Renaissance lasted all the way into the 20th century."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "18세기와 19세기에 채색 흔적이 있는 고대 유물이 발굴되었음에도 사람들의 인식이 바뀌지 않은 이유로 가장 적절한 것은?",
+  "o": [
+   "발굴된 유물들이 가짜로 판명되었기 때문에",
+   "흰 대리석 조각상에 대한 편견이 너무나 확고하게 자리 잡았기 때문에",
+   "채색 안료가 자연적으로 완전히 지워졌기 때문에",
+   "대중들이 고대 예술품에 대한 관심을 잃었기 때문에",
+   "자외선 분석 기술이 개발되지 않았기 때문에"
+  ],
+  "a": 2,
+  "e": "#33 the bias toward white marble sculpture was so firmly established that people’s perceptions did not alter."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "서양 미술사의 창시자 중 한 명인 독일인 학자는 신체가 더 하얗게 될수록 더욱더 아름답다고 언급했다.",
+  "a": "O",
+  "e": "#32 A German scholar remarked, “the whiter the body is, the more beautiful it is.”"
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["밝은 색과 무늬로 칠해진 조각상들은 미숙한 예술가들이 만든 열등한 작품으로 간주되었다.", "T"],
+   ["다색채색이 사용되었다고 믿었던 소수의 학자들은 주류 학계의 지지를 받았다.", "F"],
+   ["일부 조각상들은 아래의 흰 표면이 드러나도록 색을 인위적으로 닦아내기도 했다.", "T"]
+  ],
+  "e": "#34, #35, #38 믿었던 사람들은 공개적으로 비판받았습니다(those who did were publicly criticized)."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "명백한 색채의 흔적을 지닌 유물에 대해 일부 사람들이 주장한 내용으로 옳은 것은?",
+  "o": [
+   "중세 시대에 후대 예술가들이 덧칠한 것이다.",
+   "원래 고대 그리스 이전의 다른 문명들에서 유래한 것이다.",
+   "지하의 광물질이 침착되어 생긴 자연적 변색이다.",
+   "로마 황제의 명령으로 특별히 채색된 예외적 유물이다",
+   "그리스의 거장 조각가들이 실험적으로 제작한 것이다"
+  ],
+  "a": 2,
+  "e": "#36 Some insisted that Greek and Roman artifacts bearing obvious traces of color were in fact from other civilizations that existed before ancient Greece."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 서양 학계는 발굴된 고대 유물의 채색을 자연스러운 고유 유산으로 적극 보존하려 했다.",
+  "a": "X",
+  "e": "Section 3 English Summary: orthodox Western academia vehemently denied classical polychromy and deliberately scoured away authentic pigment."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "originator, pioneer",
+   "solidly, steadfastly",
+   "relic, antique",
+   "entrenched, ingrained",
+   "condemn, denounce"
+  ],
+  "rows": [
+   ["founder", 1],
+   ["firmly", 2],
+   ["artifact", 3],
+   ["rooted", 4],
+   ["criticize", 5]
+  ],
+  "e": "분석지 #31, #32, #33, #34 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "superficially",
+   "weakly, loosely",
+   "superior",
+   "mature, sophisticated",
+   "ambiguous, obscure"
+  ],
+  "rows": [
+   ["deeply", 1],
+   ["firmly", 2],
+   ["inferior", 3],
+   ["immature", 4],
+   ["obvious", 5]
+  ],
+  "e": "분석지 #31, #33, #35, #36 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #36의 bear가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "참다, 견디다",
+   "(아이를) 낳다",
+   "(흔적·특징을) 지니다, 띠다",
+   "(열매를) 맺다"
+  ],
+  "a": 3,
+  "e": "#36 artifacts bearing obvious traces of color에서 bear는 '(흔적이나 특징을) 지니다, 띠다(syn. carry, hold, display)'의 의미입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #39의 last가 본문에서 쓰인 의미와 품사로 옳은 것은?",
+  "o": [
+   "형용사 - 마지막의",
+   "부사 - 가장 최근에",
+   "동사 - 지속되다, 계속되다",
+   "명사 - 마지막 사람"
+  ],
+  "a": 3,
+  "e": "#39 lasted all the way into the 20th century에서 last는 '지속되다, 계속되다(syn. endure, persist)'라는 1형식 자동사입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #38의 wipe off와 바꾸어 쓸 수 있는 분석지상 동의어 표현을 두 단어로 쓰시오.",
+  "ans": [
+   "scrub off"
+  ],
+  "show": "scrub off",
+  "e": "#38 어휘: wipe off (syn. scrub off, remove, erase)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #33의 alter와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "change",
+   "shift",
+   "modify",
+   "transform"
+  ],
+  "show": "change (또는 shift, modify, transform)",
+  "e": "#33 어휘: alter (syn. change, shift, modify, transform)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The association of whiteness with artistic beauty grew (strong / strongly) in people’s minds.",
+  "o": [
+   "strong",
+   "strongly"
+  ],
+  "a": "strong",
+  "e": "#31 구문 분석 ★: grow가 2형식 상태변화 동사이므로 주격 보어로 형용사 strong이 와야 합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A German scholar was one of the (founder / founders) of art history.",
+  "o": [
+   "founders",
+   "founder"
+  ],
+  "a": "founders",
+  "e": "#32 구문 분석 ★: one of the 뒤에는 복수 명사가 와야 하므로 the founders가 맞습니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Despite / Although) the excavation of ancient artifacts, the bias was firmly established.",
+  "o": [
+   "Despite",
+   "Although"
+  ],
+  "a": "Despite",
+  "e": "#33 구문 분석 ★: 뒤에 절이 아니라 명사구(the excavation of ancient artifacts...)가 이어지므로 전치사 Despite가 맞습니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The bias was (so / such) firmly established that people’s perceptions did not alter.",
+  "o": [
+   "so",
+   "such"
+  ],
+  "a": "so",
+  "e": "#33 구문 분석 ★★★: 「so + 부사(firmly) + established + that절」(너무 ~해서 ...하다) 구문입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Many scholars simply refused (to believe / believing) that polychromy was used.",
+  "o": [
+   "to believe",
+   "believing"
+  ],
+  "a": "to believe",
+  "e": "#34 구문 분석: refuse는 목적어로 to부정사만을 취합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Scholars refused to believe, while those who (did / were) were publicly criticized.",
+  "o": [
+   "did",
+   "were"
+  ],
+  "a": "did",
+  "e": "#34 구문 분석 ★★★: 앞 절의 일반동사구 believed that polychromy was used를 받는 대동사이므로 did가 맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Sculptures painted with bright colors were regarded (as / for) inferior works.",
+  "o": [
+   "as",
+   "for"
+  ],
+  "a": "as",
+  "e": "#35 구문 분석 ★: 'regard A as B' 구문의 수동태이므로 be regarded as가 맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Some insisted that artifacts bearing traces of color (were / be) in fact from other civilizations.",
+  "o": [
+   "were",
+   "be"
+  ],
+  "a": "were",
+  "e": "#36 구문 분석 ★★★: 당위성(~해야 한다)이 아니라 과거 사실에 대한 진술이므로 일반 과거시제 were가 올바릅니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Artifacts (bearing / born) obvious traces of color were from other civilizations.",
+  "o": [
+   "bearing",
+   "born"
+  ],
+  "a": "bearing",
+  "e": "#36 구문 분석: 유물이 색채의 흔적을 능동적으로 지니고 있는 상태를 나타내므로 현재분사 bearing이 맞습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Other civilizations that (existed / were existed) before ancient Greece had color.",
+  "o": [
+   "existed",
+   "were existed"
+  ],
+  "a": "existed",
+  "e": "#36 구문 분석: exist는 1형식 절대 자동사이므로 수동태로 쓸 수 없습니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Some of them even had their colors (wipe / wiped) off so that the surface could be seen.",
+  "o": [
+   "wiped",
+   "wipe"
+  ],
+  "a": "wiped",
+  "e": "#38 구문 분석 ★★★: 사역동사 had의 목적어 their colors가 닦여 나가는 수동 관계이므로 과거분사 wiped off가 와야 합니다."
+ },
+ {
+  "n": 23,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The misconception that formed during the Renaissance (lasted / was lasted) all the way into the 20th century.",
+  "o": [
+   "lasted",
+   "was lasted"
+  ],
+  "a": "lasted",
+  "e": "#39 구문 분석 ★: last는 완전 자동사이므로 수동태로 쓰지 않고 능동 과거형 lasted를 씁니다."
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #36의 in fact에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "고대 그리스와 로마의 기술적 격차를 객관적으로 비교한다.",
+   "채색된 조각을 열등하다고 여긴 태도에 이어, 채색 유물을 그리스 이전의 다른 문명에서 온 것으로 왜곡하는 한층 구체적인 반론임을 강조한다.",
+   "18세기 고고학 발굴 조사의 오류를 정정하며 순백설을 옹호한다.",
+   "다색채색의 존재를 인정한 학자들이 학계의 주류로 자리 잡았음을 보여준다"
+  ],
+  "a": 2,
+  "e": "#36 [연결어 분석]: 앞선 학계의 반응에 이어, 채색의 실체를 부정하기 위해 동원된 한층 더 구체적이고 극단적인 문명 기원 왜곡 주장임을 강조합니다."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리적 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "순백과 예술적 미의 결합 고착화 및 학자의 교조적 발언 → 유물 출토에도 불구하고 지속된 편견 → 다색채색 지지자에 대한 비판 및 열등화 → 이질적 문명설 주장 및 색채 제거 만행 → 20세기까지 이어진 오해",
+   "채색 안료 복원 성공 → 미술사 창시자의 사과 → 르네상스 예술가들의 반발 → 박물관 유물 재도색",
+   "20세기 조각 기술 혁신 → 다색채색 학설의 폐기 → 흰 대리석 채석장 확장 → 서양 미술의 정체",
+   "고대 로마의 다른 문명 침략 → 조각상 채색 금지법 공포 → 르네상스 시대의 재발굴 → 결론"
+  ],
+  "a": 1,
+  "e": "#31, #32 백색 미학 교조화 → #33 출토에도 지속된 편견 → #34, #35 지지자 비판 및 폄훼 → #36~#38 문명 왜곡 및 색채 닦아내기 → #39 20세기까지 오해 지속 순서입니다."
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "신체가 더 하얗게 될수록 그것은 더욱더 아름답다.<br><small>「조건」 the whiter, the more beautiful, the body is, it is 활용 (총 11단어)</small>",
+  "ans": [
+   "the whiter the body is the more beautiful it is"
+  ],
+  "show": "the whiter the body is, the more beautiful it is",
+  "e": "#32 The + 비교급 ..., the + 비교급 ... 구문"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "<u>Although</u> the excavation of artifacts, the bias was so firmly established that perceptions did not alter. Many scholars refused to believe, while those who <u>were</u> were publicly criticized. Some of them even had their colors <u>wipe</u> off so that the bare white surface beneath could be seen.",
+  "keys": [
+   {
+    "k": "Despite",
+    "show": "Although → Despite (또는 In spite of)"
+   },
+   {
+    "k": "did",
+    "show": "were → did"
+   },
+   {
+    "k": "wiped",
+    "show": "wipe → wiped"
+   }
+  ],
+  "e": "#33 명사구 앞 전치사 Despite, #34 일반동사구를 받는 대동사 did, #38 사역동사 had의 목적격 보어 과거분사 wiped"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "kw",
+  "s": "34번 문장에서 those who were가 아닌 those who did를 쓴 어법적 이유를 대동사가 가리키는 내용과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "대동사",
+    "일반동사"
+   ],
+   [
+    "believed",
+    "believed that polychromy was used",
+    "과거 일반동사"
+   ]
+  ],
+  "show": "앞 절의 과거 일반동사구인 believed that polychromy was used를 대신하는 대동사 자리이기 때문이다.",
+  "e": "#34 구문 분석 ★★★"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Despite excavations uncovering color remnants, Western academia denied classical polychromy, denouncing painted works as (A) p________ and deliberately (B) s________ away authentic pigment down to bare stone.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "primitive"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "scouring"
+    ]
+   ]
+  ],
+  "show": "(A) primitive (B) scouring",
+  "e": "Section 3 English Summary 및 본문 #35, #38"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

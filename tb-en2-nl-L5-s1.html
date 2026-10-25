@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "브링크만의 발견과 고대 다색채색의 실체 정독 확인 문항 (#2~#13)",
+ "section": "교과서 본문 · 섹션 1 (#2~#13)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [2, "In the early 1980s, Vinzenz Brinkmann was studying archaeology as a graduate student at the University of Munich."],
+  [3, "He wanted to figure out a way to closely examine the marks left by tools on ancient Greek and Roman marble sculptures, so he developed a special ultraviolet lamp that would reveal marble surfaces in great detail."],
+  [4, "When Brinkmann shone his lamp on the sculptures, he was astonished to see something that he had not expected."],
+  [5, "There were clear signs of polychromy: the use of various colors in the decoration of statues or works of architecture."],
+  [6, "Brinkmann was curious, so he decided to investigate his findings further by examining more ancient statues."],
+  [7, "To his surprise, he found evidence of polychromy on almost every statue he looked at."],
+  [8, "He soon realized that many of these traces could be detected without his special lamp."],
+  [9, "They could even be seen clearly with the naked eye."],
+  [10, "Brinkmann continued to research polychromy in ancient statues with his wife, archaeologist Ulrike Koch-Brinkmann."],
+  [11, "Their research showed undeniable evidence that, while white marble was a highly valued material for Greek and Roman sculptors, its smooth surface was not always left bare."],
+  [12, "Instead, the white marble was used like a canvas."],
+  [13, "Vivid pigments could be applied in order to decorate the sculptures in many rich colors, from yellow, red, and green to blue, pink, and even gold."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 빈첸츠 브링크만이 특수 자외선 램프를 개발한 본래 목적으로 가장 적절한 것은?",
+  "o": [
+   "고대 조각상의 채색 안료 성분을 화학적으로 분해하기 위하여",
+   "고대 그리스와 로마의 대리석 조각상에 도구가 남긴 흔적을 면밀히 검사하기 위하여",
+   "대리석 채석장의 지질학적 연대를 정확히 측정하기 위하여",
+   "박물관에 소장된 조각상들의 위조 여부를 판별하기 위하여",
+   "대리석 표면의 미세한 균열을 복원하기 위한 접착제를 시험하기 위하여"
+  ],
+  "a": 2,
+  "e": "#3 He wanted to figure out a way to closely examine the marks left by tools on ancient Greek and Roman marble sculptures..."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "고대 조각상에 남겨진 다색채색의 흔적들은 오직 특수 자외선 램프를 통해서만 감지할 수 있었으며 육안으로는 전혀 식별할 수 없었다.",
+  "a": "X",
+  "e": "#8, #9 브링크만은 특수 램프 없이도 많은 흔적이 감지될 수 있으며 심지어 육안으로도 명확히 보일 수 있음을 깨달았습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["브링크만은 1980년대 초 뮌헨 대학교에서 대학원생으로 고고학을 공부하고 있었다.", "T"],
+   ["브링크만이 살펴본 거의 모든 고대 조각상에서 다색채색의 증거가 발견되었다.", "T"],
+   ["그리스와 로마 조각가들에게 흰 대리석은 가치가 낮은 저렴한 소재로 취급되었다.", "F"]
+  ],
+  "e": "#2, #7, #11 흰 대리석은 조각가들에게 매우 귀중하게 여겨진 재료(a highly valued material)였습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "브링크만 부부의 연구 결과가 밝혀낸 고대 대리석 조각상의 실체로 옳은 것은?",
+  "o": [
+   "대리석 본연의 순백색을 영구 보존하기 위해 일체의 가공을 피했다.",
+   "매끄러운 대리석 표면을 캔버스처럼 활용하여 다채롭고 생생한 안료로 장식했다.",
+   "종교적 이유로 인해 노란색과 붉은색 외의 다른 안료 사용은 엄격히 금지되었다.",
+   "조각상 표면의 색채는 후대 중세인들이 덧칠한 것으로 판명되었다",
+   "자연 건조된 흙 안료만을 사용해 시간이 흐르며 완전히 사라졌다"
+  ],
+  "a": 2,
+  "e": "#11, #12, #13 대리석 표면이 항상 드러난 채로 남겨진 것은 아니며 캔버스처럼 사용되어 생생한 안료로 장식되었습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "9번 문장의 주어 They가 가리키는 대상은 '다색채색의 흔적들(many of these traces)'이다.",
+  "a": "O",
+  "e": "#8, #9 구문 분석: They는 앞 문장의 many of these traces를 가리킵니다."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "inspect, scrutinize",
+   "uncover, disclose",
+   "evident, obvious",
+   "inquisitive, intrigued",
+   "vibrant, brilliant"
+  ],
+  "rows": [
+   ["examine", 1],
+   ["reveal", 2],
+   ["clear", 3],
+   ["curious", 4],
+   ["vivid", 5]
+  ],
+  "e": "분석지 #3, #5, #6, #13 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "carelessly, superficially",
+   "conceal, hide",
+   "ambiguous, vague",
+   "indifferent, unconcerned",
+   "dull, pale"
+  ],
+  "rows": [
+   ["closely", 1],
+   ["reveal", 2],
+   ["clear", 3],
+   ["curious", 4],
+   ["vivid", 5]
+  ],
+  "e": "분석지 #3, #5, #6, #13 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #11의 bare가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "드러난, 아무것도 덮이지 않은",
+   "가장 기본적인, 최소한의",
+   "헐벗은, 풀이 자라지 않는",
+   "드러내다, 밝히다"
+  ],
+  "a": 1,
+  "e": "#11 어휘: was not always left bare에서 bare는 '드러난, 아무것도 덮이지 않은(syn. exposed, unpainted)'의 의미입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #13의 apply가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "신청하다, 지원하다",
+   "(페인트·안료를) 바르다, 칠하다",
+   "적용되다, 들어맞다",
+   "전념하다, 몰두하다"
+  ],
+  "a": 2,
+  "e": "#13 어휘: Vivid pigments could be applied에서 apply는 '안료를 바르다, 칠하다(syn. smear, spread, coat)'의 의미입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #3의 figure out과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "determine",
+   "ascertain",
+   "comprehend",
+   "decipher"
+  ],
+  "show": "determine (또는 ascertain, comprehend, decipher)",
+  "e": "#3 어휘: figure out (syn. determine, ascertain, comprehend, decipher, work out)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #11의 undeniable과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "indisputable",
+   "unquestionable",
+   "irrefutable",
+   "conclusive"
+  ],
+  "show": "indisputable (또는 unquestionable, irrefutable, conclusive)",
+  "e": "#11 어휘: undeniable (syn. indisputable, unquestionable, irrefutable, conclusive)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He wanted to examine the marks (leaving / left) by tools on ancient sculptures.",
+  "o": [
+   "left",
+   "leaving"
+  ],
+  "a": "left",
+  "e": "#3 구문 분석 ★: 도구에 의해 남겨진 수동 관계이므로 과거분사 left가 the marks를 후치 수식합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "When Brinkmann shone his lamp on the sculptures, he was (astonished / astonishing) to see something new.",
+  "o": [
+   "astonished",
+   "astonishing"
+  ],
+  "a": "astonished",
+  "e": "#4 구문 분석 ★: 주어 he가 놀라움을 느낀 수동적 감정의 주체이므로 과거분사 astonished를 씁니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He was astonished to see something that he (did not expect / had not expected).",
+  "o": [
+   "had not expected",
+   "did not expect"
+  ],
+  "a": "had not expected",
+  "e": "#4 구문 분석 ★★★: 놀란 과거 시점(was astonished)보다 예상하지 못했던 것이 시간상 더 앞선 사건이므로 대과거 had not expected를 씁니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "There (was / were) clear signs of polychromy.",
+  "o": [
+   "were",
+   "was"
+  ],
+  "a": "were",
+  "e": "#5 구문 분석: 유도부사 There 뒤의 실제 주어가 복수명사구 clear signs이므로 복수 be동사 were가 맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He decided (to investigate / investigating) his findings further.",
+  "o": [
+   "to investigate",
+   "investigating"
+  ],
+  "a": "to investigate",
+  "e": "#6 구문 분석: 동사 decide는 목적어로 to부정사만을 취합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He found evidence of polychromy on almost every (statue / statues) he looked at.",
+  "o": [
+   "statue",
+   "statues"
+  ],
+  "a": "statue",
+  "e": "#7 구문 분석 ★: every 뒤에는 반드시 단수 명사가 와야 합니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He found evidence of polychromy on almost every statue he looked (at / on).",
+  "o": [
+   "at",
+   "on"
+  ],
+  "a": "at",
+  "e": "#7 구문 분석 ★★★: 자동사 look이 대상을 볼 때 전치사 at을 수반하므로 목적격 관계대명사가 생략된 절 끝에 at이 반드시 남아 있어야 합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Many of these traces could (detect / be detected) without his special lamp.",
+  "o": [
+   "be detected",
+   "detect"
+  ],
+  "a": "be detected",
+  "e": "#8 구문 분석 ★: 흔적(traces)은 감지되는 대상이므로 조동사 수동태 could be detected가 맞습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Their research showed undeniable evidence (that / which) the smooth surface was not always left bare.",
+  "o": [
+   "that",
+   "which"
+  ],
+  "a": "that",
+  "e": "#11 구문 분석 ★★★: 뒤에 빠진 문장 성분이 없는 완전한 절이 이어지므로 추상명사 evidence를 보충하는 동격의 접속사 that이 와야 합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "White marble was a (high / highly) valued material for sculptors.",
+  "o": [
+   "highly",
+   "high"
+  ],
+  "a": "highly",
+  "e": "#11 구문 분석 ★: 과거분사 valued를 수식하여 '대단히, 매우'를 뜻하는 정도 부사 highly가 올바릅니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Its smooth surface was not always left (bare / barely).",
+  "o": [
+   "bare",
+   "barely"
+  ],
+  "a": "bare",
+  "e": "#11 구문 분석 ★★★: 5형식 leave의 수동태 구문에서 보어 자리이므로 형용사 bare가 와야 합니다. barely는 '거의 ~않다'라는 부정 부사입니다."
+ },
+ {
+  "n": 23,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Vivid pigments could (apply / be applied) in order to decorate the sculptures.",
+  "o": [
+   "be applied",
+   "apply"
+  ],
+  "a": "be applied",
+  "e": "#13 구문 분석: 안료는 칠해지는 수동의 대상이므로 could be applied가 맞습니다."
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #12의 Instead에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "대리석 조각상이 시간이 흐르며 색이 바래게 된 화학적 원인을 규명한다.",
+   "앞 문장의 부정 진술(not always left bare)에 대해 대리석이 캔버스처럼 사용되었다는 적극적 대안이자 실체를 밝힌다.",
+   "특수 램프가 고장 난 상황에서 다른 광학 장비를 대체하여 사용했음을 안내한다.",
+   "브링크만의 가설이 학계에서 거부당하고 새로운 연구 주제로 전환되었음을 보여준다"
+  ],
+  "a": 2,
+  "e": "#12 [연결어 분석]: 앞 문장의 부정문(not always left bare)을 받아 대리석이 화폭처럼 채색에 쓰였다는 실질적 진실을 밝히는 대조/대안 관계입니다."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리적 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "도구 흔적 조사를 위한 자외선 램프 개발 → 예상치 못한 다색채색 흔적 발견 → 추가 조사를 통한 흔적의 보편성 확인(육안 식별 포함) → 대리석을 캔버스 삼아 안료로 장식한 실체 규명",
+   "고대 조각상의 안료 분석 착수 → 자외선 램프의 결함 발견 → 조각 복원 작업 중단 → 순백색 조각상의 우수성 강조",
+   "뮌헨 대학교의 연구 지원 중단 → 아내 울리케의 단독 연구 진행 → 다색채색설 반박 → 새로운 보존 기법 발표",
+   "다양한 색상의 안료 채취 → 고대 그리스 채색 기법 복원 실패 → 자외선 램프 폐기 → 육안 관찰로 전환"
+  ],
+  "a": 1,
+  "e": "#2, #3 도구 흔적 조사용 램프 개발 → #4, #5 다색채색 흔적 발견 → #6~#9 추가 조사 및 육안 식별 확인 → #10~#13 캔버스처럼 채색된 실체 입증 순서입니다."
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "브링크만이 조각상들 위에 그의 램프를 비추었을 때, 그는 그가 예상하지 못했던 무언가를 보게 되어 깜짝 놀랐다.<br><small>「조건」 shone, was astonished to see, had not expected 활용 (총 18단어)</small>",
+  "ans": [
+   "When Brinkmann shone his lamp on the sculptures he was astonished to see something that he had not expected"
+  ],
+  "show": "When Brinkmann shone his lamp on the sculptures, he was astonished to see something that he had not expected.",
+  "e": "#4 감정의 원인 to부정사 및 대과거 had not expected"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Brinkmann was astonished to see something that he <u>did not expect</u>. He found evidence of polychromy on almost every statue he looked <u>on</u>. Their research showed undeniable evidence that its smooth surface was not always left <u>barely</u>.",
+  "keys": [
+   {
+    "k": "had not expected",
+    "show": "did not expect → had not expected"
+   },
+   {
+    "k": "at",
+    "show": "on → at"
+   },
+   {
+    "k": "bare",
+    "show": "barely → bare"
+   }
+  ],
+  "e": "#4 대과거 had not expected, #7 look at의 전치사 잔류(at), #11 5형식 leave의 수동태 보어 형용사 bare"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "kw",
+  "s": "11번 문장에서 evidence 뒤의 that을 which로 바꾸어 쓸 수 없는 어법적 이유를 뒤따르는 절의 구조와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "동격",
+    "동격의 접속사",
+    "동격 that"
+   ],
+   [
+    "완전한 절",
+    "완전한 문장",
+    "완전"
+   ]
+  ],
+  "show": "뒤에 빠진 문장 성분이 없는 완전한 절이 이어지는 동격의 접속사 that 자리이기 때문이다.",
+  "e": "#11 구문 분석 ★★★"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Vinzenz Brinkmann examined sculptures, uncovering unmistakable evidence of (A) p________. Investigations confirmed that white marble functioned as a canvas coated with rich mineral (B) p________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "polychromy"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "pigments"
+    ]
+   ]
+  ],
+  "show": "(A) polychromy (B) pigments",
+  "e": "Section 1 English Summary 및 본문 #5, #13"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

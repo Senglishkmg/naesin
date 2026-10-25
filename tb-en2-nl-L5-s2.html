@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "서양 미술사 속 '순백'의 오해와 르네상스의 왜곡 정독 확인 문항 (#14~#30)",
+ "section": "교과서 본문 · 섹션 2 (#14~#30)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [14, "Does this discovery seem surprising?"],
+  [15, "If someone asks you to imagine a Greek or Roman statue, a pure white divine figure will probably come to mind."],
+  [16, "However, Brinkmann and Koch-Brinkmann’s research revealed that this image is actually inaccurate."],
+  [17, "Where did this misconception about ancient art come from, and when did it first arise?"],
+  [18, "In fact, it dates back hundreds of years."],
+  [19, "White marble has been considered the standard material for sculpture in Western art since the Renaissance, when many ancient sculptures of Greece and Rome were being excavated and newly admired for their artistic beauty."],
+  [20, "Over a period of more than 1,000 years, much of the paint with which these sculptures were originally decorated wore off."],
+  [21, "Any paint that remained was faded, and more of it came off during the excavation process itself."],
+  [22, "As a result, when these ancient statues were taken out of the ground, their surfaces were plain white marble."],
+  [23, "People of the Renaissance marveled at the smoothness of the white marble and the striking manner in which it enhanced the contrast of light and shadow."],
+  [24, "In the year 1489, an ancient Roman sculpture, which became known as the Apollo Belvedere, was dug up in Italy."],
+  [25, "Renaissance artists were amazed by how its bare stone surface highlighted the elegant outline of the sculpted body."],
+  [26, "This discovery reinforced the artists’ admiration for white marble."],
+  [27, "Both artists and scholars began to associate undecorated white marble with ideal beauty."],
+  [28, "The great Renaissance artist Michelangelo was no exception."],
+  [29, "He even traveled to different quarries around Italy in order to purchase high-quality white marble for his own sculptures."],
+  [30, "The Renaissance public’s appreciation of bare white stone led to a bias against using color to decorate sculptures, and this resulted in Renaissance artists leaving most of their marble creations unpainted."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 르네상스 시대에 발굴된 고대 조각상들이 순백의 표면을 띠게 된 물리적 원인으로 언급되지 않은 것은?",
+  "o": [
+   "1,000년이 넘는 오랜 기간 동안 본래 칠해졌던 페인트가 마모되었다.",
+   "남아 있던 극소량의 페인트마저 색이 희미하게 바래 있었다.",
+   "발굴 작업 과정 자체에서 남아 있던 페인트가 추가로 벗겨져 나갔다.",
+   "고대 로마 조각가들이 처음부터 일체의 채색을 금지하고 순백으로만 조각했다.",
+   "땅속에 오랜 세월 매장되면서 자연적인 풍화 작용을 겪었다"
+  ],
+  "a": 4,
+  "e": "#16, #20, #21 고대 조각상이 순백이라는 생각은 오해이며 원래는 페인트로 장식되었으나 오랜 세월 마모되고 발굴 중 떨어져 나갔습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "르네상스 예술가 미켈란젤로는 조각에 색채를 도입하려 시도했으나 대중의 반대로 실패했다.",
+  "a": "X",
+  "e": "#28, #29 미켈란젤로 역시 예외가 아니었으며, 자신의 조각품을 위해 고품질의 흰 대리석을 사러 이탈리아 전역의 채석장을 찾아다녔습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["1489년 이탈리아에서 발굴된 '벨베데레의 아폴로'는 예술가들의 흰 대리석에 대한 찬사를 더욱 강화했다.", "T"],
+   ["르네상스 사람들은 흰 대리석이 빛과 그림자의 대비를 극대화하는 방식에 감탄했다.", "T"],
+   ["르네상스 예술가들은 조각상에 화려한 채색을 입히는 것을 가장 이상적인 미의 기준으로 여겼다.", "F"]
+  ],
+  "e": "#23, #24, #26, #27, #30 르네상스 예술가들과 학자들은 장식되지 않은 순백의 대리석을 이상적인 아름다움과 결부시켰습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "23번 문장의 it이 가리키는 대상은?",
+  "o": [
+   "the white marble",
+   "the striking manner",
+   "the contrast",
+   "light and shadow",
+   "Western art"
+  ],
+  "a": 1,
+  "e": "#23 구문 분석: it은 앞의 the white marble(흰 대리석)을 가리킵니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 고대 조각상들이 순백이라는 이미지는 르네상스 시대로 거슬러 올라가는 뿌리 깊은 역사적 오해에 기인한다.",
+  "a": "O",
+  "e": "Section 2 English Summary: this mental image stems from an entrenched historical misconception dating back to the Renaissance."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "unearth, dig up",
+   "fade away, erode",
+   "accentuate, emphasize",
+   "strengthen, fortify",
+   "prejudice, partiality"
+  ],
+  "rows": [
+   ["excavate", 1],
+   ["wear off", 2],
+   ["highlight", 3],
+   ["reinforce", 4],
+   ["bias", 5]
+  ],
+  "e": "분석지 #19, #20, #25, #26, #30 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "accurate, correct",
+   "truth, fact",
+   "scorn, disdain",
+   "diminish, reduce",
+   "decorated, ornamented"
+  ],
+  "rows": [
+   ["inaccurate", 1],
+   ["misconception", 2],
+   ["admire", 3],
+   ["enhance", 4],
+   ["undecorated", 5]
+  ],
+  "e": "분석지 #16, #17, #19, #23, #27 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #22의 plain이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "명백한, 분명한",
+   "평원, 평지",
+   "무늬가 없는, 소박한, 있는 그대로의",
+   "솔직한, 꾸밈없는"
+  ],
+  "a": 3,
+  "e": "#22 their surfaces were plain white marble에서 plain은 '무늬가 없는, 소박한, 있는 그대로의(syn. unadorned, bare)'라는 의미입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #23의 manner가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "방식, 양식",
+   "예의범절, 풍습",
+   "태도, 몸가짐",
+   "종류, 분류"
+  ],
+  "a": 1,
+  "e": "#23 the striking manner in which...에서 manner는 '방식, 양식(syn. way, method, mode)'의 뜻입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #15의 come to mind와 바꾸어 쓸 수 있는 분석지상 동의어 숙어 표현을 쓰시오.",
+  "ans": [
+   "occur to one",
+   "spring to mind"
+  ],
+  "show": "spring to mind (또는 occur to one)",
+  "e": "#15 어휘: come to mind (syn. occur to one, spring to mind)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #24의 dig up의 과거분사형으로 본문에 쓰인 형태를 두 단어로 쓰시오.",
+  "ans": [
+   "dug up"
+  ],
+  "show": "dug up",
+  "e": "#24 어휘 및 구문: dig up (과거/과거분사 dug up)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Does this discovery seem (surprising / surprised)?",
+  "o": [
+   "surprising",
+   "surprised"
+  ],
+  "a": "surprising",
+  "e": "#14 구문 분석 ★: 감각동사 seem의 주격 보어로 주어인 발견(discovery)이 놀라움을 주는 대상이므로 현재분사 surprising을 씁니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "If someone asks you (imagine / to imagine) a Greek or Roman statue, a white figure will come to mind.",
+  "o": [
+   "to imagine",
+   "imagine"
+  ],
+  "a": "to imagine",
+  "e": "#15 구문 분석 ★: 5형식 동사 ask는 목적격 보어로 to부정사를 취합니다 (ask + 목적어 + to-v)."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Where did this misconception come from, and when did it first (arise / arouse)?",
+  "o": [
+   "arise",
+   "arouse"
+  ],
+  "a": "arise",
+  "e": "#17 구문 분석 ★: '발생하다, 생겨나다'라는 의미의 1형식 완전 자동사는 arise입니다. arouse는 '불러일으키다'라는 타동사입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "White marble (has considered / has been considered) the standard material for sculpture in Western art.",
+  "o": [
+   "has been considered",
+   "has considered"
+  ],
+  "a": "has been considered",
+  "e": "#19 구문 분석 ★★★: 흰 대리석은 표준 재료로 여겨져 온 대상이므로 현재완료 수동태 has been considered가 올바릅니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Since the Renaissance, (when / which) many ancient sculptures were being excavated.",
+  "o": [
+   "when",
+   "which"
+  ],
+  "a": "when",
+  "e": "#19 구문 분석 ★: 콤마 뒤에서 시간의 선행사 the Renaissance를 부연 설명하며 뒤에 완전한 수동태 절이 이어지므로 관계부사 when을 씁니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Much of the paint (with which / which) these sculptures were originally decorated wore off.",
+  "o": [
+   "with which",
+   "which"
+  ],
+  "a": "with which",
+  "e": "#20 구문 분석 ★★★: 'decorate A with B' 구문에서 유래하여 전치사 with가 관계대명사 앞에 위치한 with which가 맞습니다. 뒤에 완전한 수동태 문장이 이어집니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Any paint that (remained / was remained) was faded.",
+  "o": [
+   "remained",
+   "was remained"
+  ],
+  "a": "remained",
+  "e": "#21 구문 분석 ★: remain은 1형식 절대 자동사이므로 수동태로 쓸 수 없고 능동 과거형 remained를 써야 합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "People marveled at the striking manner (in which / which) it enhanced the contrast of light and shadow.",
+  "o": [
+   "in which",
+   "which"
+  ],
+  "a": "in which",
+  "e": "#23 구문 분석 ★★★: 'in a manner'에서 유래한 전치사+관계대명사 in which가 와야 하며, 뒤에 완전한 3형식 절이 이어집니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In the year 1489, an ancient Roman sculpture, which became known as the Apollo Belvedere, (was / were) dug up in Italy.",
+  "o": [
+   "was",
+   "were"
+  ],
+  "a": "was",
+  "e": "#24 구문 분석 ★: 주어의 핵이 단수 명사인 an ancient Roman sculpture이므로 단수동사 was가 올바릅니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Artists were amazed by (how its bare stone surface highlighted / how did its bare stone surface highlight) the elegant outline.",
+  "o": [
+   "how its bare stone surface highlighted",
+   "how did its bare stone surface highlight"
+  ],
+  "a": "how its bare stone surface highlighted",
+  "e": "#25 구문 분석 ★: 전치사 by의 목적어로 쓰인 간접의문문 명사절이므로 [의문사 + 주어 + 동사]의 평서문 어순을 따라야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This resulted in Renaissance artists (leave / leaving) most of their marble creations unpainted.",
+  "o": [
+   "leaving",
+   "leave"
+  ],
+  "a": "leaving",
+  "e": "#30 구문 분석 ★★★: 전치사 in의 목적어로 동명사 leaving이 와야 하며, 바로 앞의 Renaissance artists는 동명사의 의미상 주어입니다."
+ },
+ {
+  "n": 23,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This resulted in artists leaving most of their marble creations (unpainted / unpainting).",
+  "o": [
+   "unpainted",
+   "unpainting"
+  ],
+  "a": "unpainted",
+  "e": "#30 구문 분석 ★: 대리석 창작품(creations)은 칠해지지 않는 수동의 상태이므로 5형식 leaving의 목적격 보어 자리에 과거분사/형용사 unpainted가 와야 합니다."
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "순백이라는 대중적 상식과 통념에 대해 연구가 입증한 상반된 진실 간의 대조와 화제 전환",
+   "오해의 기원에 대한 질문에 대해 수백 년 전으로 거슬러 올라간다는 역사적 실체를 강조하며 사실성 심화",
+   "오랜 매장 기간의 마모와 발굴 충격이라는 물리적 원인들에 따른 최종 표면 상태의 현상적 귀결"
+  ],
+  "rows": [
+   ["However (#16)", 1],
+   ["In fact (#18)", 2],
+   ["As a result (#22)", 3]
+  ],
+  "e": "분석지 #16, #18, #22 [연결어 분석]"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리적 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "조각상 순백 이미지의 허구성 제기 → 르네상스 발굴 당시 풍화로 인한 순백 표면 노출 → 흰 대리석 표면과 빛·그림자 대비에 대한 찬사 형성 → 아폴로 벨베데레 발굴 및 이상적 미로의 신격화 → 색채 배제 편견 정착",
+   "미켈란젤로의 채석장 탐방 → 현대 브링크만 부부의 반론 → 로마 조각상의 채색 복원 실패 → 르네상스 화풍의 쇠퇴",
+   "대리석 발굴 기법의 발전 → 페인트 마모 원인 규명 → 고대 그리스 조각상의 수출 중단 → 순백 조각상의 대량 생산",
+   "벨베데레 아폴로 조각상의 위조 판명 → 르네상스 예술가들의 반발 → 박물관 소장품 폐기 → 새로운 미학 기준 수립"
+  ],
+  "a": 1,
+  "e": "#15~#18 오해 제기 → #19~#22 풍화와 발굴로 인한 순백 표면 노출 → #23~#27 빛과 그림자 대비 찬사 및 이상적 미로 결부 → #28~#30 미켈란젤로 사례 및 색채 배제 편견 정착 순서입니다."
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "르네상스 사람들은 흰 대리석의 매끄러움과 그것이 빛과 그림자의 대비를 강화했던 인상적인 방식에 감탄했다.<br><small>「조건」 marveled at, the striking manner in which, enhanced 활용 (총 22단어)</small>",
+  "ans": [
+   "People of the Renaissance marveled at the smoothness of the white marble and the striking manner in which it enhanced the contrast of light and shadow"
+  ],
+  "show": "People of the Renaissance marveled at the smoothness of the white marble and the striking manner in which it enhanced the contrast of light and shadow.",
+  "e": "#23 전치사 at 뒤 명사구 병렬 및 in which 완전한 절 구문"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Much of the paint <u>which</u> these sculptures were originally decorated wore off. Any paint that <u>was remained</u> was faded. This resulted in Renaissance artists leaving most of their marble creations <u>unpainting</u>.",
+  "keys": [
+   {
+    "k": "with which",
+    "show": "which → with which"
+   },
+   {
+    "k": "remained",
+    "show": "was remained → remained"
+   },
+   {
+    "k": "unpainted",
+    "show": "unpainting → unpainted"
+   }
+  ],
+  "e": "#20 decorate A with B에서 유래한 with which, #21 자동사 remain(수동태 불가), #30 5형식 leave의 수동 목적격 보어 unpainted"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "kw",
+  "s": "21번 문장의 that절에서 was remained가 아닌 remained를 써야 하는 어법적 이유를 동사의 성격과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "자동사",
+    "1형식 자동사",
+    "완전자동사"
+   ],
+   [
+    "수동태",
+    "수동"
+   ]
+  ],
+  "show": "remain은 완전 자동사이므로 수동태로 쓸 수 없기 때문이다.",
+  "e": "#21 구문 분석 ★"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Classical statuary's pristine white image stems from an entrenched historical (A) m________. Renaissance masters canonized bare white marble as the ultimate (B) e________ of classical aesthetic perfection.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "misconception"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "epitome"
+    ]
+   ]
+  ],
+  "show": "(A) misconception (B) epitome",
+  "e": "Section 2 English Summary 및 본문 #17"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
