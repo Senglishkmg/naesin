@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "회복탄력성의 정의와 중요성 정독 확인 문항 (#3~#12)",
+ "section": "교과서 본문 · 섹션 1 (#3~#12)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [3, "This week’s topic in the City Wellness Center Newsletter is resilience, or “the power to overcome.”"],
+  [4, "Julia Hone, a famous doctor, tells us how we can deal with difficult times by cultivating our inner strength."],
+  [5, "No life is free from problems."],
+  [6, "Whatever life path we choose, we all experience adversity."],
+  [7, "This can take the form of illness, accidents, failure in exams, family and relationship issues, or other stresses."],
+  [8, "To cope, we all need the ability to overcome difficulties, which is known as resilience."],
+  [9, "Resilience means springing back, just like a bouncy ball after hitting the ground."],
+  [10, "If you are resilient, you can bounce back and recover quickly from the hard times you experience."],
+  [11, "Furthermore, you learn and grow from adversity."],
+  [12, "So, resilience is the ability to handle, recover from, and benefit from difficult life events."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 본문에서 언급된 역경(adversity)의 구체적인 형태에 해당하지 않는 것은?",
+  "o": [
+   "질병이나 사고",
+   "시험에서의 실패",
+   "가족 및 대인관계 문제",
+   "일상의 다양한 스트레스",
+   "심각한 경제적 파산"
+  ],
+  "a": 5,
+  "e": "#7 역경의 구체적 형태로 질병, 사고, 시험 실패, 가족 및 관계 문제, 기타 스트레스가 언급되었습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "특정한 삶의 경로를 신중하게 잘 선택하기만 하면 누구나 역경을 완전히 겪지 않을 수 있다.",
+  "a": "X",
+  "e": "#5, #6 No life is free from problems 및 Whatever life path we choose, we all experience adversity라고 명시되어 있습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["의사 Julia Hone은 내면의 힘을 기르면 힘든 시기에 대처할 수 있다고 설명한다.", "T"],
+   ["본문에서 회복탄력성은 바닥에 부딪힌 뒤 다시 튀어 오르는 탄력 있는 공에 비유되었다.", "T"],
+   ["회복탄력성을 지닌 사람은 힘든 시기를 극복할 수는 있지만 그로부터 배우거나 성장하지는 못한다.", "F"]
+  ],
+  "e": "#4, #9, #11 회복탄력성이 있으면 역경으로부터 배우고 성장(learn and grow from adversity)할 수도 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "7번 문장의 지시대명사 This가 가리키는 대상은?",
+  "o": [
+   "our inner strength",
+   "the City Wellness Center",
+   "adversity",
+   "the ground",
+   "a famous doctor"
+  ],
+  "a": 3,
+  "e": "#7 구문 분석: This는 앞 문장(#6)에서 언급된 adversity(역경)를 가리킵니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 인간의 삶에서 역경은 피할 수 없는(unavoidable) 것이므로 우리 모두에게 회복탄력성이 필요하다.",
+  "a": "O",
+  "e": "Section 1 English Summary: Adversity is unavoidable in human life, so we all need resilience..."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "cope with, handle",
+   "develop, nurture",
+   "hardship, misfortune",
+   "elastic, springy",
+   "heal, recuperate"
+  ],
+  "rows": [
+   ["deal", 1],
+   ["cultivate", 2],
+   ["adversity", 3],
+   ["bouncy", 4],
+   ["recover", 5]
+  ],
+  "e": "분석지 #4, #6, #9, #10 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "unknown, obscure",
+   "outer, external",
+   "weakness",
+   "prosperity, fortune",
+   "fragile, vulnerable"
+  ],
+  "rows": [
+   ["famous", 1],
+   ["inner", 2],
+   ["strength", 3],
+   ["adversity", 4],
+   ["resilient", 5]
+  ],
+  "e": "분석지 #4, #6, #10 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #5의 free가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "자유로운, 구속되지 않은",
+   "무료의, 공짜의",
+   "~이 없는, 벗어난",
+   "시간이 있는, 한가한"
+  ],
+  "a": 3,
+  "e": "#5 be free from ~은 '~이 없는, ~에서 벗어난'이라는 의미의 관용구입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #12의 handle이 본문에서 쓰인 품사와 의미로 옳은 것은?",
+  "o": [
+   "명사 - 문이나 기구의 손잡이",
+   "동사 - 다루다, 처리하다",
+   "동사 - 손으로 만지다",
+   "명사 - 조종간"
+  ],
+  "a": 2,
+  "e": "#12 handle difficult life events에서 handle은 '다루다, 처리하다(syn. manage, deal with)'라는 동사입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #8의 cope와 바꾸어 쓸 수 있는 분석지상 동의어 한 단어를 쓰시오.",
+  "ans": [
+   "manage",
+   "deal",
+   "handle"
+  ],
+  "show": "manage (또는 deal, handle)",
+  "e": "#8 어휘: cope (syn. manage, deal, handle)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #12의 benefit from과 바꾸어 쓸 수 있는 분석지상 benefit의 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "profit",
+   "gain"
+  ],
+  "show": "profit (또는 gain)",
+  "e": "#12 어휘: benefit from (syn. profit, gain)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This week’s topic in the City Wellness Center Newsletter (is / are) resilience.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "#3 구문 분석 ★: 주어의 핵이 단수 명사인 topic이므로 단수 동사 is가 올바릅니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Julia Hone tells us (how can we deal / how we can deal) with difficult times.",
+  "o": [
+   "how we can deal",
+   "how can we deal"
+  ],
+  "a": "how we can deal",
+  "e": "#4 구문 분석 ★: 직접목적어 자리에 쓰인 간접의문문은 [의문사 + 주어 + 동사]의 평서문 어순이어야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "She tells us how we can deal with difficult times by (cultivate / cultivating) our inner strength.",
+  "o": [
+   "cultivating",
+   "cultivate"
+  ],
+  "a": "cultivating",
+  "e": "#4 구문 분석: 수단을 나타내는 전치사 by의 목적어로 동명사 cultivating이 와야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Whatever / However) life path we choose, we all experience adversity.",
+  "o": [
+   "Whatever",
+   "However"
+  ],
+  "a": "Whatever",
+  "e": "#6 구문 분석 ★: 명사 life path를 직접 수식하며 양보 부사절을 이끄는 복합관계형용사는 Whatever입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "We all need the ability to overcome difficulties, (which / that) is known as resilience.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "#8 구문 분석 ★: 콤마 뒤에서 앞의 구를 선행사로 받는 계속적 용법의 관계대명사 자리이므로 that을 쓸 수 없습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The ability to overcome difficulties is known (as / for) resilience.",
+  "o": [
+   "as",
+   "for"
+  ],
+  "a": "as",
+  "e": "#8 구문 분석: '~로 알려져 있다'라는 자격/동격을 나타내는 표현은 be known as입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Resilience means (springing / to spring) back, just like a bouncy ball.",
+  "o": [
+   "springing",
+   "to spring"
+  ],
+  "a": "springing",
+  "e": "#9 구문 분석: '다시 튀어 오르는 것을 의미하다'라는 뜻으로 동사 means의 목적어로 동명사 springing이 쓰였습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "If you are resilient, you can bounce back and (recover / recovered) quickly.",
+  "o": [
+   "recover",
+   "recovered"
+  ],
+  "a": "recover",
+  "e": "#10 구문 분석: 조동사 can에 걸려 bounce back과 and로 병렬 연결되는 동사원형 자리입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Resilience is the ability to handle, recover (from / in), and benefit from difficult life events.",
+  "o": [
+   "from",
+   "in"
+  ],
+  "a": "from",
+  "e": "#12 구문 분석 ★: difficult life events를 공통 목적어로 취하므로 'recover from'의 전치사 from이 반드시 유지되어야 합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "3번 문장의 or에 대한 어법적 설명으로 옳은 것은?",
+  "o": [
+   "둘 중 하나만을 골라야 하는 양자택일 접속사이다.",
+   "앞의 전문 용어 resilience를 풀이해 주는 '즉, 다시 말해'라는 동격의 접속사이다.",
+   "명령문 뒤에서 '그렇지 않으면'이라는 부정적 결과를 나타낸다.",
+   "이유를 나타내는 종속접속사이다"
+  ],
+  "a": 2,
+  "e": "#3 구문 분석: 여기서 or는 양자택일이 아니라 resilience를 쉽게 설명해 주는 동격의 연결어로 쓰였습니다."
+ },
+ {
+  "n": 22,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #11의 Furthermore에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "역경을 겪었을 때 회복하지 못하고 좌절하는 예외적 상황을 지적한다.",
+   "힘든 시기에서 회복하는 차원을 넘어 배움과 성장이라는 긍정적 효과를 대등한 층위에서 순접으로 덧붙인다.",
+   "앞 문장의 빠른 회복 과정에 대한 구체적인 인과적 원인을 설명한다.",
+   "내면의 힘을 기르는 구체적 훈련 방법들을 차례대로 열거한다"
+  ],
+  "a": 2,
+  "e": "#11 [연결어 분석]: 빠르게 회복한다는 내용에 이어 배움과 성장이라는 효과를 추가로 덧붙이는 순접 연결어입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "소식지 주제(회복탄력성) 소개 → 모든 삶의 역경 직면 불가피성 → 회복탄력성의 필요성과 공에 빗댄 정의 → 배움과 성장 및 종합적 개념 정리",
+   "탄력 있는 공의 물리적 법칙 설명 → 심리학적 적용 한계 지적 → 회복탄력성 포기 선언 → 결론",
+   "질병과 사고의 예방법 나열 → 소식지 정기 구독 권유 → 의사 소개 → 시험 실패 극복 사례",
+   "내면의 힘 측정 검사 소개 → 스트레스의 부작용 경고 → 회복탄력성 개념 비판 → 대체 이론 제시"
+  ],
+  "a": 1,
+  "e": "#3, #4 주제 소개 → #5~#7 역경의 불가피성과 형태 → #8~#10 회복탄력성의 필요성 및 정의 → #11, #12 배움과 성장 및 종합 정리 순서입니다."
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "우리가 어떤 삶의 경로를 선택하든지 간에, 우리 모두는 역경을 겪는다.<br><small>「조건」 Whatever life path, we choose, experience adversity 활용 (총 9단어)</small>",
+  "ans": [
+   "Whatever life path we choose we all experience adversity"
+  ],
+  "show": "Whatever life path we choose, we all experience adversity.",
+  "e": "#6 복합관계형용사 Whatever 양보 부사절"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Julia Hone tells us <u>how can we deal</u> with difficult times by cultivating our inner strength. We all need the ability to overcome difficulties, <u>that</u> is known as resilience. Resilience is the ability to handle, <u>recover</u>, and benefit from difficult life events.",
+  "keys": [
+   {
+    "k": "how we can deal",
+    "show": "how can we deal → how we can deal"
+   },
+   {
+    "k": "which",
+    "show": "that → which"
+   },
+   {
+    "k": "recover from",
+    "show": "recover → recover from"
+   }
+  ],
+  "e": "#4 간접의문문 평서문 어순, #8 계속적 용법 관계대명사 which, #12 공통 목적어에 걸리는 recover from"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "kw",
+  "s": "8번 문장의 콤마 뒤에서 which 대신 관계대명사 that을 쓸 수 없는 어법적 이유를 쓰시오.",
+  "groups": [
+   [
+    "계속적 용법",
+    "계속적",
+    "콤마"
+   ],
+   [
+    "관계대명사 that",
+    "that"
+   ]
+  ],
+  "show": "관계대명사의 계속적 용법(콤마 뒤)에서는 관계대명사 that을 쓸 수 없기 때문이다.",
+  "e": "#8 구문 분석 ★"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Adversity is (A) u________ in human life, so we all need resilience—the inner strength to bounce back, recover, and grow from (B) h________ just like a bouncy ball.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "unavoidable"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "hardships"
+    ]
+   ]
+  ],
+  "show": "(A) unavoidable (B) hardships",
+  "e": "Section 1 English Summary 및 본문 #6, #8"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

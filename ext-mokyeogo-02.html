@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "북항 수로의 상어 '북앙이' 신드롬과 발생한 과제들 정독 확인 문항 (#14~#27)",
+ "section": "보조교재 · 섹션 2 (#14~#27)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [14, "In September 2026, a shark named Bukangi appeared in an artificial waterway at Busan North Port and quickly became a national sensation."],
+  [15, "The shark, identified as a dusky shark, attracted enormous public attention through social media."],
+  [16, "Within about a month, more than 1.5 million people had visited the park to see it."],
+  [17, "This unexpected popularity turned a quiet public space into a major tourist attraction."],
+  [18, "However, Bukangi's popularity has also raised serious concerns."],
+  [19, "The waterway is not a suitable long-term habitat for the shark because its water is relatively shallow and its temperature is expected to fall as winter approaches."],
+  [20, "After two rescue attempts failed, authorities began considering a third attempt to return Bukangi to the open sea."],
+  [21, "Experts emphasize that protecting the shark's health must take priority over keeping it in a place where people can easily observe it."],
+  [22, "Meanwhile, Bukangi has brought economic benefits to nearby businesses."],
+  [23, "According to local reports, sales at restaurants and convenience stores increased as visitors arrived from across the country."],
+  [24, "At the same time, a dispute arose over the trademark rights to the name \"Bukangi,\" raising questions about whether a name created and popularized by the public should be controlled by private individuals."],
+  [25, "The city government has also moved to protect the name for public use."],
+  [26, "The Bukangi case demonstrates how a single unexpected event can influence tourism, local business, and public policy."],
+  [27, "Although its popularity has created valuable opportunities for Busan, the situation also reminds us that public interest should be balanced with animal welfare and the responsible management of shared resources."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "북항 수로가 북앙이에게 적합한 장기적 서식지가 될 수 없는 이유로 분석지에 명시된 것은?",
+  "o": [
+   "선박들의 잦은 통행으로 인한 극심한 수중 소음 때문에",
+   "수로의 수심이 상대적으로 얕고 겨울이 다가옴에 따라 수온이 떨어질 것으로 예상되기 때문에",
+   "인근 공장에서 배출된 산업 폐수로 인해 수질 오염이 심각하기 때문에",
+   "먹이 생물이 부족하여 외부 공급 없이는 생존이 불가능하기 때문에",
+   "수로에 설치된 철망 구조물로 인해 상어의 지느러미 손상이 우려되기 때문에"
+  ],
+  "a": 2,
+  "e": "#19 its water is relatively shallow and its temperature is expected to fall as winter approaches"
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "전문가들은 사람들이 북앙이를 쉽게 관찰할 수 있는 장소에 머물게 하는 것이 상어의 건강을 보호하는 것보다 더 우선시되어야 한다고 보았다.",
+  "a": "X",
+  "e": "#21 protecting the shark's health must take priority over keeping it in a place where people can easily observe it."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["북앙이를 보기 위해 대략 한 달 동안 150만 명이 넘는 사람들이 공원을 방문했다.", "T"],
+   ["당국은 두 차례의 구조 시도가 성공한 직후 세 번째 구조 시도를 전면 취소했다.", "F"],
+   ["부산시 정부는 '북앙이'라는 이름을 공공이 사용할 수 있도록 보호 조치에 나섰다.", "T"]
+  ],
+  "e": "#16, #20, #25 두 차례의 구조 시도가 실패한 후(failed) 세 번째 시도를 고려하기 시작했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "'북앙이'라는 이름의 상표권을 둘러싼 분쟁이 촉발한 사회적 의문으로 옳은 것은?",
+  "o": [
+   "야생동물의 이름을 짓는 권리를 환경부 장관이 독점해야 하는지 여부",
+   "대중에 의해 만들어지고 대중화된 이름을 민간 개인이 통제해야 하는지 여부",
+   "해양생물 캐릭터 상품의 판매 수익을 지자체에 전액 기부해야 하는지 여부",
+   "외래종 해양생물에 한국식 고유 명칭을 부여하는 것이 법적으로 타당한지 여부",
+   "지방자치단체가 민간 기업의 상표권 등록 비용을 지원해야 하는지 여부"
+  ],
+  "a": 2,
+  "e": "#24 whether a name created and popularized by the public should be controlled by private individuals"
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 흉상어 북앙이는 북항을 관광 명소로 만들었을 뿐 아니라 해양 동물 복지와 상표권 소유에 관한 심각한 과제를 제기했다.",
+  "a": "O",
+  "e": "Section 2 English Summary: turned Busan North Port into an instant viral tourism hotspot; however, this sudden attention raised serious challenges concerning marine animal welfare, relocation dilemmas, and trademark ownership rights."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "man-made, synthetic",
+   "immense, massive",
+   "unforeseen, sudden",
+   "bring up, evoke",
+   "safeguard, defend"
+  ],
+  "rows": [
+   ["artificial", 1],
+   ["enormous", 2],
+   ["unexpected", 3],
+   ["raise", 4],
+   ["protect", 5]
+  ],
+  "e": "분석지 #14, #15, #17, #18, #25 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "natural",
+   "tiny, minute",
+   "noisy, bustling",
+   "unsuitable, improper",
+   "worthless"
+  ],
+  "rows": [
+   ["artificial", 1],
+   ["enormous", 2],
+   ["quiet", 3],
+   ["suitable", 4],
+   ["valuable", 5]
+  ],
+  "e": "분석지 #14, #15, #17, #19, #27 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #19의 shallow에 대한 어휘적 설명으로 옳은 것은?",
+  "o": [
+   "반의어로 not deep이 제시되어 있다.",
+   "동의어로 superficial이 있으며 반의어로는 deep, profound가 있다.",
+   "본문에서는 '생각이 얕은'이라는 비유적 의미로 쓰였다.",
+   "명사형태로 쓰여 '모래톱, 여울'을 의미한다"
+  ],
+  "a": 2,
+  "e": "#19 shallow (a) 얕은, syn. not deep, superficial, ant. deep, profound"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #20의 open sea에서 open이 쓰인 문맥적 의미로 가장 적절한 것은?",
+  "o": [
+   "영업 중인, 개점한",
+   "탁 트인 (외해, 공해)",
+   "열린, 닫히지 않은",
+   "솔직한, 숨김없는"
+  ],
+  "a": 2,
+  "e": "#20 open (a) 탁 트인 (open sea: 외해, 공해), syn. boundless, expansive"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #21의 priority와 결합하여 '~보다 우선하다'를 뜻하는 세 단어의 숙어 표현을 쓰시오.",
+  "ans": [
+   "take priority over"
+  ],
+  "show": "take priority over",
+  "e": "#21 어휘: priority (take priority over: ~보다 우선하다)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #24의 dispute와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "conflict",
+   "controversy",
+   "disagreement"
+  ],
+  "show": "controversy (또는 conflict, disagreement)",
+  "e": "#24 어휘: dispute (syn. conflict, controversy, disagreement)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A shark (naming / named) Bukangi appeared in an artificial waterway.",
+  "o": [
+   "named",
+   "naming"
+  ],
+  "a": "named",
+  "e": "#14 구문 분석: 상어가 북앙이라는 이름으로 불리는 수동의 관계이므로 과거분사 named가 수식합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The shark, (identifying / identified) as a dusky shark, attracted enormous attention.",
+  "o": [
+   "identified",
+   "identifying"
+  ],
+  "a": "identified",
+  "e": "#15 구문 분석 ★: 상어가 식별된 수동의 관계이므로 삽입 분사구 자리에 과거분사 identified가 알맞습니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Within about a month, more than 1.5 million people (had visited / have been visited) the park.",
+  "o": [
+   "had visited",
+   "have been visited"
+  ],
+  "a": "had visited",
+  "e": "#16 구문 분석 ★: 과거의 특정 시점까지 일어난 능동의 완료 동작이므로 과거완료 had visited가 맞습니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Bukangi's popularity has also (raised / risen) serious concerns.",
+  "o": [
+   "raised",
+   "risen"
+  ],
+  "a": "raised",
+  "e": "#18 구문 분석 ★: serious concerns라는 목적어를 취하는 타동사의 현재완료형은 has raised입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The waterway is not suitable because its temperature is expected (to fall / falling) as winter approaches.",
+  "o": [
+   "to fall",
+   "falling"
+  ],
+  "a": "to fall",
+  "e": "#19 구문 분석: 'be expected to-v'는 '~할 것으로 예상되다'라는 수동 구문입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Authorities began (to consider / considering) a third attempt to return Bukangi to the sea.",
+  "o": [
+   "considering",
+   "to consider"
+  ],
+  "a": "considering",
+  "e": "#20 본문 및 구문 분석: 본문에서는 begin의 목적어로 동명사 considering이 쓰였습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Protecting the shark's health must take priority over (keep / keeping) it in a public place.",
+  "o": [
+   "keeping",
+   "keep"
+  ],
+  "a": "keeping",
+  "e": "#21 구문 분석 ★: 전치사 over의 목적어 자리이며 주어 protecting과 대칭을 이루는 동명사 keeping이 올바릅니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Keeping it in a place (where / which) people can easily observe it is not recommended.",
+  "o": [
+   "where",
+   "which"
+  ],
+  "a": "where",
+  "e": "#21 구문 분석: 선행사 a place 뒤에 완전한 3형식 절(people can easily observe it)이 이어지므로 관계부사 where가 맞습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "At the same time, a dispute (arose / aroused) over the trademark rights to the name.",
+  "o": [
+   "arose",
+   "aroused"
+  ],
+  "a": "arose",
+  "e": "#24 구문 분석 ★: '발생하다'라는 의미의 1형식 완전 자동사 arise의 과거형은 arose입니다 (aroused는 타동사 arouse의 과거형)."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A dispute arose over trademark rights, (raising / raised) questions about the name.",
+  "o": [
+   "raising",
+   "raised"
+  ],
+  "a": "raising",
+  "e": "#24 구문 분석: 의문을 능동적으로 제기하면서 발생하는 동시동작의 현재분사구문 자리이므로 raising이 맞습니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Raising questions about (whether / if) a name popularized by the public should be controlled by individuals.",
+  "o": [
+   "whether",
+   "if"
+  ],
+  "a": "whether",
+  "e": "#24 구문 분석 ★: 전치사(about) 바로 뒤에는 명사절 접속사 if를 쓸 수 없으므로 반드시 whether를 써야 합니다."
+ },
+ {
+  "n": 23,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The Bukangi case demonstrates (how a single unexpected event can influence / how can a single unexpected event influence) tourism.",
+  "o": [
+   "how a single unexpected event can influence",
+   "how can a single unexpected event influence"
+  ],
+  "a": "how a single unexpected event can influence",
+  "e": "#26 구문 분석 ★: demonstrates의 목적어로 쓰인 간접의문문은 [의문사 + 주어 + 동사]의 평서문 어순이어야 합니다."
+ },
+ {
+  "n": 24,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The situation also reminds (us / to us) that public interest should be balanced with animal welfare.",
+  "o": [
+   "us",
+   "to us"
+  ],
+  "a": "us",
+  "e": "#27 구문 분석 ★: remind는 4형식 수여동사로 쓰여 전치사 없이 간접목적어 us를 바로 취합니다 (remind A that 절)."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "인기 급증이라는 긍정적 화제성에 대해 심각한 우려 발생이라는 포괄적 문제 제기를 대조",
+   "상어의 건강과 구조 논의와 동시에 진행되는 상권의 경제적 혜택이라는 또 다른 국면 환기",
+   "사건의 다각적 영향 분석에 더해진 심층적인 교훈이자 가치관을 집약하는 시사점 추가"
+  ],
+  "rows": [
+   ["However (#18)", 1],
+   ["Meanwhile (#22)", 2],
+   ["also (#27)", 3]
+  ],
+  "e": "분석지 #18, #22, #27 [연결어 분석]"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리적 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "북앙이의 출현과 폭발적 관광 명소화 → 수로의 생태적 부적합성과 구조 시도 → 상권 매출 증가라는 경제적 혜택 → 상표권 분쟁 및 시 정부의 공공 보호 조치 → 동물 복지와 공공 이익 간의 균형이라는 교훈",
+   "부산시의 상표권 등록 완료 → 수로의 수온 상승 보고 → 전국 식당들의 불매 운동 → 외해 방류 실패",
+   "흉상어의 수족관 매입 협상 → 관광객 급감 원인 분석 → 편의점 매출 하락 → 결론",
+   "소셜 미디어 계정 폐쇄 → 부산 북항의 폐쇄 조치 → 동물 복지 단체의 시 정부 고발 → 법원 판결"
+  ],
+  "a": 1,
+  "e": "#14~#17 관광 명소화 → #18~#21 생태 우려 및 구조 시도 → #22, #23 경제 효과 → #24, #25 상표권 분쟁 및 시 대응 → #26, #27 종합 교훈 순서입니다."
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "전문가들은 그 상어의 건강을 보호하는 것이 사람들이 그것을 쉽게 관찰할 수 있는 장소에 그것을 유지하는 것보다 우선해야만 한다고 강조한다.<br><small>「조건」 emphasize that, protecting, must take priority over, keeping, where people can easily observe 활용 (총 23단어)</small>",
+  "ans": [
+   "Experts emphasize that protecting the sharks health must take priority over keeping it in a place where people can easily observe it",
+   "Experts emphasize that protecting the shark's health must take priority over keeping it in a place where people can easily observe it"
+  ],
+  "show": "Experts emphasize that protecting the shark's health must take priority over keeping it in a place where people can easily observe it.",
+  "e": "#21 동명사 주어, take priority over 동명사 목적어, 관계부사 where 구문"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Bukangi's popularity has also <u>risen</u> serious concerns. Protecting the shark's health must take priority over <u>keep</u> it in a place <u>which</u> people can easily observe it.",
+  "keys": [
+   {
+    "k": "raised",
+    "show": "risen → raised"
+   },
+   {
+    "k": "keeping",
+    "show": "keep → keeping"
+   },
+   {
+    "k": "where",
+    "show": "which → where (또는 in which)"
+   }
+  ],
+  "e": "#18 타동사 raise, #21 전치사 over 뒤의 동명사 keeping, #21 완전한 절을 이끄는 관계부사 where"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "kw",
+  "s": "24번 문장의 about 뒤에서 if 대신 whether를 써야 하는 어법적 이유를 문장 구조와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "전치사",
+    "about",
+    "전치사 뒤"
+   ],
+   [
+    "if",
+    "명사절 접속사 if"
+   ],
+   [
+    "whether"
+   ]
+  ],
+  "show": "전치사(about) 바로 뒤에는 명사절 접속사 if를 쓸 수 없고 whether만 쓸 수 있기 때문이다.",
+  "e": "#24 구문 분석 ★"
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "A dusky shark nicknamed Bukangi turned Busan North Port into a viral hotspot; however, this attention raised challenges concerning marine animal (A) w________ and trademark (B) o________ rights.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "welfare"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "ownership"
+    ]
+   ]
+  ],
+  "show": "(A) welfare (B) ownership",
+  "e": "Section 2 English Summary 및 본문 #24, #27"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

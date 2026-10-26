@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "역경을 극복한 실제 인물들의 사례 정독 확인 문항 (#13~#22)",
+ "section": "교과서 본문 · 섹션 2 (#13~#22)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [13, "There are countless stories of successful people who not only survived adversity but used it as a stepping stone to growth."],
+  [14, "Fairy tale writer Hans Andersen said that his childhood poverty, the early loss of his father, and his experience of being disrespected were the sources for his most popular stories."],
+  [15, "“The hardship was a real blessing that inspired me to write stories like The Little Match Girl, The Snow Queen, and The Ugly Duckling.”"],
+  [16, "Athlete Aimee Mullins also saw her challenges as an opportunity."],
+  [17, "She was born with a medical condition that resulted in losing both legs beneath the knee to surgery."],
+  [18, "She competed against athletes without disabilities in a national competition and participated in the Paralympics in 1996."],
+  [19, "Her career also includes modeling, acting, and public speaking."],
+  [20, "She says her physical condition is not a disability but the very thing that opened the door for her amazing potential."],
+  [21, "Both people succeeded not “despite” adversity but thanks to it."],
+  [22, "This is the real bouncing back."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "동화 작가 안데르센이 자신의 가장 인기 있는 이야기들의 원천으로 언급한 것에 해당하지 않는 것은?",
+  "o": [
+   "어린 시절의 지독한 가난",
+   "아버지의 이른 죽음(상실)",
+   "주변 사람들로부터 무시당했던 경험",
+   "전국 동화 공모전에서의 연속된 낙선",
+   "성장기에 겪었던 심각한 개인적 고난"
+  ],
+  "a": 4,
+  "e": "#14 안데르센은 어린 시절의 가난, 아버지의 이른 상실, 무시당했던 경험이 이야기의 원천이었다고 밝혔습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "에이미 멀린스는 1996년 패럴림픽에 참가했을 뿐만 아니라 장애가 없는 선수들과도 전국 대회에서 경쟁했다.",
+  "a": "O",
+  "e": "#18 She competed against athletes without disabilities in a national competition and participated in the Paralympics in 1996."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["안데르센은 자신이 겪은 고난을 명작 동화들을 쓰도록 이끈 진정한 축복으로 여겼다.", "T"],
+   ["에이미 멀린스는 수술로 인해 무릎 위의 양다리를 절단해야 했다.", "F"],
+   ["두 인물은 역경에도 불구하고 성공한 것이 아니라 역경 덕분에 성공했다.", "T"]
+  ],
+  "e": "#15, #17, #21 에이미 멀린스는 무릎 아래(beneath the knee)의 양다리를 수술로 잃었습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "21번 문장의 대명사 it이 가리키는 대상은?",
+  "o": [
+   "adversity",
+   "stepping stone",
+   "medical condition",
+   "surgery",
+   "national competition"
+  ],
+  "a": 1,
+  "e": "#21 구문 분석: not despite adversity but thanks to it에서 it은 앞선 adversity(역경)를 가리킵니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "에이미 멀린스는 자신의 신체적 조건을 극복해야 할 단순한 장애로만 평가하고 다른 활동은 전면 중단했다.",
+  "a": "X",
+  "e": "#19, #20 자신의 신체적 조건을 장애가 아니라 놀라운 잠재력의 문을 열어준 바로 그것으로 보았으며 모델, 연기, 강연 활동도 펼쳤습니다."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "innumerable, infinite",
+   "destitution, pennilessness",
+   "boon, godsend",
+   "motivate, encourage",
+   "encompass, incorporate"
+  ],
+  "rows": [
+   ["countless", 1],
+   ["poverty", 2],
+   ["blessing", 3],
+   ["inspire", 4],
+   ["include", 5]
+  ],
+  "e": "분석지 #13, #14, #15, #19 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "unsuccessful, failed",
+   "wealth, richness",
+   "respect, honor",
+   "curse",
+   "fail"
+  ],
+  "rows": [
+   ["successful", 1],
+   ["poverty", 2],
+   ["disrespect", 3],
+   ["blessing", 4],
+   ["succeed", 5]
+  ],
+  "e": "분석지 #13, #14, #15, #21 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #17의 condition이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "(건강) 질환, 병",
+   "(계약 등의) 조건, 조항",
+   "사회적 신분, 처지",
+   "길들임, 조건 반사"
+  ],
+  "a": 1,
+  "e": "#17 a medical condition에서 condition은 '(건강상의) 질환, 장애(syn. disorder, illness, disease)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #20의 the very thing에서 very가 쓰인 품사와 의미로 옳은 것은?",
+  "o": [
+   "부사 - 매우, 대단히",
+   "형용사 - 바로 그 (명사 강조)",
+   "명사 - 진실, 실체",
+   "접속사 - 꼭대기의"
+  ],
+  "a": 2,
+  "e": "#20 구문 분석: very는 '매우'라는 부사가 아니라 '바로 그(syn. exact, precise)'라는 뜻의 한정 형용사로 쓰여 명사를 강조합니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #13의 stepping stone과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "springboard",
+   "milestone"
+  ],
+  "show": "springboard (또는 milestone)",
+  "e": "#13 어휘: stepping stone (syn. springboard, milestone)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #18의 participate in과 바꾸어 쓸 수 있는 분석지상 동의어 표현을 세 단어로 쓰시오.",
+  "ans": [
+   "take part in"
+  ],
+  "show": "take part in",
+  "e": "#18 어휘: participate in (syn. take part in, join, enter)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Successful people not only survived adversity but (used / using) it as a stepping stone.",
+  "o": [
+   "used",
+   "using"
+  ],
+  "a": "used",
+  "e": "#13 구문 분석 ★: not only A but also B 구문에서 과거동사 survived와 병렬을 이루는 과거동사 used 자리입니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "His experience of (disrespecting / being disrespected) was the source for his stories.",
+  "o": [
+   "being disrespected",
+   "disrespecting"
+  ],
+  "a": "being disrespected",
+  "e": "#14 구문 분석 ★: 안데르센이 무시를 당했던 수동의 경험이므로 전치사 of 뒤에 수동태 동명사 being disrespected가 와야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "His childhood poverty, the loss of his father, and his experience (was / were) the sources for his stories.",
+  "o": [
+   "were",
+   "was"
+  ],
+  "a": "were",
+  "e": "#14 구문 분석: 세 가지 명사구가 and로 묶인 복수 주어이므로 복수 동사 were가 맞습니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The hardship was a real blessing that inspired me (write / to write) stories.",
+  "o": [
+   "to write",
+   "write"
+  ],
+  "a": "to write",
+  "e": "#15 구문 분석 ★: inspire는 목적격 보어로 to부정사를 취합니다 (inspire + 목적어 + to-v)."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "She was born with a condition that resulted (in / from) losing both legs beneath the knee.",
+  "o": [
+   "in",
+   "from"
+  ],
+  "a": "in",
+  "e": "#17 구문 분석 ★: 다리를 잃게 된 결과를 초래했으므로 'result in + 결과' 구문이 알맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "She competed against athletes and (participated / participating) in the Paralympics.",
+  "o": [
+   "participated",
+   "participating"
+  ],
+  "a": "participated",
+  "e": "#18 구문 분석: 주어 She 뒤에 과거동사 competed와 and로 대등하게 병렬 연결되는 과거시제 동사 자리입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Her career also includes modeling, acting, and (public speaking / publicly speak).",
+  "o": [
+   "public speaking",
+   "publicly speak"
+  ],
+  "a": "public speaking",
+  "e": "#19 구문 분석: includes의 목적어로 modeling, acting과 병렬을 이루는 동명사구 public speaking이 올바릅니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Her physical condition is not a disability (and / but) the very thing that opened the door for her potential.",
+  "o": [
+   "but",
+   "and"
+  ],
+  "a": "but",
+  "e": "#20 구문 분석 ★: 'A가 아니라 B'를 나타내는 대조 구문은 not A but B입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Both people succeeded not “despite” adversity but (thanks to / owing) it.",
+  "o": [
+   "thanks to",
+   "owing"
+  ],
+  "a": "thanks to",
+  "e": "#21 구문 분석: despite와 대구를 이루어 명사 it을 취하는 전치사구는 thanks to입니다 (owing to의 to 누락 주의)."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "16번 문장의 saw her challenges as an opportunity의 as와 동일한 어법적 기능을 갖는 것은?",
+  "o": [
+   "As research has progressed, it became clear.",
+   "She regards her condition as a blessing.",
+   "He ran as fast as he could.",
+   "Do in Rome as the Romans do."
+  ],
+  "a": 2,
+  "e": "#16 'see A as B' 구문에서 as는 'regard A as B'와 마찬가지로 '~로(간주/자격)'를 나타내는 전치사입니다."
+ },
+ {
+  "n": 22,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #16의 also에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "안데르센의 성공 요인과 상반되는 운동선수로서의 한계점을 지적한다.",
+   "고난을 긍정적 기회로 삼은 안데르센의 사례에 에이미 멀린스의 사례를 대등한 구체성으로 추가한다.",
+   "에이미 멀린스가 겪은 신체적 장애의 의학적 발병 원인을 설명한다.",
+   "패럴림픽 대회 참가 자격에 대한 예외적 규정을 제시한다"
+  ],
+  "a": 2,
+  "e": "#16 [연결어 분석]: 역경을 긍정적 기회로 바꾼 유명 인사의 사례를 대등한 층위에서 덧붙이는 순접 연결어입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리적 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "역경을 성장의 디딤돌로 삼은 사람들 소개 → 안데르센의 유년기 고난과 명작 탄생 → 에이미 멀린스의 장애 극복과 다방면 활약 → 역경 '덕분에' 성공했다는 핵심 교훈과 진정한 도약의 정의",
+   "패럴림픽의 기원 소개 → 에이미 멀린스의 은퇴 선언 → 안데르센 동화의 교훈 비판 → 결론",
+   "신체적 질환의 수술적 치료법 소개 → 의사들의 임상 시험 결과 → 동화 작가들의 집필 방식 비교",
+   "가난의 부정적 영향 규명 → 안데르센의 실패 원인 분석 → 스포츠 대회의 장애인 배제 실태 고발"
+  ],
+  "a": 1,
+  "e": "#13 도입 → #14, #15 안데르센 사례 → #16~#20 에이미 멀린스 사례 → #21, #22 역경 덕분에 성공한 진정한 도약 요약 순서입니다."
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그 고난은 내가 이야기들을 쓰도록 영감을 준 진정한 축복이었다.<br><small>「조건」 The hardship was, a real blessing that, inspired me to write 활용 (총 12단어)</small>",
+  "ans": [
+   "The hardship was a real blessing that inspired me to write stories"
+  ],
+  "show": "The hardship was a real blessing that inspired me to write stories.",
+  "e": "#15 주격 관계대명사 that 및 5형식 inspire + O + to-v 구문"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Hans Andersen said his experience of <u>disrespecting</u> was the source for his stories. The hardship was a real blessing that inspired me <u>write</u> stories. She was born with a condition that resulted <u>from</u> losing both legs to surgery.",
+  "keys": [
+   {
+    "k": "being disrespected",
+    "show": "disrespecting → being disrespected"
+   },
+   {
+    "k": "to write",
+    "show": "write → to write"
+   },
+   {
+    "k": "in",
+    "show": "from → in"
+   }
+  ],
+  "e": "#14 수동태 동명사 being disrespected, #15 inspire의 목적격 보어 to write, #17 결과를 이끄는 result in"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "kw",
+  "s": "14번 문장의 of 뒤에서 disrespecting 대신 being disrespected를 쓴 어법적 이유를 의미상 주어와의 능동/수동 관계와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "수동",
+    "수동태",
+    "수동 관계"
+   ],
+   [
+    "무시",
+    "존중받지 못함",
+    "무시당함"
+   ]
+  ],
+  "show": "안데르센 자신이 타인을 무시한 것이 아니라 타인에게 무시를 당했던 수동의 경험이기 때문이다.",
+  "e": "#14 구문 분석 ★"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Andersen and Mullins achieved success by turning severe personal hardships and physical disabilities into (A) s________ stones for creative and athletic (B) g________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "stepping"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "greatness"
+    ]
+   ]
+  ],
+  "show": "(A) stepping (B) greatness",
+  "e": "Section 2 English Summary 및 본문 #13"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "전략 2: 마음챙김과 'STOP' 명상 기법 정독 확인 문항 (#35~#45)",
+ "section": "교과서 본문 · 섹션 5 (#35~#45)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [35, "Second, have “me time,” that is, personal time to look after yourself."],
+  [36, "Take a break and be in the present moment, neither regretting the past nor worrying about the future."],
+  [37, "Walk, meditate, write, draw, listen to music, or exercise."],
+  [38, "If you don’t know where to start, the STOP technique can be a great meditative technique."],
+  [39, "It works like this."],
+  [40, "Stop whatever you are doing."],
+  [41, "Take a few deep breaths."],
+  [42, "Observe your emotions and thoughts as they are, not judging them as good or bad."],
+  [43, "Proceed with what you were doing."],
+  [44, "Or start something different based on what you observed."],
+  [45, "Now go forward with your life."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 본문에서 권장하는 '나만의 시간(me time)'을 보내는 태도로 가장 적절한 것은?",
+  "o": [
+   "과거의 실수를 철저히 분석하고 미래의 불안에 철저히 대비하는 것",
+   "과거를 후회하지도 미래를 걱정하지도 않으면서 온전히 현재의 순간에 머무는 것",
+   "주변 사람들의 기대를 만족시키기 위해 하루 일과를 빈틈없이 계획하는 것",
+   "감정이 생길 때마다 그것이 옳은지 그른지를 엄격하게 판정하는 것",
+   "혼자 있는 시간 동안 다른 사람들의 평가와 조언을 적극적으로 수집하는 것"
+  ],
+  "a": 2,
+  "e": "#36 be in the present moment, neither regretting the past nor worrying about the future"
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "STOP 기법의 세 번째 단계(O)에서는 감정과 생각을 좋거나 나쁘다고 평가하고 재단해야 한다.",
+  "a": "X",
+  "e": "#42 Observe your emotions and thoughts as they are, not judging them as good or bad."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["'나만의 시간'에 실천할 수 있는 구체적 행동으로 걷기, 명상, 글쓰기, 그림 그리기 등이 언급되었다.", "T"],
+   ["STOP 기법의 마지막 단계(P)에서는 오직 이전에 하던 행동만을 그대로 계속해야 하며 다른 것을 시작해서는 안 된다.", "F"],
+   ["42번 문장의 them이 가리키는 대상은 '당신의 감정들과 생각들'이다.", "T"]
+  ],
+  "e": "#37, #42, #43, #44 하던 일을 계속하거나(Proceed) 관찰한 것에 기반해 다른 무언가를 시작할 수 있습니다(start something different)."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "STOP 기법의 각 단계(S-T-O-P)에 해당하는 행동으로 옳지 않은 것은?",
+  "o": [
+   "S: 하던 일을 무엇이든 멈추기",
+   "T: 몇 번의 깊은 숨을 쉬기",
+   "O: 감정과 생각을 있는 그대로 관찰하기",
+   "P: 과거의 행동을 반성하며 자책하기"
+  ],
+  "a": 4,
+  "e": "#40, #41, #42, #43, #44 P는 하던 일을 계속 진행하거나(Proceed) 관찰한 것에 기반해 다른 것을 시작하는 단계입니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, STOP 기법은 과거에 집착하거나 미래를 두려워하지 않고 현재에 닻을 내리도록 돕는 명상적 틀이다.",
+  "a": "O",
+  "e": "Section 5 English Summary: remain anchored in the present moment rather than dwelling on the past or dreading the future; the four-step STOP technique serves as a powerful meditative framework."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "individual, private",
+   "care for, attend to",
+   "lament, rue",
+   "contemplate, reflect",
+   "halt, cease"
+  ],
+  "rows": [
+   ["personal", 1],
+   ["look after", 2],
+   ["regret", 3],
+   ["meditate", 4],
+   ["stop", 5]
+  ],
+  "e": "분석지 #35, #36, #37, #40 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "public, collective",
+   "finish, end",
+   "continue, resume",
+   "shallow",
+   "backward"
+  ],
+  "rows": [
+   ["personal", 1],
+   ["start", 2],
+   ["stop", 3],
+   ["deep", 4],
+   ["forward", 5]
+  ],
+  "e": "분석지 #35, #38, #40, #41, #45 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #36의 break가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "휴식, 쉼",
+   "부수다, 깨뜨리다",
+   "어기다, 위반하다",
+   "고장 나다"
+  ],
+  "a": 1,
+  "e": "#36 Take a break에서 break는 '휴식, 쉼(syn. rest, pause)'이라는 명사입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #43의 proceed의 분석지상 반의어로 알맞은 것은?",
+  "o": [
+   "halt, discontinue",
+   "continue, carry on",
+   "go ahead",
+   "evaluate, assess"
+  ],
+  "a": 1,
+  "e": "#43 어휘: proceed (ant. halt, discontinue)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #39의 work와 바꾸어 쓸 수 있는 분석지상 동의어 한 단어를 쓰시오.",
+  "ans": [
+   "function",
+   "operate",
+   "act"
+  ],
+  "show": "function (또는 operate, act)",
+  "e": "#39 어휘: work (syn. function, operate, act)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #42의 judge와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "evaluate",
+   "assess",
+   "gauge"
+  ],
+  "show": "evaluate (또는 assess, gauge)",
+  "e": "#42 어휘: judge (syn. evaluate, assess, gauge)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Have personal time to look after (you / yourself).",
+  "o": [
+   "yourself",
+   "you"
+  ],
+  "a": "yourself",
+  "e": "#35 구문 분석 ★: 명령문의 주어(you)와 돌봄을 받는 목적어가 일치하므로 재귀대명사 yourself를 써야 합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Take a break and be in the present moment, (neither / either) regretting the past nor worrying about the future.",
+  "o": [
+   "neither",
+   "either"
+  ],
+  "a": "neither",
+  "e": "#36 구문 분석 ★: 뒤의 nor과 호응하여 'A도 B도 아닌'을 나타내는 상관접속사는 neither입니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Be in the present moment, neither (regret / regretting) the past nor worrying about the future.",
+  "o": [
+   "regretting",
+   "regret"
+  ],
+  "a": "regretting",
+  "e": "#36 구문 분석 ★: 분사구문 내에서 worrying과 nor로 병렬 연결되는 현재분사 자리입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "If you don’t know (where to start / where starting), the STOP technique can be great.",
+  "o": [
+   "where to start",
+   "where starting"
+  ],
+  "a": "where to start",
+  "e": "#38 구문 분석 ★: know의 목적어로 쓰인 '의문사 + to부정사' 구문입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Stop (whatever / however) you are doing.",
+  "o": [
+   "whatever",
+   "however"
+  ],
+  "a": "whatever",
+  "e": "#40 구문 분석 ★: Stop의 목적어 역할을 하며 you are doing의 목적어가 빠진 불완전한 절을 이끄는 복합관계대명사는 whatever입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Take a (few / little) deep breaths.",
+  "o": [
+   "few",
+   "little"
+  ],
+  "a": "few",
+  "e": "#41 구문 분석 ★: 셀 수 있는 복수 명사(breaths)를 수식하므로 a few가 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Observe your emotions and thoughts as they are, (not judging / not judged) them as good or bad.",
+  "o": [
+   "not judging",
+   "not judged"
+  ],
+  "a": "not judging",
+  "e": "#42 구문 분석 ★: 판단하지 않으면서라는 능동의 부정 분사구문이므로 not judging이 맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Proceed with (what / that) you were doing.",
+  "o": [
+   "what",
+   "that"
+  ],
+  "a": "what",
+  "e": "#43 구문 분석 ★: 전치사 with의 목적어이며 you were doing의 목적어가 빠진 불완전한 절을 이끄는 선행사 포함 관계대명사는 what입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Start (different something / something different) based on what you observed.",
+  "o": [
+   "something different",
+   "different something"
+  ],
+  "a": "something different",
+  "e": "#44 구문 분석 ★: -thing으로 끝나는 부정대명사는 형용사가 뒤에서 후치 수식합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "35번 문장의 that is에 대한 설명으로 옳은 것은?",
+  "o": [
+   "시간의 순서를 나타내는 접속부사이다.",
+   "앞의 “me time”을 뒤의 명사구로 다시 설명해 주는 '즉, 다시 말해'라는 동격 어구이다.",
+   "원인과 결과를 나타내는 인과 연결어이다.",
+   "반대 의견을 도입하는 대조 연결어이다"
+  ],
+  "a": 2,
+  "e": "#35 구문 분석: that is는 '즉, 다시 말해(=namely, in other words)'라는 동격 연결어입니다."
+ },
+ {
+  "n": 22,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "'나만의 시간' 제안 → 현재에 머무는 태도 설명 및 활동 나열 → STOP 기법 소개 및 절차 예고 → STOP 기법 4단계 실행 안내 → 삶을 향해 나아가라는 격려",
+   "STOP 기법의 부작용 비판 → 운동과 명상의 갈등 분석 → 호흡법 실패 사례 제시 → 결론",
+   "미래 계획 수립 촉구 → 과거 후회의 필요성 강조 → 명상 기법 폐기 선언",
+   "심호흡의 생리학적 기제 설명 → 의사의 진단서 발급 → 운동 치료법 처방"
+  ],
+  "a": 1,
+  "e": "#35, #36 나만의 시간 및 현재 집중 → #37 활동 나열 → #38, #39 STOP 기법 소개 → #40~#44 4단계 절차 → #45 삶을 향해 나아가라는 격려 순서입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "match",
+  "s": "STOP 기법의 각 알파벳에 해당하는 구체적 행동 지침을 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "하고 있는 것을 무엇이든 멈추기",
+   "몇 번의 깊은 숨을 쉬기",
+   "감정과 생각을 있는 그대로 관찰하기",
+   "하던 일을 계속하거나 관찰한 것에 기반해 다른 것 시작하기"
+  ],
+  "rows": [
+   ["S (Stop)", 1],
+   ["T (Take)", 2],
+   ["O (Observe)", 3],
+   ["P (Proceed)", 4]
+  ],
+  "e": "분석지 #40~#44 STOP 기법"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "과거를 후회하지도 미래를 걱정하지도 않으면서, 휴식을 취하고 현재의 순간에 머물러라.<br><small>「조건」 Take a break, be in the present moment, neither regretting, nor worrying about 활용 (총 16단어)</small>",
+  "ans": [
+   "Take a break and be in the present moment neither regretting the past nor worrying about the future"
+  ],
+  "show": "Take a break and be in the present moment, neither regretting the past nor worrying about the future.",
+  "e": "#36 명령문 병렬 및 neither A nor B 분사구문"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Have personal time to look after <u>you</u>. Take a <u>little</u> deep breaths. Observe your emotions as they are, not <u>judged</u> them as good or bad.",
+  "keys": [
+   {
+    "k": "yourself",
+    "show": "you → yourself"
+   },
+   {
+    "k": "few",
+    "show": "little → few"
+   },
+   {
+    "k": "judging",
+    "show": "judged → judging"
+   }
+  ],
+  "e": "#35 재귀대명사 yourself, #41 복수명사를 꾸미는 a few, #42 능동 부정 분사구문 not judging"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "kw",
+  "s": "38번 문장의 where to start를 'where + 주어 + should + 동사' 어순의 4단어로 바꾸어 쓰시오.",
+  "groups": [
+   [
+    "where you should start"
+   ]
+  ],
+  "show": "where you should start",
+  "e": "#38 구문 분석 ★: where to start = where you should start"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Carve out personal \"me time\" to remain (A) a________ in the present moment rather than dwelling on the past or (B) d________ the future.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "anchored"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "dreading"
+    ]
+   ]
+  ],
+  "show": "(A) anchored (B) dreading",
+  "e": "Section 5 English Summary 및 본문 #36"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

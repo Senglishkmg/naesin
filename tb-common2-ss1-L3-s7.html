@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "일상적 실천의 중요성과 궁극적 보상 정독 확인 문항 (#51~#58)",
+ "section": "교과서 본문 · 섹션 7 (#51~#58)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [51, "I am not saying that these strategies are easy or remove all stress and suffering."],
+  [52, "Still, I urge you to practice them whenever you can, particularly when you are under stress."],
+  [53, "Remember that there is no better time to build your “resilience muscle” than the moment when you are in the middle of adversity and uncertainty."],
+  [54, "Practicing resilience during tough times helps you endure and grow stronger."],
+  [55, "However, you can also apply these strategies to everyday small stresses or minor challenges."],
+  [56, "Then you will gradually become more able to deal with big ones."],
+  [57, "Resilient people tend to be happier and more fulfilled because they are less afraid of failing or challenges."],
+  [58, "So, building resilience is the key not only to overcoming adversity but also to living a happy life."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "회복탄력성 전략의 성격과 실천 방법에 대해 필자가 설명한 내용으로 가장 적절한 것은?",
+  "o": [
+   "전략들을 실천하기만 하면 모든 삶의 스트레스와 고통이 완벽히 사라진다.",
+   "전략들은 배우기 매우 쉬우므로 오직 거대한 국가적 재난 상황에서만 사용해야 한다.",
+   "모든 스트레스가 사라지지 않더라도 일상의 사소한 스트레스부터 연습해 볼 가치가 있다.",
+   "실패를 겪기 전 평화로운 상태에서만 회복탄력성 근육을 단련하는 것이 효과적이다.",
+   "작은 스트레스는 무시하고 처음부터 가장 큰 위기에만 전략을 적용해야 한다"
+  ],
+  "a": 3,
+  "e": "#51, #52, #55 전략이 모든 고통을 없애주지는 않지만, 일상의 작은 스트레스부터 꾸준히 연습하여 큰 위기에 대비할 수 있다고 설명합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "회복탄력성이 있는 사람들이 더 행복하고 성취감을 느끼는 경향이 있는 이유는 실패나 도전을 덜 두려워하기 때문이다.",
+  "a": "O",
+  "e": "#57 Resilient people tend to be happier and more fulfilled because they are less afraid of failing or challenges."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["역경과 불확실성의 한가운데에 있을 때는 회복탄력성 근육을 기르기에 가장 부적합한 시기이다.", "F"],
+   ["일상의 사소한 도전들에 전략을 적용해 보면 점차 더 큰 문제들을 다룰 수 있게 된다.", "T"],
+   ["회복탄력성을 기르는 것은 역경을 극복하는 열쇠일 뿐만 아니라 행복한 삶을 살아가는 비결이기도 하다.", "T"]
+  ],
+  "e": "#53, #55, #56, #58 53번 문장에서 역경과 불확실성의 한가운데에 있는 순간보다 회복탄력성 근육을 키우기 더 좋은 시간은 없다고 명시합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "56번 문장의 ones가 가리키는 대상을 분석지에 근거하여 고른 것은?",
+  "o": [
+   "strategies",
+   "stresses or challenges",
+   "resilient people",
+   "moments",
+   "success stories"
+  ],
+  "a": 2,
+  "e": "#55, #56 구문 분석: ones는 앞 문장의 everyday small stresses or minor challenges를 받는 부정대명사입니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 회복탄력성을 강화하는 것은 실패에 대한 두려움으로부터 우리를 해방시키고 진정으로 충만한 삶을 열어준다.",
+  "a": "O",
+  "e": "Section 7 English Summary: ultimately, it liberates us from the fear of failure and unlocks a truly fulfilled life."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "eliminate, erase",
+   "encourage, press",
+   "especially, notably",
+   "bear, withstand",
+   "satisfied, content"
+  ],
+  "rows": [
+   ["remove", 1],
+   ["urge", 2],
+   ["particularly", 3],
+   ["endure", 4],
+   ["fulfilled", 5]
+  ],
+  "e": "분석지 #51, #52, #54, #57 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "add, install",
+   "certainty, stability",
+   "easy",
+   "major, significant",
+   "brave, confident"
+  ],
+  "rows": [
+   ["remove", 1],
+   ["uncertainty", 2],
+   ["tough", 3],
+   ["minor", 4],
+   ["afraid", 5]
+  ],
+  "e": "분석지 #51, #53, #54, #55, #57 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #55의 apply가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "지원하다, 신청하다",
+   "적용하다, 응용하다",
+   "(약이나 연고를) 바르다",
+   "전념하다, 몰두하다"
+  ],
+  "a": 2,
+  "e": "#55 apply these strategies to ~에서 apply는 '적용하다, 응용하다(syn. implement, utilize)'의 의미입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #56의 gradually의 분석지상 반의어로 알맞은 것은?",
+  "o": [
+   "step by step, slowly",
+   "progressively",
+   "suddenly, abruptly",
+   "competent, capable"
+  ],
+  "a": 3,
+  "e": "#56 어휘: gradually (ant. suddenly, abruptly)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #53의 in the middle of와 바꾸어 쓸 수 있는 분석지상 middle의 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "midst",
+   "center",
+   "core"
+  ],
+  "show": "midst (또는 center, core)",
+  "e": "#53 어휘: middle (syn. midst, center, core)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #58의 key와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "secret",
+   "solution"
+  ],
+  "show": "secret (또는 solution)",
+  "e": "#58 어휘: key (syn. secret, solution, crucial factor)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "I urge you (practice / to practice) them whenever you can.",
+  "o": [
+   "to practice",
+   "practice"
+  ],
+  "a": "to practice",
+  "e": "#52 구문 분석 ★: 5형식 동사 urge는 목적격 보어로 to부정사를 취합니다 (urge + O + to-v)."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "There is no better time to build your muscle than the moment (when / which) you are in adversity.",
+  "o": [
+   "when",
+   "which"
+  ],
+  "a": "when",
+  "e": "#53 구문 분석: 시간의 선행사 the moment 뒤에서 완전한 절을 이끄는 관계부사 when이 올바릅니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Practicing resilience during tough times (help / helps) you endure and grow stronger.",
+  "o": [
+   "helps",
+   "help"
+  ],
+  "a": "helps",
+  "e": "#54 구문 분석: 동명사구(Practicing resilience...)가 주어이므로 단수 동사 helps가 쓰여야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Practicing resilience helps you endure and (grow / growing) stronger.",
+  "o": [
+   "grow",
+   "growing"
+  ],
+  "a": "grow",
+  "e": "#54 구문 분석 ★: 준사역동사 help의 목적격 보어로 endure와 and로 병렬 연결되는 원형부정사 grow 자리입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It helps you endure and grow (strong / stronger).",
+  "o": [
+   "stronger",
+   "strongly"
+  ],
+  "a": "stronger",
+  "e": "#54 구문 분석: 2형식 상태변화 동사 grow의 주격 보어 자리이므로 부사가 아닌 형용사(비교급) stronger가 올바릅니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "You will gradually become more able to deal with big (one / ones).",
+  "o": [
+   "ones",
+   "one"
+  ],
+  "a": "ones",
+  "e": "#56 구문 분석 ★: 복수 명사구인 small stresses or minor challenges를 대신하는 부정대명사이므로 복수형 ones가 맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Resilient people tend to be happier and more (fulfilling / fulfilled).",
+  "o": [
+   "fulfilled",
+   "fulfilling"
+  ],
+  "a": "fulfilled",
+  "e": "#57 구문 분석 ★: 주어인 people이 성취감과 만족을 느끼는 수동적 감정 주체이므로 과거분사 fulfilled를 씁니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Building resilience is the key not only to (overcome / overcoming) adversity but also to living a happy life.",
+  "o": [
+   "overcoming",
+   "overcome"
+  ],
+  "a": "overcoming",
+  "e": "#58 구문 분석 ★★★: the key to에서 to는 전치사이므로 뒤에 동명사 overcoming이 와야 합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It is the key not only to overcoming adversity but also to (live / living) a happy life.",
+  "o": [
+   "living",
+   "live"
+  ],
+  "a": "living",
+  "e": "#58 구문 분석 ★★★: not only to overcoming과 완벽한 대칭을 이루어 전치사 to 뒤에 연결되는 동명사 living 자리입니다."
+ },
+ {
+  "n": 21,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "전략의 한계 규정에도 불구하고 실천을 강력히 권고하는 양보·대조",
+   "극심한 역경의 시기에서 일상의 사소한 스트레스로 실천 범위를 대조",
+   "작은 스트레스부터 먼저 연습해 보는 조건에 따라 점차 큰 문제도 다룰 수 있게 되는 논리적 귀결",
+   "앞서 전개된 모든 내용을 종합하여 글 전체의 대의를 아우르는 최종적 결론 도출"
+  ],
+  "rows": [
+   ["Still (#52)", 1],
+   ["However (#55)", 2],
+   ["Then (#56)", 3],
+   ["So (#58)", 4]
+  ],
+  "e": "분석지 #52, #55, #56, #58 [연결어 분석]"
+ },
+ {
+  "n": 22,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 논리적 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "전략의 한계 인정과 그럼에도 불구하고 실천 촉구 → 역경의 한가운데가 최적기임을 제시 → 일상의 작은 스트레스로의 적용 범위 확장 → 점진적 위기 극복 능력 형성 → 실패에 대한 두려움 감소와 행복한 삶의 비결 결론",
+   "회복탄력성 전략의 전면 수정 발표 → 스트레스의 완전 제거 입증 → 큰 위기만을 선별하여 대처 → 결론",
+   "불확실성 회피 기술 안내 → 일상 스트레스 방치 권고 → 회복탄력성 개념 비판 → 대체 이론 제시",
+   "실패에 대한 공포 극대화 → 전문가 상담 의무화 → 일상 훈련의 불가능성 증명"
+  ],
+  "a": 1,
+  "e": "#51, #52 실천 촉구 → #53, #54 역경의 한가운데가 최적기 → #55 일상 스트레스로 확장 → #56 큰 문제 대처 능력 획득 → #57, #58 두려움 감소 및 행복한 삶의 비결 도출 순서입니다."
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "따라서 회복탄력성을 기르는 것은 역경을 극복하는 것뿐만 아니라 행복한 삶을 살아가는 것의 핵심이다.<br><small>「조건」 building resilience is the key, not only to overcoming, but also to living 활용 (총 18단어)</small>",
+  "ans": [
+   "So building resilience is the key not only to overcoming adversity but also to living a happy life"
+  ],
+  "show": "So, building resilience is the key not only to overcoming adversity but also to living a happy life.",
+  "e": "#58 전치사 to + 동명사 및 not only A but also B 병렬구조"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "I urge you <u>practice</u> them whenever you can. Practicing resilience during tough times <u>help</u> you endure. You will gradually become more able to deal with big <u>one</u>.",
+  "keys": [
+   {
+    "k": "to practice",
+    "show": "practice → to practice"
+   },
+   {
+    "k": "helps",
+    "show": "help → helps"
+   },
+   {
+    "k": "ones",
+    "show": "one → ones"
+   }
+  ],
+  "e": "#52 urge + O + to-v, #54 동명사 주어 수 일치(helps), #56 복수 명사구를 대신하는 부정대명사 ones"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "kw",
+  "s": "58번 문장의 to 뒤에 overcome이 아닌 overcoming을 써야 하는 어법적 이유를 to의 품사와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "전치사",
+    "전치사 to"
+   ],
+   [
+    "동명사",
+    "-ing"
+   ]
+  ],
+  "show": "the key to의 to는 to부정사의 to가 아니라 전치사이므로 뒤에 동명사 overcoming이 와야 하기 때문이다.",
+  "e": "#58 구문 분석 ★★★"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Resilience requires continuous practice in both major crises and minor everyday frictions; ultimately, it (A) l________ us from the fear of failure and unlocks a truly (B) f________ life.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "liberates"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "fulfilled"
+    ]
+   ]
+  ],
+  "show": "(A) liberates (B) fulfilled",
+  "e": "Section 7 English Summary 및 본문 #57"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "전략 1: 역경 수용과 통제 가능한 것에의 집중 정독 확인 문항 (#29~#34)",
+ "section": "교과서 본문 · 섹션 4 (#29~#34)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [29, "Three Basic Strategies to Build Up Your “Resilience Muscle”"],
+  [30, "First, accept and respect adversity as a natural part of life."],
+  [31, "This doesn’t mean being passive, but understanding that some changes in life can cause suffering or stress."],
+  [32, "Then, instead of feeling singled out and thinking, “Why me?”, you can face whatever happens and focus on what you can change, not what you can’t."],
+  [33, "Embracing challenges and unexpected obstacles in your life can help you confront them as a learning process."],
+  [34, "Think of all the success stories that could never have happened without adversity!"]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 역경을 삶의 자연스러운 일부로 받아들인다는 것의 참된 의미로 가장 적절한 것은?",
+  "o": [
+   "모든 시련에 무조건 순응하며 수동적인 태도를 취하는 것",
+   "삶의 변화가 고통이나 스트레스를 부를 수 있음을 인정하고 바꿀 수 있는 것에 집중하는 것",
+   "예상치 못한 장애물을 피해 안전한 경로로만 삶을 재설계하는 것",
+   "자신에게만 닥친 불운에 대해 '왜 나인가?'라고 끊임없이 자문하는 것",
+   "통제할 수 없는 외부 요인들을 억지로 바꾸려 노력하는 것"
+  ],
+  "a": 2,
+  "e": "#31, #32 수동적이 되는 것이 아니라 삶의 일부 변화가 고통을 줄 수 있음을 이해하고, 불평 대신 바꿀 수 있는 것에 집중하는 것을 뜻합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "삶의 도전과 뜻밖의 장애물을 기꺼이 포용하는 것은 그것들을 배움의 과정으로 마주하도록 돕는다.",
+  "a": "O",
+  "e": "#33 Embracing challenges and unexpected obstacles in your life can help you confront them as a learning process."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["본문은 역경을 마주했을 때 '왜 나에게 이런 일이 생겼을까?'라고 불평하는 태도를 권장한다.", "F"],
+   ["성공담들 중에는 역경이 없었더라면 결코 일어날 수 없었을 이야기들이 존재한다.", "T"],
+   ["33번 문장의 them이 가리키는 대상은 '도전들과 예상치 못한 장애물들'이다.", "T"]
+  ],
+  "e": "#32, #33, #34 'Why me?'라며 지목당했다고 느끼는 대신 바꿀 수 있는 일에 집중하라고 조언합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하지 않는 것은?",
+  "o": [
+   "우리는 역경을 인간 실존의 자연스러운 일부로 받아들여야 한다.",
+   "무기력한 희생자처럼 느끼기보다는 실행 가능한 해결책으로 초점을 돌려야 한다.",
+   "시련과 좌절을 개인적 성장의 기회로 바라보아야 한다.",
+   "역경을 극복하기 위해 모든 상황을 완벽하게 통제할 수 있다는 환상을 유지해야 한다"
+  ],
+  "a": 4,
+  "e": "Section 4 English Summary: rather than feeling like helpless victims, we should direct our focus toward actionable solutions and view setbacks as opportunities for personal growth."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "embrace, acknowledge",
+   "esteem, honor",
+   "inactive, submissive",
+   "confront, encounter",
+   "barrier, hurdle"
+  ],
+  "rows": [
+   ["accept", 1],
+   ["respect", 2],
+   ["passive", 3],
+   ["face", 4],
+   ["obstacle", 5]
+  ],
+  "e": "분석지 #30, #31, #32, #33 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "reject, refuse",
+   "unnatural, artificial",
+   "active, aggressive",
+   "pleasure, joy",
+   "expected, predicted"
+  ],
+  "rows": [
+   ["accept", 1],
+   ["natural", 2],
+   ["passive", 3],
+   ["suffering", 4],
+   ["unexpected", 5]
+  ],
+  "e": "분석지 #30, #31, #33 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #32의 single out이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "독신으로 살아가다",
+   "(안 좋은 일의 대상으로) 지목하다, 선발하다",
+   "단 하나의 선택지를 고르다",
+   "야구에서 1루타를 치다"
+  ],
+  "a": 2,
+  "e": "#32 feeling singled out은 '자신만 억울하게 지목당했다고 느끼다'라는 뜻입니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #33의 confront의 반의어로 분석지에 제시된 것은?",
+  "o": [
+   "face, encounter",
+   "evade, avoid",
+   "aid, assistance",
+   "procedure, course"
+  ],
+  "a": 2,
+  "e": "#33 어휘: confront (ant. evade, avoid)"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #32의 happen과 바꾸어 쓸 수 있는 분석지상 동의어 표현을 두 단어로 쓰시오.",
+  "ans": [
+   "take place"
+  ],
+  "show": "take place",
+  "e": "#32 어휘: happen (syn. occur, take place, arise)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #33의 embrace와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "accept",
+   "welcome",
+   "adopt"
+  ],
+  "show": "accept (또는 welcome, adopt)",
+  "e": "#33 어휘: embrace (syn. accept, welcome, adopt)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "First, accept and respect adversity (as / for) a natural part of life.",
+  "o": [
+   "as",
+   "for"
+  ],
+  "a": "as",
+  "e": "#30 구문 분석: '~로서(자격/동격)'를 나타내는 전치사는 as입니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This doesn’t mean being passive, but (understand / understanding) that some changes cause stress.",
+  "o": [
+   "understanding",
+   "understand"
+  ],
+  "a": "understanding",
+  "e": "#31 구문 분석 ★: 'not A but B' 구문에서 mean의 목적어인 being passive와 병렬을 이루는 동명사 understanding 자리입니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Instead of feeling (singling / singled) out and thinking, “Why me?”, you can face adversity.",
+  "o": [
+   "singled",
+   "singling"
+  ],
+  "a": "singled",
+  "e": "#32 구문 분석: 자신만 억울하게 지목당했다고 느끼는 수동의 의미이므로 과거분사 singled out이 쓰여야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "You can face (whatever / however) happens and focus on solutions.",
+  "o": [
+   "whatever",
+   "however"
+  ],
+  "a": "whatever",
+  "e": "#32 구문 분석 ★: face의 목적어 역할을 하며 주어가 없는 불완전한 절을 이끄는 복합관계대명사는 whatever(=anything that)입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Focus on (what / that) you can change, not what you can’t.",
+  "o": [
+   "what",
+   "that"
+  ],
+  "a": "what",
+  "e": "#32 구문 분석 ★: 전치사 on 뒤에서 목적어 역할을 하며 change의 목적어가 빠진 불완전한 절을 이끄는 선행사 포함 관계대명사는 what입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Embracing challenges in your life can help you (confront / confronting) them as a learning process.",
+  "o": [
+   "confront",
+   "confronting"
+  ],
+  "a": "confront",
+  "e": "#33 구문 분석 ★: 준사역동사 help의 목적격 보어로는 동사원형이나 to부정사가 올 수 있으며, 분사(confronting)는 올 수 없습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Think of all the success stories that could never (happen / have happened) without adversity!",
+  "o": [
+   "have happened",
+   "happen"
+  ],
+  "a": "have happened",
+  "e": "#34 구문 분석 ★: 과거 사실의 반대를 가정하는 가정법 과거완료 귀결절이므로 「could + have p.p.」인 could never have happened가 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "33번 문장의 주어와 동사의 어법적 관계로 옳은 것은?",
+  "o": [
+   "주어가 obstacles로 복수이므로 조동사 뒤에 복수형 동사가 결합했다.",
+   "주어가 동명사구(Embracing challenges...)이므로 개념상 단수 취급한다.",
+   "주어가 life이므로 장소 부사구 도치 구문이다.",
+   "주어가 생략된 명령문 구조이다"
+  ],
+  "a": 2,
+  "e": "#33 구문 분석: 문장의 주어는 동명사구인 Embracing challenges and unexpected obstacles in your life이며 단수 취급합니다."
+ },
+ {
+  "n": 19,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #32의 Then에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "앞 문장의 고통 수용이라는 인식 전환을 바탕으로, 바꿀 수 있는 것에 집중한다는 구체적 대처 행동이 도출되는 귀결을 나타낸다.",
+   "삶의 역경을 인정하지 못하고 좌절하는 예외적 인물들의 행동을 대조한다.",
+   "도전을 포용하지 못했을 때 발생하는 심리적 장애 요인들을 열거한다.",
+   "역경을 극복한 과거 역사적 인물들의 일대기를 시간 순서로 나열한다"
+  ],
+  "a": 1,
+  "e": "#32 [연결어 분석]: 고통이 삶의 자연스러운 일부라는 이해(#31)를 조건으로 하여, 불평 대신 통제 가능한 일에 집중한다는 구체적 대처(#32)가 이어지는 귀결/결과를 나타냅니다."
+ },
+ {
+  "n": 20,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "역경 수용 및 존중 제안 → 수동성과 구별되는 고통에 대한 이해 설명 → 불평 대신 통제 가능한 것에의 집중 촉구 → 도전을 배움의 과정으로 전환 → 역경을 통해 탄생한 성공 이야기 상기",
+   "성공담의 허구성 비판 → 삶의 스트레스 제거 방법 소개 → 수동적 수용 권장 → 결론",
+   "예상치 못한 장애물 회피 기술 안내 → 통제 불가능한 요인 분석 → 'Why me?'의 철학적 의미 고찰",
+   "회복탄력성 근육의 한계 지적 → 의학적 수술 권유 → 고통의 불가역성 경고"
+  ],
+  "a": 1,
+  "e": "#30 수용 제안 → #31 수동성이 아닌 고통 이해 → #32 바꿀 수 있는 것에 집중 → #33 배움의 과정으로 전환 → #34 역경 기반 성공담 상기 순서입니다."
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "이것은 수동적이 되는 것을 의미하는 것이 아니라, 삶에서의 몇몇 변화들이 고통이나 스트레스를 초래할 수 있다는 것을 이해하는 것을 의미한다.<br><small>「조건」 This doesn’t mean, being passive, but understanding that, can cause 활용 (총 19단어)</small>",
+  "ans": [
+   "This doesnt mean being passive but understanding that some changes in life can cause suffering or stress",
+   "This doesn't mean being passive but understanding that some changes in life can cause suffering or stress"
+  ],
+  "show": "This doesn’t mean being passive, but understanding that some changes in life can cause suffering or stress.",
+  "e": "#31 not A but B 동명사 목적어 병렬구조"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "This doesn’t mean being passive, but <u>understand</u> that changes cause stress. Then, you can face <u>however</u> happens and focus on <u>that</u> you can change, not what you can’t.",
+  "keys": [
+   {
+    "k": "understanding",
+    "show": "understand → understanding"
+   },
+   {
+    "k": "whatever",
+    "show": "however → whatever"
+   },
+   {
+    "k": "what",
+    "show": "that → what"
+   }
+  ],
+  "e": "#31 not A but B 동명사 병렬(understanding), #32 face의 목적어 복합관계대명사(whatever), #32 change의 목적어가 빠진 선행사 포함 관계대명사(what)"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "kw",
+  "s": "34번 문장의 without adversity를 if로 시작하는 6단어의 가정법 과거완료 조건절로 바꾸어 쓰시오.",
+  "groups": [
+   [
+    "if it had not been for adversity",
+    "if it had not been for"
+   ]
+  ],
+  "show": "if it had not been for adversity",
+  "e": "#34 구문 분석 ★: without adversity = if it had not been for adversity"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "We must accept adversity as a natural part of existence; rather than feeling like helpless victims, we should direct our focus toward (A) a________ solutions and view setbacks as opportunities for personal (B) g________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "actionable"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "growth"
+    ]
+   ]
+  ],
+  "show": "(A) actionable (B) growth",
+  "e": "Section 4 English Summary 및 본문 #29, #32"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

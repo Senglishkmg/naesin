@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "테슬라의 대담한 기술 혁신과 실용적 시장 지배력 정독 확인 문항 (#30~#43)",
+ "section": "보조교재 · 섹션 3 (#30~#43)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [30, "Tesla has recently drawn worldwide attention with the demonstration of its long-awaited Roadster, an electric sports car developed with technology inspired by SpaceX."],
+  [31, "During the event, the vehicle performed a series of unusual movements, including rising into the air, turning over, and landing with the help of rocket-like thrusters."],
+  [32, "Tesla also claimed that the car could accelerate from zero to 60 miles per hour in less than one second."],
+  [33, "These demonstrations highlighted the company's ambition to push the boundaries of automobile technology."],
+  [34, "However, despite its impressive performance, the Roadster is not expected to enter production until 2028."],
+  [35, "Its repeated delays have raised questions about whether Tesla can turn its ambitious promises into reality."],
+  [36, "In contrast, the Model Y demonstrates Tesla's current strength in the automobile market."],
+  [37, "In September 2026, it recorded 11,157 new registrations in South Korea, making it the country's best-selling car that month."],
+  [38, "This achievement suggests that Tesla's success does not depend solely on futuristic technology."],
+  [39, "Its ability to offer practical electric vehicles that meet consumers' everyday needs is also an important factor."],
+  [40, "The two models represent different aspects of Tesla's strategy."],
+  [41, "While the Roadster captures public attention through technological innovation, the Model Y demonstrates the commercial value of making electric vehicles accessible to a wider range of customers."],
+  [42, "Ultimately, Tesla's long-term success will depend on its ability to bridge the gap between ambitious innovation and practical achievement."],
+  [43, "Its challenge is not simply to create extraordinary vehicles, but to deliver reliable products that meet customer expectations."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "차세대 로드스터(Roadster)의 시연 및 양산 계획에 대해 분석지 내용과 일치하지 않는 것은?",
+  "o": [
+   "SpaceX에 의해 영감을 받은 기술로 개발된 전기 스포츠카이다.",
+   "로켓 같은 추진기의 도움으로 공중 부양, 전복, 착륙 등의 동작을 수행했다.",
+   "시속 0에서 60마일까지 1초 미만에 가속할 수 있다고 주장되었다.",
+   "눈부신 성능 시연 직후 2026년 하반기부터 즉각 대량 양산에 들어갔다.",
+   "거듭된 양산 지연으로 인해 테슬라의 공약 실현 가능성에 대한 의구심이 제기되었다"
+  ],
+  "a": 4,
+  "e": "#34 2028년이 되어서야 양산에 들어갈 것으로 예상된다고 명시되어 있습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "모델 Y는 2026년 9월 한국에서 11,157건의 신규 등록을 기록하며 그 달의 최다 판매 차량이 되었다.",
+  "a": "O",
+  "e": "#37 In September 2026, it recorded 11,157 new registrations in South Korea, making it the country's best-selling car that month."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["테슬라의 성공은 오로지 미래지향적인 첨단 기술에만 전적으로 의존하고 있다.", "F"],
+   ["소비자들의 일상적 요구를 충족시키는 실용적 전기차 공급 능력은 테슬라의 또 다른 중요 성공 요인이다.", "T"],
+   ["테슬라의 장기적인 성공은 야심 찬 혁신과 실용적인 성취 사이의 간극을 메우는 능력에 달려 있다.", "T"]
+  ],
+  "e": "#38, #39, #42 38번 문장에서 미래지향적 기술에만 전적으로 의존하지 않는다(does not depend solely on futuristic technology)고 설명합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "38번 문장의 This achievement가 가리키는 내용으로 가장 적절한 것은?",
+  "o": [
+   "SpaceX와의 로켓 추진체 공동 특허 취득",
+   "로드스터의 1초 미만 제로백 가속 공언",
+   "모델 Y의 한국 내 월간 11,157대 신규 등록 및 베스트셀러 등극",
+   "전기 스포츠카의 전복 및 착륙 시연 성공",
+   "2028년 완공 예정인 신규 기가팩토리의 착공"
+  ],
+  "a": 3,
+  "e": "#37, #38 구문 분석: 앞 문장(#37)에서 언급된 모델 Y의 한국 시장 내 압도적인 판매 실적을 집약합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 테슬라의 장기적인 지속력은 대담하고 미래지향적인 공학과 신뢰할 수 있는 상업적 실행 사이의 간극을 잇는 것에 달려 있다.",
+  "a": "O",
+  "e": "Section 3 English Summary: Tesla's long-term endurance hinges upon bridging the divide between audacious, futuristic engineering and reliable commercial execution."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "display, presentation",
+   "ascend, climb",
+   "emphasize, underline",
+   "limit, frontier",
+   "pragmatic, functional"
+  ],
+  "rows": [
+   ["demonstration", 1],
+   ["rise", 2],
+   ["highlight", 3],
+   ["boundary", 4],
+   ["practical", 5]
+  ],
+  "e": "분석지 #30, #31, #33, #39 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "uncommon, bizarre",
+   "decelerate, slow down",
+   "unimpressive, mediocre",
+   "weakness, flaw",
+   "inaccessible, remote"
+  ],
+  "rows": [
+   ["usual", 1],
+   ["accelerate", 2],
+   ["impressive", 3],
+   ["strength", 4],
+   ["accessible", 5]
+  ],
+  "e": "분석지 #31, #32, #34, #36, #41 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #39의 meet이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "만나다, 접견하다",
+   "(요구·기대를) 충족시키다, 만족시키다",
+   "(기한 등을) 맞추다",
+   "(요금 등을) 지불하다"
+  ],
+  "a": 2,
+  "e": "#39 that meet consumers' everyday needs에서 meet은 '충족시키다, 만족시키다(syn. satisfy, fulfill)'의 의미입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #43의 reliable에 대한 어휘적 설명으로 옳은 것은?",
+  "o": [
+   "동의어로 dependable, trustworthy가 있으며 반의어로는 unreliable, untrustworthy가 있다.",
+   "오직 기계 장치에만 쓰이며 사람이나 제품에는 쓰이지 않는다.",
+   "동사형태로 쓰여 '의존하다'를 뜻한다.",
+   "본문에서는 '질 낮은, 조잡한'이라는 의미로 쓰였다"
+  ],
+  "a": 1,
+  "e": "#43 reliable (a) 신뢰할 수 있는, 믿을 만한, syn. dependable, trustworthy, ant. unreliable, untrustworthy"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #30의 draw와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "attract",
+   "catch",
+   "engage",
+   "lure",
+   "pull"
+  ],
+  "show": "attract (또는 catch, engage, lure, pull)",
+  "e": "#30 어휘: draw (syn. attract, catch, engage, lure, pull)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #42의 gap과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "divide",
+   "disparity",
+   "breach",
+   "chasm",
+   "distance"
+  ],
+  "show": "divide (또는 disparity, breach, chasm, distance)",
+  "e": "#42 어휘: gap (syn. divide, disparity, breach, chasm, distance)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Roadster is an electric sports car (developing / developed) with technology inspired by SpaceX.",
+  "o": [
+   "developed",
+   "developing"
+  ],
+  "a": "developed",
+  "e": "#30 구문 분석 ★: 스포츠카가 기술로 개발된 수동 관계이므로 과거분사 developed가 명사를 후치 수식합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(During / While) the event, the vehicle performed a series of unusual movements.",
+  "o": [
+   "During",
+   "While"
+  ],
+  "a": "During",
+  "e": "#31 구문 분석 ★: the event라는 특정 사건 명사구 앞에는 전치사 During을 써야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The vehicle performed movements including rising into the air, turning over, and (landing / land).",
+  "o": [
+   "landing",
+   "land"
+  ],
+  "a": "landing",
+  "e": "#31 구문 분석 ★: 전치사 including의 목적어로 rising, turning over와 병렬 연결되는 동명사 landing 자리입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Despite / Although) its impressive performance, the Roadster is not expected to enter production until 2028.",
+  "o": [
+   "Despite",
+   "Although"
+  ],
+  "a": "Despite",
+  "e": "#34 구문 분석 ★: 뒤에 절이 아니라 명사구(its impressive performance)가 왔으므로 전치사 Despite가 올바릅니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The Roadster (does not expect / is not expected) to enter production until 2028.",
+  "o": [
+   "is not expected",
+   "does not expect"
+  ],
+  "a": "is not expected",
+  "e": "#34 구문 분석 ★: 로드스터는 양산 진입이 사람들에 의해 예상되는 대상이므로 수동태 is not expected를 씁니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Its repeated delays have (raised / risen) questions about the car.",
+  "o": [
+   "raised",
+   "risen"
+  ],
+  "a": "raised",
+  "e": "#35 구문 분석 ★: questions라는 목적어를 취하는 타동사의 현재완료형이므로 have raised가 맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Its repeated delays have raised questions about (whether / if) Tesla can turn promises into reality.",
+  "o": [
+   "whether",
+   "if"
+  ],
+  "a": "whether",
+  "e": "#35 구문 분석 ★: 전치사(about) 바로 뒤에는 명사절 접속사 if를 쓸 수 없으므로 반드시 whether를 써야 합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It recorded 11,157 new registrations, (making / made) it the country's best-selling car that month.",
+  "o": [
+   "making",
+   "made"
+  ],
+  "a": "making",
+  "e": "#37 구문 분석 ★: 앞 절의 결과로 인해 베스트셀러가 된 능동의 결과 분사구문 자리이므로 making이 올바릅니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Its ability to offer practical electric vehicles that meet consumers' everyday needs (is / are) also an important factor.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "#39 구문 분석 ★: 문장의 핵심 주어가 단수 명사인 Its ability이므로 단수 동사 is가 올바릅니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Model Y demonstrates the commercial value of making electric vehicles (accessible / accessibly) to customers.",
+  "o": [
+   "accessible",
+   "accessibly"
+  ],
+  "a": "accessible",
+  "e": "#41 구문 분석 ★: 5형식 making의 목적격 보어 자리이므로 부사가 아닌 형용사 accessible이 와야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Its challenge is not simply to create extraordinary vehicles, but (deliver / to deliver) reliable products.",
+  "o": [
+   "to deliver",
+   "deliver"
+  ],
+  "a": "to deliver",
+  "e": "#43 구문 분석 ★★★: not simply A but B 구문에서 to create와 병렬을 이루어 주격 보어 역할을 하는 to deliver 자리입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "화려한 동작 시연 사실에 시속 60마일 가속 데이터라는 추가적 성능 특징을 덧붙임",
+   "자동차 기술의 경계를 넓히려는 대담한 야망과 실질적인 양산 지연이라는 상반된 현실을 대조",
+   "양산이 지연되는 미래형 로드스터와 현재 시장을 장악하고 있는 양산 모델 Y의 위상을 대조",
+   "미래지향적 첨단 기술에 더해진 또 다른 성공 요인으로 실용 전기차 공급 능력을 병렬 설명"
+  ],
+  "rows": [
+   ["also (#32)", 1],
+   ["However (#34)", 2],
+   ["In contrast (#36)", 3],
+   ["also (#39)", 4]
+  ],
+  "e": "분석지 #32, #34, #36, #39 [연결어 분석]"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "로드스터의 화려한 시연과 기술적 야망 소개 → 반복된 양산 지연과 실현 가능성에 대한 의구심 제기 → 대조적인 모델 Y의 실용성과 압도적 판매 실적 제시 → 두 모델이 상징하는 전략 분석 → 혁신과 신뢰성 간 균형이라는 최종 과제 도출",
+   "모델 Y의 배터리 결함 분석 → 로드스터의 즉각적인 양산 성공 → SpaceX와의 합병 발표 → 결론",
+   "한국 자동차 시장의 규제 강화 보고 → 전기차 보조금 축소 → 테슬라의 판매량 급감 → 사업 철수",
+   "로켓 엔진 기술의 안전성 논란 → 자동차 시연 행사 취소 → 대중의 무관심 확산 → 경영진 교체"
+  ],
+  "a": 1,
+  "e": "#30~#33 로드스터 시연 → #34, #35 양산 지연 및 의구심 → #36~#39 모델 Y 실적 및 실용성 → #40, #41 두 모델의 전략 분석 → #42, #43 혁신과 실용성의 균형이라는 과제 결론 순서입니다."
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그것의 도전 과제는 단지 비범한 차량들을 창조하는 것이 아니라, 고객 기대들을 충족시키는 신뢰할 수 있는 제품들을 전달하는 것이다.<br><small>「조건」 Its challenge is not simply to create, but to deliver, reliable products that meet 활용 (총 18단어)</small>",
+  "ans": [
+   "Its challenge is not simply to create extraordinary vehicles but to deliver reliable products that meet customer expectations"
+  ],
+  "show": "Its challenge is not simply to create extraordinary vehicles, but to deliver reliable products that meet customer expectations.",
+  "e": "#43 not simply A but B to부정사 보어 병렬 및 주격 관계대명사절 구문"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "<u>Although</u> its impressive performance, the Roadster is not expected to enter production. Its repeated delays have <u>risen</u> questions about the car. In September 2026, it recorded new registrations, <u>made</u> it the best-selling car.",
+  "keys": [
+   {
+    "k": "Despite",
+    "show": "Although → Despite (또는 In spite of)"
+   },
+   {
+    "k": "raised",
+    "show": "risen → raised"
+   },
+   {
+    "k": "making",
+    "show": "made → making"
+   }
+  ],
+  "e": "#34 명사구 앞 전치사 Despite, #35 목적어를 취하는 타동사 raised, #37 능동 결과 분사구문 making"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "kw",
+  "s": "34번 문장의 not과 until을 활용한 'the Roadster is not expected to enter production until 2028'이 지닌 실제 양산 시점의 의미를 한국어로 서술하시오.",
+  "groups": [
+   [
+    "2028년",
+    "2028년이 되어서야",
+    "2028년까지는"
+   ],
+   [
+    "비로소",
+    "들어가다",
+    "들어가지 않는다"
+   ],
+   [
+    "양산",
+    "생산"
+   ]
+  ],
+  "show": "2028년이 되어서야 비로소 양산에 들어갈 것으로 예상된다는 의미이다.",
+  "e": "#34 구문 분석 ★"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Tesla demonstrated its next-generation Roadster; however, repeated (A) d________ raise skepticism. In contrast, Model Y showcases practical market (B) d________ by catering to consumers' everyday needs.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "delays"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "dominance"
+    ]
+   ]
+  ],
+  "show": "(A) delays (B) dominance",
+  "e": "Section 3 English Summary 및 본문 #35, #36"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

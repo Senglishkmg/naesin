@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "치이카와의 상업적 성공 요인과 문화적 확장 정독 확인 문항 (#2~#12)",
+ "section": "교과서 본문 · 섹션 1 (#2~#12)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [2, "Chiikawa, a Japanese character known for its cute appearance, has gained considerable popularity in Korea through its first theatrical film, Chiikawa: The Secret of Mermaid Island."],
+  [3, "Its success demonstrates how existing online popularity can be transformed into commercial success in the film industry."],
+  [4, "One key factor behind the film's popularity is its creative marketing strategy."],
+  [5, "The characters appeared on a Korean music program and performed a song, attracting attention beyond their original fan base."],
+  [6, "In addition, limited-edition movie gifts encouraged fans to visit theaters and share their experiences online."],
+  [7, "These strategies helped turn individual interest into a shared cultural experience."],
+  [8, "The film's appeal also lies in the contrast between the characters' innocent appearance and the challenges they encounter."],
+  [9, "Although they look adorable, their stories reflect everyday struggles and emotional difficulties."],
+  [10, "This allows audiences to connect with them on a deeper level."],
+  [11, "The success of Chiikawa suggests that effective entertainment requires more than attractive characters."],
+  [12, "By combining emotional storytelling with innovative marketing, companies can expand their audience and transform a familiar character into a broader cultural phenomenon."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 극장판 영화 치이카와의 창의적인 마케팅 전략에 해당하지 않는 것은?",
+  "o": [
+   "캐릭터들이 한국 음악 프로그램에 출연하여 노래를 공연한 것",
+   "원래의 팬층을 넘어서서 대중적인 관심을 끌어모은 것",
+   "한정판 영화 선물을 제공하여 극장 방문을 장려한 것",
+   "관객들이 자신의 관람 경험을 온라인에 공유하도록 유도한 것",
+   "주요 배역의 성우진을 전원 교체하여 온라인 유료 광고를 집행한 것"
+  ],
+  "a": 5,
+  "e": "#5, #6 한국 음악 방송 출연 및 한정판 극장 굿즈 증정이 마케팅 전략으로 언급되었습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "치이카와 영화의 매력은 캐릭터들의 순진한 외모와 그들이 마주하는 도전 과제 사이의 대비에 놓여 있다.",
+  "a": "O",
+  "e": "#8 The film's appeal also lies in the contrast between the characters' innocent appearance and the challenges they encounter."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["치이카와는 첫 번째 극장판 영화를 통해 한국에서 상당한 인기를 얻었다.", "T"],
+   ["치이카와의 이야기들은 일상적인 분투나 감정적인 어려움을 전혀 다루지 않는다.", "F"],
+   ["효과적인 엔터테인먼트를 위해서는 매력적인 캐릭터 그 이상의 요소가 요구된다.", "T"]
+  ],
+  "e": "#2, #9, #11 치이카와의 이야기는 일상적인 분투와 감정적 어려움을 반영합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "10번 문장의 This가 가리키는 내용으로 분석지에 가장 부합하는 것은?",
+  "o": [
+   "한정판 영화 선물을 통해 극장 티켓 가격을 할인해 준 것",
+   "캐릭터들이 사랑스러워 보임에도 불구하고 일상의 분투와 감정적 어려움을 반영하는 이야기 구조",
+   "한국 음악 방송에 가상 캐릭터가 직접 출연했던 제작 방식",
+   "영화 산업에서 온라인 상업 광고를 집중적으로 집행한 사실",
+   "원래 팬층만을 대상으로 비공개 상영회를 개최한 것"
+  ],
+  "a": 2,
+  "e": "#9, #10 구문 분석: This는 사랑스러운 외모 이면에 일상적인 시련과 감정적 고충을 담고 있는 이야기 구조를 가리킵니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 치이카와는 혁신적인 마케팅과 순수한 외모 및 일상의 분투를 잇는 깊이 있는 서사를 결합하여 성공을 거두었다.",
+  "a": "O",
+  "e": "Section 1 English Summary: pairing innovative marketing with relatable, emotionally profound narratives that bridge innocent appearances and everyday struggles."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "substantial, sizable",
+   "show, prove",
+   "innovative, inventive",
+   "motivate, prompt",
+   "groundbreaking, advanced"
+  ],
+  "rows": [
+   ["considerable", 1],
+   ["demonstrate", 2],
+   ["creative", 3],
+   ["encourage", 4],
+   ["innovative", 5]
+  ],
+  "e": "분석지 #2, #3, #4, #6, #12 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "negligible, slight",
+   "disappear",
+   "repel, distract",
+   "unlimited",
+   "repulsive, hateful"
+  ],
+  "rows": [
+   ["considerable", 1],
+   ["appear", 2],
+   ["attract", 3],
+   ["limited", 4],
+   ["adorable", 5]
+  ],
+  "e": "분석지 #2, #5, #6, #9 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #8의 lie가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "거짓말하다",
+   "놓여 있다, 존재하다",
+   "(자리에) 눕다",
+   "방향을 가리키다"
+  ],
+  "a": 2,
+  "e": "#8 The film's appeal also lies in ~에서 lie는 '놓여 있다, 존재하다(syn. exist, consist, reside)'의 의미입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #7의 shared cultural experience에서 shared가 지닌 문맥적 의미로 옳은 것은?",
+  "o": [
+   "독점적인, 배타적인",
+   "공유된, 공동의",
+   "분할된, 쪼개진",
+   "비밀스러운, 사적인"
+  ],
+  "a": 2,
+  "e": "#7 shared는 '공유된, 공동의(syn. collective, mutual, joint)'를 뜻합니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #8의 contrast와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "difference",
+   "disparity",
+   "distinction"
+  ],
+  "show": "difference (또는 disparity, distinction)",
+  "e": "#8 어휘: contrast (syn. difference, disparity, distinction)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #12의 expand와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "broaden",
+   "enlarge",
+   "extend"
+  ],
+  "show": "broaden (또는 enlarge, extend)",
+  "e": "#12 어휘: expand (syn. broaden, enlarge, extend)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Chiikawa, a Japanese character (knowing / known) for its cute appearance, has gained popularity.",
+  "o": [
+   "known",
+   "knowing"
+  ],
+  "a": "known",
+  "e": "#2 구문 분석 ★: 귀여운 외모로 알려진 수동 관계이므로 과거분사 known이 character를 후치 수식합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Chiikawa (has gained / have gained) considerable popularity in Korea.",
+  "o": [
+   "has gained",
+   "have gained"
+  ],
+  "a": "has gained",
+  "e": "#2 구문 분석: 주어 Chiikawa가 3인칭 단수이므로 현재완료 has gained가 알맞습니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Its success demonstrates how existing online popularity (can transform / can be transformed) into commercial success.",
+  "o": [
+   "can be transformed",
+   "can transform"
+  ],
+  "a": "can be transformed",
+  "e": "#3 구문 분석 ★: 인기는 상업적 성공으로 전환되는 대상이므로 조동사 수동태 can be transformed를 씁니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "One key factor behind the film's popularity (is / are) its creative marketing strategy.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "#4 구문 분석 ★: 주어의 핵이 단수 명사인 One key factor이므로 단수 동사 is가 올바릅니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The characters appeared on a music program and performed a song, (attracting / attracted) attention.",
+  "o": [
+   "attracting",
+   "attracted"
+  ],
+  "a": "attracting",
+  "e": "#5 구문 분석 ★: 캐릭터들이 관심을 능동적으로 끌어모은 연속/동시동작을 나타내는 현재분사구문 자리입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Limited-edition movie gifts encouraged fans (to visit / visiting) theaters.",
+  "o": [
+   "to visit",
+   "visiting"
+  ],
+  "a": "to visit",
+  "e": "#6 구문 분석 ★: 5형식 동사 encourage는 목적격 보어로 to부정사를 취합니다 (encourage + O + to-v)."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Movie gifts encouraged fans to visit theaters and (share / sharing) their experiences online.",
+  "o": [
+   "share",
+   "sharing"
+  ],
+  "a": "share",
+  "e": "#6 구문 분석 ★: to visit과 and로 병렬 연결되는 원형부정사 자리입니다 (to 생략 병렬)."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The film's appeal also (lies / lays) in the contrast between the characters' appearance and challenges.",
+  "o": [
+   "lies",
+   "lays"
+  ],
+  "a": "lies",
+  "e": "#8 구문 분석: 단수 주어 appeal에 호응하여 '~에 놓여 있다'를 나타내는 자동사는 lies입니다 (lays는 타동사)."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Although / Despite) they look adorable, their stories reflect everyday struggles.",
+  "o": [
+   "Although",
+   "Despite"
+  ],
+  "a": "Although",
+  "e": "#9 구문 분석 ★: 뒤에 주어(they)와 동사(look)를 갖춘 절이 이어지므로 양보 접속사 Although가 올바릅니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Although they look (adorable / adorably), their stories reflect difficulties.",
+  "o": [
+   "adorable",
+   "adorably"
+  ],
+  "a": "adorable",
+  "e": "#9 구문 분석 ★: 2형식 감각동사 look의 주격 보어 자리이므로 부사가 아닌 형용사 adorable이 와야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This allows audiences (connect / to connect) with them on a deeper level.",
+  "o": [
+   "to connect",
+   "connect"
+  ],
+  "a": "to connect",
+  "e": "#10 구문 분석 ★: 5형식 동사 allow는 목적격 보어로 to부정사를 취합니다 (allow + O + to-v)."
+ },
+ {
+  "n": 23,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The success of Chiikawa (suggest / suggests) that effective entertainment requires more than attractive characters.",
+  "o": [
+   "suggests",
+   "suggest"
+  ],
+  "a": "suggests",
+  "e": "#11 구문 분석: 주어의 핵이 단수 명사인 The success이므로 단수 동사 suggests가 쓰여야 합니다."
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "음악 방송 출연 홍보에 한정판 굿즈 제공이라는 추가적인 마케팅 전략을 덧붙임",
+   "외적 마케팅 성공 요인에 이어 작품 내부의 매력 요소를 대등한 층위에서 추가"
+  ],
+  "rows": [
+   ["In addition (#6)", 1],
+   ["also (#8)", 2]
+  ],
+  "e": "분석지 #6, #8 [연결어 분석]"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "치이카와의 극장판 성공 소개 → 창의적 마케팅 전략(음악 방송·한정판 굿즈) 제시 → 사랑스러운 외모와 현실적 시련의 서사적 대비 설명 → 감정적 스토리텔링과 혁신적 마케팅의 결합을 통한 문화적 확장 결론",
+   "한정판 굿즈의 제조 공정 설명 → 음악 방송 제작진과의 갈등 → 영화 개봉 취소 → 대체 캐릭터 개발",
+   "영화 산업의 상업적 실패 사례 분석 → 치이카와 캐릭터 디자인 수정 → 팬덤과의 소통 단절",
+   "일본 원작 만화의 역사 고찰 → 한국 배급사의 마케팅 실패 분석 → 캐릭터 상품 전량 회수"
+  ],
+  "a": 1,
+  "e": "#2, #3 성공 소개 → #4~#7 마케팅 전략 → #8~#10 서사적 매력과 공감대 → #11, #12 마케팅과 서사의 결합을 통한 문화적 확장 결론 순서입니다."
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그 캐릭터들은 한국 음악 프로그램에 출연하여 노래를 불렀고, 그들의 원래 팬층을 넘어서는 관심을 끌었다.<br><small>「조건」 appeared on, performed a song, attracting attention beyond 활용 (총 18단어)</small>",
+  "ans": [
+   "The characters appeared on a Korean music program and performed a song attracting attention beyond their original fan base"
+  ],
+  "show": "The characters appeared on a Korean music program and performed a song, attracting attention beyond their original fan base.",
+  "e": "#5 과거동사 병렬 및 능동 분사구문 attracting"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "One key factor behind the film's popularity <u>are</u> its creative marketing strategy. The characters performed a song, <u>attracted</u> attention. <u>Despite</u> they look adorable, their stories reflect everyday struggles.",
+  "keys": [
+   {
+    "k": "is",
+    "show": "are → is"
+   },
+   {
+    "k": "attracting",
+    "show": "attracted → attracting"
+   },
+   {
+    "k": "Although",
+    "show": "Despite → Although (또는 Even though, Though)"
+   }
+  ],
+  "e": "#4 One key factor 단수 수 일치, #5 능동 분사구문 attracting, #9 절을 이끄는 양보 접속사 Although"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "kw",
+  "s": "9번 문장에서 look 뒤에 adorably가 아닌 adorable을 써야 하는 어법적 이유를 look의 동사 성격과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "감각동사",
+    "2형식 감각동사",
+    "2형식"
+   ],
+   [
+    "주격 보어",
+    "보어"
+   ],
+   [
+    "형용사"
+   ]
+  ],
+  "show": "look은 2형식 감각동사이므로 주격 보어로 부사가 아닌 형용사(adorable)를 써야 하기 때문이다.",
+  "e": "#9 구문 분석 ★"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Chiikawa achieved success by pairing innovative (A) m________ with relatable narratives that bridge innocent appearances and everyday (B) s________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "marketing"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "struggles"
+    ]
+   ]
+  ],
+  "show": "(A) marketing (B) struggles",
+  "e": "Section 1 English Summary 및 본문 #4, #9"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

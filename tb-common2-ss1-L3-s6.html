@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "전략 3: 사회적 연결과 지지 네트워크 형성 정독 확인 문항 (#46~#50)",
+ "section": "교과서 본문 · 섹션 6 (#46~#50)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [46, "Third, be connected."],
+  [47, "Allow yourself to ask for help from people whom you can trust, such as friends, family members, or counselors."],
+  [48, "Talking about your issues with someone can help you see your situation with more clarity and respond to it with more strength."],
+  [49, "Good communication helps resilience."],
+  [50, "This is the reason why resilient people tend to create good support networks."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 신뢰할 수 있는 사람과 자신의 문제에 대해 대화할 때 얻을 수 있는 유익으로 언급된 것은?",
+  "o": [
+   "모든 재정적 문제에 대한 즉각적인 금전적 지원을 받게 된다.",
+   "상황을 더 명확하게 바라보고 더 큰 힘을 가지고 대응할 수 있게 된다.",
+   "전문적인 의료 진단서와 약물 처방을 신속하게 확보할 수 있다.",
+   "과거의 실수를 완전히 망각하고 새로운 직업을 찾게 된다.",
+   "모든 사회적 책임을 주변 지인들에게 온전히 위임할 수 있다"
+  ],
+  "a": 2,
+  "e": "#48 see your situation with more clarity and respond to it with more strength"
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "회복탄력성이 있는 사람들은 혼자 힘으로만 고통을 해결하려 하므로 지지 네트워크를 형성하지 않는 경향이 있다.",
+  "a": "X",
+  "e": "#50 resilient people tend to create good support networks라고 명시되어 있어 좋은 지지 네트워크를 만드는 경향이 있습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["본문에서 신뢰할 수 있는 사람들의 예시로 친구, 가족 구성원, 상담사가 언급되었다.", "T"],
+   ["좋은 의사소통은 회복탄력성에 아무런 도움이 되지 않는다.", "F"],
+   ["48번 문장의 it이 가리키는 대상은 '당신의 상황(your situation)'이다.", "T"]
+  ],
+  "e": "#47, #48, #49 Good communication helps resilience라고 명시되어 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하지 않는 것은?",
+  "o": [
+   "스스로를 고립시키는 태도에 저항해야 한다.",
+   "친구, 가족, 혹은 상담사에게 의지하는 것이 권장된다.",
+   "의미 있는 사회적 연결은 명료함을 부여하고 회복탄력성 비축분을 강화한다.",
+   "자신의 감정을 숨기기 위해 외부와의 소통을 완전히 단절해야 한다"
+  ],
+  "a": 4,
+  "e": "Section 6 English Summary: Resist isolating yourself; instead, lean on friends, family, or counselors."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "link, unite",
+   "rely on, count on",
+   "advisor, consultant",
+   "clearness, lucidity",
+   "backing, assistance"
+  ],
+  "rows": [
+   ["connect", 1],
+   ["trust", 2],
+   ["counselor", 3],
+   ["clarity", 4],
+   ["support", 5]
+  ],
+  "e": "분석지 #46, #47, #48, #50 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "disconnect, isolate",
+   "distrust, suspect",
+   "ambiguity, confusion",
+   "destroy"
+  ],
+  "rows": [
+   ["connect", 1],
+   ["trust", 2],
+   ["clarity", 3],
+   ["create", 4]
+  ],
+  "e": "분석지 #46, #47, #48, #50 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #50의 tend에 대한 설명으로 옳은 것은?",
+  "o": [
+   "목적어로 동명사만을 취하는 타동사이다.",
+   "본문에서 tend to V 형태로 쓰여 '~하는 경향이 있다'를 뜻한다.",
+   "본문에서 '돌보다, 보살피다'라는 의미로 쓰였다.",
+   "과거분사형으로만 쓰이는 불완전동사이다"
+  ],
+  "a": 2,
+  "e": "#50 tend to create good support networks에서 tend to V는 '~하는 경향이 있다'라는 뜻입니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #48의 respond to와 바꾸어 쓸 수 있는 분석지상 동의어 동사를 한 단어로 쓰시오.",
+  "ans": [
+   "react",
+   "reply",
+   "answer"
+  ],
+  "show": "react (또는 reply, answer)",
+  "e": "#48 어휘: respond (syn. react, reply, answer)"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #49의 communication과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "dialogue",
+   "conversation",
+   "interaction"
+  ],
+  "show": "dialogue (또는 conversation, interaction)",
+  "e": "#49 어휘: communication (syn. dialogue, conversation, interaction)"
+ },
+ {
+  "n": 10,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Third, (be connected / connect) with others.",
+  "o": [
+   "be connected",
+   "connect"
+  ],
+  "a": "be connected",
+  "e": "#46 구문 분석: 고립되지 않고 타인과 연결된 상태를 유지하라는 의미의 수동태 명령문 be connected가 올바릅니다."
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Allow (you / yourself) to ask for help from people.",
+  "o": [
+   "yourself",
+   "you"
+  ],
+  "a": "yourself",
+  "e": "#47 구문 분석 ★: 명령문의 주어(You)와 목적어가 동일하므로 재귀대명사 yourself가 와야 합니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Allow yourself (ask / to ask) for help from people whom you can trust.",
+  "o": [
+   "to ask",
+   "ask"
+  ],
+  "a": "to ask",
+  "e": "#47 구문 분석 ★: 5형식 동사 allow는 목적격 보어로 to부정사를 취합니다 (allow + O + to-v)."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Talking about your issues with someone can help you (see / seeing) your situation with more clarity.",
+  "o": [
+   "see",
+   "seeing"
+  ],
+  "a": "see",
+  "e": "#48 구문 분석 ★: 준사역동사 help의 목적격 보어로는 동사원형이나 to부정사가 올 수 있으며, 분사(seeing)는 올 수 없습니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It can help you see your situation and (respond / responding) to it with more strength.",
+  "o": [
+   "respond",
+   "responding"
+  ],
+  "a": "respond",
+  "e": "#48 구문 분석 ★: help의 목적격 보어로 see와 and로 병렬 연결되는 원형부정사 respond 자리입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Good communication (help / helps) resilience.",
+  "o": [
+   "helps",
+   "help"
+  ],
+  "a": "helps",
+  "e": "#49 구문 분석: 단수 주어 Good communication 뒤에 3인칭 단수 현재형 동사 helps가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This is the reason (why / which) resilient people tend to create good support networks.",
+  "o": [
+   "why",
+   "which"
+  ],
+  "a": "why",
+  "e": "#50 구문 분석 ★: the reason을 선행사로 받고 뒤에 완전한 절이 이어지므로 관계부사 why가 올바릅니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Resilient people tend (create / to create) good support networks.",
+  "o": [
+   "to create",
+   "create"
+  ],
+  "a": "to create",
+  "e": "#50 구문 분석: tend는 목적어로 to부정사를 취합니다 (tend to-v)."
+ },
+ {
+  "n": 18,
+  "p": "D",
+  "t": "mc",
+  "s": "50번 문장의 This가 가리키는 내용으로 가장 적절한 것은?",
+  "o": [
+   "혼자서 모든 문제를 해결했을 때 내면의 힘이 길러진다는 사실",
+   "타인과 대화하고 소통하는 것이 명확성을 주고 회복탄력성을 돕는다는 점",
+   "친구 및 가족들과의 대화가 때로는 스트레스의 직접적 원인이 된다는 점",
+   "상담사를 방문하는 데 많은 시간과 경제적 비용이 소모된다는 사실"
+  ],
+  "a": 2,
+  "e": "#48, #49, #50 누군가와 소통하는 것이 상황을 명확히 보게 하고 회복탄력성을 돕는다는 앞 문장의 내용이 회복탄력성이 있는 사람들이 지지망을 구축하는 이유(This is the reason why)입니다."
+ },
+ {
+  "n": 19,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 방식으로 가장 적절한 것은?",
+  "o": [
+   "세 번째 전략 제시(연결되어 있기) → 신뢰할 수 있는 대상에게 도움 요청 권고 → 소통이 가져오는 명확성과 힘의 효과 설명 → 의사소통과 회복탄력성의 관계 요약 → 지지 네트워크 형성의 이유 도출",
+   "상담사의 자격 요건 분석 → 가족 관계의 갈등 원인 규명 → 고립의 필요성 역설 → 결론",
+   "네트워크 기술의 발달 소개 → 디지털 기기 과의존 경고 → 회복탄력성 개념 비판",
+   "의사소통 실패 사례 나열 → 언어적 표현의 한계 지적 → 침묵 명상 권유"
+  ],
+  "a": 1,
+  "e": "#46 제3전략 제시 → #47 도움 요청 권고 → #48 대화의 효과 설명 → #49 의사소통과 회복탄력성 요약 → #50 지지 네트워크 형성 이유 규명 순서입니다."
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "이것이 회복탄력성이 있는 사람들이 좋은 지지 네트워크를 만드는 경향이 있는 이유이다.<br><small>「조건」 This is the reason why, tend to create 활용 (총 12단어)</small>",
+  "ans": [
+   "This is the reason why resilient people tend to create good support networks"
+  ],
+  "show": "This is the reason why resilient people tend to create good support networks.",
+  "e": "#50 관계부사 why 및 tend to부정사 구문"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "Allow <u>you</u> to ask for help from people. Talking about your issues with someone can help you see your situation and <u>responding</u> to it with more strength. This is the reason <u>which</u> resilient people tend to create good support networks.",
+  "keys": [
+   {
+    "k": "yourself",
+    "show": "you → yourself"
+   },
+   {
+    "k": "respond",
+    "show": "responding → respond (또는 to respond)"
+   },
+   {
+    "k": "why",
+    "show": "which → why (또는 for which, that)"
+   }
+  ],
+  "e": "#47 재귀대명사 yourself, #48 help의 목적격 보어 병렬(respond), #50 선행사 the reason 뒤의 관계부사 why"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "kw",
+  "s": "50번 문장에서 the reason 뒤에 which 대신 관계부사 why를 써야 하는 어법적 이유를 뒤따르는 절의 구조와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "관계부사",
+    "why"
+   ],
+   [
+    "완전한 절",
+    "완전한 문장",
+    "완전"
+   ],
+   [
+    "the reason",
+    "이유"
+   ]
+  ],
+  "show": "선행사가 the reason이며, 뒤에 빠진 문장 성분이 없는 완전한 절(resilient people tend to create good support networks)이 이어지기 때문이다.",
+  "e": "#50 구문 분석 ★"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Resist (A) i________ yourself; instead, lean on friends, family, or counselors. Meaningful social connection grants (B) c________ and reinforces your resilience reserve.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "isolating"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "clarity"
+    ]
+   ]
+  ],
+  "show": "(A) isolating (B) clarity",
+  "e": "Section 6 English Summary 및 본문 #46, #48"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

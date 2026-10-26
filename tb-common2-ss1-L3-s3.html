@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "회복탄력성의 보편성과 근육 메타포 정독 확인 문항 (#23~#28)",
+ "section": "교과서 본문 · 섹션 3 (#23~#28)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [23, "You might think “Hey, these are exceptional people.”"],
+  [24, "However, we are all born with the potential for resilience."],
+  [25, "Just like these people, we all can develop the strength to quickly recover from a crisis that could otherwise cause lasting damage to our mental health."],
+  [26, "The good news is that resilience is like a muscle."],
+  [27, "You can build it up through practice, by developing thoughts, behaviors, and habits that allow you to recover from painful or stressful events."],
+  [28, "Here are three basic strategies to build up this “resilience muscle.”"]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "분석지 내용에 비추어 볼 때, 필자가 23번 문장(Hey, these are exceptional people.)을 제시한 의도로 가장 적절한 것은?",
+  "o": [
+   "앞서 언급된 인물들의 비범한 신체적 능력을 찬양하기 위하여",
+   "독자가 가질 법한 흔한 선입견이나 반론을 예상하여 직접 인용 형식으로 제기하기 위하여",
+   "일반인들은 결코 위대한 업적을 달성할 수 없음을 경고하기 위하여",
+   "신체 훈련을 위한 전문 코치의 필요성을 역설하기 위하여",
+   "역경을 극복한 사람들의 유전적 차이점을 과학적으로 규명하기 위하여"
+  ],
+  "a": 2,
+  "e": "#23 구문 분석: 독자가 가질 법한 흔한 반론이나 선입견을 예상하여 직접 인용 형식으로 제시한 문장입니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "회복탄력성은 오직 극소수의 특별한 사람들에게만 주어지는 배타적인 특성이며 일반인은 타고나지 못한다.",
+  "a": "X",
+  "e": "#24, English Summary: resilience is not an exclusive trait of extraordinary individuals but an innate capacity in all of us."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "분석지 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["우리 모두는 회복탄력성에 대한 잠재력을 지닌 채 태어난다.", "T"],
+   ["회복탄력성은 근육과 같아서 지속적인 연습과 생각을 발전시킴으로써 길러질 수 있다.", "T"],
+   ["본문은 회복탄력성 근육을 기르기 위한 다섯 가지 고급 전략을 소개하고 있다.", "F"]
+  ],
+  "e": "#24, #26, #27, #28 28번 문장에서 세 가지 기본적인 전략(three basic strategies)을 소개합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "27번 문장의 it이 가리키는 대상은?",
+  "o": [
+   "resilience",
+   "a crisis",
+   "mental health",
+   "practice",
+   "a stressful event"
+  ],
+  "a": 1,
+  "e": "#26, #27 앞 문장의 resilience(회복탄력성)를 가리킵니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 회복탄력성은 훈련과 건강한 습관을 통해 강화될 수 있는 타고난 역량이다.",
+  "a": "O",
+  "e": "Section 3 English Summary: an innate capacity in all of us; like a muscle, it can be strengthened through practice and healthy habits."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "extraordinary, remarkable",
+   "capability, capacity",
+   "bring about, trigger",
+   "enduring, permanent",
+   "permit, enable"
+  ],
+  "rows": [
+   ["exceptional", 1],
+   ["potential", 2],
+   ["cause", 3],
+   ["lasting", 4],
+   ["allow", 5]
+  ],
+  "e": "분석지 #23, #24, #25, #27 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "ordinary, average",
+   "temporary, fleeting",
+   "physical",
+   "forbid, prohibit",
+   "relaxing, calm"
+  ],
+  "rows": [
+   ["exceptional", 1],
+   ["lasting", 2],
+   ["mental", 3],
+   ["allow", 4],
+   ["stressful", 5]
+  ],
+  "e": "분석지 #23, #25, #27 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #25의 develop이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "기르다, 발달시키다",
+   "(필름을) 현상하다",
+   "(토지를) 개발하다",
+   "(병에) 걸리다"
+  ],
+  "a": 1,
+  "e": "#25 we all can develop the strength에서 develop은 '기르다, 발달시키다(syn. build, cultivate, advance)'의 의미입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #27의 practice가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "(의사·변호사 등의) 개업",
+   "연습, 훈련",
+   "관행, 관습",
+   "실행, 실천하다"
+  ],
+  "a": 2,
+  "e": "#27 build it up through practice에서 practice는 '연습, 훈련(syn. training, exercise, drill)'의 뜻입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #28의 basic과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "fundamental",
+   "essential",
+   "rudimentary"
+  ],
+  "show": "fundamental (또는 essential, rudimentary)",
+  "e": "#28 어휘: basic (syn. fundamental, essential, rudimentary)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #24의 born과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "innate",
+   "native"
+  ],
+  "show": "innate (또는 native)",
+  "e": "#24 어휘: born (syn. innate, native)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The good news is (that / what) resilience is like a muscle.",
+  "o": [
+   "that",
+   "what"
+  ],
+  "a": "that",
+  "e": "#26 구문 분석 ★: 동사 is 뒤에서 완전한 문장 구조를 이끌며 주격 보어 역할을 하는 명사절 접속사 that이 올바릅니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "You can (build it up / build up it) through practice.",
+  "o": [
+   "build it up",
+   "build up it"
+  ],
+  "a": "build it up",
+  "e": "#27 구문 분석 ★: 이어동사(동사+부사)의 목적어가 대명사일 때는 반드시 동사와 부사 사이에 위치해야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "You can build it up through practice, by (develop / developing) thoughts, behaviors, and habits.",
+  "o": [
+   "developing",
+   "develop"
+  ],
+  "a": "developing",
+  "e": "#27 구문 분석: 수단을 나타내는 전치사 by의 목적어로 동명사 developing이 와야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Developing habits that allow you (recover / to recover) from stressful events.",
+  "o": [
+   "to recover",
+   "recover"
+  ],
+  "a": "to recover",
+  "e": "#27 구문 분석 ★: 5형식 동사 allow는 목적격 보어로 to부정사를 취합니다 (allow + O + to-v)."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Here (is / are) three basic strategies to build up this resilience muscle.",
+  "o": [
+   "are",
+   "is"
+  ],
+  "a": "are",
+  "e": "#28 구문 분석: Here 유도부사 구문에서 실제 주어가 복수명사구인 three basic strategies이므로 복수 동사 are가 올바릅니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "We all can develop the strength to quickly recover from a crisis that could (otherwise / likewise) cause lasting damage.",
+  "o": [
+   "otherwise",
+   "likewise"
+  ],
+  "a": "otherwise",
+  "e": "#25 구문 분석 ★: '그렇지 않다면 지속적인 손상을 초래할 수도 있는'이라는 가정적 의미를 나타내므로 otherwise가 적절합니다."
+ },
+ {
+  "n": 18,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 #24의 However에 대한 [연결어 분석] 설명으로 가장 적절한 것은?",
+  "o": [
+   "앞 문장의 특별한 사람들에 대한 의학적 치료법의 한계를 지적한다.",
+   "사례의 인물들이 특별한 사람들이라는 독자의 착각과 우리 모두가 잠재력을 지니고 태어난다는 진실을 정면으로 대조한다.",
+   "근육 훈련이 신체 건강에 미치는 위험성을 경고한다.",
+   "정신 건강 손상의 구체적인 원인과 결과를 규명한다"
+  ],
+  "a": 2,
+  "e": "#24 [연결어 분석]: 앞 문장(독자의 일반적 착각)과 본문장(필자의 핵심 진실)이 정면으로 대조(역접)를 이룸을 나타냅니다."
+ },
+ {
+  "n": 19,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "독자의 편견 제시(특별한 사람들) → 진실 규명(누구나 타고난 잠재력) → 위기 회복력 발달 가능성 → 근육 비유 도입 → 훈련을 통한 강화 방법 설명 → 실천 전략 소개 예고",
+   "근육의 해부학적 구조 분석 → 회복탄력성 포기 선언 → 정신 건강 질환의 확산 경고 → 결론",
+   "세 가지 전략 실행 결과 보고 → 습관 형성 실패 사례 나열 → 특별한 인물들의 유전적 우수성 강조",
+   "스트레스 사건들의 유형 분류 → 위기 대처 불가능성 증명 → 회복탄력성 개념 비판"
+  ],
+  "a": 1,
+  "e": "#23 편견 → #24 보편적 잠재력 → #25 회복력 발전 가능성 → #26 근육 비유 → #27 훈련을 통한 강화 → #28 세 가지 전략 제시 예고 순서입니다."
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "좋은 소식은 회복탄력성이 근육과 같다는 것이다.<br><small>「조건」 The good news is that, is like a muscle 활용 (총 9단어)</small>",
+  "ans": [
+   "The good news is that resilience is like a muscle"
+  ],
+  "show": "The good news is that resilience is like a muscle.",
+  "e": "#26 명사절 보어 접속사 that 및 전치사 like 구문"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오.",
+  "c": "The good news is <u>what</u> resilience is like a muscle. You can <u>build up it</u> through practice. Habits that allow you <u>recover</u> from stressful events can be developed.",
+  "keys": [
+   {
+    "k": "that",
+    "show": "what → that"
+   },
+   {
+    "k": "build it up",
+    "show": "build up it → build it up"
+   },
+   {
+    "k": "to recover",
+    "show": "recover → to recover"
+   }
+  ],
+  "e": "#26 완전한 절을 이끄는 접속사 that, #27 이어동사의 대명사 목적어 위치(build it up), #27 allow의 목적격 보어 to recover"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "kw",
+  "s": "25번 문장에서 otherwise가 함축하고 있는 가정의 의미를 한국어로 서술하시오.",
+  "groups": [
+   [
+    "회복",
+    "회복하는 힘",
+    "힘"
+   ],
+   [
+    "기르지 않는다",
+    "회복하지 않는다",
+    "그렇지 않다"
+   ]
+  ],
+  "show": "우리가 그 위기로부터 신속하게 회복하는 힘을 기르지 않는다면",
+  "e": "#25 구문 분석 ★"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Resilience is not an exclusive trait of extraordinary individuals but an (A) i________ capacity in all of us; like a (B) m________, it can be strengthened through practice.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "innate"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "muscle"
+    ]
+   ]
+  ],
+  "show": "(A) innate (B) muscle",
+  "e": "Section 3 English Summary 및 본문 #24, #26"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
