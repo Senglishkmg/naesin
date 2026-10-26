@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "차별적인 장벽의 파괴와 연구자로서의 공인 정독 확인 문항 (#20~#30)",
+ "section": "교과서 본문 · 섹션 4 (#20~#30)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [20, "Two weeks into the job, Katherine was reassigned to NASA’s elite space research division."],
+  [21, "There, she was the only black female member of the staff."],
+  [22, "Despite her enormous contributions, the important research meetings were held only among white staff members."],
+  [23, "When she asked for permission to attend the meetings, her male colleagues said that “the girls” didn’t usually go."],
+  [24, "Katherine asked, “Is there a law that says I can’t go?”"],
+  [25, "The embarrassed male workers had no choice but to let her in."],
+  [26, "By asking questions no one had ever asked, Katherine ended a discriminatory custom."],
+  [27, "She had faced barriers, but her efforts to overcome them paid off."],
+  [28, "She felt proud and continued her work with courage."],
+  [29, "In 1960, she wrote a research paper with another engineer about how to place a spacecraft into orbit."],
+  [30, "That was the first time a woman in her division received credit as an author of a research report."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 Katherine Johnson에 관한 내용과 일치하지 않는 것은?",
+  "o": [
+   "새 업무를 시작한 지 2주 만에 NASA의 정예 우주 연구 부서로 재배치되었다.",
+   "재배치된 부서에서 유일한 흑인 여성 직원이었다.",
+   "남성 동료들은 관행을 이유로 그녀의 중요 연구 회의 참석을 막으려 했다.",
+   "자신이 회의에 갈 수 없다고 규정한 실제 법률 조항을 확인하고 회의 참석을 포기했다.",
+   "1960년 다른 엔지니어와 함께 우주선을 궤도에 올리는 방법에 관한 연구 논문을 썼다"
+  ],
+  "a": 4,
+  "e": "#24, #25 자신이 갈 수 없다는 법이 있느냐고 당당히 물어보았고, 당황한 남성 직원들은 그녀를 회의에 들여보낼 수밖에 없었습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "Katherine은 1960년에 자신의 부서에서 여성 최초로 연구 보고서의 저자로서 공로를 인정받았다.",
+  "a": "O",
+  "e": "#30 That was the first time a woman in her division received credit as an author of a research report."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["Katherine의 거대한 기여에도 불구하고 중요한 연구 회의는 오직 백인 직원들 사이에서만 열렸다.", "T"],
+   ["남성 직원들은 Katherine이 질문을 던지기 전부터 이미 회의 참석을 적극 권장하고 환영했다.", "F"],
+   ["27번 문장의 them이 가리키는 대상은 '장벽들(barriers)'이다.", "T"]
+  ],
+  "e": "#22, #23, #25, #27 남성 동료들은 여성들은 대개 가지 않는다고 핑계를 대며 막으려 했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Katherine accepted systemic biases and never questioned why she was excluded from meetings.",
+   "Katherine was reassigned to an elite division and asked why she could not attend all-white, all-male research meetings.",
+   "Her male colleagues easily persuaded her to follow traditional customs.",
+   "In 1960, she failed to get her name credited on the research paper regarding spacecraft trajectories."
+  ],
+  "a": 2,
+  "e": "Section 4 English Summary: confronted systemic racial and gender biases by boldly asking why she could not attend the all-white, all-male research meetings."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "transfer, relocate",
+   "immense, tremendous",
+   "authorization, approval",
+   "coworker, associate",
+   "conquer, surmount"
+  ],
+  "rows": [
+   ["reassign", 1],
+   ["enormous", 2],
+   ["permission", 3],
+   ["colleague", 4],
+   ["overcome", 5]
+  ],
+  "e": "분석지 #20, #22, #23, #27 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "male",
+   "tiny, minute",
+   "trivial, unimportant",
+   "prohibition, refusal",
+   "ashamed, humble"
+  ],
+  "rows": [
+   ["female", 1],
+   ["enormous", 2],
+   ["important", 3],
+   ["permission", 4],
+   ["proud", 5]
+  ],
+  "e": "분석지 #21, #22, #23, #28 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #27의 pay off가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "(빚이나 대출금을) 모두 갚다, 청산하다",
+   "결실을 맺다, 성과를 거두다",
+   "(직원을) 해고하다",
+   "뇌물을 주어 매수하다"
+  ],
+  "a": 2,
+  "e": "#27 her efforts to overcome them paid off에서 pay off는 '결실을 맺다, 성과를 거두다(syn. succeed, bear fruit, yield results)'의 뜻입니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #30의 credit이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "외상 거래, 신용 대출",
+   "(대학의) 이수 학점",
+   "공로 인정, 칭찬, 명예",
+   "신용 카드"
+  ],
+  "a": 3,
+  "e": "#30 received credit as an author에서 credit은 '공로 인정, 명예, 칭찬(syn. recognition, praise, acknowledgment)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #26의 discriminatory와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "biased",
+   "prejudicial",
+   "unfair"
+  ],
+  "show": "biased (또는 prejudicial, unfair)",
+  "e": "#26 어휘: discriminatory (syn. biased, prejudicial, unfair)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #28의 courage와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "bravery",
+   "valor",
+   "boldness"
+  ],
+  "show": "bravery (또는 valor, boldness)",
+  "e": "#28 어휘: courage (syn. bravery, valor, boldness)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Two weeks into the job, Katherine (reassigned / was reassigned) to NASA’s elite space research division.",
+  "o": [
+   "was reassigned",
+   "reassigned"
+  ],
+  "a": "was reassigned",
+  "e": "#20 구문 분석: 주어 Katherine이 인사 발령을 받아 재배치된 대상이므로 수동태 was reassigned가 올바릅니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Despite / Although) her enormous contributions, the research meetings were held only among white staff members.",
+  "o": [
+   "Despite",
+   "Although"
+  ],
+  "a": "Despite",
+  "e": "#22 구문 분석: 뒤에 동사가 없는 명사구(her enormous contributions)가 왔으므로 전치사 Despite가 맞습니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The important research meetings (held / were held) only among white staff members.",
+  "o": [
+   "were held",
+   "held"
+  ],
+  "a": "were held",
+  "e": "#22 구문 분석 ★: 회의(meetings)는 개최되는 수동의 대상이므로 수동태 were held가 쓰여야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "When she asked for permission to (attend / attend to) the meetings, colleagues refused.",
+  "o": [
+   "attend",
+   "attend to"
+  ],
+  "a": "attend",
+  "e": "#23 구문 분석 ★: '회의에 참석하다'라는 의미의 attend는 타동사이므로 목적어 앞에 전치사 to를 쓰지 않습니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Is there a law that (says / is said) I can’t go?",
+  "o": [
+   "says",
+   "is said"
+  ],
+  "a": "says",
+  "e": "#24 구문 분석: 선행사인 법(a law)이 능동적으로 규정한다는 의미로 동사 says를 능동태로 씁니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The (embarrassing / embarrassed) male workers had no choice but to let her in.",
+  "o": [
+   "embarrassed",
+   "embarrassing"
+  ],
+  "a": "embarrassed",
+  "e": "#25 구문 분석 ★: 남성 직원들이 질문을 받고 당혹감을 느낀 대상이므로 과거분사 형용사 embarrassed가 수식합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The male workers had no choice but (to let / letting) her in.",
+  "o": [
+   "to let",
+   "letting"
+  ],
+  "a": "to let",
+  "e": "#25 구문 분석 ★★★: '~하지 않을 수 없다'를 나타내는 관용구는 「have no choice but to-v」입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "By asking questions no one (had ever asked / has ever asked), Katherine ended a discriminatory custom.",
+  "o": [
+   "had ever asked",
+   "has ever asked"
+  ],
+  "a": "had ever asked",
+  "e": "#26 구문 분석: Katherine이 관행을 끝내기 전까지 아무도 묻지 않았던 과거 이전의 대과거 사실이므로 had ever asked가 쓰여야 합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "She felt (proud / proudly) and continued her work with courage.",
+  "o": [
+   "proud",
+   "proudly"
+  ],
+  "a": "proud",
+  "e": "#28 구문 분석 ★: 2형식 감각동사 felt의 주격 보어 자리이므로 부사가 아닌 형용사 proud가 와야 합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In 1960, she wrote a research paper with (another / other) engineer.",
+  "o": [
+   "another",
+   "other"
+  ],
+  "a": "another",
+  "e": "#29 구문 분석: 단수 가산명사 engineer 앞에는 another가 와야 합니다."
+ },
+ {
+  "n": 21,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "NASA 정예 부서 재배치 및 유일한 흑인 여성 직원 상황 → 기여에도 불구하고 배제된 연구 회의 현실 → 동료들의 핑계와 법적 근거를 묻는 당당한 질문 → 남성 직원들의 굴복과 차별적 관행 종식 → 연구 지속과 여성 최초 공식 저자 등재",
+   "연구 보고서 공동 저자 등재 → 남성 엔지니어들의 집단 사직 → 회의 참석 법률 개정안 국회 통과 → 2주간의 정직 처분",
+   "우주선 궤도 진입 실패 보고 → 다른 부서로의 강제 전출 → 백인 직원 대상 수학 강의 개설 → 화해",
+   "인종 차별 철폐 소송 제기 → 법원 출두 → NASA 본부 해체 → 개인 연구실 설립"
+  ],
+  "a": 1,
+  "e": "#20, #21 정예 부서 이동 및 고립된 위치 → #22, #23 회의 배제와 남성들의 핑계 → #24, #25 질문을 통한 회의 진입 → #26~#28 관행 종식과 자부심 → #29, #30 1960년 역사적 논문 저자 등재 순서입니다."
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "당황한 남성 직원들은 그녀를 안으로 들여보내는 것 외에는 선택의 여지가 없었다.<br><small>「조건」 The embarrassed male workers, had no choice but to let her in 활용 (총 11단어)</small>",
+  "ans": [
+   "The embarrassed male workers had no choice but to let her in"
+  ],
+  "show": "The embarrassed male workers had no choice but to let her in.",
+  "e": "#25 have no choice but to-v 관용구 및 사역동사 let"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "When she asked for permission to <u>attend to</u> the meetings, her male colleagues refused. The <u>embarrassing</u> male workers had no choice but to let her in. She felt <u>proudly</u> and continued her work.",
+  "keys": [
+   {
+    "k": "attend",
+    "show": "attend to → attend"
+   },
+   {
+    "k": "embarrassed",
+    "show": "embarrassing → embarrassed"
+   },
+   {
+    "k": "proud",
+    "show": "proudly → proud"
+   }
+  ],
+  "e": "#23 타동사 attend, #25 감정을 느낀 주체를 수식하는 과거분사 embarrassed, #28 감각동사 felt의 형용사 보어 proud"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "kw",
+  "s": "28번 문장에서 felt 뒤에 proudly가 아닌 proud를 써야 하는 어법적 이유를 felt의 동사 성격과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "감각동사",
+    "2형식 감각동사",
+    "2형식"
+   ],
+   [
+    "주격 보어",
+    "보어"
+   ],
+   [
+    "형용사"
+   ]
+  ],
+  "show": "felt는 2형식 감각동사이므로 주격 보어로 부사가 아닌 형용사(proud)를 써야 하기 때문이다.",
+  "e": "#28 구문 분석 ★"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Katherine confronted racial and gender biases by boldly asking why she could not attend the all-white meetings. Her (A) p________ broke custom, leading to her historic recognition as the first female co-author of a paper on spacecraft (B) t________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "persistence"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "trajectories"
+    ]
+   ]
+  ],
+  "show": "(A) persistence (B) trajectories",
+  "e": "Section 4 English Summary 및 본문 #26, #29"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "인간 컴퓨터의 승리와 John Glenn의 궤도 비행 정독 확인 문항 (#31~#37)",
+ "section": "교과서 본문 · 섹션 5 (#31~#37)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [31, "Katherine’s remarkable calculations by hand were trusted more than digital computers."],
+  [32, "In early 1962, John Glenn, one of the pioneering American astronauts, was preparing to orbit the Earth for the first time in American history."],
+  [33, "NASA used an electronic computer, first introduced into the space program a year earlier, to calculate the spaceship’s trajectory, but it made many minor errors."],
+  [34, "Glenn, who was concerned about its accuracy, asked Katherine Johnson to double-check the machine’s figures by hand."],
+  [35, "“If she says the numbers are good,” he said, “I’m good to go.”"],
+  [36, "Using only a pencil and a slide rule, Katherine spent a day and a half checking the calculations and finally made sure of them."],
+  [37, "Eventually, Glenn became the first American astronaut to orbit the Earth."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "Katherine의 손 계산은 초기 디지털 컴퓨터보다 더 큰 신뢰를 받았다.",
+   "John Glenn은 1962년 초 미국 역사상 최초로 지구 궤도를 도는 비행을 준비하고 있었다.",
+   "NASA가 우주선의 궤도를 계산하기 위해 1년 전 도입한 전자 컴퓨터는 완벽한 정확성을 자랑했다.",
+   "Glenn은 컴퓨터의 정확성에 대해 우려하여 Katherine에게 수치를 직접 재검증해 달라고 요구했다.",
+   "Katherine은 연필과 계산척만을 사용하여 하루 반 동안 계산을 점검하고 확인했다"
+  ],
+  "a": 3,
+  "e": "#33 전자 컴퓨터는 많은 사소한 오류들(many minor errors)을 일으켰습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "John Glenn은 Katherine이 숫자들이 괜찮다고 말하기 전까지는 비행에 나설 준비가 되지 않았다는 입장을 취했다.",
+  "a": "O",
+  "e": "#35 “If she says the numbers are good,” he said, “I’m good to go.”"
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["NASA는 Glenn의 비행 직전에 최신형 디지털 컴퓨터를 처음으로 도입했다.", "F"],
+   ["Katherine은 연필과 계산척만을 가지고 수계산 점검을 수행했다.", "T"],
+   ["Glenn은 결국 지구 궤도를 돈 최초의 미국인 우주비행사가 되었다.", "T"]
+  ],
+  "e": "#33, #36, #37 전자 컴퓨터는 1년 일찍(a year earlier) 도입되었습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "34번 문장의 the machine’s figures가 가리키는 것으로 가장 적절한 것은?",
+  "o": [
+   "전자 컴퓨터가 계산해 낸 우주선의 궤도 수치들",
+   "우주비행사 선발 시험에서 Glenn이 획득한 체력 점수들",
+   "NASA 현장 센터의 연간 연구 예산 지출 내역",
+   "최신형 로켓 추진체에 장착된 센서들의 무게 측정값"
+  ],
+  "a": 1,
+  "e": "#33, #34 전자 컴퓨터(the machine)가 계산한 우주선의 궤도 수치들을 가리킵니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "English Summary에 따르면, 초기 디지털 컴퓨터의 부정확성 때문에 John Glenn은 Katherine이 직접 손으로 계산을 검증하는 것 없이는 비행 착수를 거부했다.",
+  "a": "O",
+  "e": "Section 5 English Summary: refused to embark on America’s first orbital spaceflight without Katherine Johnson personally verifying the calculations by hand."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "extraordinary, phenomenal",
+   "innovative, groundbreaking",
+   "worried, anxious",
+   "flight path, track",
+   "reexamine, cross-check"
+  ],
+  "rows": [
+   ["remarkable", 1],
+   ["pioneering", 2],
+   ["trajectory", 3],
+   ["concerned", 4],
+   ["double-check", 5]
+  ],
+  "e": "분석지 #31, #32, #33, #34 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "ordinary, unexceptional",
+   "distrust, doubt",
+   "analog",
+   "major, severe",
+   "unconcerned, indifferent"
+  ],
+  "rows": [
+   ["remarkable", 1],
+   ["trust", 2],
+   ["digital", 3],
+   ["minor", 4],
+   ["concerned", 5]
+  ],
+  "e": "분석지 #31, #33, #34 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #34의 figure가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "(사람의) 체형, 몸매",
+   "(역사적으로) 중요한 인물",
+   "수치, 숫자, 자릿수",
+   "도표, 그림"
+  ],
+  "a": 3,
+  "e": "#34 double-check the machine’s figures에서 figures는 '수치, 숫자, 자릿수(syn. number, numeral, digit)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #35의 be good to go가 지닌 숙어적 의미로 가장 적절한 것은?",
+  "o": [
+   "착한 일을 하러 가다",
+   "갈 준비(시작할 준비)가 완전히 다 되다",
+   "좋은 곳으로 여행을 떠나다",
+   "성공적으로 잘 팔려 나가다"
+  ],
+  "a": 2,
+  "e": "#35 be good to go는 '떠날/시작할 모든 준비가 다 되었다(be fully ready to go)'라는 뜻입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #31의 by hand와 바꾸어 쓸 수 있는 분석지상 동의어 부사를 한 단어로 쓰시오.",
+  "ans": [
+   "manually"
+  ],
+  "show": "manually",
+  "e": "#31 구문 분석: by hand = manually (손으로, 수작업으로)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #36의 make sure of와 바꾸어 쓸 수 있는 분석지상 동의어 동사를 한 단어로 쓰시오.",
+  "ans": [
+   "confirm",
+   "verify",
+   "ensure"
+  ],
+  "show": "confirm (또는 verify, ensure)",
+  "e": "#36 어휘: make sure of (syn. confirm, verify, ensure)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Katherine’s remarkable calculations by hand (trusted / were trusted) more than digital computers.",
+  "o": [
+   "were trusted",
+   "trusted"
+  ],
+  "a": "were trusted",
+  "e": "#31 구문 분석: 계산(calculations)은 신뢰를 받는 대상이므로 수동태 were trusted가 올바릅니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "John Glenn was one of the pioneering American (astronaut / astronauts).",
+  "o": [
+   "astronauts",
+   "astronaut"
+  ],
+  "a": "astronauts",
+  "e": "#32 구문 분석: 'one of the + 복수명사' 규칙에 따라 astronauts가 와야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "NASA used an electronic computer, first (introducing / introduced) into the space program a year earlier.",
+  "o": [
+   "introduced",
+   "introducing"
+  ],
+  "a": "introduced",
+  "e": "#33 구문 분석 ★: 전자 컴퓨터가 우주 프로그램에 도입된 수동 관계이므로 과거분사 introduced가 수식합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Glenn, (who / that) was concerned about its accuracy, asked Katherine to double-check the figures.",
+  "o": [
+   "who",
+   "that"
+  ],
+  "a": "who",
+  "e": "#34 구문 분석: 콤마 뒤의 관계대명사 계속적 용법 자리에는 that을 쓸 수 없습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He asked Katherine Johnson (double-check / to double-check) the machine’s figures by hand.",
+  "o": [
+   "to double-check",
+   "double-check"
+  ],
+  "a": "to double-check",
+  "e": "#34 구문 분석 ★: 5형식 동사 ask는 목적격 보어로 to부정사를 취합니다 (ask + O + to-v)."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Using / Used) only a pencil and a slide rule, Katherine spent a day and a half on the work.",
+  "o": [
+   "Using",
+   "Used"
+  ],
+  "a": "Using",
+  "e": "#36 구문 분석: 주어 Katherine이 도구를 능동적으로 사용하며 검토한 것이므로 현재분사 Using이 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Katherine spent a day and a half (checking / to check) the calculations.",
+  "o": [
+   "checking",
+   "to check"
+  ],
+  "a": "checking",
+  "e": "#36 구문 분석 ★: 「spend + 시간 + -ing」(동명사) 구문이므로 checking이 올바릅니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Katherine spent a day and a half checking the calculations and finally (made / making) sure of them.",
+  "o": [
+   "made",
+   "making"
+  ],
+  "a": "made",
+  "e": "#36 구문 분석: 주어 Katherine에 걸리는 과거시제 본동사 spent와 and로 병렬 연결되는 과거형 made 자리입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Glenn became the first American astronaut (to orbit / orbiting) the Earth.",
+  "o": [
+   "to orbit",
+   "orbiting"
+  ],
+  "a": "to orbit",
+  "e": "#37 구문 분석: 'the first + 명사' 뒤에서 수식하는 to부정사 형용사적 한정 수식 자리입니다."
+ },
+ {
+  "n": 21,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 [연결어 분석]에 근거하여 36번 문장의 finally에 대한 설명으로 가장 적절한 것은?",
+  "o": [
+   "컴퓨터 개발이 최종적으로 중단되었음을 선언한다.",
+   "하루 반 동안 끈질기게 점검한 노력 끝에 마침내 계산의 정확성을 완벽히 확인했다는 최종적 결과를 강조한다.",
+   "비행 계획이 기상 악화로 인해 연기되었음을 알린다.",
+   "우주비행사들의 훈련 절차가 성공적으로 끝났음을 나열한다"
+  ],
+  "a": 2,
+  "e": "#36 [연결어 분석]: 점검에 걸린 오랜 노력 끝에 도달한 최종적 결과(마침내 정확성을 입증함)를 강조합니다."
+ },
+ {
+  "n": 22,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "디지털 컴퓨터보다 신뢰받은 수계산 → John Glenn의 역사적 궤도 비행 준비 → 1년 전 도입된 전자 컴퓨터의 잦은 사소한 오차 발생 → Glenn의 Katherine에 대한 수작업 재검증 요청 및 전적인 신뢰 표명 → 도구를 활용한 점검 완수와 마침내 이뤄낸 미국 최초 궤도 비행 성공",
+   "Glenn의 은퇴 선언 → 전자 컴퓨터의 전량 폐기 → Katherine의 NASA 탈퇴 → 궤도 비행 취소",
+   "계산척의 제조 공정 설명 → 연필 가격 폭등 → 수작업 계산 금지령 → Glenn의 단독 비행",
+   "미국 역사상 최초의 인공위성 발사 실패 → 소련과의 기술 격차 분석 → 우주 프로그램 전면 수정"
+  ],
+  "a": 1,
+  "e": "#31 수계산 신뢰 → #32 Glenn의 비행 준비 → #33 컴퓨터의 오류 → #34, #35 Glenn의 재검증 요청 및 신뢰 → #36, #37 점검 완수와 궤도 비행 성공 순서입니다."
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그것의 정확성에 대해 염려했던 Glenn은 Katherine Johnson에게 그 기계의 수치들을 손으로 재확인하도록 요청했다.<br><small>「조건」 who was concerned about its accuracy, asked Katherine Johnson to double-check 활용 (총 17단어)</small>",
+  "ans": [
+   "Glenn who was concerned about its accuracy asked Katherine Johnson to doublecheck the machines figures by hand",
+   "Glenn who was concerned about its accuracy asked Katherine Johnson to double-check the machine's figures by hand"
+  ],
+  "show": "Glenn, who was concerned about its accuracy, asked Katherine Johnson to double-check the machine’s figures by hand.",
+  "e": "#34 계속적 용법 관계사절 및 ask + O + to-v 5형식 구문"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "NASA used an electronic computer, first <u>introducing</u> into the space program a year earlier. Glenn asked Katherine Johnson <u>double-check</u> the machine's figures. Katherine spent a day and a half <u>to check</u> the calculations.",
+  "keys": [
+   {
+    "k": "introduced",
+    "show": "introducing → introduced"
+   },
+   {
+    "k": "to double-check",
+    "show": "double-check → to double-check"
+   },
+   {
+    "k": "checking",
+    "show": "to check → checking"
+   }
+  ],
+  "e": "#33 수동 의미 과거분사 introduced, #34 ask의 목적격 보어 to double-check, #36 spend + 시간 + -ing(checking)"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "kw",
+  "s": "36번 문장의 spent a day and a half 뒤에서 to check가 아닌 checking을 써야 하는 어법적 이유를 쓰시오.",
+  "groups": [
+   [
+    "spend",
+    "spend + 시간 + -ing",
+    "spend 시간 -ing"
+   ],
+   [
+    "동명사",
+    "-ing",
+    "관용구"
+   ]
+  ],
+  "show": "「spend + 시간 + -ing」(동명사) 관용 구문이기 때문이다.",
+  "e": "#36 구문 분석 ★"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Astronaut John Glenn refused to embark on America’s first orbital spaceflight without Katherine Johnson personally (A) v________ the calculations by hand. Relying on simple manual tools, Katherine ensured mission (B) a________, leading to Glenn’s historic orbital success.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "verifying"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "accuracy"
+    ]
+   ]
+  ],
+  "show": "(A) verifying (B) accuracy",
+  "e": "Section 5 English Summary 및 본문 #34"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

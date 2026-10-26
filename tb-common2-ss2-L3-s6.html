@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "달 착륙, 화성 탐사, 그리고 불멸의 유산 정독 확인 문항 (#38~#43)",
+ "section": "교과서 본문 · 섹션 6 (#38~#43)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [38, "Katherine was also part of the team that performed calculations for Apollo 11, which sent the first three men to the Moon in 1969, and even the plan to put people on Mars, which is still being worked on today."],
+  [39, "Katherine retired in 1986 after thirty-three years at NASA."],
+  [40, "After that, she dedicated the rest of her life to championing access to *STEM education for Black girls."],
+  [41, "For her contributions, President Barack Obama awarded her the Presidential Medal of Freedom in 2015 and said, “Katherine G. Johnson refused to be limited by society’s expectations of her gender and race while expanding the boundaries of humanity’s reach.”"],
+  [42, "In 2017, NASA dedicated a building in her honor in Virginia and named it the Katherine G. Johnson Computational Research Facility."],
+  [43, "She died on February 24, 2020, at the age of 101, but her pioneering legacy will never be forgotten."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "Katherine은 1969년 최초의 세 사람을 달로 보낸 아폴로 11호 계산 팀의 일원이었다.",
+   "Katherine은 NASA에서 33년간 근무한 후 1986년에 은퇴했다.",
+   "은퇴 후 Katherine은 흑인 여학생들의 STEM 교육 접근성을 옹호하는 데 여생을 바쳤다.",
+   "2015년에 Barack Obama 대통령으로부터 대통령 자유 훈장을 받았다.",
+   "2017년 버지니아에 있는 NASA 연구 시설 건물이 헌정되자마자 101세로 영면했다"
+  ],
+  "a": 5,
+  "e": "#42, #43 건물이 헌정된 해는 2017년이며, 101세의 나이로 영면한 시점은 2020년 2월 24일입니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "Katherine이 참여했던 사람을 화성에 착륙시키기 위한 계획은 오늘날에도 여전히 연구·작업이 진행되고 있다.",
+  "a": "O",
+  "e": "#38 the plan to put people on Mars, which is still being worked on today."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["Obama 대통령은 Katherine이 성별과 인종에 대한 사회적 기대에 의해 제한받기를 거부했다고 말했다.", "T"],
+   ["NASA는 2017년 버지니아에 건물을 지어 Katherine의 이름을 붙였다.", "T"],
+   ["Katherine의 개척자적인 유산은 그녀의 사망과 함께 곧 대중의 기억 속에서 사라졌다.", "F"]
+  ],
+  "e": "#41, #42, #43 43번 문장에서 her pioneering legacy will never be forgotten(그녀의 유산은 결코 잊히지 않을 것이다)이라고 명시되어 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Katherine retired in 1969 immediately after Apollo 11 returned from the Moon.",
+   "She dedicated herself to promoting STEM education for minority girls after retiring in 1986.",
+   "President Obama refused to award her the Presidential Medal of Freedom.",
+   "NASA removed her name from the research facility shortly before she turned 101."
+  ],
+  "a": 2,
+  "e": "Section 6 English Summary: Katherine retired in 1986 and dedicated herself to advancing STEM education for minority girls."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "execute, carry out",
+   "devote, commit",
+   "advocate, support",
+   "grant, bestow",
+   "border, frontier"
+  ],
+  "rows": [
+   ["perform", 1],
+   ["dedicate", 2],
+   ["champion", 3],
+   ["award", 4],
+   ["boundary", 5]
+  ],
+  "e": "분석지 #38, #40, #41 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "join, enlist",
+   "oppose",
+   "restriction",
+   "accept, consent",
+   "contract, shrink"
+  ],
+  "rows": [
+   ["retire", 1],
+   ["champion", 2],
+   ["access", 3],
+   ["refuse", 4],
+   ["expand", 5]
+  ],
+  "e": "분석지 #39, #40, #41 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #40의 champion이 본문에서 쓰인 의미와 품사로 옳은 것은?",
+  "o": [
+   "명사 - 챔피언, 우승자",
+   "동사 - 옹호하다, 앞장서 지지하다",
+   "형용사 - 최고의, 일류의",
+   "동사 - 경기에서 승리하다"
+  ],
+  "a": 2,
+  "e": "#40 to championing access에서 champion은 '옹호하다, 앞장서 지지하다(syn. advocate, support, uphold)'라는 의미의 동사로 쓰였습니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #41의 reach가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "도달 범위, 미치는 영역",
+   "팔을 뻗치다",
+   "목적지에 도착하다",
+   "연락이 닿다"
+  ],
+  "a": 1,
+  "e": "#41 boundaries of humanity’s reach에서 reach는 '도달 범위, 미치는 영역(syn. range, scope, grasp)'이라는 명사입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #43의 legacy와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "heritage",
+   "bequest",
+   "inheritance"
+  ],
+  "show": "heritage (또는 bequest, inheritance)",
+  "e": "#43 어휘: legacy (syn. heritage, bequest, inheritance)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #42의 in one's honor와 바꾸어 쓸 수 있는 분석지상 동의어 숙어 표현을 세 단어로 쓰시오.",
+  "ans": [
+   "in tribute to"
+  ],
+  "show": "in tribute to",
+  "e": "#42 어휘: in one's honor (syn. in tribute to, to commemorate)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Apollo 11, (which / that) sent the first three men to the Moon in 1969.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "#38 구문 분석: 콤마 뒤에서 Apollo 11을 부연 설명하는 계속적 용법의 관계대명사이므로 that은 쓸 수 없고 which를 써야 합니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The plan to put people on Mars, which (is still being worked / is still working) on today.",
+  "o": [
+   "is still being worked",
+   "is still working"
+  ],
+  "a": "is still being worked",
+  "e": "#38 구문 분석 ★: 화성 탐사 계획은 연구·작업이 진행되는 대상이므로 현재진행 수동태인 is still being worked on이 맞습니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Katherine retired in 1986 after thirty-three years (at / in) NASA.",
+  "o": [
+   "at",
+   "in"
+  ],
+  "a": "at",
+  "e": "#39 본문: thirty-three years at NASA"
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "She dedicated the rest of her life to (champion / championing) access to STEM education.",
+  "o": [
+   "championing",
+   "champion"
+  ],
+  "a": "championing",
+  "e": "#40 구문 분석 ★★★: dedicate A to B 구문에서 to는 전치사이므로 뒤에 동명사 championing이 와야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Katherine refused (limiting / to be limited) by society’s expectations of her gender and race.",
+  "o": [
+   "to be limited",
+   "limiting"
+  ],
+  "a": "to be limited",
+  "e": "#41 구문 분석 ★: refuse는 목적어로 to부정사를 취하며, 편견에 의해 제한받는 수동의 의미이므로 to be limited가 올바릅니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "She refused to be limited while (expanding / expanded) the boundaries of humanity’s reach.",
+  "o": [
+   "expanding",
+   "expanded"
+  ],
+  "a": "expanding",
+  "e": "#41 구문 분석: 접속사 while 뒤에서 Katherine이 인류의 도달 범위를 능동적으로 확장하면서 나아갔으므로 능동 분사 expanding이 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "NASA dedicated a building and (named / naming) it the Computational Research Facility.",
+  "o": [
+   "named",
+   "naming"
+  ],
+  "a": "named",
+  "e": "#42 구문 분석: 주어 NASA 뒤에 과거동사 dedicated와 and로 병렬 연결되는 과거형 동사 named 자리입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Her pioneering legacy (will never forget / will never be forgotten).",
+  "o": [
+   "will never be forgotten",
+   "will never forget"
+  ],
+  "a": "will never be forgotten",
+  "e": "#43 구문 분석 ★: 주어인 '그녀의 유산(legacy)'은 사람들에 의해 기억되거나 잊히는 수동의 대상이므로 will never be forgotten이 맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 [연결어 분석]에 근거하여 38번 문장의 also에 대한 설명으로 가장 적절한 것은?",
+  "o": [
+   "NASA 은퇴 후 맞이한 삶의 변화를 앞선 직장 생활과 대조한다.",
+   "John Glenn 비행 검증 업적 위에 아폴로 11호 및 화성 탐사 계획 참여라는 후속 업적을 대등하게 추가한다.",
+   "달 착륙 프로젝트가 화성 계획보다 더 중요한 국가적 과제였음을 강조한다.",
+   "아폴로 11호 발사 과정에서 발생한 수학적 계산 오차를 규명한다"
+  ],
+  "a": 2,
+  "e": "#38 [연결어 분석]: 앞선 지구 궤도 비행 검증 업적 위에 아폴로 11호와 화성 탐사 계획 참여라는 추가적인 성과를 덧붙입니다."
+ },
+ {
+  "n": 20,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "아폴로 11호와 화성 탐사 계획 기여 → 33년 만의 NASA 은퇴 → 흑인 여학생 STEM 교육을 위한 헌신 → 2015년 대통령 자유 훈장 수여와 업적 찬사 → 2017년 연구 시설 건물 헌정 → 101세 영면과 영원한 유산",
+   "101세 영면 발표 → 대통령 자유 훈장 취소 → 화성 탐사 계획 중단 → 은퇴식 거행",
+   "아폴로 11호 발사 실패 보고 → NASA 시설 명칭 변경 → STEM 교육 축소 → 결론",
+   "버지니아 연구소 설립 → 1986년 NASA 입사 → 인종 분리 교육 재도입 → 대통령 표창"
+  ],
+  "a": 1,
+  "e": "#38 아폴로 및 화성 계획 기여 → #39 1986년 은퇴 → #40 STEM 교육 헌신 → #41 2015년 훈장 수여 → #42 2017년 건물 헌정 → #43 2020년 영면과 불멸의 유산 순서입니다."
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그녀는 흑인 여학생들을 위한 STEM 교육으로의 접근을 옹호하는 데 그녀 생애의 나머지를 바쳤다.<br><small>「조건」 dedicated the rest of her life to, championing access to 활용 (총 16단어)</small>",
+  "ans": [
+   "She dedicated the rest of her life to championing access to STEM education for Black girls"
+  ],
+  "show": "She dedicated the rest of her life to championing access to STEM education for Black girls.",
+  "e": "#40 dedicate A to B(전치사) + 동명사 구문"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "Apollo 11, <u>that</u> sent the first three men to the Moon in 1969. She dedicated the rest of her life to <u>champion</u> access to education. Katherine refused to <u>limit</u> by society’s expectations of her gender and race.",
+  "keys": [
+   {
+    "k": "which",
+    "show": "that → which"
+   },
+   {
+    "k": "championing",
+    "show": "champion → championing"
+   },
+   {
+    "k": "be limited",
+    "show": "limit → be limited"
+   }
+  ],
+  "e": "#38 계속적 용법 관계대명사 which, #40 전치사 to 뒤의 동명사 championing, #41 수동태 to부정사 to be limited"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "kw",
+  "s": "40번 문장의 to 뒤에 champion이 아닌 동명사 championing을 써야 하는 어법적 이유를 to의 품사와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "전치사",
+    "전치사 to",
+    "to"
+   ],
+   [
+    "동명사",
+    "-ing"
+   ]
+  ],
+  "show": "dedicate A to B 구문에서 to는 to부정사의 to가 아니라 전치사이므로 뒤에 동명사 championing이 와야 하기 때문이다.",
+  "e": "#40 구문 분석 ★★★"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Katherine retired in 1986 and dedicated herself to advancing STEM education for minority girls. Honored with a NASA facility in her name, she passed away at 101, leaving behind an indelible trail of (A) i________ and a pioneering (B) l________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "inspiration"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "legacy"
+    ]
+   ]
+  ],
+  "show": "(A) inspiration (B) legacy",
+  "e": "Section 6 English Summary 및 본문 #43"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
