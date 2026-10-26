@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "인종 차별의 장벽과 뛰어난 학업 성취 정독 확인 문항 (#6~#14)",
+ "section": "교과서 본문 · 섹션 2 (#6~#14)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [6, "But Katherine’s hometown had a segregated education system, and black students could not enter high school."],
+  [7, "So her father moved the family 200 kilometers away so that she could enter high school."],
+  [8, "After graduating from high school in 1932, she was admitted to a black college at the age of fifteen."],
+  [9, "By her junior year, she had taken all the math courses the college could offer."],
+  [10, "Her mentor gladly offered special classes just for her, but he was not happy when he had to tell his outstanding student about her career opportunities."],
+  [11, "“You would make a good research mathematician,” he told his seventeen-year-old student, “and I’m going to prepare you for this career.”"],
+  [12, "Katherine asked, “Where will I find a job?”"],
+  [13, "“That,” he replied, “will be your problem.”"],
+  [14, "The path ahead was unclear and full of obstacles, but Katherine knew she had the strength to make her own way."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "Katherine의 고향에는 인종 분리 교육 제도가 있어 흑인 학생이 고등학교에 진학할 수 없었다.",
+   "아버지는 Katherine이 고등학교에 들어갈 수 있도록 가족을 200킬로미터 떨어진 곳으로 이주시켰다.",
+   "Katherine은 1932년에 고등학교를 졸업한 뒤 15세의 나이에 흑인 대학에 입학 허가를 받았다.",
+   "대학 3학년 무렵에 대학이 개설한 모든 수학 과목의 이수를 끝마쳤다.",
+   "멘토는 당시 사회적 차별에도 불구하고 Katherine에게 취업할 수 있는 좋은 직장이 이미 마련되어 있다고 안심시켰다"
+  ],
+  "a": 5,
+  "e": "#10, #13 멘토는 진로 기회에 대해 말해야 했을 때 기뻐하지 않았으며, 직장을 구하는 것은 그녀 자신의 문제가 될 것이라고 답했습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "Katherine의 멘토는 오직 그녀만을 위한 특별 수업을 개설해 주는 것을 몹시 꺼리고 주저했다.",
+  "a": "X",
+  "e": "#10 Her mentor gladly offered special classes just for her라고 명시되어 있어 기꺼이(gladly) 제공했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["Katherine은 17세였을 때 멘토로부터 훌륭한 연구 수학자가 될 자질이 있다는 말을 들었다.", "T"],
+   ["13번 문장의 지시대명사 That이 가리키는 것은 '직업을 찾는 일'이다.", "T"],
+   ["Katherine은 앞에 놓인 길이 불명확하고 장애물로 가득 차 있어서 결국 자신의 길을 개척하는 것을 포기했다.", "F"]
+  ],
+  "e": "#11, #13, #14 14번 문장에서 Katherine은 자신의 길을 개척할 힘이 자신에게 있음을 알고 있었습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Katherine could attend high school locally without moving to another town.",
+   "Her father refused to relocate the family because of the distant high school.",
+   "Entering a black college at fifteen, she mastered all available math courses under a dedicated mentor.",
+   "Systemic racism had no negative effect on Katherine's future career opportunities."
+  ],
+  "a": 3,
+  "e": "Section 2 English Summary: Entering a black college at fifteen, she quickly mastered all available math courses under a dedicated mentor."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "separate, isolate",
+   "relocate, shift",
+   "willingly, cheerfully",
+   "exceptional, prominent",
+   "barrier, hurdle"
+  ],
+  "rows": [
+   ["segregate", 1],
+   ["move", 2],
+   ["gladly", 3],
+   ["outstanding", 4],
+   ["obstacle", 5]
+  ],
+  "e": "분석지 #6, #7, #10, #14 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "integrate, desegregate",
+   "leave, exit",
+   "reluctantly, unwillingly",
+   "mediocre, unimpressive",
+   "clear, distinct"
+  ],
+  "rows": [
+   ["segregate", 1],
+   ["enter", 2],
+   ["gladly", 3],
+   ["outstanding", 4],
+   ["unclear", 5]
+  ],
+  "e": "분석지 #6, #10, #14 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #11의 make가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "손이나 도구로 물건을 제작하다",
+   "~가 되다 (소질이나 자질이 있다)",
+   "억지로 ~하게 시키다",
+   "돈이나 재산을 벌다"
+  ],
+  "a": 2,
+  "e": "#11 You would make a good research mathematician에서 make는 '만들다'가 아니라 '~가 되다(become), ~로서의 소질이 있다'는 뜻의 2형식 동사입니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #8의 admit에 대한 설명으로 옳은 것은?",
+  "o": [
+   "동의어로 deny, reject가 제시되어 있다.",
+   "본문에서 수동태 be admitted to 형태로 쓰여 '입학을 허가받다'를 뜻한다.",
+   "항상 타동사로만 쓰이며 뒤에 to를 쓸 수 없다.",
+   "본문에서는 범죄를 자백하다라는 의미로 쓰였다"
+  ],
+  "a": 2,
+  "e": "#8 admit (v.) (수동태 be admitted to) 입학을 허가받다"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #10의 career와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "profession",
+   "occupation",
+   "vocation"
+  ],
+  "show": "profession (또는 occupation, vocation)",
+  "e": "#10 어휘: career (syn. profession, occupation, vocation)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #14의 obstacle과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "barrier",
+   "hurdle",
+   "impediment"
+  ],
+  "show": "barrier (또는 hurdle, impediment)",
+  "e": "#14 어휘: obstacle (syn. barrier, hurdle, impediment)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Black students could not (enter / enter into) high school.",
+  "o": [
+   "enter",
+   "enter into"
+  ],
+  "a": "enter",
+  "e": "#6 구문 분석 ★: enter는 장소나 학교에 들어갈 때 전치사 into를 쓰지 않는 완전타동사이므로 목적어 high school이 바로 옵니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Her father moved the family 200 kilometers away (so that / in order) she could enter high school.",
+  "o": [
+   "so that",
+   "in order"
+  ],
+  "a": "so that",
+  "e": "#7 구문 분석 ★: 뒤에 주어(she)와 조동사(could)를 갖춘 절이 이어지므로 목적을 나타내는 접속사 so that이 올바릅니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "After (graduating / graduating from) high school in 1932, she went to college.",
+  "o": [
+   "graduating from",
+   "graduating"
+  ],
+  "a": "graduating from",
+  "e": "#8 구문 분석: graduate는 출신 학교 앞에 반드시 전치사 from을 수반하는 자동사입니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "She (admitted / was admitted) to a black college at the age of fifteen.",
+  "o": [
+   "was admitted",
+   "admitted"
+  ],
+  "a": "was admitted",
+  "e": "#8 구문 분석 ★: 주어 Katherine이 대학에 입학 승인을 받은 수동의 대상이므로 수동태 was admitted to가 알맞습니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "By her junior year, she (took / had taken) all the math courses the college could offer.",
+  "o": [
+   "had taken",
+   "took"
+  ],
+  "a": "had taken",
+  "e": "#9 구문 분석 ★: By her junior year라는 과거 기준 시점 이전에 이미 과목 이수를 완료했음을 나타내므로 대과거 과거완료 had taken이 쓰여야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He told his (seventeen-year-old / seventeen-years-old) student about her future.",
+  "o": [
+   "seventeen-year-old",
+   "seventeen-years-old"
+  ],
+  "a": "seventeen-year-old",
+  "e": "#11 구문 분석: 하이픈으로 연결되어 명사 student를 꾸미는 복합형용사 안의 단위명사는 단수형 year를 씁니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Katherine knew she had the strength to (make / making) her own way.",
+  "o": [
+   "to make",
+   "making"
+  ],
+  "a": "to make",
+  "e": "#14 구문 분석: 명사 strength를 뒤에서 수식하는 to부정사 형용사적 용법 자리입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "9번 문장의 courses the college could offer 사이에 생략된 것으로 가장 적절한 것은?",
+  "o": [
+   "관계부사 where",
+   "목적격 관계대명사 that 또는 which",
+   "주격 관계대명사 who",
+   "동격의 접속사 that"
+  ],
+  "a": 2,
+  "e": "#9 구문 분석: offer의 목적어가 생략된 관계사절이 선행사(courses)를 수식하므로 목적격 관계대명사 that 또는 which가 생략되었습니다."
+ },
+ {
+  "n": 19,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "고향의 인종 분리 교육 체제와 이사 → 조기 대학 입학 및 모든 수학 과정 이수 → 멘토의 특별 수업과 진로에 관한 무거운 진실 → 연구 수학자로서의 자질 인정과 일자리 고민 → 불확실한 앞날 속 자립의 의지",
+   "연구 수학자 채용 공고 확인 → 고향으로의 귀환 → 인종 분리 학교 설립 → 수학 과목 수강 포기",
+   "멘토의 장학금 수여 거절 → 200킬로미터 달리기 대회 참가 → 대학 입학 허가 취소 → 자원입대",
+   "15세 나이에 교수 임용 → 고등학교 수학 교재 집필 → 아버지의 반대 → 독립 선언"
+  ],
+  "a": 1,
+  "e": "#6, #7 고향의 분리 체제와 이사 → #8, #9 15세 대학 입학 및 전 과목 이수 → #10, #11 멘토의 지도와 자질 인정 → #12, #13 직업에 관한 현실적 문답 → #14 개척 의지로 이어지는 전개입니다."
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그래서 그녀의 아버지는 그녀가 고등학교에 들어갈 수 있도록 그 가족을 200킬로미터 떨어진 곳으로 이주시켰다.<br><small>「조건」 moved the family 200 kilometers away, so that she could enter 활용 (총 14단어)</small>",
+  "ans": [
+   "So her father moved the family 200 kilometers away so that she could enter high school"
+  ],
+  "show": "So her father moved the family 200 kilometers away so that she could enter high school.",
+  "e": "#7 목적을 나타내는 접속사 so that + S + could 구문"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "Black students could not <u>enter into</u> high school. She was <u>admitting</u> to a black college at the age of fifteen. By her junior year, she <u>took</u> all the math courses the college could offer.",
+  "keys": [
+   {
+    "k": "enter",
+    "show": "enter into → enter"
+   },
+   {
+    "k": "admitted",
+    "show": "admitting → admitted"
+   },
+   {
+    "k": "had taken",
+    "show": "took → had taken"
+   }
+  ],
+  "e": "#6 타동사 enter, #8 수동태 was admitted to, #9 과거 기준 시점 이전의 완료 had taken"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "kw",
+  "s": "9번 문장에서 took 대신 과거완료 had taken을 쓴 어법적 이유를 시점과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "대학 3학년",
+    "By her junior year",
+    "과거 기준 시점"
+   ],
+   [
+    "이전",
+    "대과거",
+    "먼저"
+   ],
+   [
+    "완료",
+    "이수"
+   ]
+  ],
+  "show": "대학 3학년 무렵(By her junior year)이라는 과거 기준 시점 이전에 이미 모든 수학 과목 이수를 끝마쳤음을 나타내기 때문이다.",
+  "e": "#9 구문 분석 ★"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Due to (A) s________ schooling in her hometown, Katherine could not attend high school locally. Though a dedicated mentor prepared her, systemic racism posed significant challenges to her future (B) c________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "segregated"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "career"
+    ]
+   ]
+  ],
+  "show": "(A) segregated (B) career",
+  "e": "Section 2 English Summary 및 본문 #6, #10"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

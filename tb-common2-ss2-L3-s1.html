@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "어린 시절과 탁월한 수학적 재능 정독 확인 문항 (#2~#5)",
+ "section": "교과서 본문 · 섹션 1 (#2~#5)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [2, "Katherine Johnson was born on August 26, 1918, in West Virginia, in the U.S., and was the youngest of four children in a black family."],
+  [3, "Katherine was a math prodigy from early childhood."],
+  [4, "Reflecting on her youth, Katherine once said, “I counted everything—the steps to the road, the steps up to church, the number of dishes, spoons, and forks I washed.”"],
+  [5, "She excitedly added, “I couldn’t wait to get to high school to take algebra and geometry.”"]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "Katherine Johnson에 관한 본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "1918년 8월 26일 미국 웨스트버지니아의 흑인 가정에서 태어났다.",
+   "네 명의 자녀 중 첫째이자 장녀로 태어났다.",
+   "어린 시절부터 비범한 수학 신동이었다.",
+   "도로로 가는 계단, 교회로 올라가는 계단, 설거지한 식기류의 수를 셌다.",
+   "고등학교에 진학하여 대수학과 기하학을 배우기를 몹시 고대했다"
+  ],
+  "a": 2,
+  "e": "#2 네 명의 자녀 중 막내(the youngest of four children)로 태어났습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "Katherine Johnson은 어린 시절에 집안일을 도우면서 자신이 씻은 접시, 숟가락, 포크의 개수를 세곤 했다.",
+  "a": "O",
+  "e": "#4 the number of dishes, spoons, and forks I washed라고 직접 언급했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["Katherine은 어린 시절부터 주변 사물들의 수를 끊임없이 세었다.", "T"],
+   ["Katherine은 고등학교에 진학하여 대수학과 기하학을 배우는 것에 큰 두려움을 느꼈다.", "F"],
+   ["Katherine은 흑인 가정에서 넷째 아이로 태어났다.", "T"]
+  ],
+  "e": "#2, #4, #5 고등학교에 진학해 수학을 배우기를 기다릴 수 없을 정도로 몹시 고대(couldn't wait to)했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Katherine was born in 1918 as the eldest child of an African American family.",
+   "Katherine was a math prodigy from early childhood and counted everyday items around her.",
+   "Katherine hesitated to study advanced mathematics in high school.",
+   "Katherine avoided taking algebra and geometry in high school."
+  ],
+  "a": 2,
+  "e": "Section 1 English Summary: a math prodigy from early childhood, constantly counted everyday items around her."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "genius, mastermind",
+   "contemplate, ponder",
+   "calculate, enumerate",
+   "enthusiastically, eagerly",
+   "append, supplement"
+  ],
+  "rows": [
+   ["prodigy", 1],
+   ["reflect", 2],
+   ["count", 3],
+   ["excitedly", 4],
+   ["add", 5]
+  ],
+  "e": "분석지 #3, #4, #5 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "oldest, eldest",
+   "adult, parent",
+   "late, overdue",
+   "dirty, soil",
+   "calmly, indifferently"
+  ],
+  "rows": [
+   ["young", 1],
+   ["child", 2],
+   ["early", 3],
+   ["wash", 4],
+   ["excitedly", 5]
+  ],
+  "e": "분석지 #2, #3, #4, #5 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #4의 reflect on이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "빛이나 열을 반사하다",
+   "거울에 비추어 보다",
+   "되돌아보다, 회상하다",
+   "그대로 반영하여 나타내다"
+  ],
+  "a": 3,
+  "e": "#4 Reflecting on her youth에서 reflect on은 '되돌아보다, 회상하다, 깊이 생각하다(syn. contemplate, ponder, recollect)'의 뜻입니다."
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #4의 count가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "세다, 계산하다",
+   "중요하다, 가치가 있다",
+   "간주하다, 여기다",
+   "신뢰하다, 믿다"
+  ],
+  "a": 1,
+  "e": "#4 I counted everything에서 count는 '세다, 계산하다(syn. calculate, enumerate)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #3의 childhood와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "youth",
+   "infancy"
+  ],
+  "show": "youth (또는 infancy)",
+  "e": "#3 어휘: childhood (syn. youth, infancy)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #2의 bear의 동의어로 '참다, 견디다'를 뜻하는 단어를 한 단어로 쓰시오.",
+  "ans": [
+   "endure",
+   "tolerate"
+  ],
+  "show": "endure (또는 tolerate)",
+  "e": "#2 어휘: bear (syn. endure, tolerate)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Katherine Johnson was born on August 26, 1918, and (was / were) the youngest of four children.",
+  "o": [
+   "was",
+   "were"
+  ],
+  "a": "was",
+  "e": "#2 구문 분석 ★: 단수 주어 Katherine Johnson 뒤에 was born과 and로 병렬 연결되는 단수 과거 동사 was가 올바릅니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Katherine was the youngest of four (child / children) in a black family.",
+  "o": [
+   "children",
+   "child"
+  ],
+  "a": "children",
+  "e": "#2 구문 분석: 'the youngest of + 복수명사' 구조이므로 child의 복수형인 children이 와야 합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(Reflecting / Reflected) on her youth, Katherine once said that she counted everything.",
+  "o": [
+   "Reflecting",
+   "Reflected"
+  ],
+  "a": "Reflecting",
+  "e": "#4 구문 분석 ★: 주절의 주어 Katherine이 능동적으로 과거를 회상하는 주체이므로 현재분사 Reflecting이 올바릅니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "I counted the number of dishes, spoons, and forks I (washed / was washed).",
+  "o": [
+   "washed",
+   "was washed"
+  ],
+  "a": "washed",
+  "e": "#4 구문 분석: 주어 I가 식기류를 능동적으로 씻은 것이므로 능동태 과거동사 washed가 와야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "She (excited / excitedly) added that she loved math.",
+  "o": [
+   "excitedly",
+   "excited"
+  ],
+  "a": "excitedly",
+  "e": "#5 어휘 및 구문: 일반동사 added를 수식하는 부사 자리이므로 excitedly가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "I couldn’t wait to get to high school (to take / taking) algebra and geometry.",
+  "o": [
+   "to take",
+   "taking"
+  ],
+  "a": "to take",
+  "e": "#5 구문 분석: 대수학과 기하학을 '듣기(수강하기) 위하여'라는 목적을 나타내는 to부정사 부사적 용법 자리입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "mc",
+  "s": "4번 문장의 forks I washed 사이에 생략된 것으로 가장 적절한 것은?",
+  "o": [
+   "관계부사 where",
+   "목적격 관계대명사 which 또는 that",
+   "주격 관계대명사 who",
+   "동격의 접속사 that"
+  ],
+  "a": 2,
+  "e": "#4 구문 분석: washed의 목적어가 빠진 관계사절이 선행사(forks)를 수식하므로 목적격 관계대명사 which 또는 that이 생략되어 있습니다."
+ },
+ {
+  "n": 18,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "출생 및 가족 배경 소개 → 수학 신동으로서의 면모 제시 → 사물을 세었던 어린 시절 회상 인용 → 고등학교 수학 수강에 대한 기대와 열정 표명",
+   "고등학교 입학 실패 경험 → 수학 신동으로 인정받은 계기 → 식기류 설거지의 고단함 토로 → 출생지 소개",
+   "대수학과 기하학의 개념 설명 → 어린 시절 부모님의 교육관 소개 → 웨스트버지니아의 교육 제도 비판",
+   "수학 영재 교육 프로그램 소개 → Katherine의 지원 동기 → 어린 시절 가정 형편 서술"
+  ],
+  "a": 1,
+  "e": "#2 출생 및 가족 배경 → #3 수학 신동 면모 → #4 계단과 식기를 세었던 회상 인용 → #5 고등학교 수학 수업에 대한 기대로 이어지는 논리적 전개입니다."
+ },
+ {
+  "n": 19,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "나는 대수학과 기하학을 듣기 위해 고등학교에 도달하기를 몹시 고대했다.<br><small>「조건」 couldn’t wait to get to, to take algebra and geometry 활용 (총 14단어)</small>",
+  "ans": [
+   "I couldnt wait to get to high school to take algebra and geometry",
+   "I couldn't wait to get to high school to take algebra and geometry"
+  ],
+  "show": "I couldn’t wait to get to high school to take algebra and geometry.",
+  "e": "#5 couldn't wait to-v 관용표현 및 to부정사의 부사적 용법(목적)"
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "Katherine Johnson was born in West Virginia, and <u>were</u> the youngest of four children. <u>Reflected</u> on her youth, Katherine said that she counted everything around her.",
+  "keys": [
+   {
+    "k": "was",
+    "show": "were → was"
+   },
+   {
+    "k": "Reflecting",
+    "show": "Reflected → Reflecting"
+   }
+  ],
+  "e": "#2 단수 주어 Katherine Johnson에 호응하는 단수 동사 was, #4 주어(Katherine)가 능동적으로 회상하는 현재분사구문 Reflecting"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "kw",
+  "s": "4번 문장의 문두에서 Reflected가 아닌 Reflecting을 써야 하는 어법적 이유를 주절의 주어와의 능동/수동 관계와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "주절의 주어",
+    "Katherine",
+    "주어"
+   ],
+   [
+    "능동",
+    "능동 관계",
+    "능동적"
+   ],
+   [
+    "회상",
+    "돌아보다"
+   ]
+  ],
+  "show": "주절의 주어인 Katherine이 자신의 어린 시절을 능동적으로 되돌아보는(회상하는) 주체이기 때문이다.",
+  "e": "#4 구문 분석 ★"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Katherine Johnson was a math (A) p________ from early childhood. She constantly (B) c________ everyday items around her.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "prodigy"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "counted"
+    ]
+   ]
+  ],
+  "show": "(A) prodigy (B) counted",
+  "e": "Section 1 English Summary 및 본문 #3, #4"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
