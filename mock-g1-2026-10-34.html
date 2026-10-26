@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "34번 빈칸추론 분석지 확인 문제",
+ "section": "수능 영어 · 34번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 34번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "No matter how you choose to delineate your evolutionary system of interest—let's say it's cell phones—there will be some things that your model just needs to take as a given, such as the fact that new ideas emerge at particular times."],
+  [2, "Indeed, all models must make simplifying assumptions of this nature."],
+  [3, "When Wallace and Darwin presented their verbal model of biological evolution, there was little knowledge of how variation generation and inheritance worked."],
+  [4, "They just took as a given that these things happened somehow."],
+  [5, "Even at the finest level of detail, we need simplifying assumptions."],
+  [6, "Physicists, for example, must take as a given the mass and charge of fundamental particles."],
+  [7, "In a model of atomic bonds, physicists don't attempt to explain why electrons have their particular mass and charge, they just accept the measured values and move on."],
+  [8, "The key point is that we can build useful models at one level of analysis <u>     </u>."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "관심 있는 진화 시스템의 경계를 어떻게 설정하든 모델이 기정사실로 받아들여야 하는 것들이 존재한다.",
+  "a": "O",
+  "e": "1번 문장의 there will be some things that your model just needs to take as a given과 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "모든 과학 모델은 복잡성을 있는 그대로 담아내기 위해 단순화하는 가정을 절대 설정해서는 안 된다.",
+  "a": "X",
+  "e": "2번 문장에서 all models must make simplifying assumptions of this nature라 하여 반드시 단순화 가정을 만들어야 한다고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "Wallace와 Darwin이 진화론 모델을 제시했을 당시에는 변이 생성과 유전의 작동 원리에 대한 지식이 이미 풍부했다.",
+  "a": "X",
+  "e": "3번 문장에서 there was little knowledge of how variation generation and inheritance worked라 하여 지식이 거의 없었다고 했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "Darwin과 Wallace는 변이와 유전이 어떻게든 일어난다는 사실 자체를 기정사실로 받아들였다.",
+  "a": "O",
+  "e": "4번 문장의 They just took as a given that these things happened somehow와 일치합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "가장 미세한 세부 수준의 과학 연구에서는 단순화하는 가정이 전혀 필요하지 않다.",
+  "a": "X",
+  "e": "5번 문장에서 Even at the finest level of detail, we need simplifying assumptions라 하여 가장 미세한 수준에서도 필요하다고 했습니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "물리학자들은 기본 입자들의 질량과 전하를 기정사실로 받아들여야만 한다.",
+  "a": "O",
+  "e": "6번 문장의 must take as a given the mass and charge of fundamental particles와 일치합니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "원자 결합 모델에서 물리학자들은 전자가 왜 특정한 질량과 전하를 갖는지를 완벽히 설명하려고 시도한다.",
+  "a": "X",
+  "e": "7번 문장에서 physicists don't attempt to explain why electrons have their particular mass and charge라 하여 설명하려 하지 않는다고 했습니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "물리학자들은 전자의 측정된 값들을 그대로 받아들이고 다음 단계로 넘어간다.",
+  "a": "O",
+  "e": "7번 문장의 they just accept the measured values and move on과 일치합니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "(경계·윤곽을) 정하다, 기술하다",
+   "출현하다, 나타나다",
+   "가장 미세한, 지극히 정밀한",
+   "설명, 해명"
+  ],
+  "rows": [
+   ["delineate", 1],
+   ["emerge", 2],
+   ["finest", 3],
+   ["accounting", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어, 5번 심화 어휘"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "Physicists must take as a given the mass and (charge / change) of fundamental particles.",
+  "o": [
+   "charge",
+   "change"
+  ],
+  "a": "charge",
+  "e": "분석지 5번 혼동 어휘: charge는 물리학 지문에서 물질이 띤 '전하(전기적 성질)'를 뜻합니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 delineate의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["define", "outline", "demarcate", "describe"]],
+   ["②", ["define", "outline", "demarcate", "describe"]]
+  ],
+  "show": "define, outline, demarcate, describe 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 assumption의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["presumption", "premise", "supposition", "hypothesis"]],
+   ["②", ["presumption", "premise", "supposition", "hypothesis"]]
+  ],
+  "show": "presumption, premise, supposition, hypothesis 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "short",
+  "s": "1번 문장에서 「A를 기정사실로 받아들이다, 당연한 것으로 전제하다」의 뜻으로 쓰인 네 단어의 관용 표현을 본문에서 찾아 쓰시오. (목적어 자리는 A로 표기할 것)",
+  "ans": [
+   "take A as a given",
+   "take a as a given"
+  ],
+  "show": "take A as a given",
+  "e": "분석지 2번 1번 문장 어휘 및 연결어"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "7번 문장 끝에서 「더 이상 집착하지 않고 다음으로 넘어가다」의 뜻으로 쓰인 두 단어의 구동사를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "move on"
+  ],
+  "show": "move on",
+  "e": "7번 문장 move on"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "1번 문두의 No matter how you choose를 복합관계부사를 활용하여 한 단어로 바꾼 것으로 알맞은 것은?",
+  "o": [
+   "However",
+   "Whatever"
+  ],
+  "a": "However",
+  "e": "분석지 1번 문장 구문 분석: No matter how는 양보 부사절을 이끄는 However로 전환할 수 있습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 the fact that new ideas emerge at particular times에서 that에 대한 설명으로 옳은 것은?",
+  "o": [
+   "the fact를 선행사로 받는 목적격 관계대명사이다.",
+   "뒤에 완전한 절이 이어지는 동격의 접속사이다.",
+   "emerge의 목적어로 쓰인 명사절 접속사이다.",
+   "the fact와 자리바꿈된 관계부사이다."
+  ],
+  "a": 2,
+  "e": "분석지 1번 문장 구문 분석: the fact 뒤의 that은 완전한 1형식 절을 이끄는 동격 접속사입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사 assumptions를 능동으로 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "Indeed, all models must make (simplifying / simplified) assumptions of this nature.",
+  "o": [
+   "simplifying",
+   "simplified"
+  ],
+  "a": "simplifying",
+  "e": "2번 문장: 현상을 단순화해 주는 가정이라는 의미의 능동 현재분사 simplifying이 쓰였습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 셀 수 없는 명사 knowledge 앞의 부정 수량형용사로 알맞은 것을 고르시오.",
+  "c": "... there was (little / few) knowledge of how variation generation and inheritance worked.",
+  "o": [
+   "little",
+   "few"
+  ],
+  "a": "little",
+  "e": "3번 문장: 셀 수 없는 명사 knowledge 앞이므로 little이 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 전치사 of의 목적어로 쓰인 간접의문문의 올바른 어순을 고르시오.",
+  "c": "... knowledge of (how variation generation and inheritance worked / how worked variation generation and inheritance).",
+  "o": [
+   "how variation generation and inheritance worked",
+   "how worked variation generation and inheritance"
+  ],
+  "a": "how variation generation and inheritance worked",
+  "e": "3번 문장: 간접의문문은 [의문사(how) + 주어(variation generation and inheritance) + 동사(worked)]의 평서문 어순을 취합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사 values를 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "... they just accept the (measured / measuring) values and move on.",
+  "o": [
+   "measured",
+   "measuring"
+  ],
+  "a": "measured",
+  "e": "7번 문장: 측정된 수치들이라는 수동 의미이므로 과거분사 measured가 맞습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "8번 문장 The key point is that we can build useful models에서 that의 문법적 역할은?",
+  "o": [
+   "point를 선행사로 받는 주격 관계대명사",
+   "be동사 is의 주격 보어로 쓰인 완전한 명사절을 이끄는 접속사",
+   "models를 수식하는 목적격 관계대명사",
+   "원인을 나타내는 부사절 접속사"
+  ],
+  "a": 2,
+  "e": "분석지 8번 문장 구문 분석: be동사 is의 주격 보어로 완전한 절을 이끄는 명사절 접속사 that입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 전치사 of의 목적어로 쓰인 알맞은 관계사를 고르시오.",
+  "c": "... without a complete accounting of (what / that)'s happening at all other levels.",
+  "o": [
+   "what",
+   "that"
+  ],
+  "a": "what",
+  "e": "8번 문장: 선행사를 자체에 포함하며 절 내에서 주어 역할을 하는 관계대명사 what이 알맞습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "기본 입자의 물리적 특성 규명이 양자역학 발전에 미친 영향",
+   "다른 수준에 대한 완전한 설명 없이도 성립하는 유용한 과학 모델과 단순화 가정",
+   "생물학적 진화론과 기술 발전 모델 간의 구조적 불일치성",
+   "과학사적 발견 과정에서 연구자 간 협업의 제도적 중요성"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 다른 수준에 대한 완전한 설명 없이도 성립하는 유용한 과학 모델과 단순화 가정"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 글의 최종 결론을 명쾌하게 집약하여 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "2번 문장",
+   "5번 문장",
+   "8번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 1번 중심 문장: 8번 문장 The key point is that we can build useful models at one level of analysis without a complete accounting of what's happening at all other levels."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (모델 구축을 위한 단순화하는 가정)",
+   "키워드 B (타 수준에 대한 완전한 설명의 불필요성)"
+  ],
+  "rows": [
+   ["take as a given", 1],
+   ["don't attempt to explain why", 2],
+   ["simplifying assumptions", 1],
+   ["without a complete accounting of other levels", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "일반 명제 제시 - 생물학/물리학 구체적 예시 논증 - 핵심 원리 도출(주제문 제시)",
+   "통념 반박 - 역사적 사실 나열 - 절충안 제시",
+   "가설 설정 - 실험 데이터 분석 - 후속 연구 과제 제언",
+   "문제점 제기 - 원인 분석 - 정책적 대안 제시"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 일반 명제 제시 - 생물학/물리학 구체적 예시 논증 - 핵심 원리 도출"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 세 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "과학적 모델링의 본질적 속성 규명 및 대전제 확립",
+   "역사적 진화론과 정밀 물리학의 구체적 사례를 통한 논리적 실증",
+   "앞선 사례들을 총괄하여 글 전체의 최종 핵심 요점을 천명"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~2번 문장)", 1],
+   ["두 번째 부분 (3~7번 문장)", 2],
+   ["세 번째 부분 (8번 문장)", 3]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "2번 문장의 연결부사 Indeed는 앞선 개별 사례의 불가피성을 일반적 원칙으로 승화하며 강조하는 역할을 한다.",
+  "a": "O",
+  "e": "분석지 2번 2번 문장 어휘 및 연결어와 일치합니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 확정한 34번 빈칸에 들어갈 가장 적절한 선택지는?",
+  "o": [
+   "with enough financial support for quality studies",
+   "even in the absence of acceptance by other scientists",
+   "by tracing how science has developed throughout history",
+   "through a detailed examination of higher-level phenomena",
+   "without a complete accounting of what's happening at all other levels"
+  ],
+  "a": 5,
+  "e": "분석지 4번 문제 풀이: 정답은 5번 without a complete accounting of what's happening at all other levels입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지에서 오답 through a detailed examination of higher-level phenomena를 소거한 근거는?",
+  "o": [
+   "연구비 지원의 한계를 다루지 않았기 때문",
+   "다른 수준에 대해 세부적으로 조사하지 않고 넘어가도 된다는 핵심 논지와 정면 배치되기 때문",
+   "상위 수준이 아니라 하위 수준만 연구해야 한다고 주장했기 때문",
+   "물리학 모델의 한계만을 비판하는 선택지이기 때문"
+  ],
+  "a": 2,
+  "e": "분석지 4번 오답 분석: 다른 수준에 대해 세부적으로 조사하지 않고 넘어가도 된다는 것이 글의 핵심이므로 detailed examination은 필자의 주장과 정면으로 배치됩니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「6. 마무리」에서 제시한 34번 빈칸 문제의 핵심 정답 도출 비결은?",
+  "o": [
+   "진화론과 원자 모델이라는 두 이질적 예시 속에 관통하는 공통분모를 추출하는 것",
+   "지문에 등장하는 과학자들의 연대기적 순서를 암기하는 것",
+   "어려운 물리학 전문 용어의 사전적 정의를 외우는 것",
+   "마지막 문장에 나오는 모든 전치사의 개수를 계산하는 것"
+  ],
+  "a": 1,
+  "e": "분석지 6번 마무리: 진화론과 원자 모델이라는 두 가지 이질적인 예시 속에 관통하는 추상적 공통분모를 추출해 낼 수 있는지가 정답을 가르는 분수령이었습니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "3번 문장에서 Darwin과 Wallace가 생물학적 진화 모델을 제시할 당시 작동 원리에 대한 지식이 거의 없었던 두 가지 개념을 본문에서 찾아 영어로 쓰시오. (and로 연결할 것)",
+  "ans": [
+   "variation generation and inheritance"
+  ],
+  "show": "variation generation and inheritance",
+  "e": "3번 문장 how variation generation and inheritance worked"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 7번 문장을 바탕으로, 물리학자들이 원자 결합 모델을 다룰 때 전자의 질량과 전하에 대해 <b>취하는 구체적인 태도 두 가지</b>(하지 않는 것과 하는 것)를 우리말로 서술하세요.",
+  "show": "전자가 왜 특정한 질량과 전하를 갖는지는 설명하려고 시도하지 않으며, 단지 측정된 값들을 그대로 받아들이고 다음으로 넘어간다.",
+  "crit": "① '전자가 왜 그런 질량/전하를 갖는지 설명하려 하지 않음' 서술 (2점) ② '측정된 값들을 받아들이고 넘어감' 서술 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 8번 문장과 「1. 키워드 분석」을 바탕으로, 이 글이 밝히는 과학 모델의 <b>방법론적 핵심 요점</b>을 '분석 수준'과 '타 수준에 대한 설명'의 관계를 중심으로 서술하세요.",
+  "show": "모든 다른 수준에서 무엇이 일어나고 있는지에 대한 완전한 설명(규명)이 없더라도, 단 하나의 분석 수준에서 충분히 유용한 모델을 구축할 수 있다는 점이다.",
+  "crit": "① '다른 모든 수준에 대한 완전한 설명이 없음' 명시 (2점) ② '하나의 분석 수준에서 유용한 모델을 만들 수 있음' 명시 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

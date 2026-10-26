@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "26번 내용일치 분석지 확인 문제",
+ "section": "수능 영어 · 26번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 26번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Douglas Carl Engelbart was an American engineer and inventor who transformed the field of human-computer interaction."],
+  [2, "He was born in Portland, Oregon, in 1925 to a European immigrant family."],
+  [3, "During World War II, he served as a radar technician in the U.S. Navy in the Philippines."],
+  [4, "It was during this time that he read an article that influenced his vision of using computers to enhance human abilities and solve complex problems."],
+  [5, "After serving, he earned master's and doctoral degrees in electrical engineering from the University of California, Berkeley, where he focused on computer-related research."],
+  [6, "In the 1968 Fall Joint Computer Conference held in San Francisco, he demonstrated his technologies including the computer mouse, which became a monumental event in computer history."],
+  [7, "For his contributions to computer science, he received the Turing Award in 1997 and the National Medal of Technology three years later."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "Douglas Carl Engelbart는 인간-컴퓨터 상호작용 분야를 변혁시킨 미국의 공학자이자 발명가였다.",
+  "a": "O",
+  "e": "1번 문장의 an American engineer and inventor who transformed the field of human-computer interaction과 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "Engelbart는 1925년 아시아계 이민자 가정에서 태어났다.",
+  "a": "X",
+  "e": "2번 문장에서 a European immigrant family(유럽인 이민자 가정)라고 명시되어 있습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "제2차 세계 대전 동안 그는 필리핀에서 미국 육군의 암호 해독병으로 복무했다.",
+  "a": "X",
+  "e": "3번 문장에서 a radar technician in the U.S. Navy(미 해군의 레이더 기술병)로 복무했다고 명시되어 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "그는 군 복무 기간 동안 컴퓨터를 활용하여 인간의 역량을 향상시킨다는 비전에 영향을 준 기사를 읽었다.",
+  "a": "O",
+  "e": "4번 문장의 influenced his vision of using computers to enhance human abilities and solve complex problems와 일치합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "군 복무를 마친 후 그는 캘리포니아 대학교 버클리 캠퍼스에서 전기 공학 학사 학위만을 취득했다.",
+  "a": "X",
+  "e": "5번 문장에서 master's and doctoral degrees(석사 및 박사 학위)를 취득했다고 서술되어 있습니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "1968년 샌프란시스코에서 열린 학술회의에서 컴퓨터 마우스를 포함한 기술들을 시연했다.",
+  "a": "O",
+  "e": "6번 문장의 demonstrated his technologies including the computer mouse와 일치합니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "컴퓨터 과학에 대한 공헌으로 그는 1997년에 Turing Award를 수상했다.",
+  "a": "O",
+  "e": "7번 문장의 he received the Turing Award in 1997과 일치합니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "National Medal of Technology를 수상한 해는 1997년이다.",
+  "a": "X",
+  "e": "7번 문장에서 1997년에 Turing Award를 받았고 National Medal of Technology는 3년 뒤(three years later, 2000년)에 받았습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "완전히 바꾸다, 변혁시키다",
+   "향상시키다, 증진하다",
+   "기념비적인, 역사적으로 대단히 중대한",
+   "시연하다, 입증하다"
+  ],
+  "rows": [
+   ["transform", 1],
+   ["enhance", 2],
+   ["monumental", 3],
+   ["demonstrate", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "He was born in Portland, Oregon, in 1925 to a European (immigrant / emigrant) family.",
+  "o": [
+   "immigrant",
+   "emigrant"
+  ],
+  "a": "immigrant",
+  "e": "분석지 5번 혼동 어휘: immigrant는 다른 나라에서 들어오는 유입 이민자이고, emigrant는 본국을 떠나 나가는 유출 이민자입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "... which became a (monumental / momentary) event in computer history.",
+  "o": [
+   "monumental",
+   "momentary"
+  ],
+  "a": "monumental",
+  "e": "분석지 5번 혼동 어휘: monumental은 기념비적인, 역사적으로 중대한의 뜻이며, momentary는 순간의, 찰나의를 뜻합니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 enhance의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["improve", "boost", "amplify", "augment"]],
+   ["②", ["improve", "boost", "amplify", "augment"]]
+  ],
+  "show": "improve, boost, amplify, augment 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 demonstrate의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["display", "exhibit", "illustrate", "prove"]],
+   ["②", ["display", "exhibit", "illustrate", "prove"]]
+  ],
+  "show": "display, exhibit, illustrate, prove 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "5번 문장에서 「~에 전념하다, 집중하다」의 뜻으로 전치사 on과 함께 쓰인 두 단어의 구동사를 쓰시오.",
+  "ans": [
+   "focus on",
+   "focused on"
+  ],
+  "show": "focus on",
+  "e": "5번 문장 focused on"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Douglas Carl Engelbart was an American engineer and inventor (who / whom) transformed the field of human-computer interaction.",
+  "o": [
+   "who",
+   "whom"
+  ],
+  "a": "who",
+  "e": "1번 문장: 관계사절 내에서 동사 transformed의 주어 역할을 해야 하므로 주격 관계대명사 who가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 형태를 고르시오.",
+  "c": "He (born / was born) in Portland, Oregon, in 1925 to a European immigrant family.",
+  "o": [
+   "was born",
+   "born"
+  ],
+  "a": "was born",
+  "e": "2번 문장: 동사 bear의 과거 수동태 형태로 태어나다의 의미를 나타내므로 was born이 알맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "mc",
+  "s": "4번 문장 It was during this time that he read an article의 문법적 구조로 옳은 것은?",
+  "o": [
+   "It은 가주어, that절은 진주어인 명사절 구문이다.",
+   "부사구 during this time을 강조하는 It ~ that 강조 구문이다.",
+   "It은 날씨나 시간을 나타내는 비인칭 주어이다.",
+   "that은 time을 선행사로 받는 관계부사 when의 대용이다."
+  ],
+  "a": 2,
+  "e": "분석지 4번 문장 구문 분석: 부사구 during this time을 강조하기 위한 It was ~ that 강조 구문입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 병렬 구조상 알맞은 형태를 고르시오.",
+  "c": "... his vision of using computers to enhance human abilities and (solve / solving) complex problems.",
+  "o": [
+   "solve",
+   "solving"
+  ],
+  "a": "solve",
+  "e": "4번 문장: to부정사의 부사적 용법 내에서 enhance와 병렬 연결되어 to가 생략된 동사원형 solve가 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장의 where he focused on computer-related research에서 where에 대한 분석지의 설명으로 옳은 것은?",
+  "o": [
+   "선행사 research를 수식하는 한정적 용법의 관계부사이다.",
+   "where절은 earned의 직접목적어로 쓰인 간접의문문 명사절이다.",
+   "선행사를 부연 설명하는 계속적 용법의 관계부사로 and there로 바꿔 쓸 수 있다.",
+   "the way를 대신하여 방법을 나타내는 관계부사이다."
+  ],
+  "a": 3,
+  "e": "분석지 5번 문장 구문 분석: 선행사 the University of California, Berkeley를 부연 설명하는 관계부사의 계속적 용법으로 and there로 전환 가능합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 학술회의 명칭을 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "In the 1968 Fall Joint Computer Conference (held / holding) in San Francisco, he demonstrated his technologies...",
+  "o": [
+   "held",
+   "holding"
+  ],
+  "a": "held",
+  "e": "6번 문장: 학술회의가 샌프란시스코에서 개최된 것이므로 수동 의미의 과거분사 held가 수식합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 계속적 용법의 관계대명사로 알맞은 것을 고르시오.",
+  "c": "... he demonstrated his technologies including the computer mouse, (which / that) became a monumental event in computer history.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "6번 문장: 콤마 뒤 계속적 용법의 관계대명사로는 that을 쓸 수 없으므로 which가 올바릅니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "6번 문장의 계속적 용법 관계사절 , which became ~를 분석지에 제시된 「접속사 + 대명사」 두 단어로 전환하여 쓰시오.",
+  "ans": [
+   "and it"
+  ],
+  "show": "and it",
+  "e": "분석지 6번 문장 구문 분석: 앞 절 전체 내용을 선행사로 받는 주격 관계대명사의 계속적 용법으로 and it으로 전환할 수 있습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "제2차 세계 대전 당시 레이더 기술이 컴퓨터 공학에 미친 영향",
+   "인간-컴퓨터 상호작용의 선구자 더글러스 칼 엥겔바트의 생애와 혁신적 업적",
+   "컴퓨터 마우스의 상용화 과정에서 발생한 특허 분쟁의 역사",
+   "전기 공학 교육 과정에서 기초 컴퓨터 연구의 제도적 중요성"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 인간-컴퓨터 상호작용의 선구자 더글러스 칼 엥겔바트의 생애와 혁신적 업적"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 엥겔바트의 대표적 기술 혁신의 역사적 가치를 가장 집약적으로 보여주어 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "4번 문장",
+   "5번 문장",
+   "6번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 1번 중심 문장: 6번 문장 In the 1968 Fall Joint Computer Conference held in San Francisco, he demonstrated his technologies including the computer mouse, which became a monumental event in computer history."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (엥겔바트의 생애와 업적)",
+   "키워드 B (컴퓨터 마우스와 기술적 혁신)"
+  ],
+  "rows": [
+   ["American engineer and inventor", 1],
+   ["monumental event in computer history", 2],
+   ["Turing Award", 1],
+   ["computer mouse", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "시간 순서에 따른 전기적 평전 서술 방식",
+   "가설 설정과 실험 검증 중심의 학술적 서술 방식",
+   "상반된 평가를 절충하는 논쟁적 서술 방식",
+   "원인 분석과 문제 해결 방안 제시 방식"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 시간 순서에 따른 전기적 평전(Chronological Biography) 서술 방식을 취하고 있습니다."
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 두 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "인물의 초기 배경과 생애 전환점이 된 사상적 영감의 획득 과정 서술",
+   "인물의 학문적 성취와 대표 발명품 시연, 권위 있는 수상 실적 서술"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~4번 문장)", 1],
+   ["두 번째 부분 (5~7번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "7번 문장의 문두 전치사구 For his contributions to computer science는 수상의 이유와 원인을 나타내는 역할을 한다.",
+  "a": "O",
+  "e": "분석지 7번 문장 구문 분석: 이유·원인을 나타내는 전치사 for가 이끄는 부사구입니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에 따라 본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "오리건주 포틀랜드에서 유럽인 이민자 가정의 자녀로 태어났다.",
+   "제2차 세계 대전 중 미 해군에서 레이더 기술병으로 복무했다.",
+   "캘리포니아 대학교 버클리 캠퍼스에서 전기 공학 석사 및 박사 학위를 취득했다.",
+   "1968년 샌프란시스코에서 열린 학술회의에서 컴퓨터 마우스를 포함한 기술을 시연했다.",
+   "1997년에 National Medal of Technology를 수상했다."
+  ],
+  "a": 5,
+  "e": "분석지 4번 문제 풀이: 1997년에 받은 것은 Turing Award이며, National Medal of Technology는 3년 뒤인 2000년에 받았습니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "choice",
+  "s": "지문 7번 문장의 three years later를 바탕으로 할 때, Engelbart가 National Medal of Technology를 수상한 연도로 알맞은 것은?",
+  "o": [
+   "1997년",
+   "2000년"
+  ],
+  "a": "2000년",
+  "e": "분석지 2번 어휘 및 4번 문제 풀이: 1997년에 3년을 더한 2000년에 수상했습니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「6. 마무리」에서 제시한 26번 인물 일치·불일치 문제 해결의 핵심 조언으로 옳은 것은?",
+  "o": [
+   "어려운 형용사의 철자를 사전순으로 외워야 한다.",
+   "연도, 고유명사, 각 사건의 선후 관계를 꼼꼼히 대조해야 한다.",
+   "지문의 길이와 문장 개수를 파악하여 중간 문장에 집중해야 한다.",
+   "인물의 주관적 감정이 드러난 문장을 우선적으로 찾아야 한다."
+  ],
+  "a": 2,
+  "e": "분석지 6번 마무리: 연도, 고유명사, 그리고 각 사건의 선후 관계를 꼼꼼히 대조하는 정확성이 핵심입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "6번 문장에서 1968년 학술회의에서 Engelbart가 시연한 핵심 기술이자 컴퓨터 역사상 기념비적 사건이 된 발명품을 본문에서 찾아 영어 두 단어로 쓰시오.",
+  "ans": [
+   "computer mouse",
+   "the computer mouse"
+  ],
+  "show": "computer mouse",
+  "e": "6번 문장 the computer mouse"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 4번 문장을 바탕으로, Engelbart가 군 복무 중에 읽은 기사가 컴퓨터 활용에 관해 그에게 심어준 <b>두 가지 비전(목적)</b>을 우리말로 서술하세요.",
+  "show": "첫째, 인간의 능력을 향상(증진)시키는 것, 둘째, 복잡한 문제들을 해결하는 것이다.",
+  "crit": "① '인간의 능력 향상/증진' 서술 (2점) ② '복잡한 문제 해결' 서술 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 7번 문장과 「4. 문제 풀이」를 바탕으로, 본문 7번 문장에 언급된 <b>두 가지 상의 명칭과 각각의 정확한 수상 연도</b>를 서술하세요.",
+  "show": "1997년에 Turing Award를 수상했고, 그로부터 3년 뒤인 2000년에 National Medal of Technology를 수상했다.",
+  "crit": "① Turing Award - 1997년 명시 (2점) ② National Medal of Technology - 2000년(또는 1997년의 3년 뒤) 명시 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

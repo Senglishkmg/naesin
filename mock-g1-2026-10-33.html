@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "33번 빈칸추론 분석지 확인 문제",
+ "section": "수능 영어 · 33번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 33번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "The very fact that all of our experiences \"take place\" in a physical space makes the space inseparable from what defines it, from the event that took place in it."],
+  [2, "The tree and the ground beneath are inseparable from what took place there."],
+  [3, "This intertwining of space, place, and experience <u>     </u>."],
+  [4, "If place and space are central to the very heart of experience, we must accept the possibility that the spatial framework is the medium of all experiences—actions, thoughts, memories, and feelings of every place—not merely a background or context exterior to experience (as commonly supposed)."],
+  [5, "Belgian literary critic Georges Poulet made the point elegantly, writing of the space created in Marcel Proust's great novel In Search of Lost Time: \"Beings surround themselves with the places where they find themselves, the way one wraps oneself up in a garment that is at one and the same time a disguise and a characterization."],
+  [6, "Without places, beings would be only abstractions.\""]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "우리의 모든 경험이 물리적 공간에서 일어난다는 사실은 공간과 그 안에서 일어난 사건을 결코 분리할 수 없게 만든다.",
+  "a": "O",
+  "e": "1번 문장의 makes the space inseparable from what defines it, from the event that took place in it과 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "특정 장소의 나무와 그 아래의 땅은 그곳에서 발생했던 사건과 아무런 연관성을 갖지 않는다.",
+  "a": "X",
+  "e": "2번 문장에서 The tree and the ground beneath are inseparable from what took place there라 하여 분리할 수 없다고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "공간, 장소, 경험의 뒤얽힘은 장소를 단지 수동적인 배경으로 바라보는 생각에 힘을 실어준다.",
+  "a": "X",
+  "e": "3번 문장에서 challenges the idea of place as passive backdrop이라 하여 수동적 배경이라는 생각에 이의를 제기한다고 했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "일반적인 통념과 달리 공간적 틀은 경험 외부에 존재하는 단순한 배경이 아니라 모든 경험의 매개체일 수 있다.",
+  "a": "O",
+  "e": "4번 문장의 the spatial framework is the medium of all experiences... not merely a background or context exterior to experience와 일치합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "공간적 틀이 매개하는 경험에는 행동, 생각뿐만 아니라 기억과 감정까지 포함된다.",
+  "a": "O",
+  "e": "4번 문장의 actions, thoughts, memories, and feelings of every place와 일치합니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "Georges Poulet는 마르셀 프루스트의 소설에서 창조된 공간을 비판하며 장소가 인간에게 무의미하다고 주장했다.",
+  "a": "X",
+  "e": "5번 문장에서 프루스트 소설의 공간을 언급하며 공간과 존재의 밀접한 관계를 우아하게 짚어냈다고(made the point elegantly) 서술했습니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "존재들은 자신을 둘러싸는 의복으로 몸을 감싸듯, 자신이 처해 있는 장소들로 자기 자신을 둘러싼다.",
+  "a": "O",
+  "e": "5번 문장의 Beings surround themselves with the places where they find themselves, the way one wraps oneself up in a garment...와 일치합니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "장소가 존재하지 않더라도 인간 존재는 여전히 구체적이고 완벽한 실체성을 유지할 수 있다.",
+  "a": "X",
+  "e": "6번 문장에서 Without places, beings would be only abstractions라 하여 장소가 없다면 단지 추상적 관념에 불과할 것이라고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "떼어놓을 수 없는, 분리할 수 없는",
+   "뒤얽힘, 밀접한 융합",
+   "매개체, 수단",
+   "추상적 개념, 관념"
+  ],
+  "rows": [
+   ["inseparable", 1],
+   ["intertwining", 2],
+   ["medium", 3],
+   ["abstraction", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "This intertwining of space, place, and experience challenges the idea of place as passive (backdrop / backbone).",
+  "o": [
+   "backdrop",
+   "backbone"
+  ],
+  "a": "backdrop",
+  "e": "분석지 5번 혼동 어휘: backdrop은 '배경, 배경막'이고 backbone은 '척추, 등뼈, 중심'입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "... makes the space (inseparable / comparable) from what defines it...",
+  "o": [
+   "inseparable",
+   "comparable"
+  ],
+  "a": "inseparable",
+  "e": "분석지 5번 혼동 어휘: inseparable은 '뗄 수 없는, 불가분의' 뜻이고 comparable은 '비교할 수 있는' 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 passive의 반의어 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["active", "dynamic"]],
+   ["②", ["active", "dynamic"]]
+  ],
+  "show": "active, dynamic",
+  "e": "분석지 5번 반의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 medium의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["vehicle", "channel", "instrument"]],
+   ["②", ["vehicle", "channel", "instrument"]]
+  ],
+  "show": "vehicle, channel, instrument 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "5번 문장에서 「동시에」의 뜻으로 쓰인 여섯 단어의 관용 어구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "at one and the same time"
+  ],
+  "show": "at one and the same time",
+  "e": "5번 문장 at one and the same time"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어과의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "The very fact that all of our experiences \"take place\" in a physical space (makes / make) the space inseparable...",
+  "o": [
+   "makes",
+   "make"
+  ],
+  "a": "makes",
+  "e": "1번 문장: 주어의 핵심 명사가 단수명사인 The very fact이므로 3인칭 단수 현재형 makes가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 The very fact that all of our experiences \"take place\" in a physical space에서 that에 대한 설명으로 옳은 것은?",
+  "o": [
+   "The very fact를 선행사로 받는 목적격 관계대명사이다.",
+   "뒤에 완전한 1형식 절이 이어지는 동격의 접속사이다.",
+   "experiences를 수식하는 주격 관계대명사이다.",
+   "take place의 목적어로 쓰인 명사절 접속사이다."
+  ],
+  "a": 2,
+  "e": "분석지 1번 문장 구문 분석: The very fact 뒤의 that은 완전한 절을 이끄는 동격의 접속사입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 5형식 동사 make의 목적격 보어로 알맞은 형태를 고르시오.",
+  "c": "... makes the space (inseparable / inseparably) from what defines it...",
+  "o": [
+   "inseparable",
+   "inseparably"
+  ],
+  "a": "inseparable",
+  "e": "1번 문장: make + 목적어(the space) + 목적격 보어 자리이므로 부사가 아닌 형용사 inseparable이 와야 합니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어과의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "This intertwining of space, place, and experience (challenges / challenge) the idea of place...",
+  "o": [
+   "challenges",
+   "challenge"
+  ],
+  "a": "challenges",
+  "e": "3번 문장: 주어구의 핵심 명사가 단수명사 intertwining이므로 단수동사 challenges가 맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "4번 문장 the possibility that the spatial framework is the medium of all experiences에서 that의 문법적 성격은?",
+  "o": [
+   "possibility와 동격 관계를 이루는 동격 접속사",
+   "possibility를 선행사로 받는 목적격 관계대명사",
+   "accept의 직접목적어로 쓰인 간접의문문 유도사",
+   "so that 구문에서 so가 생략된 목적의 부사절 접속사"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문장 구문 분석: the possibility 뒤에 완전한 절을 이끄는 동격의 접속사 that입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 선행사 the places를 수식하는 알맞은 관계사를 고르시오.",
+  "c": "Beings surround themselves with the places (where / which) they find themselves...",
+  "o": [
+   "where",
+   "which"
+  ],
+  "a": "where",
+  "e": "5번 문장: 뒤에 완전한 5형식 절(they find themselves)이 이어지므로 장소를 나타내는 관계부사 where가 올바릅니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사 the space를 뒤에서 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "... writing of the space (created / creating) in Marcel Proust's great novel...",
+  "o": [
+   "created",
+   "creating"
+  ],
+  "a": "created",
+  "e": "5번 문장: 공간이 소설 속에서 창조된 것이므로 수동 의미의 과거분사 created가 뒤에서 수식합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 가정법 과거 귀결절의 문법 규칙에 알맞은 조동사 형태를 고르시오.",
+  "c": "Without places, beings (would be / will be) only abstractions.",
+  "o": [
+   "would be",
+   "will be"
+  ],
+  "a": "would be",
+  "e": "6번 문장: 현재 사실의 반대를 가정하는 가정법 과거 구문이므로 귀결절에 [조동사 과거형 would + 동사원형 be]가 와야 합니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "문학 작품에서 시간적 배경이 인물의 성격 형성에 미치는 결정적 영향",
+   "단순한 수동적 배경을 넘어 모든 인간 경험의 본질적 매개체가 되는 장소",
+   "물리적 공간의 제약을 극복하기 위한 가상현실 기술의 발전 방향",
+   "인간의 인지 발달 과정에서 기억 회상 능력을 향상시키는 환경 요인"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 단순한 수동적 배경을 넘어 모든 인간 경험의 본질적 매개체가 되는 장소"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 통념인 수동적 배경을 무너뜨리고 장소를 경험의 능동적 매개체로 전환시키는 핵심 문장으로 선정한 것은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "2번 문장",
+   "3번 문장",
+   "6번 문장"
+  ],
+  "a": 3,
+  "e": "분석지 1번 중심 문장: 3번 문장 This intertwining of space, place, and experience challenges the idea of place as passive backdrop."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (공간과 경험의 불가분한 뒤얽힘)",
+   "키워드 B (경험의 능동적 매개체로서의 장소)"
+  ],
+  "rows": [
+   ["inseparable from what defines it", 1],
+   ["medium of all experiences", 2],
+   ["intertwining of space, place, and experience", 1],
+   ["without places, beings would be only abstractions", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "현상 규명 - 통념 비판 및 재정의 - 권위자 인용을 통한 확증",
+   "실험 가설 설정 - 변인 통제 분석 - 새로운 통계 모델 도출",
+   "역사적 사건 비교 - 원인 분석 - 미래 전망 예측",
+   "문제점 제기 - 상반된 대안 검토 - 절충안 제시"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 현상 규명 - 통념 비판 및 재정의 - 권위자 인용을 통한 확증"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 세 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "장소와 경험의 불가분성 선언 및 기존의 수동적 배경 관점에 대한 반론 제기",
+   "장소의 본질적 위상을 배경에서 경험의 매개체로 완전히 재정의",
+   "권위 있는 문학 비평가의 말을 인용하여 장소가 존재를 규정한다는 결론 완성"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~3번 문장)", 1],
+   ["두 번째 부분 (4번 문장)", 2],
+   ["세 번째 부분 (5~6번 문장)", 3]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "4번 문장의 괄호 (as commonly supposed)는 공간을 단순한 외부적 배경으로 바라보는 일반적인 통념을 환기하는 역할을 한다.",
+  "a": "O",
+  "e": "분석지 4번 문장 구문 및 어휘 분석과 일치합니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 확정한 33번 빈칸에 들어갈 가장 적절한 선택지는?",
+  "o": [
+   "limits our ability to recall past events",
+   "explains how actions influence thoughts",
+   "shows how time settings work in literature",
+   "makes it difficult for us to define our feelings",
+   "challenges the idea of place as passive backdrop"
+  ],
+  "a": 5,
+  "e": "분석지 4번 문제 풀이: 정답은 5번 challenges the idea of place as passive backdrop입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지에서 오답 limits our ability to recall past events를 소거한 근거는?",
+  "o": [
+   "공간이 기억의 매개체가 된다고 했을 뿐 회상 능력을 방해한다는 부정적 진술은 없기 때문",
+   "과거 사건이 아니라 미래 예측 능력에 관한 글이기 때문",
+   "문학 비평가가 기억력 감퇴를 겪은 적이 없기 때문",
+   "기억은 오직 시간적 순서에 의해서만 결정된다고 서술했기 때문"
+  ],
+  "a": 1,
+  "e": "분석지 4번 오답 분석: 공간이 기억의 매개체가 된다고 했을 뿐 회상 능력을 제한하거나 방해한다는 부정적 진술은 전혀 없으므로 오답입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지에서 오답 shows how time settings work in literature를 소거한 이유로 옳은 것은?",
+  "o": [
+   "소설 속 주인공의 이름이 명시되지 않았기 때문",
+   "문학 비평은 공간의 역할을 설명하기 위한 비유적 예시일 뿐 시간적 배경에 관한 논의가 아니기 때문",
+   "비평가가 벨기에 출신이 아니라 프랑스 출신이기 때문",
+   "고전 소설의 출판 연도가 언급되지 않았기 때문"
+  ],
+  "a": 2,
+  "e": "분석지 4번 오답 분석: 문학 비평은 공간(space)의 역할을 설명하기 위한 비유적 예시일 뿐, 시간적 배경에 관한 논의가 아니므로 오답입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "6번 문장의 가정법 과거 구문 Without places를 If로 시작하는 네 단어의 조건절로 전환하여 쓰시오.",
+  "ans": [
+   "If it were not for places"
+  ],
+  "show": "If it were not for places",
+  "e": "분석지 6번 문장 구문 분석: Without places = If it were not for places"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 4번 문장을 바탕으로, 공간적 틀(spatial framework)이 통념처럼 '단순한 외적 배경'이 아니라 <b>인간의 경험에 대해 실질적으로 수행하는 본질적 역할</b>이 무엇인지 지문의 핵심 단어를 사용하여 우리말로 서술하세요.",
+  "show": "공간적 틀은 경험 외부에 존재하는 단순한 배경이 아니라, 행동, 생각, 기억, 감정을 포함한 모든 인간 경험의 매개체(medium)이다.",
+  "crit": "① '단순한 외적 배경이 아님' 언급 (1점) ② '모든 경험(행동, 생각, 기억, 감정)의 매개체(medium)' 명시 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 6번 문장과 「4. 문제 풀이」를 바탕으로, 비평가 Georges Poulet가 말한 <b>Without places, beings would be only abstractions</b>의 문맥적 의미를 '장소'와 '존재의 실체성'의 관계를 중심으로 설명하세요.",
+  "show": "장소가 없다면 존재란 단지 추상적 관념에 불과할 것이라는 뜻으로, 인간 존재는 자신이 처해 있는 구체적인 장소와 결합될 때 비로소 추상을 벗어나 진정한 구체적 실체성을 얻게 됨을 의미한다.",
+  "crit": "① '장소가 없으면 존재는 추상적 관념에 불과함' 서술 (2점) ② '장소가 존재를 규정하고 구체적 실체성을 부여함' 서술 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

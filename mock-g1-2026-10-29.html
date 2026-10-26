@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "29번 어법추론 분석지 확인 문제",
+ "section": "수능 영어 · 29번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 29번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Since hydra and the immortal jellyfish don't exhibit obvious signs of aging, they are often called biologically immortal."],
+  [2, "This doesn't mean they don't die."],
+  [3, "Nor does it even mean that they cannot die of biological causes."],
+  [4, "But, unlike most every animal, their likelihood of dying does not increase with age."],
+  [5, "Species such as hydra and the immortal jellyfish excite gerontologists because they may provide clues about how to defeat the aging process."],
+  [6, "But their property of being able to regenerate entire body parts, or even a whole organism, <u>making</u> them more similar to trees than to us."],
+  [7, "Although we may learn some fascinating things about their lack of apparent aging, it is not at all clear <u>how relevant</u> those findings will be to human aging."],
+  [8, "Sometimes biology is universal, especially if it relates to fundamental mechanisms."],
+  [9, "But in other cases, even discoveries in rats or mice, <u>which</u> are mammals and biologically much closer to us, are difficult to translate into humans."],
+  [10, "It may be a very long time <u>before</u> any findings gained from hydra or jellyfish <u>are</u> useful to us."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "히드라와 영생불사 해파리는 뚜렷한 노화 징후를 보이지 않아 흔히 생물학적으로 불멸이라 불린다.",
+  "a": "O",
+  "e": "1번 문장 Since hydra and the immortal jellyfish don't exhibit obvious signs of aging, they are often called biologically immortal과 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "생물학적으로 불멸이라는 말은 질병이나 감염 같은 생물학적 원인으로도 절대 죽을 수 없음을 의미한다.",
+  "a": "X",
+  "e": "3번 문장에서 Nor does it even mean that they cannot die of biological causes라 하여 생물학적 원인으로 죽을 수 없다는 뜻이 아니라고 밝혔습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "대부분의 동물과 달리 히드라와 영생불사 해파리는 나이가 들어도 사망할 확률이 증가하지 않는다.",
+  "a": "O",
+  "e": "4번 문장 unlike most every animal, their likelihood of dying does not increase with age와 일치합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "노화학자들은 이들 생물이 노화 과정을 극복하는 방법에 대한 단서를 줄 수 있기 때문에 흥미를 느낀다.",
+  "a": "O",
+  "e": "5번 문장 excite gerontologists because they may provide clues about how to defeat the aging process와 일치합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "신체 전체 부위나 유기체 전체를 재생할 수 있는 특성은 이들을 나무보다 우리 인간에게 더 가깝게 만든다.",
+  "a": "X",
+  "e": "6번 문장에서 makes them more similar to trees than to us라 하여 인간보다 오히려 나무에 더 가깝게 만든다고 했습니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "히드라의 외견상 노화 결핍에 대한 발견들이 인간 노화와 얼마나 관련성이 있을지는 대단히 명백하다.",
+  "a": "X",
+  "e": "7번 문장에서 it is not at all clear how relevant those findings will be to human aging이라 하여 전혀 분명하지 않다고 했습니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "인간과 생물학적으로 훨씬 가까운 포유류인 쥐를 통한 발견들조차도 인간에게 적용하기 어려운 경우가 있다.",
+  "a": "O",
+  "e": "9번 문장 even discoveries in rats or mice, which are mammals and biologically much closer to us, are difficult to translate into humans와 일치합니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "히드라나 해파리로부터 얻은 연구 결과는 가까운 시일 내에 인간에게 실질적으로 유용해질 것이다.",
+  "a": "X",
+  "e": "10번 문장에서 It may be a very long time before any findings... are useful to us라 하여 유용해지기까지 매우 오랜 시간이 걸릴 수 있다고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "드러내다, 보이다",
+   "노화학자, 노년학자",
+   "성질, 특성",
+   "보편적인, 널리 적용되는"
+  ],
+  "rows": [
+   ["exhibit", 1],
+   ["gerontologist", 2],
+   ["property", 3],
+   ["universal", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "Since hydra and the (immortal / immoral) jellyfish don't exhibit obvious signs of aging...",
+  "o": [
+   "immortal",
+   "immoral"
+  ],
+  "a": "immortal",
+  "e": "분석지 5번 혼동 어휘: immortal은 '죽지 않는, 불멸의' 뜻이고 immoral은 '부도덕한' 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "지문 9번 문장에서 '실험 결과를 인간에게 적용하다'라는 특이한 문맥적 의미로 쓰인 구동사를 고르시오.",
+  "c": "... are difficult to (translate into / depend on) humans.",
+  "o": [
+   "translate into",
+   "depend on"
+  ],
+  "a": "translate into",
+  "e": "분석지 2번 9번 문장 어휘: translate into는 본문에서 '전환하다, 적용하다'의 뜻으로 사용되었습니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 regenerate의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["reproduce", "renew", "restore"]],
+   ["②", ["reproduce", "renew", "restore"]]
+  ],
+  "show": "reproduce, renew, restore 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 universal의 유의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["general", "ubiquitous", "widespread"]],
+   ["②", ["general", "ubiquitous", "widespread"]]
+  ],
+  "show": "general, ubiquitous, widespread 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "4번 문장에서 likelihood의 유의어로 분석지에 제시된 「가능성, 확률」을 뜻하는 p로 시작하는 영어 단어를 쓰시오.",
+  "ans": [
+   "probability"
+  ],
+  "show": "probability",
+  "e": "분석지 2번 4번 문장 어휘: likelihood (probability의 유의어)"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 부정어 도치 규칙에 맞는 올바른 어순을 고르시오.",
+  "c": "Nor (it even means / does it even mean) that they cannot die of biological causes.",
+  "o": [
+   "does it even mean",
+   "it even means"
+  ],
+  "a": "does it even mean",
+  "e": "3번 문장: 부정의 접속사 Nor가 문두로 전치되어 조동사 does + 주어 it + 동사원형 mean의 도치 어순이 되어야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어와의 수 일치상 알맞은 것을 고르시오.",
+  "c": "But, unlike most every animal, their likelihood of dying (does not / do not) increase with age.",
+  "o": [
+   "does not",
+   "do not"
+  ],
+  "a": "does not",
+  "e": "4번 문장: 주어의 핵심 명사가 단수명사 likelihood이므로 단수 부정형 does not이 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어과의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "Species such as hydra and the immortal jellyfish (excite / excites) gerontologists...",
+  "o": [
+   "excite",
+   "excites"
+  ],
+  "a": "excite",
+  "e": "5번 문장: 주어 Species가 뒤따르는 복수 예시와 함께 복수 주어로 쓰였으므로 복수동사 excite가 알맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장의 how to defeat the aging process에 대한 설명으로 옳은 것은?",
+  "o": [
+   "전치사 about의 목적어로 쓰인 명사구이며 how they should defeat로 전환할 수 있다.",
+   "defeat의 목적어로 쓰인 형용사적 용법의 to부정사이다.",
+   "주절의 주어 Species를 수식하는 관계부사절이다.",
+   "결과를 나타내는 to부정사의 부사적 용법이다."
+  ],
+  "a": 1,
+  "e": "분석지 5번 문장 구문 분석: [의문사 + to부정사] 구조로 전치사 about의 목적어 역할을 하는 명사구입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "7번 문장 it is not at all clear how relevant those findings will be to human aging의 구문적 특성으로 옳은 것은?",
+  "o": [
+   "it은 시간을 나타내는 비인칭 주어이다.",
+   "it은 가주어이며 how relevant 이하의 간접의문문 명사절이 진주어이다.",
+   "how relevant는 reason을 선행사로 받는 관계부사이다.",
+   "clear는 목적격 보어이며 it은 가목적어이다."
+  ],
+  "a": 2,
+  "e": "분석지 7번 문장 구문 분석: it은 형식상의 가주어, 간접의문문 명사절이 진주어입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주절 주어와의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "But in other cases, even discoveries in rats or mice, which are mammals and biologically much closer to us, (is / are) difficult to translate into humans.",
+  "o": [
+   "are",
+   "is"
+  ],
+  "a": "are",
+  "e": "9번 문장: 주절의 주어가 복수명사 discoveries이므로 복수동사 are가 와야 합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 비교급 closer를 수식할 수 있는 알맞은 부사를 고르시오.",
+  "c": "... which are mammals and biologically (much / very) closer to us...",
+  "o": [
+   "much",
+   "very"
+  ],
+  "a": "much",
+  "e": "9번 문장: 비교급 closer 앞에서는 very를 쓸 수 없고 much, far, even, still, a lot 등으로 수식합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 시간 부사절의 시제 규칙에 알맞은 형태를 고르시오.",
+  "c": "It may be a very long time before any findings gained from hydra or jellyfish (are / will be) useful to us.",
+  "o": [
+   "are",
+   "will be"
+  ],
+  "a": "are",
+  "e": "10번 문장: 시간 부사절 접속사 before가 이끄는 절에서는 미래 시제 대신 현재 시제 are를 씁니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "해양 생태계 파괴가 강장동물의 재생 메커니즘에 미치는 악영향",
+   "생물학적 불멸 생물 연구의 의의와 그 발견을 인간 노화에 적용하는 데 따르는 생물학적 한계",
+   "포유류 동물 실험의 윤리적 쟁점과 대안적 줄기세포 연구",
+   "식물과 하등 동물의 세포 분열 속도 비교를 통한 수명 예측 모델"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 생물학적 불멸 생물 연구의 의의와 그 발견을 인간 노화에 적용하는 데 따르는 생물학적 한계"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 불멸 생물 연구의 매혹적인 가능성과 인간 적용 한계의 대조를 가장 뚜렷하게 보여주어 중심 문장으로 선정한 것은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "4번 문장",
+   "5번 문장",
+   "7번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 1번 중심 문장: 7번 문장 Although we may learn some fascinating things about their lack of apparent aging, it is not at all clear how relevant those findings will be to human aging."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (생물학적 불멸 유기체)",
+   "키워드 B (인간 노화 적용의 한계와 난제)"
+  ],
+  "rows": [
+   ["regenerate entire body parts", 1],
+   ["more similar to trees than to us", 2],
+   ["biologically immortal", 1],
+   ["difficult to translate into humans", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "흥미 유발 및 통념적 기대 - 반전 - 구체적 근거를 통한 한계 규명",
+   "역사적 사실 열거 - 상반된 가설 검증 - 절충안 도출",
+   "상반된 두 학설 대립 - 현장 관찰 데이터 분석 - 새로운 패러다임 제시",
+   "통념 반박 - 실험 결과 오류 지적 - 후속 연구 제언"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 흥미 유발 및 통념적 기대 - 반전 - 구체적 근거를 통한 한계 규명"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 두 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "연구 대상의 독특한 특성 정의와 학문적 기대감 제시",
+   "환상을 걷어내고 생물학적 격차로 인한 한계점과 장기적 난제 규명"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~5번 문장)", 1],
+   ["두 번째 부분 (6~10번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "mc",
+  "s": "6번 문장의 But이 글의 논리 전개에서 수행하는 핵심 기능은?",
+  "o": [
+   "노화 극복 단서라는 긍정적 기대에서 인간과의 근본적 괴리라는 한계로 시선을 전환한다.",
+   "히드라와 해파리의 서식 환경 차이를 비교한다.",
+   "노화학자들의 학문적 성과를 연대기순으로 정리한다.",
+   "앞서 언급된 모든 동물의 공통점을 요약한다."
+  ],
+  "a": 1,
+  "e": "분석지 2번 6번 문장 어휘 및 연결어: 긍정적 기대에서 인간과의 근본적 괴리라는 한계로 시선을 전환하는 핵심 대조 연결어입니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "fix",
+  "s": "지문 6번 문장에서 문법상 틀린 밑줄 친 어구를 찾아 올바르게 고쳐 쓰시오.",
+  "c": "But their property of being able to regenerate entire body parts, or even a whole organism, <u>making</u> them more similar to trees than to us.",
+  "keys": [
+   {"k":"makes","show":"making → makes"}
+  ],
+  "e": "분석지 4번 문제 풀이: 핵심 주어가 3인칭 단수명사인 property이므로 준동사 making이 아닌 본동사 makes가 와야 합니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 7번 문장의 how relevant가 어법상 옳은 이유로 설명한 것은?",
+  "o": [
+   "진주어 간접의문문 명사절 내에서 will be의 주격 보어 역할을 완벽히 수행하기 때문",
+   "how가 방법의 관계부사로 쓰였기 때문",
+   "relevant가 clear를 직접 수식하는 부사 역할을 하기 때문",
+   "it that 강조 구문에서 강조되는 주어 역할을 하기 때문"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이: how relevant는 진주어 간접의문문을 이끌며 will be의 주격 보어 역할을 합니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「6. 마무리」에서 언급한 29번 어법 문제의 전형적인 킬러 패턴은?",
+  "o": [
+   "복잡한 가정법 과거완료 시제 도치 패턴",
+   "진짜 주어 찾기와 본동사 자리에 준동사(-ing) 쓰기 함정 패턴",
+   "관계대명사 what과 that의 구별 패턴",
+   "재귀대명사의 강조 용법 구별 패턴"
+  ],
+  "a": 2,
+  "e": "분석지 6번 마무리: '진짜 주어 찾기와 본동사 자리에 준동사(-ing) 쓰기 함정' 패턴이라고 설명되어 있습니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "1번 문장의 'biologically immortal'이라는 표현이 뜻하는 실제 의미를 4번 문장의 표현을 활용하여 「나이가 들어도 죽을 <u>   </u>이 증가하지 않음」에서 빈칸에 들어갈 두 글자의 우리말을 쓰시오.",
+  "ans": [
+   "확률",
+   "가능성"
+  ],
+  "show": "확률 (또는 가능성)",
+  "e": "4번 문장 their likelihood of dying does not increase with age"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 6번 문장과 9번 문장을 바탕으로, 히드라의 연구 결과를 인간의 노화 극복에 바로 적용하기 어려운 <b>생물학적 이유 2가지</b>를 지문 내용을 근거로 서술하세요.",
+  "show": "첫째, 몸 전체 부위나 유기체 전체를 재생하는 특성이 인간보다는 나무에 더 가깝기 때문이고, 둘째, 인간과 훨씬 더 가까운 포유류인 쥐의 발견조차도 인간에게 적용하기 어렵기 때문이다.",
+  "crit": "① 나무에 가까운 전신 재생 특성(식물과의 유사성) 언급 (2점) ② 인간과 가까운 포유류(쥐) 실험 결과조차 적용하기 어렵다는 점 언급 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 6번 문장 구문 분석과 「4. 문제 풀이」를 참고하여, 왜 making이 어법상 틀렸으며 <b>makes</b>로 고쳐야 하는지 문장의 주어와 품사 성격을 명시하여 서술하세요.",
+  "show": "문장의 주어는 단수명사 their property인데 문장에 술어 동사(본동사)가 누락되어 있으므로, 준동사인 현재분사 making을 3인칭 단수 현재 시제 본동사인 makes로 고쳐야 한다.",
+  "crit": "① 핵심 주어가 단수명사 property라는 점 명시 (1점) ② 본동사(술어 동사) 자리에 준동사(-ing)가 쓰였다는 오류 설명 (1점) ③ 단수 본동사 makes로 고쳐야 한다는 점 설명 (1점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

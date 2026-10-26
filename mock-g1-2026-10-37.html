@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "37번 순서배열 분석지 확인 문제",
+ "section": "수능 영어 · 37번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 37번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "When people are collaborating face to face they can easily see each other and the range of different communication cues being used, so the task space is a subset of the communication space."],
+  [2, "Ishii, a professor at the MIT Media Lab, describes this as seamless communication because there is no functional separation between the task and communication space."],
+  [3, "However, when people are working remotely, the task space is often separated from the communication space."],
+  [4, "For example, when video conferencing, people may have the face of their collaborator on one screen, while looking at a shared document on another."],
+  [5, "In this case, it is impossible to see many of the remote collaborator's communication cues at the same time as looking at the task space."],
+  [6, "So, there is an artificial seam between the communication space and task space."],
+  [7, "This is the type of impact of remote communication technology that needs to be predicted through communication models."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "대면하여 협력할 때 사람들은 서로를 쉽게 볼 수 있고 사용되는 다양한 의사소통 단서들을 확인할 수 있다.",
+  "a": "O",
+  "e": "1번 문장의 they can easily see each other and the range of different communication cues being used와 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "대면 협업 상황에서 의사소통 공간은 과업 공간의 부분집합이 된다.",
+  "a": "X",
+  "e": "1번 문장에서 the task space is a subset of the communication space라 하여 과업 공간이 의사소통 공간의 부분집합이라고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "MIT 미디어 랩의 Ishii 교수는 대면 협업 상태를 '이음매 없는 의사소통'이라고 설명한다.",
+  "a": "O",
+  "e": "2번 문장의 describes this as seamless communication과 일치합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "대면 협업에서는 과업 공간과 의사소통 공간 사이에 뚜렷한 기능적 분리가 존재한다.",
+  "a": "X",
+  "e": "2번 문장에서 there is no functional separation between the task and communication space라 하여 기능적 분리가 없다고 밝혔습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "사람들이 원격으로 작업할 때는 과업 공간이 의사소통 공간으로부터 종종 분리된다.",
+  "a": "O",
+  "e": "3번 문장의 the task space is often separated from the communication space와 일치합니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "화상 회의 시 한 화면에 협업자의 얼굴을 두고 다른 화면에 공유 문서를 보는 것은 불가능하다.",
+  "a": "X",
+  "e": "4번 문장에서 people may have the face of their collaborator on one screen, while looking at a shared document on another라 하여 그렇게 할 수 있다고 서술했습니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "화상 회의 상황에서는 과업 공간을 보면서 원격 협업자의 많은 소통 단서를 동시에 확인하는 것이 불가능하다.",
+  "a": "O",
+  "e": "5번 문장의 it is impossible to see many of the remote collaborator's communication cues at the same time as looking at the task space와 일치합니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "원격 의사소통 기술이 만들어내는 두 공간 사이의 인공적 틈은 의사소통 모델을 통해서도 결코 예측될 수 없다.",
+  "a": "X",
+  "e": "7번 문장에서 needs to be predicted through communication models라 하여 의사소통 모델을 통해 예측되어야만 한다고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "이음매가 없는, 아주 매끄러운",
+   "솔기, 이음매, 갈라진 틈",
+   "협력하다, 공동 작업하다",
+   "인공적인, 인위적인"
+  ],
+  "rows": [
+   ["seamless", 1],
+   ["seam", 2],
+   ["collaborate", 3],
+   ["artificial", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "So, there is an artificial (seam / seem) between the communication space and task space.",
+  "o": [
+   "seam",
+   "seem"
+  ],
+  "a": "seam",
+  "e": "분석지 5번 혼동 어휘: seam은 갈라진 틈, 이음매를 뜻하는 명사이고, seem은 '~처럼 보이다'라는 동사입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "Ishii describes this as (seamless / shameless) communication...",
+  "o": [
+   "seamless",
+   "shameless"
+  ],
+  "a": "seamless",
+  "e": "분석지 5번 혼동 어휘: seamless는 '이음매가 없는, 아주 매끄러운' 뜻이고 shameless는 '뻔뻔한' 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 artificial의 유의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["synthetic", "man-made", "unnatural"]],
+   ["②", ["synthetic", "man-made", "unnatural"]]
+  ],
+  "show": "synthetic, man-made, unnatural 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 collaborate의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["cooperate", "team up", "work together"]],
+   ["②", ["cooperate", "team up", "work together"]]
+  ],
+  "show": "cooperate, team up, work together 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "5번 문장에서 「~하는 것과 동시에」의 뜻으로 쓰인 다섯 단어의 관용 어구를 본문에서 찾아 쓰시오. (동명사 looking 앞까지)",
+  "ans": [
+   "at the same time as"
+  ],
+  "show": "at the same time as",
+  "e": "5번 문장 at the same time as"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사 communication cues를 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "... and the range of different communication cues (being used / using), so the task space...",
+  "o": [
+   "being used",
+   "using"
+  ],
+  "a": "being used",
+  "e": "1번 문장: 의사소통 단서들이 사용되고 있는 수동 진행 관계이므로 being used가 올바릅니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 유도부사 there 뒤에 올 알맞은 be동사를 고르시오.",
+  "c": "... because there (is / are) no functional separation between the task and communication space.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "2번 문장: 주어의 핵심 명사가 단수명사 separation이므로 단수 be동사 is가 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 수동태 술어로 알맞은 형태를 고르시오.",
+  "c": "... the task space is often (separated / separating) from the communication space.",
+  "o": [
+   "separated",
+   "separating"
+  ],
+  "a": "separated",
+  "e": "3번 문장: 과업 공간이 의사소통 공간으로부터 분리되는 수동의 의미이므로 separated가 맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사 document를 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "... while looking at a (shared / sharing) document on another.",
+  "o": [
+   "shared",
+   "sharing"
+  ],
+  "a": "shared",
+  "e": "4번 문장: 공유된 문서라는 수동의 의미이므로 과거분사 shared가 수식합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장 it is impossible to see many of the remote collaborator's communication cues의 문법적 구조로 옳은 것은?",
+  "o": [
+   "it은 날씨를 나타내는 비인칭 주어이다.",
+   "it은 가주어이며 to see 이하의 to부정사구가 진주어이다.",
+   "impossible은 목적격 보어이며 it은 가목적어이다.",
+   "to see는 impossible을 수식하는 부사적 용법이다."
+  ],
+  "a": 2,
+  "e": "분석지 5번 문장 구문 분석: it은 형식상의 가주어, to see 이하가 진짜 주어입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 유도부사 there 뒤의 수 일치상 알맞은 be동사를 고르시오.",
+  "c": "So, there (is / are) an artificial seam between the communication space and task space.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "6번 문장: 진주어가 단수명사 an artificial seam이므로 단수 be동사 is가 알맞습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 선행사 the type of impact를 수식하는 알맞은 관계사를 고르시오.",
+  "c": "This is the type of impact of remote communication technology (that / what) needs to be predicted...",
+  "o": [
+   "that",
+   "what"
+  ],
+  "a": "that",
+  "e": "7번 문장: 선행사 the type of impact를 수식하는 주격 관계대명사 that이 올바릅니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 needs to의 목적어로 알맞은 수동형 to부정사를 고르시오.",
+  "c": "... technology that needs (to predict / to be predicted) through communication models.",
+  "o": [
+   "to be predicted",
+   "to predict"
+  ],
+  "a": "to be predicted",
+  "e": "7번 문장: 기술의 영향이 모델을 통해 예측되어야 하는 수동 의미이므로 to be predicted가 맞습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "대면 협업 시 신체 언어가 의사소통 효율성에 미치는 긍정적 효과",
+   "원격 협업 기술이 과업 공간과 의사소통 공간 사이에 초래하는 인공적 단절",
+   "화상 회의 소프트웨어 개발을 위한 다중 화면 인터페이스 설계 기법",
+   "인공지능 기반 의사소통 모델의 자연어 처리 알고리즘 고도화 방안"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 원격 협업 기술이 과업 공간과 의사소통 공간 사이에 초래하는 인공적 단절"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 원격 기술이 만들어내는 두 공간 사이의 인공적 틈을 규명하여 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "2번 문장",
+   "3번 문장",
+   "6번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 1번 중심 문장: 6번 문장 So, there is an artificial seam between the communication space and task space."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (과업 공간과 의사소통 공간의 일치와 분리)",
+   "키워드 B (이음매 없는 소통과 인공적 단절)"
+  ],
+  "rows": [
+   ["task space is a subset of the communication space", 1],
+   ["seamless communication", 2],
+   ["separated from the communication space", 1],
+   ["artificial seam", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "대면 상황(통합) - 역접 및 원격 상황(분리) - 예시 상술 - 결론 도출",
+   "통념 반박 - 역사적 사실 나열 - 절충안 도출",
+   "가설 설정 - 실험 데이터 분석 - 대안 가설 제시",
+   "문제점 제기 - 실패 사례 열거 - 개인적 반성 촉구"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 대면 상황(통합) - 역접 및 원격 상황(분리) - 예시 상술 - 결론 도출"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 세 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "대면 소통의 완벽한 공간 통합성 제시",
+   "원격 협업에서 공간 분리가 발생하는 구체적 메커니즘 실증",
+   "앞선 문제점의 인과적 총괄 및 학문적·기술적 시사점 제시"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~2번 문장)", 1],
+   ["두 번째 부분 (3~5번 문장)", 2],
+   ["세 번째 부분 (6~7번 문장)", 3]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "choice",
+  "s": "3번 문장의 However가 글의 논리 전개에서 수행하는 핵심 기능은 무엇인가?",
+  "o": [
+   "대면 협업의 일치 상태에서 원격 협업의 분리 상태로 논의를 전환한다",
+   "화상 회의의 장점을 강조하며 대면 소통의 단점을 지적한다"
+  ],
+  "a": "대면 협업의 일치 상태에서 원격 협업의 분리 상태로 논의를 전환한다",
+  "e": "분석지 2번 3번 문장 어휘 및 연결어: 대면 협업의 일치 상태에서 원격 협업의 분리 상태로 논의를 전환하는 핵심 역접 연결부사입니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에 따라 주어진 글 다음에 이어질 글의 가장 적절한 순서는?",
+  "o": [
+   "(A) - (C) - (B)",
+   "(B) - (A) - (C)",
+   "(B) - (C) - (A)",
+   "(C) - (A) - (B)",
+   "(C) - (B) - (A)"
+  ],
+  "a": 3,
+  "e": "분석지 4번 문제 풀이: 정답은 (B) - (C) - (A)입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 주어진 글 바로 뒤에 (B)가 와야 하는 지시어적 근거는?",
+  "o": [
+   "(B)의 지시대명사 this가 주어진 글의 대면 협업 통합 상황을 정확히 가리키기 때문",
+   "(B)의 Media Lab이 주어진 글의 task space를 가리키는 대명사이기 때문",
+   "(B)의 However가 주어진 글의 When과 동일한 접속사이기 때문",
+   "(B)의 professor가 주어진 글의 collaborator를 대신하기 때문"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이: (B)의 this는 주어진 글의 과업 공간이 의사소통 공간의 부분집합이 되는 대면 협업 상황을 완벽하게 받습니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 (C) 뒤에 (A)가 이어져야 하는 인과적 연결 근거는?",
+  "o": [
+   "(C)의 두 화면 분리와 동시 확인 불가능의 직접적 결과로 (A)의 인공적 틈(seam)이 도출되기 때문",
+   "(A)의 models가 (C)의 shared document를 지칭하기 때문",
+   "(C)의 screen이 (A)의 technology와 반의어 관계를 형성하기 때문",
+   "(A)의 So가 (C)의 In this case와 어원상 동일하기 때문"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이: (C)에서 설명된 두 화면 분리와 동시 포착 불가능의 직접적 결과로서 인공적 틈이 생긴다는 결론이 인과 접속사 So와 함께 맞물립니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "6번 문장에서 원격 협업 기술로 인해 의사소통 공간과 과업 공간 사이에 발생하는 분절 현상을 가리키는 두 단어의 명사구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "artificial seam",
+   "an artificial seam"
+  ],
+  "show": "artificial seam",
+  "e": "6번 문장 an artificial seam"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 2번 문장을 바탕으로, MIT의 Ishii 교수가 대면 협업 상황을 <b>이음매 없는 의사소통(seamless communication)</b>이라고 설명한 구체적인 이유를 우리말로 서술하세요.",
+  "show": "과업 공간과 의사소통 공간 사이에 기능적인 분리가 존재하지 않기 때문이다.",
+  "crit": "① '과업 공간과 의사소통 공간' 언급 (1점) ② '기능적인 분리가 없다' 명시 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 4번 문장과 5번 문장을 바탕으로, 화상 회의와 같은 원격 협업에서 <b>의사소통 단서를 동시에 확인하기 불가능한 원인</b>을 '화면'의 배치 관점에서 서술하세요.",
+  "show": "한쪽 화면에는 협업자의 얼굴을 띄워두고 다른 쪽 화면에서는 공유 문서를 바라보아야 하므로, 과업 공간을 보면서 동시에 상대방의 의사소통 단서를 확인할 수 없기 때문이다.",
+  "crit": "① '한 화면에는 상대 얼굴, 다른 화면에는 공유 문서(과업)를 봄' 서술 (2점) ② '두 영역을 동시에 바라볼 수 없음' 명시 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

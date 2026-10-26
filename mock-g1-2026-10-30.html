@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "30번 문맥상 어휘 분석지 확인 문제",
+ "section": "수능 영어 · 30번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 30번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Subsidies, taxes, and regulations can all lead to power plants that pollute less by switching away from coal."],
+  [2, "In all cases, profits can be higher from making the transition, even taking the related costs into account."],
+  [3, "The power plants prefer subsidies over regulations or taxes."],
+  [4, "The reason is obvious."],
+  [5, "They prefer to receive money from the government rather than pay the costs themselves."],
+  [6, "But the \"expansion\" of their opportunity set through subsidies has to be matched by the contraction of the opportunity set of others."],
+  [7, "The electricity companies' \"freedom\" is <u>decreased</u> at the expense of the ordinary individual, who must suffer from increased taxation to pay for the subsidy."],
+  [8, "Moreover, from the perspective of pure efficiency, the subsidy distorts the economy because the electricity company is not facing the full costs of what it does, even if it is successful in limiting emissions."],
+  [9, "Indeed, electricity prices may end up lower than they should be and electricity consumption higher, which will worsen global warming, even though the emissions per unit of electricity have been reduced."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "보조금, 세금, 규제는 모두 발전소가 석탄으로부터 전환하여 오염을 덜 일으키도록 유도할 수 있다.",
+  "a": "O",
+  "e": "1번 문장의 Subsidies, taxes, and regulations can all lead to power plants that pollute less by switching away from coal과 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "관련 비용을 감안할 때 모든 경우에서 석탄 탈피 전환을 단행하면 발전소의 이익은 항상 감소한다.",
+  "a": "X",
+  "e": "2번 문장에서 profits can be higher from making the transition, even taking the related costs into account라 하여 이익이 더 높을 수 있다고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "발전소들은 자신들이 직접 비용을 치르는 것보다 정부로부터 돈을 지원받는 것을 더 선호한다.",
+  "a": "O",
+  "e": "5번 문장의 They prefer to receive money from the government rather than pay the costs themselves와 일치합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "보조금을 통한 발전소의 기회 집합 확장은 사회 구성원 모두의 기회 집합을 동시에 확장시킨다.",
+  "a": "X",
+  "e": "6번 문장에서 has to be matched by the contraction of the opportunity set of others라 하여 다른 사람들의 기회 집합 축소와 맞물려 상쇄되어야 한다고 했습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "일반 개인들은 기업의 보조금을 충당하기 위해 늘어난 세금 부담을 겪게 된다.",
+  "a": "O",
+  "e": "7번 문장의 who must suffer from increased taxation to pay for the subsidy와 일치합니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "발전소가 배출량을 줄이는 데 성공한다면 보조금은 시장 경제의 순수한 효율성을 전혀 왜곡하지 않는다.",
+  "a": "X",
+  "e": "8번 문장에서 even if it is successful in limiting emissions라 하더라도 the subsidy distorts the economy라고 명시했습니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "보조금으로 인해 전력 회사가 자신의 전체 비용을 직접 감당하지 않으면 전기 요금은 형성되어야 할 수준보다 더 낮아질 수 있다.",
+  "a": "O",
+  "e": "9번 문장의 electricity prices may end up lower than they should be와 일치합니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "전기 단위당 배출량이 줄어들었기 때문에 전기 소비가 늘어나더라도 지구 온난화는 완화된다.",
+  "a": "X",
+  "e": "9번 문장에서 전기 소비가 많아져 which will worsen global warming이라 하여 온난화가 오히려 악화된다고 서술했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "축소, 수축",
+   "보조금, 장려금",
+   "왜곡하다, 비틀다",
+   "과세, 세금 부담"
+  ],
+  "rows": [
+   ["subsidy", 2],
+   ["contraction", 1],
+   ["taxation", 4],
+   ["distort", 3]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "... through subsidies has to be matched by the (contraction / contract) of the opportunity set of others.",
+  "o": [
+   "contraction",
+   "contract"
+  ],
+  "a": "contraction",
+  "e": "분석지 5번 혼동 어휘: contraction은 '수축, 축소'이고, contract는 '계약'입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 distort의 유의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["misrepresent", "twist", "skew"]],
+   ["②", ["misrepresent", "twist", "skew"]]
+  ],
+  "show": "misrepresent, twist, skew 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 worsen의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["aggravate", "exacerbate", "deteriorate"]],
+   ["②", ["aggravate", "exacerbate", "deteriorate"]]
+  ],
+  "show": "aggravate, exacerbate, deteriorate 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "short",
+  "s": "2번 문장에서 「~을 고려하다, 참작하다」의 뜻으로 쓰인 세 단어의 관용구를 본문에서 찾아 원형으로 쓰시오.",
+  "ans": [
+   "take into account",
+   "take related costs into account"
+  ],
+  "show": "take into account",
+  "e": "2번 문장 taking the related costs into account"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "7번 문장에서 「~의 희생으로, ~을 대가로 치르고」의 뜻으로 쓰인 네 단어의 관용 숙어를 찾아 쓰시오.",
+  "ans": [
+   "at the expense of"
+  ],
+  "show": "at the expense of",
+  "e": "7번 문장 at the expense of"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 관계사절의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "... lead to power plants that (pollute / pollutes) less by switching away from coal.",
+  "o": [
+   "pollute",
+   "pollutes"
+  ],
+  "a": "pollute",
+  "e": "1번 문장: 주격 관계대명사 that의 선행사가 복수명사인 power plants이므로 복수동사 pollute가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어와의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "But the \"expansion\" of their opportunity set through subsidies (has / have) to be matched...",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "has",
+  "e": "6번 문장: 주어의 핵심 명사가 단수명사인 expansion이므로 단수형 has가 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 당위 조동사구 뒤에 알맞은 수동태 형태를 고르시오.",
+  "c": "... through subsidies has to (match / be matched) by the contraction of the opportunity set of others.",
+  "o": [
+   "be matched",
+   "match"
+  ],
+  "a": "be matched",
+  "e": "6번 문장: 기회 집합의 확장이 다른 사람들의 기회 집합 축소에 의해 맞춰지고 상쇄되는 것이므로 수동태 be matched가 옳습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 병렬 대조 구조상 알맞은 형태를 고르시오.",
+  "c": "They prefer to receive money from the government rather than (pay / paying) the costs themselves.",
+  "o": [
+   "pay",
+   "paying"
+  ],
+  "a": "pay",
+  "e": "5번 문장: rather than 뒤에 앞의 to부정사 내 동사원형 receive와 병렬 대조를 이루는 동사원형 pay가 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "short",
+  "s": "5번 문장 끝에 쓰인 themselves의 문법적 용법을 네 글자로 쓰시오.",
+  "ans": [
+   "강조용법",
+   "강조 용법"
+  ],
+  "show": "강조 용법",
+  "e": "분석지 5번 문장 구문 분석: 주어 They를 강조하기 위해 덧붙은 재귀대명사의 강조 용법입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "mc",
+  "s": "7번 문장의 , who must suffer from increased taxation에서 관계대명사 who에 대한 설명으로 옳은 것은?",
+  "o": [
+   "목적격 관계대명사이며 선행사는 subsidy이다.",
+   "선행사 the ordinary individual을 부연하는 주격 관계대명사의 계속적 용법이다.",
+   "the electricity companies를 선행사로 받는 소유격 관계대명사이다.",
+   "관계부사 where를 대신하는 계속적 용법이다."
+  ],
+  "a": 2,
+  "e": "분석지 7번 문장 구문 분석: 선행사 the ordinary individual을 부연하는 주격 관계대명사의 계속적 용법으로 and he/she로 풀 수 있습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 전치사 of의 목적어로 쓰인 알맞은 관계사를 고르시오.",
+  "c": "... the electricity company is not facing the full costs of (what / that) it does...",
+  "o": [
+   "what",
+   "that"
+  ],
+  "a": "what",
+  "e": "8번 문장: 선행사를 자체 포함하며 does의 목적어 역할을 하는 관계대명사 명사절 what이 알맞습니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 계속적 용법의 관계대명사로 알맞은 것을 고르시오.",
+  "c": "... and electricity consumption higher, (which / that) will worsen global warming...",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "9번 문장: 콤마 뒤 계속적 용법의 관계대명사로는 that을 쓸 수 없으며 앞 절 전체 내용을 받는 which가 옳습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "석탄 화력 발전소 폐쇄에 따른 대체 에너지 개발의 시급성",
+   "발전소 배출 저감 보조금이 초래하는 공공 비용 전가와 경제적 왜곡",
+   "전기 요금 현실화를 통한 누진세 개편의 경제적 파급 효과",
+   "탄소 배출권 거래제와 정부 보조금 제도의 효율성 비교"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 발전소 배출 저감 보조금이 초래하는 공공 비용 전가와 경제적 왜곡"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 보조금 혜택이 일반인의 세금 부담과 기회 축소라는 불공정한 전가를 낳는 핵심 모순을 짚어 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "3번 문장",
+   "7번 문장",
+   "9번 문장"
+  ],
+  "a": 3,
+  "e": "분석지 1번 중심 문장: 7번 문장 The electricity companies' \"freedom\" is increased at the expense of the ordinary individual, who must suffer from increased taxation to pay for the subsidy."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (발전소 친환경 전환 보조금)",
+   "키워드 B (경제적 왜곡과 사회적 비용 전가)"
+  ],
+  "rows": [
+   ["receive money from the government", 1],
+   ["contraction of the opportunity set of others", 2],
+   ["at the expense of the ordinary individual", 2],
+   ["pay for the subsidy", 1]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 연결어가 수행하는 논리적 역할을 올바르게 연결하세요.",
+  "box": [
+   "기업 이익 뒤에 숨겨진 사회적 대가를 폭로하는 핵심 역접 전환",
+   "세금 희생에 더하여 경제적 효율성 왜곡이라는 추가 문제를 덧붙이는 첨가",
+   "시장 왜곡의 구체적 결과(가격 하락과 소비 증가)를 확인하고 심화하는 강조"
+  ],
+  "rows": [
+   ["But (6번 문장)", 1],
+   ["Moreover (8번 문장)", 2],
+   ["Indeed (9번 문장)", 3]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "현상 설명 - 이면의 비용 전가 비판 - 시장 왜곡과 최종적 역효과 경고",
+   "가설 설정 - 실험 데이터 분석 - 대안 정책 제시",
+   "역사적 사례 비교 - 통념 반박 - 절충안 도출",
+   "문제점 제기 - 원인 규명 - 기술적 해결책 제언"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 현상 설명 - 이면의 비용 전가 비판 - 시장 왜곡과 최종적 역효과 경고"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 세 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "발전소의 경제적 유인과 보조금 선호 경향 제시",
+   "보조금의 제로섬적 성격과 공공 비용 전가의 실태 폭로",
+   "보조금 정책이 초래하는 시장 효율성 파괴와 최종적인 환경적 역설 규명"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~5번 문장)", 1],
+   ["두 번째 부분 (6~7번 문장)", 2],
+   ["세 번째 부분 (8~9번 문장)", 3]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "fix",
+  "s": "지문 7번 문장에서 문맥상 낱말의 쓰임이 적절하지 않은 밑줄 친 단어를 찾아 바르게 고쳐 쓰시오.",
+  "c": "The electricity companies' \"freedom\" is <u>decreased</u> at the expense of the ordinary individual, who must suffer from increased taxation to pay for the subsidy.",
+  "keys": [
+   {"k":"increased","show":"decreased → increased"}
+  ],
+  "e": "분석지 4번 문제 풀이: 발전소의 기회 집합 확장은 일반 대중의 증세 희생 위에 성립하므로 freedom is increased가 되어야 논리상 부합합니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이 1단계」에서 7번 문장의 decreased가 문맥상 모순인 이유로 밝힌 것은?",
+  "o": [
+   "발전소의 기회 확장이 일반인의 기회 축소와 맞물린다는 앞 문장의 논리와 정면 충돌하므로",
+   "전력 회사가 신재생 에너지를 완전히 포기했다고 서술되었으므로",
+   "일반 납세자들의 세금이 감면되었다고 앞서 언급되었으므로",
+   "규제와 세금이 보조금보다 훨씬 효과적이라고 결론지었으므로"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이 1단계: 앞선 전력 회사의 기회 확장 및 일반인의 증세 고통이라는 논리적 맥락과 정면으로 모순·충돌합니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "choice",
+  "s": "지문 9번 문장에 따르면 보조금으로 인해 전력 회사가 비용을 직접 감당하지 않을 때 전력 가격과 소비는 마땅한 수준보다 어떻게 형성되는가?",
+  "o": [
+   "가격은 더 낮아지고 소비는 더 많아진다",
+   "가격은 더 높아지고 소비는 더 줄어든다"
+  ],
+  "a": "가격은 더 낮아지고 소비는 더 많아진다",
+  "e": "9번 문장: electricity prices may end up lower than they should be and electricity consumption higher"
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "6번 문장에서 보조금을 통한 발전소의 기회 집합의 확장에 맞물려 상쇄되는 다른 사람들의 기회 집합의 상태를 가리키는 한 단어의 명사를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "contraction"
+  ],
+  "show": "contraction",
+  "e": "6번 문장 contraction of the opportunity set of others"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 6번 문장과 7번 문장을 바탕으로, 발전소가 보조금을 지원받을 때 왜 <b>일반 개인의 희생</b>이 발생하는지 '기회 집합'과 '세금'이라는 개념을 활용하여 서술하세요.",
+  "show": "보조금을 통한 발전소의 기회 집합 확장은 필연적으로 타인(일반 개인)의 기회 집합 축소와 맞물리며, 일반 개인은 그 보조금을 충당하기 위해 늘어난 세금 부담(과세)으로 고통받기 때문이다.",
+  "crit": "① '발전소의 기회 확장과 일반인의 기회 집합 축소(상쇄/맞물림)' 언급 (2점) ② '보조금 충당을 위한 일반 개인의 늘어난 세금 부담(증세)' 언급 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 8번 문장과 9번 문장을 바탕으로, 발전소 보조금 지급이 전기 단위당 배출량을 줄였음에도 불구하고 <b>최종적으로 지구 온난화를 악화시키는 역설적 이유</b>를 시장 가격과 소비의 관점에서 서술하세요.",
+  "show": "전력 회사가 행위의 전체 비용을 직접 감당하지 않아 경제가 왜곡됨으로써, 전기 가격은 마땅한 수준보다 낮아지고 전기 소비는 오히려 늘어나 결과적으로 온난화를 악화시키기 때문이다.",
+  "crit": "① '전력 회사가 전체 비용을 부담하지 않아 시장/경제 왜곡' 언급 (1점) ② '전기 가격이 낮아짐' 언급 (1점) ③ '전기 소비가 늘어나 온난화 악화' 언급 (1점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

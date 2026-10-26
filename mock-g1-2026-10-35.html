@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "35번 무관한 문장 분석지 확인 문제",
+ "section": "수능 영어 · 35번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 35번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "The recognition of burnout as an occupational phenomenon by the WHO in 2019 marked an important moment in the discourse on workplace mental health."],
+  [2, "This designation reframes clinical assessment and organizational responsibility, shifting attention to systemic prevention."],
+  [3, "It invites employers to adopt structural interventions rather than relying solely on individual-level remedies."],
+  [4, "In practice, this means clinicians should collaborate with occupational health and leadership to address root causes."],
+  [5, "Individuals can help themselves recover from burnout by changing patterns that contribute to stress."],
+  [6, "It signaled a shift away from viewing burnout as a personal failing or a matter of individual resilience, toward understanding it as a structural issue rooted in organizational culture, leadership practices, and the broader socio-economic context of work."],
+  [7, "This reframing is essential, as it opens the door to systemic interventions and policy-level changes rather than placing the burden solely on individuals to cope or adapt."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "2019년 WHO가 번아웃을 직업적 현상으로 인정한 것은 직장 정신 건강 담론에서 중요한 순간을 나타냈다.",
+  "a": "O",
+  "e": "1번 문장의 The recognition of burnout as an occupational phenomenon by the WHO in 2019 marked an important moment...와 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "WHO의 번아웃 재지정은 관심의 초점을 시스템적 예방에서 개인의 치료법으로 이동시켰다.",
+  "a": "X",
+  "e": "2번 문장에서 shifting attention to systemic prevention이라 하여 시스템적 예방으로 관심을 돌려놓았다고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "이 지정은 고용주들에게 개인적 차원의 해결책에만 전적으로 의존하기보다 구조적 개입을 채택하도록 촉구한다.",
+  "a": "O",
+  "e": "3번 문장의 invites employers to adopt structural interventions rather than relying solely on individual-level remedies와 일치합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "실제 현장에서 임상의들은 근본 원인을 해결하기 위해 조직 지도부와의 협력을 피해야 한다.",
+  "a": "X",
+  "e": "4번 문장에서 clinicians should collaborate with occupational health and leadership to address root causes라 하여 지도부와 협력해야 한다고 명시했습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "번아웃의 재지정은 그것을 개인의 실패나 개인적 회복탄력성의 문제로 바라보는 시각에서 벗어나는 전환을 알렸다.",
+  "a": "O",
+  "e": "6번 문장의 signaled a shift away from viewing burnout as a personal failing or a matter of individual resilience와 일치합니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "새로운 관점에서 번아웃은 조직 문화, 리더십 관행, 사회경제적 맥락에 뿌리를 둔 구조적 문제로 이해된다.",
+  "a": "O",
+  "e": "6번 문장의 structural issue rooted in organizational culture, leadership practices, and the broader socio-economic context of work와 일치합니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "이러한 재구성은 대처나 적응의 모든 부담을 노동자 개인에게 온전히 지우는 것을 목표로 한다.",
+  "a": "X",
+  "e": "7번 문장에서 rather than placing the burden solely on individuals to cope or adapt라 하여 개인에게만 부담을 지우는 대신 시스템적 개입의 문을 연다고 했습니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "이 재구성은 시스템적 개입과 정책 수준의 변화로 향하는 문을 열어준다는 점에서 필수적이다.",
+  "a": "O",
+  "e": "7번 문장의 This reframing is essential, as it opens the door to systemic interventions and policy-level changes와 일치합니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "지정, 명칭 부여",
+   "치료법, 구제책",
+   "회복 탄력성, 회복력",
+   "전적으로, 오로지"
+  ],
+  "rows": [
+   ["designation", 1],
+   ["remedy", 2],
+   ["solely", 4],
+   ["resilience", 3]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "This designation reframes clinical assessment and organizational responsibility, shifting attention to (systemic / systematic) prevention.",
+  "o": [
+   "systemic",
+   "systematic"
+  ],
+  "a": "systemic",
+  "e": "분석지 5번 혼동 어휘: systemic은 조직·사회 전체 시스템의 구조적 성격을 뜻하고 systematic은 체계적인, 질서정연한의 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "... viewing burnout as a personal failing or a matter of individual (resilience / resistance) ...",
+  "o": [
+   "resilience",
+   "resistance"
+  ],
+  "a": "resilience",
+  "e": "분석지 5번 혼동 어휘: resilience는 회복 탄력성, 회복력이고 resistance는 저항, 반항입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 intervention의 유의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["involvement", "intercession", "mediation"]],
+   ["②", ["involvement", "intercession", "mediation"]]
+  ],
+  "show": "involvement, intercession, mediation 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 reframe의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["reconceptualize", "reshape", "reevaluate"]],
+   ["②", ["reconceptualize", "reshape", "reevaluate"]]
+  ],
+  "show": "reconceptualize, reshape, reevaluate 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "7번 문장에서 「~로 향하는 문을 열다, ~의 길을 터주다」의 뜻으로 쓰인 네 단어의 관용구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "open the door to",
+   "opens the door to"
+  ],
+  "show": "open the door to",
+  "e": "7번 문장 opens the door to"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어와의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "The recognition of burnout as an occupational phenomenon by the WHO in 2019 (marked / marking) an important moment...",
+  "o": [
+   "marked",
+   "marking"
+  ],
+  "a": "marked",
+  "e": "1번 문장: 문장의 본동사 자리이므로 과거시제 술어 동사 marked가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 능동 분사구문으로 알맞은 형태를 고르시오.",
+  "c": "This designation reframes clinical assessment and organizational responsibility, (shifting / shifted) attention to systemic prevention.",
+  "o": [
+   "shifting",
+   "shifted"
+  ],
+  "a": "shifting",
+  "e": "2번 문장: 주절의 주어(This designation)가 능동적으로 관심을 돌리는 분사구문이므로 현재분사 shifting이 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 5형식 동사 invites의 목적격 보어로 알맞은 것을 고르시오.",
+  "c": "It invites employers (adopt / to adopt) structural interventions...",
+  "o": [
+   "to adopt",
+   "adopt"
+  ],
+  "a": "to adopt",
+  "e": "3번 문장: invite + 목적어 + to-v 구문이므로 to adopt가 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "4번 문장의 to address root causes에 대한 설명으로 옳은 것은?",
+  "o": [
+   "leadership을 수식하는 형용사적 용법의 to부정사이다.",
+   "목적(~하기 위하여)을 나타내는 to부정사의 부사적 용법이다.",
+   "collaborate의 목적어로 쓰인 명사적 용법이다.",
+   "결과를 나타내는 독립부정사이다."
+  ],
+  "a": 2,
+  "e": "분석지 4번 문장 구문 분석: 목적(~하기 위하여)을 나타내는 to부정사의 부사적 용법(목적)입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어 Individuals와 동일인을 가리키는 재귀대명사로 알맞은 것을 고르시오.",
+  "c": "Individuals can help (them / themselves) recover from burnout...",
+  "o": [
+   "themselves",
+   "them"
+  ],
+  "a": "themselves",
+  "e": "5번 문장: 주어 Individuals와 목적어가 동일 대상이므로 재귀대명사 themselves가 옳습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사 a structural issue를 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "... toward understanding it as a structural issue (rooted / rooting) in organizational culture...",
+  "o": [
+   "rooted",
+   "rooting"
+  ],
+  "a": "rooted",
+  "e": "6번 문장: 구조적 문제가 조직 문화에 뿌리를 두고 있는 수동 관계이므로 과거분사 rooted가 맞습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "7번 문장의 rather than placing the burden solely on individuals to cope or adapt에서 to cope or adapt의 문법적 용법은?",
+  "o": [
+   "the burden 또는 individuals를 수식하는 to부정사의 형용사적 용법",
+   "원인을 나타내는 to부정사의 부사적 용법",
+   "placing의 직접목적어로 쓰인 명사적 용법",
+   "결과를 나타내는 to부정사의 부사적 용법"
+  ],
+  "a": 1,
+  "e": "분석지 7번 문장 구문 분석: 앞의 명사구(the burden 또는 individuals)를 뒤에서 수식하는 형용사적 용법입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 이유를 나타내는 종속접속사로 쓰인 것을 고르시오.",
+  "c": "This reframing is essential, (as / while) it opens the door to systemic interventions...",
+  "o": [
+   "as",
+   "while"
+  ],
+  "a": "as",
+  "e": "7번 문장: 문맥상 '~이므로, ~이기 때문에'라는 이유의 부사절을 이끄는 접속사 as가 알맞습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "직장 내 번아웃 극복을 위한 개인의 스트레스 관리 요령",
+   "번아웃의 직업적·구조적 재인식과 조직적·시스템적 예방의 필요성",
+   "세계보건기구(WHO)의 의사결정 구조와 보건 정책 입안 과정",
+   "임상 의사들의 직무 스트레스 해소를 위한 전문 상담 프로그램"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 번아웃의 직업적·구조적 재인식과 조직적·시스템적 예방의 필요성"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 글의 중심 논지를 가장 명쾌하게 집약하여 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "2번 문장",
+   "4번 문장",
+   "7번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 1번 중심 문장: 7번 문장 This reframing is essential, as it opens the door to systemic interventions and policy-level changes rather than placing the burden solely on individuals to cope or adapt."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (번아웃의 직업적·구조적 문제 규정)",
+   "키워드 B (시스템적 예방과 조직 차원의 개입)"
+  ],
+  "rows": [
+   ["occupational phenomenon", 1],
+   ["systemic prevention", 2],
+   ["structural interventions", 1],
+   ["policy-level changes", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "역사적 사건 제시 - 관점의 재구성 - 시스템적 해결책의 정당화",
+   "통념 제시 - 반례 열거 - 개인적 차원의 해결책 강조",
+   "가설 설정 - 실험 데이터 분석 - 대안 가설 도출",
+   "문제점 제기 - 실패 사례 나열 - 개인의 반성 촉구"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 역사적 사건 제시 - 관점의 재구성 - 시스템적 해결책의 정당화"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 두 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "번아웃 담론의 역사적 전환점 제시 및 조직적 책임 강조",
+   "개인 책임론을 공식적으로 배격하고 구조적 재구성이 지닌 궁극적 가치 천명"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~4번 문장)", 1],
+   ["두 번째 부분 (5~7번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "choice",
+  "s": "6번 문장에서 상관 전치사 대조 표현으로 쓰인 것은 무엇인가?",
+  "o": [
+   "a shift away from A toward B",
+   "both A and B"
+  ],
+  "a": "a shift away from A toward B",
+  "e": "분석지 6번 문장 구문 및 어휘 분석: a shift away from A toward B는 A로부터 벗어나 B로 향하는 대전환을 나타냅니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에 따라 전체 글의 흐름과 관계없는 문장은 몇 번인가?",
+  "o": [
+   "2번 문장",
+   "3번 문장",
+   "4번 문장",
+   "5번 문장",
+   "6번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 4번 문제 풀이: 5번 문장 Individuals can help themselves recover from burnout by changing patterns that contribute to stress는 전체 글의 흐름과 무관합니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이 2. 지시어의 연결성 분석」에서 5번 문장이 빠져야 6번 문장의 It이 가리키게 되는 대상은?",
+  "o": [
+   "Individuals",
+   "patterns",
+   "WHO의 공식 지정 및 재인식(This designation)",
+   "clinical assessment"
+  ],
+  "a": 3,
+  "e": "분석지 4번 문제 풀이 2단계: 6번 문장의 It은 WHO의 공식 지정(This designation)을 가리키므로 복수 명사 뒤에 올 수 없습니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이 3. 주제의 일관성 분석」에서 5번 문장을 무관한 문장으로 판정한 결정적 이유는?",
+  "o": [
+   "필자가 탈피하고자 하는 '개인 책임론(individual resilience)'으로 퇴행하는 진술이기 때문에",
+   "스트레스의 생물학적 메커니즘을 설명하지 않았기 때문에",
+   "WHO의 권위를 부정하는 주장을 담고 있기 때문에",
+   "임상의와 지도부의 임금 협상 문제를 다루고 있기 때문에"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이 3단계: 글 전체가 개인 책임론을 비판하고 조직 차원의 해결을 촉구하는데 홀로 개인의 자기 치유 노력을 조언하기 때문입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "1번 문장에서 2019년 WHO가 번아웃을 규정한 용어를 본문에서 찾아 영어 두 단어로 쓰시오.",
+  "ans": [
+   "occupational phenomenon",
+   "an occupational phenomenon"
+  ],
+  "show": "occupational phenomenon",
+  "e": "1번 문장 an occupational phenomenon"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 6번 문장을 바탕으로, 번아웃을 바라보는 시각이 <b>어떤 관점에서 벗어나(away from) 어떤 관점으로 전환(toward)</b>되었는지 우리말로 명확히 비교하여 서술하세요.",
+  "show": "번아웃을 개인의 실패나 개인적 회복탄력성의 문제로 보던 시각에서 벗어나, 조직 문화, 리더십 관행, 일의 사회경제적 맥락에 뿌리를 둔 구조적 문제로 이해하는 쪽으로 전환되었다.",
+  "crit": "① '개인의 실패 또는 개인적 회복탄력성 문제에서 벗어남' 명시 (2점) ② '조직 문화/리더십/사회경제적 맥락에 뿌리를 둔 구조적 문제로의 전환' 명시 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 7번 문장과 「1. 키워드 분석」을 바탕으로, 번아웃을 구조적 문제로 재구성하는 것이 왜 <b>필수적(essential)</b>인지 그 이유를 서술하세요.",
+  "show": "대처하거나 적응해야 하는 부담을 온전히 개인에게만 지우기보다는, 시스템적 개입과 정책 수준의 변화로 향하는 문을 열어주기 때문이다.",
+  "crit": "① '개인에게만 부담(대처/적응)을 지우지 않음' 언급 (1점) ② '시스템적 개입과 정책 수준의 변화의 길을 열어줌' 명시 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

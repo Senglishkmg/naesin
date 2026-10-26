@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "36번 순서배열 분석지 확인 문제",
+ "section": "수능 영어 · 36번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 36번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "All sound begins with some kind of motion, something that disturbs molecules in air, water, steel, wood, or other medium."],
+  [2, "Isaac Newton noted that light waves are colorless: the perception of color only occurs in the brain of a living organism."],
+  [3, "The same is true of sound."],
+  [4, "Thus perception of sound begins at our eardrums—before it hits our eardrums, it is nothing more than the disturbance of molecules."],
+  [5, "We can measure that disturbance with gauges and instruments, but until it hits a brain, it is not sound."],
+  [6, "You may have heard the old philosophical riddle, \"If a tree falls in the forest and no one is there to hear it, does it make it sound?\""],
+  [7, "No, because sound is a psychological concept, a product of brains."],
+  [8, "That tree will disturb molecules and make a mess, but if no creature hears it, no bird, fox, or human, it has not made sound."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "모든 소리는 공기나 물 같은 매질 속의 분자들을 교란하는 일종의 움직임과 함께 시작된다.",
+  "a": "O",
+  "e": "1번 문장의 All sound begins with some kind of motion, something that disturbs molecules in air, water, steel, wood, or other medium과 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "아이작 뉴턴에 따르면 빛의 파동 자체가 고유한 색상을 지니고 있어서 생물체의 뇌 없이도 색이 존재한다.",
+  "a": "X",
+  "e": "2번 문장에서 light waves are colorless이며 the perception of color only occurs in the brain of a living organism이라 하여 뇌 속에서만 색의 지각이 일어난다고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "소리에 대한 지각은 우리의 고막을 치기 전부터 물리적 공간 속에서 소리 형태로 완성되어 있다.",
+  "a": "X",
+  "e": "4번 문장에서 before it hits our eardrums, it is nothing more than the disturbance of molecules라 하여 고막을 치기 전에는 분자들의 교란에 불과하다고 명시했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "분자의 물리적 교란은 계측기와 기구를 통해 객관적으로 측정할 수 있다.",
+  "a": "O",
+  "e": "5번 문장의 We can measure that disturbance with gauges and instruments와 일치합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "기구로 측정할 수 있는 분자의 교란은 뇌에 도달하지 않더라도 그 자체로 이미 소리라고 정의된다.",
+  "a": "X",
+  "e": "5번 문장에서 but until it hits a brain, it is not sound라 하여 뇌에 가닿기 전까지는 소리가 아니라고 단언했습니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "지문에서 소리는 물리적 실체가 아니라 심리학적인 개념이자 뇌의 산물이라고 설명된다.",
+  "a": "O",
+  "e": "7번 문장의 sound is a psychological concept, a product of brains와 일치합니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "숲속에서 쓰러진 나무는 들을 생명체가 주위에 없더라도 분자를 교란하지 않고 쓰러진다.",
+  "a": "X",
+  "e": "8번 문장에서 That tree will disturb molecules and make a mess라 하여 분자들을 교란하고 주변을 난장판으로 만들기는 한다고 서술했습니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "새, 여우, 인간을 포함하여 어떤 생명체도 나무가 쓰러지는 소리를 듣지 못했다면 그 나무는 소리를 낸 것이 아니다.",
+  "a": "O",
+  "e": "8번 문장의 if no creature hears it, no bird, fox, or human, it has not made sound와 일치합니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "교란하다, 어지럽히다",
+   "매질, 매개물",
+   "지각, 인식",
+   "수수께끼, 난제"
+  ],
+  "rows": [
+   ["disturb", 1],
+   ["medium", 2],
+   ["perception", 3],
+   ["riddle", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "... something that disturbs molecules in air, water, steel, wood, or other (medium / media).",
+  "o": [
+   "medium",
+   "media"
+  ],
+  "a": "medium",
+  "e": "분석지 5번 혼동 어휘: medium은 물리 화학에서 파동이나 에너지를 전달하는 물질인 '매질(단수형)'을 뜻합니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 disturbance의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["disruption", "perturbation", "agitation"]],
+   ["②", ["disruption", "perturbation", "agitation"]]
+  ],
+  "show": "disruption, perturbation, agitation 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 perception의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["awareness", "apprehension", "recognition"]],
+   ["②", ["awareness", "apprehension", "recognition"]]
+  ],
+  "show": "awareness, apprehension, recognition 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "short",
+  "s": "4번 문장에서 「단지 ~에 불과한」의 뜻으로 쓰인 세 단어의 관용구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "nothing more than"
+  ],
+  "show": "nothing more than",
+  "e": "4번 문장 nothing more than"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "3번 문장에서 앞선 뉴턴의 빛과 색채 지각 원리를 소리로 전이시키는 데 쓰인 다섯 단어의 유추 관용 표현을 본문에서 찾아 쓰시오.",
+  "ans": [
+   "The same is true of sound",
+   "the same is true of sound"
+  ],
+  "show": "The same is true of sound",
+  "e": "3번 문장 The same is true of sound"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어와의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "All sound (begins / begin) with some kind of motion...",
+  "o": [
+   "begins",
+   "begin"
+  ],
+  "a": "begins",
+  "e": "1번 문장: All sound에서 sound가 셀 수 없는 명사이므로 단수 취급하여 begins가 맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주격 관계대명사절의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "... something that (disturbs / disturb) molecules in air, water, steel, wood...",
+  "o": [
+   "disturbs",
+   "disturb"
+  ],
+  "a": "disturbs",
+  "e": "1번 문장: 선행사 something이 단수이므로 단수동사 disturbs가 알맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 동사 형태를 고르시오.",
+  "c": "... the perception of color only (occurs / is occurred) in the brain of a living organism.",
+  "o": [
+   "occurs",
+   "is occurred"
+  ],
+  "a": "occurs",
+  "e": "2번 문장: occur는 수동태가 불가능한 완전자동사이므로 능동태 단수형 occurs가 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어과의 수 일치상 알맞은 동사를 고르시오.",
+  "c": "Thus perception of sound (begins / begin) at our eardrums...",
+  "o": [
+   "begins",
+   "begin"
+  ],
+  "a": "begins",
+  "e": "4번 문장: 핵심 주어가 단수명사구 perception of sound이므로 단수동사 begins가 맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장 You may have heard the old philosophical riddle의 시제 및 조동사 표현에 대한 분석지의 설명으로 옳은 것은?",
+  "o": [
+   "과거에 발생한 사건에 대해 반드시 그랬어야 한다는 후회를 나타낸다.",
+   "[조동사 + have p.p.] 구조로 과거 사실에 대한 불확실한 추측을 나타낸다.",
+   "현재완료진행형으로 과거부터 지금까지 계속 듣고 있음을 나타낸다.",
+   "가정법 과거완료 조건절을 대용하는 구문이다."
+  ],
+  "a": 2,
+  "e": "분석지 6번 문장 구문 분석: may have heard는 과거 사실에 대한 불확실한 추측을 나타냅니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 사역동사 make의 목적격 보어로 알맞은 형태를 고르시오.",
+  "c": "... does it make it (sound / sounded)?",
+  "o": [
+   "sound",
+   "sounded"
+  ],
+  "a": "sound",
+  "e": "6번 문장: 사역동사 make + 목적어(it) + 목적격 보어 자리이므로 동사원형 sound(소리를 내다)가 옵니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장의 to hear it에서 to hear의 to부정사 용법으로 옳은 것은?",
+  "o": [
+   "결과를 나타내는 부사적 용법",
+   "목적을 나타내는 부사적 용법",
+   "대명사 no one을 뒤에서 수식하는 형용사적 용법",
+   "동사 is의 주격 보어로 쓰인 명사적 용법"
+  ],
+  "a": 3,
+  "e": "분석지 6번 문장 구문 분석: no one을 뒤에서 수식하는 형용사적 용법입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주절의 알맞은 완료 시제 형태를 고르시오.",
+  "c": "... but if no creature hears it, no bird, fox, or human, it (has not made / will not make) sound.",
+  "o": [
+   "has not made",
+   "will not make"
+  ],
+  "a": "has not made",
+  "e": "8번 문장: 듣는 유기체가 없을 때 소리의 생성이 완결되지 못함을 나타내는 현재완료 부정형 has not made가 쓰였습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "고막의 해부학적 구조가 음파 전달에 미치는 기계적 영향",
+   "물리적 교란을 넘어 뇌의 지각을 통해 비로소 완성되는 소리의 본질",
+   "아이작 뉴턴의 광학 이론이 현대 양자역학에 남긴 한계점",
+   "숲 생태계 파괴가 야생동물의 청각적 의사소통에 미치는 피해"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 물리적 교란을 넘어 뇌의 지각을 통해 비로소 완성되는 소리의 본질"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 물리적 분자 교란 그 자체가 아니라 뇌가 지각할 때만 소리가 된다는 핵심 명제를 단호하게 정리하여 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "3번 문장",
+   "5번 문장",
+   "7번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 1번 중심 문장: 7번 문장 No, because sound is a psychological concept, a product of brains."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (분자의 물리적 교란)",
+   "키워드 B (뇌의 심리학적 지각으로서의 소리)"
+  ],
+  "rows": [
+   ["disturbs molecules", 1],
+   ["perception occurs in the brain", 2],
+   ["that disturbance", 1],
+   ["product of brains", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "일반적 물리 사실 제시 - 타 영역(빛) 유추 - 수수께끼 제기 및 해답을 통한 본질 규명",
+   "통념 반박 - 역사적 사실 나열 - 절충안 도출",
+   "가설 설정 - 실험 데이터 분석 - 새로운 측정 장비 제안",
+   "문제점 제기 - 원인 규명 - 생물학적 치료 대안 제시"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 일반적 물리 사실 제시 - 타 영역(빛) 유추 - 수수께끼 제기 및 해답을 통한 본질 규명"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 세 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "물리적 파동과 뇌의 감각 지각 사이의 괴리를 소개하는 도입부",
+   "뉴턴 비유의 소리 적용, 물리적 신호의 한계 규명, 핵심 논증을 위한 수수께끼 제시",
+   "수수께끼에 대한 해답 완결 및 소리는 뇌의 산물이라는 최종 명제 확립"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~2번 문장)", 1],
+   ["두 번째 부분 (3~6번 문장)", 2],
+   ["세 번째 부분 (7~8번 문장)", 3]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "4번 문장의 연결부사 Thus는 앞선 뉴턴의 빛에 대한 유추를 바탕으로 소리의 법칙을 규명하는 인과 접속부사이다.",
+  "a": "O",
+  "e": "분석지 2번 4번 문장 어휘 및 연결어와 일치합니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에 따라 주어진 글 다음에 이어질 글의 가장 적절한 순서는?",
+  "o": [
+   "(A) - (C) - (B)",
+   "(B) - (A) - (C)",
+   "(B) - (C) - (A)",
+   "(C) - (A) - (B)",
+   "(C) - (B) - (A)"
+  ],
+  "a": 2,
+  "e": "분석지 4번 문제 풀이: 정답은 (B) - (A) - (C)입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 (B) 뒤에 (A)가 반드시 이어져야 하는 지시어적 연결 근거는?",
+  "o": [
+   "(A)의 that disturbance가 (B)의 마지막 명사구 the disturbance of molecules를 정확히 지시하며 이어받기 때문",
+   "(A)의 gauges가 (B)의 eardrums를 가리키는 대명사이기 때문",
+   "(B)의 sound와 (A)의 sound가 품사가 서로 다르기 때문",
+   "(A)의 until 절이 (B)의 시간 부사절과 정확히 중복되기 때문"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이: (A)의 지시형용사 that disturbance가 (B) 마지막의 the disturbance of molecules를 이어받습니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 (A) 뒤에 (C)가 이어져야 하는 결정적 담화 표지 연결 근거는?",
+  "o": [
+   "(C)의 첫머리 No가 (A) 후반부의 의문형 수수께끼 질문에 대한 직접적인 답변이기 때문",
+   "(A)의 instruments에 대한 구체적 반박이 (C)에 나오기 때문",
+   "(C)의 fox가 (A)의 forest를 가리키는 대명사이기 때문",
+   "(A)의 we를 (C)의 brains로 전환해야 하기 때문"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이: (A) 끝의 의문형 수수께끼에 대해 (C) 첫머리의 No가 직접적이고 명쾌한 부정 답변을 제시합니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "7번 문장에서 소리가 물리적 실체가 아님을 보여주는 보어로 쓰인 두 단어의 명사구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "psychological concept",
+   "a psychological concept"
+  ],
+  "show": "psychological concept",
+  "e": "7번 문장 sound is a psychological concept"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 2번 문장과 3번 문장을 바탕으로, 필자가 소리의 본질을 설명하기 위해 도입한 <b>아이작 뉴턴의 빛과 색채에 관한 원리</b>가 무엇인지 구체적으로 서술하세요.",
+  "show": "빛의 파동 자체는 색이 없는 무색이며, 색에 대한 지각은 오직 살아있는 유기체의 뇌 속에서만 일어난다는 원리이다.",
+  "crit": "① '빛의 파동 자체는 무색임' 언급 (2점) ② '색에 대한 지각은 살아있는 유기체의 뇌 속에서만 일어남' 명시 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 7번 문장과 8번 문장을 바탕으로, 숲속에서 나무가 쓰러졌을 때 들을 생명체가 아무도 없다면 <b>왜 소리가 발생한 것이 아닌지</b> 소리의 정의와 뇌의 역할을 결부하여 서술하세요.",
+  "show": "소리는 단순한 분자의 물리적 교란이 아니라 뇌의 산물인 심리학적 개념이므로, 새, 여우, 인간 등 그 교란을 감각하여 지각할 뇌를 지닌 생명체가 주위에 없다면 소리는 만들어진 것이 아니기 때문이다.",
+  "crit": "① '소리는 단순한 물리적 교란이 아니라 뇌의 산물/심리학적 개념임' 명시 (2점) ② '들을 뇌를 가진 생명체가 없다면 소리가 성립하지 않음' 서술 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

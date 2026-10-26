@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "40번 요약문완성 분석지 확인 문제",
+ "section": "수능 영어 · 40번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 40번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Researchers recently found that goldenrods that live in peaceful areas without much threat from predators will issue chemical alarm calls that are incredibly specific—comprehensible only to their close kin on the rare occasion they are attacked."],
+  [2, "But goldenrods in more hostile territory signal to their neighbors using chemical phrases easily understood by all the goldenrod in the area, not just their biological kin."],
+  [3, "Instead of using coded whisper networks, these goldenrod broadcast the threat over loudspeaker, so to speak."],
+  [4, "It is the first time research has confirmed that these chemical communications are beneficial not only to the plant receiving them but also to the sender."],
+  [5, "When times are truly tough, you do not want to be left standing in a field alone."],
+  [6, "There will be no one to mate with, no one to help bring in pollinators."],
+  [7, "Compared to those in peaceful areas, goldenrods in more hostile environments send more <u> (A) </u> chemical messages, thereby <u> (B) </u> both the senders and the receivers."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "포식자의 위협이 적은 평화로운 지역의 미역취는 오직 가까운 친족만 이해할 수 있는 매우 구체적인 화학 경보 신호를 발산한다.",
+  "a": "O",
+  "e": "1번 문장의 chemical alarm calls that are incredibly specific—comprehensible only to their close kin과 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "적대적인 환경에 서식하는 미역취는 생물학적 친족에게만 국한된 비밀 암호 신호를 사용한다.",
+  "a": "X",
+  "e": "2번 문장에서 easily understood by all the goldenrod in the area, not just their biological kin이라 하여 모든 미역취가 이해할 수 있는 신호를 보낸다고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "가혹한 환경의 미역취는 암호화된 속삭임 네트워크 대신 확성기로 방송하듯 위협을 알린다.",
+  "a": "O",
+  "e": "3번 문장의 broadcast the threat over loudspeaker, so to speak과 일치합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "연구에 따르면 이러한 화학적 의사소통은 신호를 전달받는 수신 식물에게만 이익이 될 뿐 발신자에게는 손해를 끼친다.",
+  "a": "X",
+  "e": "4번 문장에서 beneficial not only to the plant receiving them but also to the sender라 하여 수신자뿐 아니라 발신 식물에게도 유익하다고 확인했습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "들판에 혼자 남겨지게 되면 짝짓기를 할 상대도 없고 꽃가루 매개자를 유인하는 데 도움을 줄 상대도 없게 된다.",
+  "a": "O",
+  "e": "6번 문장의 There will be no one to mate with, no one to help bring in pollinators와 일치합니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "이 연구 이전에도 화학적 경보 신호가 발신자 자신에게 유익하다는 사실은 이미 수많은 실험을 통해 확증되어 있었다.",
+  "a": "X",
+  "e": "4번 문장에서 It is the first time research has confirmed라 하여 연구를 통해 이것이 확인된 것은 이번이 처음이라고 명시했습니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "평화로운 지역의 미역취는 포식자에게 공격을 받는 일이 매우 빈번하여 항상 확성기식 경보를 유지한다.",
+  "a": "X",
+  "e": "1번 문장에서 on the rare occasion they are attacked라 하여 공격받는 경우가 드물다고 했습니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "가혹한 환경에서 이웃 식물들을 경보로 살려두는 것은 결과적으로 발신 식물 자신의 번식과 생존에 기여한다.",
+  "a": "O",
+  "e": "5~6번 문장 및 분석지 키워드 분석과 일치합니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "친족, 동족",
+   "적대적인, 가혹한",
+   "방송하다, 널리 퍼뜨리다",
+   "꽃가루 매개자, 수분 매개 곤충"
+  ],
+  "rows": [
+   ["kin", 1],
+   ["hostile", 2],
+   ["broadcast", 3],
+   ["pollinator", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "goldenrods in more (hostile / hospitable) territory signal to their neighbors...",
+  "o": [
+   "hostile",
+   "hospitable"
+  ],
+  "a": "hostile",
+  "e": "분석지 5번 혼동 어휘: hostile은 '적대적인, 가혹한'의 뜻이고 hospitable은 '환대하는, 온화한'의 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 broadcast의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["disseminate", "circulate", "spread", "propagate"]],
+   ["②", ["disseminate", "circulate", "spread", "propagate"]]
+  ],
+  "show": "disseminate, circulate, spread, propagate 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 beneficial의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["advantageous", "favorable", "profitable"]],
+   ["②", ["advantageous", "favorable", "profitable"]]
+  ],
+  "show": "advantageous, favorable, profitable 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 specific의 반의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["broad", "general", "universal"]],
+   ["②", ["broad", "general", "universal"]]
+  ],
+  "show": "broad, general, universal 중 두 개",
+  "e": "분석지 5번 반의어 정리"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "3번 문장 끝에서 비유적 표현임을 밝히며 「말하자면, 비유적으로 말해서」의 뜻으로 쓰인 세 단어의 관용 어구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "so to speak"
+  ],
+  "show": "so to speak",
+  "e": "3번 문장 so to speak"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 시간 부사절의 수동태 술어로 알맞은 형태를 고르시오.",
+  "c": "... on the rare occasion they (attack / are attacked).",
+  "o": [
+   "are attacked",
+   "attack"
+  ],
+  "a": "are attacked",
+  "e": "1번 문장: 미역취가 포식자에게 공격을 받는 수동의 관계이므로 are attacked가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 동시 동작을 나타내는 능동 분사구문으로 알맞은 형태를 고르시오.",
+  "c": "... goldenrods in more hostile territory signal to their neighbors (using / used) chemical phrases...",
+  "o": [
+   "using",
+   "used"
+  ],
+  "a": "using",
+  "e": "2번 문장: 주어가 능동적으로 화학적 어구를 사용하는 분사구문이므로 현재분사 using이 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사구 chemical phrases를 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "... chemical phrases easily (understood / understanding) by all the goldenrod in the area...",
+  "o": [
+   "understood",
+   "understanding"
+  ],
+  "a": "understood",
+  "e": "2번 문장: 화학 어구가 모든 미역취에 의해 쉽게 이해되는 수동의 의미이므로 과거분사 understood가 수식합니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 전치사 Instead of 뒤에 올 준동사 형태로 알맞은 것을 고르시오.",
+  "c": "Instead of (use / using) coded whisper networks, these goldenrod broadcast...",
+  "o": [
+   "using",
+   "use"
+  ],
+  "a": "using",
+  "e": "3번 문장: 전치사의 목적어 자리이므로 동명사 using이 올바릅니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사 the plant를 능동으로 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "... beneficial not only to the plant (receiving / received) them but also to the sender.",
+  "o": [
+   "receiving",
+   "received"
+  ],
+  "a": "receiving",
+  "e": "4번 문장: 신호를 능동적으로 받아들이는 식물이므로 현재분사 receiving이 알맞습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 타동사 want의 목적어로 쓰인 알맞은 수동형 to부정사 형태를 고르시오.",
+  "c": "... you do not want (to be left / to leave) standing in a field alone.",
+  "o": [
+   "to be left",
+   "to leave"
+  ],
+  "a": "to be left",
+  "e": "5번 문장: 들판에 홀로 남겨지는 것을 원치 않는다는 수동 의미이므로 to be left가 맞습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장의 There will be no one to mate with에서 to mate with에 대한 설명으로 옳은 것은?",
+  "o": [
+   "원인을 나타내는 to부정사의 부사적 용법이다.",
+   "결과를 나타내는 to부정사의 부사적 용법이다.",
+   "부정대명사 no one을 뒤에서 수식하는 형용사적 용법이다.",
+   "동사 will be의 주격 보어로 쓰인 명사적 용법이다."
+  ],
+  "a": 3,
+  "e": "분석지 6번 문장 구문 분석: no one을 뒤에서 수식하는 형용사적 용법이며 전치사 with가 동반됩니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "4번 문장에서 전치사구 [to the plant receiving them]과 대등하게 연결되어 「A뿐만 아니라 B도」의 병렬 구조를 완성하는 네 단어의 어구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "but also to the sender"
+  ],
+  "show": "but also to the sender",
+  "e": "4번 문장 not only to the plant receiving them but also to the sender"
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "국화과 야생 식물의 포식자 방어 물질 분비 기제와 유전적 변이",
+   "가혹한 환경에서 미역취가 광범위한 경보 신호를 통해 발신자와 수신자 모두의 생존 이익을 도모하는 기제",
+   "군집 내 서열 경쟁이 식물 간 페로몬 의사소통에 미치는 생태학적 영향",
+   "기후 변화에 따른 꿀벌 등 꽃가루 매개 곤충의 개체 수 감소 실태"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 가혹한 환경에서 미역취가 광범위한 경보 신호를 통해 발신자와 수신자 모두의 생존 이익을 도모하는 기제"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 경보 신호의 방송이 수신자뿐 아니라 발신자의 집단 생존까지 이롭게 한다는 요점을 명확히 하여 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "2번 문장",
+   "3번 문장",
+   "4번 문장"
+  ],
+  "a": 4,
+  "e": "분석지 1번 중심 문장: 4번 문장 It is the first time research has confirmed that these chemical communications are beneficial not only to the plant receiving them but also to the sender."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (환경에 따른 화학 경보 신호의 범위)",
+   "키워드 B (발신자와 수신자 모두의 상호 번영과 이익)"
+  ],
+  "rows": [
+   ["comprehensible only to their close kin", 1],
+   ["beneficial not only to the receiver but to the sender", 2],
+   ["broadcast over loudspeaker", 1],
+   ["help bring in pollinators", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "2번 문장의 역접 접속사 But이 글의 논리 전개에서 수행하는 핵심 기능은?",
+  "o": [
+   "평화로운 지역의 좁은 신호 체계와 대비하여 적대적 환경의 광범위한 신호 체계를 대조한다.",
+   "미역취가 포식자에게 공격당하는 구체적인 화학 경로를 설명한다.",
+   "생물학적 친족 간의 유전적 동질성을 증명한다.",
+   "식물의 의사소통 능력이 동물보다 열등함을 입증한다."
+  ],
+  "a": 1,
+  "e": "분석지 2번 2번 문장 어휘 및 연결어: 평화로운 지역의 좁은 신호 체계와 대비하여 적대적 환경의 광범위한 신호 체계를 대조하는 핵심 역접 접속사입니다."
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "대조를 통한 현상 제시 - 원인 규명 및 상호 이익의 결론 도출",
+   "가설 설정 - 실험 데이터 분석 - 대안 가설 도출",
+   "역사적 사실 열거 - 통념 반박 - 절충안 제시",
+   "문제점 제기 - 실패 사례 분석 - 개인적 반성 촉구"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 대조를 통한 현상 제시 - 원인 규명 및 상호 이익의 결론 도출"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 두 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "대조적 환경에 따른 두 가지 경보 신호 방식의 극명한 비교 제시",
+   "경보 방송이 발신자와 수신자 모두에게 이익이 되는 생태학적 메커니즘 규명"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~3번 문장)", 1],
+   ["두 번째 부분 (4~6번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에 따라 7번 요약문의 빈칸 (A)와 (B)에 들어갈 말로 가장 적절한 것은?",
+  "o": [
+   "broadly — benefiting",
+   "narrowly — harming",
+   "specifically — protecting",
+   "easily — endangering",
+   "accidentally — profiting"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이: 정답은 broadly — benefiting입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 요약문 빈칸 (A)의 오답으로 specifically를 소거한 근거는?",
+  "o": [
+   "specifically는 평화로운 지역의 친족 신호에 해당하므로 적대적 환경의 신호 특성과 정반대이기 때문",
+   "식물이 구체적인 언어를 구사하는 것은 불가능하기 때문",
+   "적대적 환경의 미역취가 포식자의 종류를 구별하지 못하기 때문",
+   "화학 물질의 농도가 수치로 제시되지 않았기 때문"
+  ],
+  "a": 1,
+  "e": "분석지 4번 오답 소거: specifically는 평화로운 지역의 친족 신호에 해당하므로 적대적 환경의 신호 특성과 정반대입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에서 요약문 빈칸 (B)의 오답으로 harming이나 endangering을 소거한 이유는?",
+  "o": [
+   "포식자를 공격하는 살충 물질을 분비하기 때문",
+   "발신자와 수신자 양쪽 모두를 위험에 빠뜨리는 것이 아니라 상호 생존을 돕는 유익한 기제이기 때문",
+   "화상 회의 시스템처럼 화면이 분리되기 때문",
+   "수신자만 보호하고 발신자는 희생되기 때문"
+  ],
+  "a": 2,
+  "e": "분석지 4번 오답 소거: 양쪽을 위험에 빠뜨리는 것이 아니라 상호 생존을 돕는 유익한 관계이므로 오답입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "3번 문장에서 가혹한 환경의 미역취가 위협을 널리 알리는 방식을 빗대어 표현한 「확성기를 통해」에 해당하는 세 단어의 영어 표현을 본문에서 찾아 쓰시오.",
+  "ans": [
+   "over loudspeaker"
+  ],
+  "show": "over loudspeaker",
+  "e": "3번 문장 broadcast the threat over loudspeaker"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 1번 문장과 2번 문장을 바탕으로, <b>평화로운 지역의 미역취</b>와 <b>적대적인 환경의 미역취</b>가 발산하는 화학 경보 신호의 <b>이해 대상(수신 범위)의 차이점</b>을 비교하여 서술하세요.",
+  "show": "평화로운 지역의 미역취는 오직 자신의 가까운 친족에게만 이해될 수 있는 구체적인 신호를 보내는 반면, 적대적인 환경의 미역취는 생물학적 친족뿐만 아니라 그 지역의 모든 미역취가 쉽게 이해할 수 있는 신호를 보낸다.",
+  "crit": "① 평화로운 지역: 오직 가까운 친족에게만 국한/이해됨 명시 (2점) ② 적대적 환경: 친족뿐 아니라 지역의 모든 미역취가 이해할 수 있음 명시 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 5번 문장과 6번 문장을 바탕으로, 적대적 환경의 미역취가 확성기식 경보 방송을 통해 이웃들을 살려두는 것이 왜 <b>발신자 자신에게도 생존상의 이익</b>이 되는지 2가지 이유를 서술하세요.",
+  "show": "들판에 홀로 남겨질 경우 짝짓기를 할 상대가 없게 되고, 꽃가루 매개자(수분 곤충)를 유인하는 데 도움을 줄 상대도 없게 되기 때문이다.",
+  "crit": "① '홀로 남으면 짝짓기할 상대가 없음' 명시 (2점) ② '꽃가루 매개자(수분 곤충)를 유인하는 데 도움을 줄 상대가 없음' 명시 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

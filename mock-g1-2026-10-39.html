@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "39번 문장삽입 분석지 확인 문제",
+ "section": "수능 영어 · 39번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 39번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "When submerged underwater, to avoid feeling the pressure of the surrounding environment, it is necessary to maintain the condition of equal external and internal pressure."],
+  [2, "The human body on the Earth's surface experiences constant air pressure equal to 16-18 tons per square meter of its body surface."],
+  [3, "However, this pressure is not felt because external pressure is balanced by internal pressure in the lungs and air cavities of the body."],
+  [4, "During dives, in addition to atmospheric pressure, the pressure of the water also acts on the human body."],
+  [5, "To achieve this, air or a breathing mixture is supplied to the diver under pressure equal to the pressure applied by the surrounding water."],
+  [6, "Water pressure increases proportionally with depth."],
+  [7, "It increases by 1 bar for every 10 meters."],
+  [8, "It follows that a diver at a depth of 10 meters experiences a pressure of 2 bar, and to stabilize pressure, the supply of a breathing mixture under a pressure of 2 atmospheres is required."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "지표면 위의 인체는 신체 표면 1제곱미터당 16에서 18톤에 달하는 기압을 경험한다.",
+  "a": "O",
+  "e": "2번 문장의 constant air pressure equal to 16-18 tons per square meter of its body surface와 일치합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "지표면에서 외부 기압이 엄청남에도 우리가 느끼지 못하는 것은 폐와 체내 공기 공간의 내부 압력이 외부 압력과 균형을 이루기 때문이다.",
+  "a": "O",
+  "e": "3번 문장의 external pressure is balanced by internal pressure in the lungs and air cavities of the body와 일치합니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "잠수 중에는 물의 압력(수압)만 작용할 뿐 대기압은 인체에 전혀 작용하지 않는다.",
+  "a": "X",
+  "e": "4번 문장에서 in addition to atmospheric pressure, the pressure of the water also acts on the human body라 하여 대기압에 더하여 수압도 작용한다고 명시했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "물속에 잠겼을 때 주변 압력을 느끼지 않으려면 외부 압력보다 내부 압력을 훨씬 더 낮게 유지해야 한다.",
+  "a": "X",
+  "e": "1번 문장에서 to maintain the condition of equal external and internal pressure라 하여 외부와 내부 압력이 동등한 상태를 유지해야 한다고 했습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "내외부 압력 평형을 유지하기 위해 잠수부에게는 주변 수압과 동등한 압력의 호흡용 혼합 기체가 공급된다.",
+  "a": "O",
+  "e": "5번 문장의 supplied to the diver under pressure equal to the pressure applied by the surrounding water와 일치합니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "수압은 수심이 깊어질수록 불규칙하게 감소하는 경향을 보인다.",
+  "a": "X",
+  "e": "6번 문장에서 Water pressure increases proportionally with depth라 하여 수심에 비례하여 증가한다고 했습니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "수압은 수심 매 10미터마다 1바(bar)씩 증가한다.",
+  "a": "O",
+  "e": "7번 문장의 It increases by 1 bar for every 10 meters와 일치합니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "수심 10미터에 있는 잠수부의 압력을 안정시키기 위해 요구되는 호흡 혼합 기체의 압력은 1기압이다.",
+  "a": "X",
+  "e": "8번 문장에서 대기압 1바에 수압 1바가 더해진 2바의 압력을 경험하므로 under a pressure of 2 atmospheres가 요구된다고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 올바른 뜻을 「보기」에서 골라 연결하세요.",
+  "box": [
+   "물속에 잠그다",
+   "구멍, 빈 공간",
+   "비례하여, 정비례하여",
+   "안정시키다, 평형을 유지하다"
+  ],
+  "rows": [
+   ["submerge", 1],
+   ["cavity", 2],
+   ["proportionally", 3],
+   ["stabilize", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에 들어갈 올바른 단어를 고르시오.",
+  "c": "When (submerged / emerged) underwater, to avoid feeling the pressure...",
+  "o": [
+   "submerged",
+   "emerged"
+  ],
+  "a": "submerged",
+  "e": "분석지 5번 혼동 어휘: submerge는 '물속에 잠그다'이고 emerge는 '나타나다, 수면 위로 떠오르다'입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 proportionally의 동의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["in proportion", "correspondingly", "relatively"]],
+   ["②", ["in proportion", "correspondingly", "relatively"]]
+  ],
+  "show": "in proportion, correspondingly, relatively 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "blanks",
+  "s": "분석지 「5. 심화 어휘 및 표현 정리」에 제시된 stabilize의 유의어 중 2개를 쓰세요.",
+  "any": true,
+  "blanks": [
+   ["①", ["steady", "balance", "equalize"]],
+   ["②", ["steady", "balance", "equalize"]]
+  ],
+  "show": "steady, balance, equalize 중 두 개",
+  "e": "분석지 5번 동의어 정리"
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "short",
+  "s": "4번 문장에서 「~에 더하여, ~ 외에도」의 뜻으로 쓰인 세 단어의 전치사구를 본문에서 찾아 쓰시오.",
+  "ans": [
+   "in addition to"
+  ],
+  "show": "in addition to",
+  "e": "4번 문장 in addition to"
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "8번 문장의 문두에서 논리적 필연성을 도출하며 「결과적으로 ~라는 결론이 나오다」의 뜻으로 쓰인 세 단어의 표현을 본문에서 찾아 쓰시오.",
+  "ans": [
+   "It follows that",
+   "it follows that"
+  ],
+  "show": "It follows that",
+  "e": "8번 문장 It follows that"
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 수동태 술어로 알맞은 형태를 고르시오.",
+  "c": "However, this pressure is not (felt / feeling) because external pressure is balanced...",
+  "o": [
+   "felt",
+   "feeling"
+  ],
+  "a": "felt",
+  "e": "3번 문장: 압력이 인간에 의해 느껴지는 수동의 관계이므로 과거분사 felt가 알맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 접속사가 남겨진 수동 분사구문으로 알맞은 형태를 고르시오.",
+  "c": "When (submerged / submerging) underwater, to avoid feeling the pressure...",
+  "o": [
+   "submerged",
+   "submerging"
+  ],
+  "a": "submerged",
+  "e": "1번 문장: 인체가 물속에 잠기게 되는 수동의 의미이므로 과거분사 submerged가 옳습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 타동사 avoid의 목적어로 알맞은 준동사 형태를 고르시오.",
+  "c": "... to avoid (feeling / to feel) the pressure of the surrounding environment...",
+  "o": [
+   "feeling",
+   "to feel"
+  ],
+  "a": "feeling",
+  "e": "1번 문장: 타동사 avoid는 동명사를 목적어로 취하므로 feeling이 알맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장 it is necessary to maintain the condition of equal external and internal pressure에서 it과 to maintain의 문법적 관계는?",
+  "o": [
+   "it은 비인칭 주어이고, to maintain은 조건을 나타내는 부사적 용법이다.",
+   "it은 가주어이고, to maintain 이하의 to부정사구가 진주어이다.",
+   "it은 앞 문장의 대기압을 받는 대명사이고, to maintain은 목적의 부사적 용법이다.",
+   "it은 가목적어이고, to maintain은 진목적어이다."
+  ],
+  "a": 2,
+  "e": "분석지 1번 문장 구문 분석: it은 형식상의 가주어, to maintain 이하가 진짜 주어입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 명사 the pressure를 수식하는 알맞은 분사 형태를 고르시오.",
+  "c": "... equal to the pressure (applied / applying) by the surrounding water.",
+  "o": [
+   "applied",
+   "applying"
+  ],
+  "a": "applied",
+  "e": "5번 문장: 주변 물에 의해 가해지는 압력이므로 수동 의미의 과거분사 applied가 수식합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 증가의 차이 및 정도 폭을 나타내는 전치사로 알맞은 것을 고르시오.",
+  "c": "It increases (by / for) 1 bar for every 10 meters.",
+  "o": [
+   "by",
+   "for"
+  ],
+  "a": "by",
+  "e": "7번 문장: 증가의 폭이나 정도(~의 차이로, ~만큼)를 나타낼 때는 전치사 by를 사용합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 주어 the supply와의 수 일치상 알맞은 수동태 동사를 고르시오.",
+  "c": "... the supply of a breathing mixture under a pressure of 2 atmospheres (is required / are required).",
+  "o": [
+   "is required",
+   "are required"
+  ],
+  "a": "is required",
+  "e": "8번 문장: 주어구의 핵심 명사가 단수명사 the supply이므로 단수 수동태 is required가 맞습니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "5번 문장의 To achieve this에서 목적어 this가 구체적으로 가리키는 내용을 1번 문장에서 찾아 「to부정사구」로 쓰시오.",
+  "ans": [
+   "to maintain the condition of equal external and internal pressure",
+   "maintain the condition of equal external and internal pressure"
+  ],
+  "show": "to maintain the condition of equal external and internal pressure",
+  "e": "분석지 5번 문장 구문 분석: this는 앞서 언급된 외부와 내부 압력이 동등한 상태를 유지하는 것을 가리킵니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「1. 키워드 분석을 통한 주제 도출」에서 제시한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "심해 잠수 장비의 경량화와 산소통 폭발 방지 설계 기술",
+   "수중 잠수 시 수압에 대응하여 내외부 압력 평형을 유지하는 기제",
+   "대기압의 일교차가 인간 폐활량과 혈압에 미치는 생리학적 영향",
+   "잠수병 치료를 위한 고압산소치료 챔버의 작동 원리와 임상적 효용"
+  ],
+  "a": 2,
+  "e": "분석지 1번 주제: 수중 잠수 시 수압에 대응하여 내외부 압력 평형을 유지하는 기제"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지에서 지상의 평형 원리를 수중 잠수 환경으로 전이시키며 가압 호흡 기체 공급의 필요성을 규정하여 선정한 중심 문장은 몇 번 문장인가?",
+  "o": [
+   "1번 문장",
+   "2번 문장",
+   "4번 문장",
+   "6번 문장"
+  ],
+  "a": 1,
+  "e": "분석지 1번 중심 문장: 1번 문장 When submerged underwater, to avoid feeling the pressure of the surrounding environment, it is necessary to maintain the condition of equal external and internal pressure."
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "지문의 각 어구가 해당하는 키워드를 고르세요.",
+  "box": [
+   "키워드 A (외부 압력과 내부 압력의 균형)",
+   "키워드 B (수심 증가에 비례하는 호흡 기체 공급)"
+  ],
+  "rows": [
+   ["external pressure is balanced by internal pressure", 1],
+   ["breathing mixture is supplied", 2],
+   ["condition of equal external and internal pressure", 1],
+   ["supply under a pressure of 2 atmospheres", 2]
+  ],
+  "e": "분석지 1번 키워드 분석"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "mc",
+  "s": "3번 문장의 연결부사 However가 지문의 논리 흐름에서 수행하는 역할로 가장 적절한 것은?",
+  "o": [
+   "인체에 가해지는 엄청난 대기압 수치에도 불구하고 체감되지 않는다는 반전을 도입한다.",
+   "수압이 대기압보다 훨씬 위험하다는 결론을 제시한다.",
+   "지구 표면의 대기압이 계절에 따라 변동함을 설명한다.",
+   "폐와 공기 공간의 부피가 압력에 의해 수축되는 과정을 묘사한다."
+  ],
+  "a": 1,
+  "e": "분석지 2번 3번 문장 어휘 및 연결어: 엄청난 수치의 대기압에도 불구하고 우리가 그것을 느끼지 못한다는 반전을 도입하는 역접 연결부사입니다."
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 「3. 서술 전략」에서 규정한 이 글의 전개 방식으로 옳은 것은?",
+  "o": [
+   "지상 원리 소개 - 수중 문제 제기 - 평형 조건 설정 - 기술적 해결책 제시 - 구체적 수치 실증",
+   "통념 반박 - 역사적 실험 고찰 - 상반된 가설 검증 - 절충안 도출",
+   "생물학적 진화 과정 설명 - 유전적 변이 분석 - 환경 적응 사례 열거",
+   "수중 사고 통계 분석 - 원인 규명 - 안전 규제 법안 제언"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 지상 원리 소개 - 수중 문제 제기 - 평형 조건 설정 - 기술적 해결책 제시 - 구체적 수치 실증"
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법 분석지에서 나눈 세 개 부분(Chunk)과 그 역할을 올바르게 연결하세요.",
+  "box": [
+   "대기압 하에서 내외부 압력 평형이라는 기본 물리·생리학적 원리 제시",
+   "수중 환경의 압력 문제 제기 및 호흡 기체 가압 공급이라는 해결책 도입",
+   "구체적 수치와 물리 법칙을 통한 압력 평형 공급의 과학적 실증 및 결론 도출"
+  ],
+  "rows": [
+   ["첫 번째 부분 (2~3번 문장)", 1],
+   ["두 번째 부분 (4, 1, 5번 문장)", 2],
+   ["세 번째 부분 (6~8번 문장)", 3]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이」에 따라 본문의 1번 문장(When submerged underwater, to avoid feeling the pressure...)이 들어가기에 가장 적절한 위치는?",
+  "o": [
+   "선택지 ①번 위치",
+   "선택지 ②번 위치",
+   "선택지 ③번 위치",
+   "선택지 ④번 위치",
+   "선택지 ⑤번 위치"
+  ],
+  "a": 2,
+  "e": "분석지 4번 문제 풀이: 정답은 ②번 위치입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이 2. 지시어의 연결성 분석」에서 주어진 1번 문장이 ②번에 들어가야 하는 결정적 지시어 근거는?",
+  "o": [
+   "②번 다음 문장의 To achieve this에서 this가 가리킬 구체적 목표 조건이 1번 문장에 있기 때문",
+   "②번 다음 문장의 air or a breathing mixture가 1번 문장의 surrounding environment를 대신하기 때문",
+   "1번 문장의 When이 4번 문장의 During과 대등하게 연결되어야 하기 때문",
+   "1번 문장의 internal pressure가 3번 문장의 lungs를 수식해야 하기 때문"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이 2단계: To achieve this의 this는 달성해야 할 목표를 가리켜야 하므로 1번 문장의 동등한 내외부 압력 상태 유지를 받아야 합니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "mc",
+  "s": "분석지 「4. 문제 풀이 3. 논지 전개상의 허점 분석」에서 지적한 4번 문장과 5번 문장 사이의 논리적 비약(단절)은?",
+  "o": [
+   "수압이 몸에 작용한다는 위협 서술 뒤에 목표 제시 없이 느닷없이 '이를 달성하기 위해'로 건너뛴 점",
+   "기압의 단위를 바(bar)에서 파스칼(Pa)로 설명 없이 전환한 점",
+   "호흡 기체의 성분 비율을 밝히지 않은 점",
+   "잠수부의 훈련 과정에 대한 언급이 생략된 점"
+  ],
+  "a": 1,
+  "e": "분석지 4번 문제 풀이 3단계: 수압이 작용한다는 단순 현상 뒤에 무엇을 달성하기 위해 기체를 공급하는지 알 수 없는 비약이 발생했습니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "3번 문장에서 외부 기압과 균형을 맞추어 압력을 느끼지 못하게 해 주는 신체 내부의 두 부위를 본문에서 찾아 영어로 쓰시오. (and로 연결할 것)",
+  "ans": [
+   "the lungs and air cavities of the body",
+   "lungs and air cavities of the body",
+   "the lungs and air cavities"
+  ],
+  "show": "the lungs and air cavities of the body",
+  "e": "3번 문장 in the lungs and air cavities of the body"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 1]</b> 분석지 8번 문장을 바탕으로, 수심 10미터에서 잠수부가 경험하는 총 압력이 왜 <b>2바(bar)</b>가 되며, 이에 대응하여 왜 <b>2기압</b>의 호흡 혼합 기체가 요구되는지 계산 원리를 서술하세요.",
+  "show": "기본 대기압 1바에 수심 10미터당 증가하는 수압 1바가 더해져 총 2바의 압력을 경험하게 되며, 내외부 압력 평형을 안정화하기 위해 수압과 동일한 2기압의 호흡 기체 공급이 요구된다.",
+  "crit": "① '대기압 1바 + 수심 10m 수압 1바 = 총 2바' 계산 원리 명시 (2점) ② '내외부 압력 평형/안정화를 위해 동등한 2기압 기체 공급 필요' 서술 (2점)"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 2]</b> 분석지 「4. 문제 풀이」를 참고하여, 주어진 1번 문장이 왜 <b>②번 자리</b>에 들어가야 하는지 앞 문장(4번 문장)과 뒤 문장(5번 문장 To achieve this...)과의 <b>논리적 연결 관계</b>를 서술하세요.",
+  "show": "앞 문장은 수압이 인체에 작용한다는 외부 위협을 제기했을 뿐이므로, 뒤 문장의 '이것을 달성하기 위해(To achieve this)'가 가리킬 구체적인 목표 상태(내외부 압력 평형 조건 유지)를 담고 있는 주어진 문장이 ②번에 들어가야 논리적으로 완벽히 연결된다.",
+  "crit": "① '앞 문장은 단순 수압 작용(위협)에 불과함' 언급 (1점) ② '뒤 문장의 To achieve this가 가리키는 대상이 주어진 문장의 동등한 압력 상태 유지임' 명시 (2점)"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
