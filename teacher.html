@@ -56,6 +56,7 @@
     .cmt textarea { width:100%; min-height:62px; font:inherit; font-size:14px; border:1px solid #cbd5e1; border-radius:8px; padding:8px 10px; resize:vertical; background:#fff; }
     .cmt .bar { display:flex; gap:8px; align-items:center; margin-top:6px; }
     .b-cmt { background:#e0f2fe; color:var(--brand2); }
+    .btn.del { background:#fff; color:var(--bad); border:1px solid #fecaca; } .btn.del:hover { background:var(--badsoft); }
     @media (max-width:640px) { .right { margin-left:0; width:100%; } .man .row { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -113,6 +114,7 @@
         <select id="fn"><option value="">학생 전체</option>${names.map(n => `<option ${n === F.name ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>
         <select id="fp"><option value="">시험지 전체</option>${pages.map(p => `<option ${p === F.page ? 'selected' : ''}>${esc(p)}</option>`).join('')}</select>
         <label class="chk"><input type="checkbox" id="fw" ${F.wait ? 'checked' : ''}> 채점 대기만</label>
+        ${shown.length ? `<button class="btn del" id="delall" style="margin-left:auto">보이는 ${shown.length}건 지우기</button>` : ''}
       </div>
       <div id="list">${shown.length ? shown.map(sub).join('') : '<div class="card empty">해당하는 제출이 없어요.</div>'}</div>`;
     document.getElementById('reload').onclick = load;
@@ -120,8 +122,33 @@
     document.getElementById('fn').onchange = e => { F.name = e.target.value; draw(); };
     document.getElementById('fp').onchange = e => { F.page = e.target.value; draw(); };
     document.getElementById('fw').onchange = e => { F.wait = e.target.checked; draw(); };
+    const da = document.getElementById('delall');
+    if (da) da.onclick = () => {
+      const who = [F.name || '학생 전체', F.page || '시험지 전체'].concat(F.wait ? ['채점 대기만'] : []).join(' · ');
+      if (!confirm(`지금 보이는 제출 ${shown.length}건을 모두 지울까요?\n(${who})\n\n지운 제출은 구글 시트의 '지운 기록' 탭으로 옮겨져요.`)) return;
+      del(shown.map(r => String(r.id)), da);
+    };
+    document.querySelectorAll('.del1').forEach(b => b.onclick = () => {
+      const r = rows.find(x => String(x.id) === b.dataset.id); if (!r) return;
+      if (!confirm(`${r.name} · ${r.page} (${fmt(r.time)} · ${r.att}회차)\n이 제출을 지울까요?\n\n지운 제출은 구글 시트의 '지운 기록' 탭으로 옮겨져요.`)) return;
+      del([String(r.id)], b);
+    });
     document.querySelectorAll('details.sub').forEach(d => d.ontoggle = () => { d.open ? open.add(d.dataset.id) : open.delete(d.dataset.id); });
     bindScores();
+  }
+
+  async function del(ids, btn) {
+    btn.disabled = true; btn.textContent = '지우는 중…';
+    try {
+      for (let i = 0; i < ids.length; i += 80) {
+        const d = await api({ action: 'delete', ids: ids.slice(i, i + 80).join(',') });
+        if (d.error === 'key') return login('비밀번호가 바뀌었어요. 다시 들어가 주세요.');
+      }
+      const gone = new Set(ids); rows = rows.filter(r => !gone.has(String(r.id))); ids.forEach(id => { open.delete(id); delete drafts[id]; });
+      if (F.name && !rows.some(r => r.name === F.name)) F.name = '';
+      if (F.page && !rows.some(r => r.page === F.page)) F.page = '';
+      draw();
+    } catch (e) { alert('지우지 못했어요. 인터넷을 확인하고 다시 해 주세요.'); load(); }
   }
 
   function sub(r) {
@@ -140,7 +167,8 @@
         ${manOk.length ? `<h3>모범 답안과 똑같아 정답 처리된 문항</h3><div class="meta">${manOk.map(i => `${i.n}번`).join(', ')}</div>` : ''}
         <div class="cmt" data-id="${esc(r.id)}"><h3 style="margin:0 0 6px">학생에게 한마디 <span class="meta" style="font-weight:400">· 채점이 끝나면 학생의 '내 결과'에 보여요</span></h3>
           <textarea placeholder="예) 주제문 찾기는 좋아요. 빈칸 문제는 근거 문장을 한 번 더 확인해 보세요.">${esc(r.id in drafts ? drafts[r.id] : (r.comment || ''))}</textarea>
-          <div class="bar"><button class="btn">한마디 저장</button><span class="meta saving">${r.id in drafts ? '저장 안 됨' : ''}</span></div></div>
+          <div class="bar"><button class="btn save">한마디 저장</button><span class="meta saving">${r.id in drafts ? '저장 안 됨' : ''}</span></div></div>
+        <div style="text-align:right;margin-top:12px"><button class="btn del del1" data-id="${esc(r.id)}">이 제출 지우기</button></div>
       </div></details>`;
   }
   function manBox(r, i) {
@@ -172,7 +200,7 @@
     document.querySelectorAll('.cmt').forEach(box => {
       const ta = box.querySelector('textarea'), s = box.querySelector('.saving'), id = box.dataset.id;
       ta.oninput = () => { drafts[id] = ta.value; s.textContent = '저장 안 됨'; };
-      box.querySelector('button').onclick = async () => {
+      box.querySelector('button.save').onclick = async () => {
         s.textContent = '저장 중…';
         try {
           const d = await api({ action: 'comment', id, text: ta.value.trim() });
