@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "18번 글의 목적 추론 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 18번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Dear Ms. Palmer,"],
+    [2, "My name is Karen Whitfield, a marketing assistant in the marketing department."],
+    [3, "As part of my efforts to contribute more to the department, I would like to receive additional training to further develop my skills."],
+    [4, "Over the last quarter, I noticed our department needs to better attract potential customers for our products online."],
+    [5, "For this reason, I'm requesting that the company cover part of my training cost."],
+    [6, "I have recently searched for training courses and found Smart Growth Training's two-week course that focuses on digital marketing strategies."],
+    [7, "It costs $1,600, and I strongly believe it would be helpful for my current work."],
+    [8, "I hope you will consider my request positively."],
+    [9, "Sincerely,"],
+    [10, "Karen Whitfield"]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "Karen Whitfield는 마케팅 부서의 마케팅 보조원이다.",
+    "a": "O",
+    "e": "2번 문장 a marketing assistant in the marketing department"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 지난 1년 동안 부서의 온라인 고객 유치 필요성을 절감했다.",
+    "a": "X",
+    "e": "4번 문장 Over the last quarter(지난 분기 동안)"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 회사에 훈련 비용 전액을 지원해 줄 것을 요청하고 있다.",
+    "a": "X",
+    "e": "5번 문장 cover part of my training cost(훈련 비용의 일부)"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "필자가 찾아낸 훈련 과정은 2주 동안 진행되는 프로그램이다.",
+    "a": "O",
+    "e": "6번 문장 two-week course that focuses on digital marketing strategies"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "필자가 찾은 연수 과정은 오프라인 전통 마케팅 전략에 중점을 둔다.",
+    "a": "X",
+    "e": "6번 문장 focuses on digital marketing strategies"
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "필자가 언급한 연수 과정의 비용은 1,600달러이다.",
+    "a": "O",
+    "e": "7번 문장 It costs $1,600"
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 사내에 새로운 마케팅 교육 과정을 신설해 달라고 요청하고 있다.",
+    "a": "X",
+    "e": "4. 문제 풀이 ⑤번 설명 및 6번 문장 (외부 기관 강좌 비용 지원 요청)"
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 자신의 요청을 긍정적으로 검토해 주기를 희망하며 편지를 마무리한다.",
+    "a": "O",
+    "e": "8번 문장 I hope you will consider my request positively."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 분석지상 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "(고객·관심 등을) 끌어모으다, 유인하다",
+      "(비용 등을) 충당하다, 부담하다",
+      "분기 (1년의 4분의 1인 3개월)",
+      "~에 기여하다, 이바지하다"
+    ],
+    "rows": [
+      ["quarter", 3],
+      ["attract", 1],
+      ["contribute to", 4],
+      ["cover", 2]
+    ],
+    "e": "2. 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지에서 제시된 potential(잠재적인)의 <b>반의어</b>로 알맞은 것은?",
+    "o": [
+      "prospective",
+      "latent",
+      "definite",
+      "possible"
+    ],
+    "a": 3,
+    "e": "5. 심화 어휘 (반의어: actual, definite / 동의어: prospective, possible, latent)"
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지에 제시된 request의 동의어 중 두 개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["첫 번째 동의어", ["ask for", "appeal", "petition"]],
+      ["두 번째 동의어", ["ask for", "appeal", "petition"]]
+    ],
+    "show": "ask for, appeal, petition 중 2개",
+    "e": "5. 심화 어휘"
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 형태가 유사하여 혼동하기 쉬우나 '분배하다, 유통하다'의 뜻을 지닌 어휘는?",
+    "o": [
+      "contribute",
+      "distribute",
+      "discover",
+      "develop"
+    ],
+    "a": 2,
+    "e": "5. 심화 어휘 (contribute vs distribute)"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "6번 문장의 focus on과 동일하게 동사와 전치사가 묶여 '~을 찾다, 검색하다'를 뜻하는 두 단어의 표현을 쓰시오.",
+    "ans": [
+      "search for"
+    ],
+    "show": "search for",
+    "e": "2. 어휘 및 연결어 (search for)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "choice",
+    "s": "본문의 문맥상 cover가 사용된 알맞은 의미를 고르시오.",
+    "c":"requesting that the company (책의 표지를 덮다 / 비용을 충당하다) part of my training cost",
+    "o": [
+      "책의 표지를 덮다",
+      "비용을 충당하다"
+    ],
+    "a": "비용을 충당하다",
+    "e": "5. 심화 어휘 (비용을 대신 대다/충당하다)"
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 밑줄 친 부분 중 명사 my efforts를 뒤에서 수식하는 형용사적 용법의 to부정사를 고르시오.",
+    "c":"As part of my efforts (to contribute / to further develop) ...",
+    "o": [
+      "to contribute",
+      "to further develop"
+    ],
+    "a": "to contribute",
+    "e": "2. 구문 분석 3번 문장 (to contribute more to the department: 형용사적 용법)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "mc",
+    "s": "3번 문장의 to further develop my skills에서 to부정사의 문법적 용법으로 옳은 것은?",
+    "o": [
+      "명사적 용법 (주어)",
+      "형용사적 용법 (명사 수식)",
+      "부사적 용법 (목적)",
+      "명사적 용법 (목적어)"
+    ],
+    "a": 3,
+    "e": "2. 구문 분석 3번 문장 ('더 개발하기 위하여'라는 목적의 의미를 나타내는 부사적 용법)"
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 타동사 needs의 목적어 자리에 들어갈 알맞은 어형을 고르시오.",
+    "c":"our department needs (better attracting / to better attract) potential customers",
+    "o": [
+      "better attracting",
+      "to better attract"
+    ],
+    "a": "to better attract",
+    "e": "2. 구문 분석 4번 문장 (needs의 목적어로 쓰인 명사적 용법의 분리부정사)"
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 빈칸에 들어갈 알맞은 동사 형태를 고르시오.",
+    "c":"I'm requesting that the company (cover / covers) part of my training cost.",
+    "o": [
+      "cover",
+      "covers"
+    ],
+    "a": "cover",
+    "e": "2. 구문 분석 5번 문장 (요구 동사 request 뒤 that절에서 당위의 조동사 should 생략)"
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "short",
+    "s": "5번 문장에서 the company 뒤에 동사원형 cover가 쓰인 이유로, 생략된 당위성을 나타내는 한 단어의 조동사를 쓰시오.",
+    "ans": [
+      "should"
+    ],
+    "show": "should",
+    "e": "2. 구문 분석 5번 문장 (당위성을 나타내는 조동사 should 생략)"
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장에서 주어 I에 병렬로 연결되어 현재완료 시제를 이루는 알맞은 동사를 고르시오.",
+    "c":"I have recently searched for training courses and (found / finding) Smart Growth Training's two-week course ...",
+    "o": [
+      "found",
+      "finding"
+    ],
+    "a": "found",
+    "e": "2. 구문 분석 6번 문장 (have searched와 [have] found가 병렬 구조)"
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장의 관계사절에서 선행사에 일치시킬 알맞은 동사 형태를 고르시오.",
+    "c":"two-week course that (focus / focuses) on digital marketing strategies.",
+    "o": [
+      "focus",
+      "focuses"
+    ],
+    "a": "focuses",
+    "e": "2. 구문 분석 6번 문장 (선행사 course가 단수이므로 focuses)"
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "mc",
+    "s": "다음 중 타동사 뒤에 목적어절을 이끄는 명사절 접속사 that이 생략된 문장이 <b>아닌</b> 것은?",
+    "o": [
+      "4번 문장 (noticed 뒤)",
+      "5번 문장 (requesting 뒤)",
+      "7번 문장 (believe 뒤)",
+      "8번 문장 (hope 뒤)"
+    ],
+    "a": 2,
+    "e": "2. 구문 분석 (5번 문장은 접속사 that이 명시되어 있으며 생략되지 않았음)"
+  },
+  {
+    "n": 23,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 분석지에서 분류된 알맞은 키워드를 고르시오.",
+    "box": [
+      "키워드 A (추가 교육 훈련)",
+      "키워드 B (비용 지원 요청)"
+    ],
+    "rows": [
+      ["additional training", 1],
+      ["requesting that the company cover part of my training cost", 2],
+      ["two-week course that focuses on digital marketing strategies", 1],
+      ["consider my request positively", 2]
+    ],
+    "e": "1. 키워드 분석을 통한 주제 도출"
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번 항목에서 키워드 A를 수행하기 위해 회사 측에 키워드 B를 정식으로 요청하는 중심 문장으로 선정한 문장의 번호를 숫자로 쓰시오.",
+    "ans": [
+      "5",
+      "5번"
+    ],
+    "show": "5",
+    "e": "1. 키워드 분석 (5번 문장 For this reason, I'm requesting that the company cover part of my training cost.)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "5번 문장의 연결 표현 'For this reason'의 역할로 분석지에 명시된 설명은?",
+    "o": [
+      "앞서 언급된 내용과 상반되는 대조 관계를 도입함",
+      "온라인 고객 유치의 필요성을 원인으로 삼아 요구 사항을 이끌어내는 인과 관계의 연결 표현",
+      "앞 내용에 대한 구체적 예시를 나열하는 예시 관계의 연결 표현",
+      "시간 순서에 따른 사건의 전개를 나타내는 시간 순접 표현"
+    ],
+    "a": 2,
+    "e": "2. 에스 독해법 심층 분석 5번 어휘 및 연결어"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "match",
+    "s": "지문의 각 부분(Chunk)과 분석지에 제시된 역할을 바르게 연결하시오.",
+    "box": [
+      "발신인 신분 소개 및 직무 훈련에 대한 배경 설명 (도입부)",
+      "문제 인식 제시 및 편지의 핵심 요구 전달 (본론 핵심)",
+      "세부 정보 제공 및 정중한 당부로 서신 마무리 (결론)"
+    ],
+    "rows": [
+      ["첫 번째 부분 (1~3번 문장)", 1],
+      ["두 번째 부분 (4~5번 문장)", 2],
+      ["세 번째 부분 (6~10번 문장)", 3]
+    ],
+    "e": "2. 부분(Chunk) 마무리"
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식으로 옳은 것은?",
+    "o": [
+      "문제점 제기 - 원인 분석 - 해결책 비판 - 대안 모색",
+      "상황 설명 - 요구 제기 - 세부 사항 제시 - 당부",
+      "통념 제시 - 반박 - 실험 결과 소개 - 요약",
+      "사건 발생 - 갈등 심화 - 절정 - 교훈 제시"
+    ],
+    "a": 2,
+    "e": "3. 서술 전략"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지에서 제시된 이 글의 영문 주제로 알맞은 것은?",
+    "o": [
+      "Inquiry about the Product Development Cost",
+      "Report on the Performance of Marketing Department",
+      "Proposal for Launching Internal Marketing Courses",
+      "Request for Financial Support for Professional Training Cost"
+    ],
+    "a": 4,
+    "e": "1. 키워드 분석을 통한 주제 도출"
+  },
+  {
+    "n": 29,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 문제 풀이 단계 중 '마케팅 부서의 업무 성과를 보고하려고'가 오답으로 소거되는 이유로 명시된 것은?",
+    "o": [
+      "사내 연수 신설이 아니라 외부 과정을 수강하려 하기 때문",
+      "상품 개발비와 무관하며 본인의 훈련 비용이 핵심이기 때문",
+      "마케팅 예산 전체 증액이 아니라 개인의 연수 훈련비 지원 요청이기 때문",
+      "부서 성과 보고 내용이 전혀 언급되지 않았기 때문"
+    ],
+    "a": 4,
+    "e": "4. 문제 풀이 5단계 ③번 해설"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 문제 풀이 4단계에서 추출된 행동 촉구 내용으로 가장 알맞은 것은?",
+    "o": [
+      "사내 온라인 마케팅 신규 부서 개설 요청",
+      "찾아낸 디지털 마케팅 훈련 과정 비용의 일부를 회사가 부담해 달라는 행정적 지원 요청",
+      "1,600달러 전액을 회사 예산에서 지급해 달라는 요구",
+      "부서의 온라인 고객 유치 성과를 인정해 달라는 요청"
+    ],
+    "a": 2,
+    "e": "4. 문제 풀이 4단계 행동 촉구 문장 추출"
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오.",
+    "c":"Over the last quarter, I noticed our department needs to better attract potential customers. For this reason, I'm requesting that the company covers part of my training cost. I have recently searched for training courses and found Smart Growth Training's two-week course that focus on digital marketing strategies.",
+    "keys": [
+      {
+        "k": "cover",
+        "show": "covers → cover"
+      },
+      {
+        "k": "focuses",
+        "show": "focus → focuses"
+      }
+    ],
+    "e": "2. 구문 분석 5번 문장(should 생략에 따른 동사원형 cover) 및 6번 문장(선행사 course에 따른 단수동사 focuses)"
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 8단어의 영어 문장으로 완성하시오.",
+    "c":"제 요청을 긍정적으로 검토해 주시기를 바랍니다.<br>「조건」 hope, consider, positively를 반드시 포함하여 영작할 것",
+    "ans": [
+      "I hope you will consider my request positively",
+      "I hope you will consider my request positively."
+    ],
+    "show": "I hope you will consider my request positively.",
+    "e": "0. 지문 원문 8번 문장"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "kw",
+    "s": "5번 문장에서 주어 the company 뒤에 covers 대신 동사원형 cover를 쓰는 문법적 이유를 쓰시오.",
+    "groups": [
+      [
+        "요구",
+        "제안",
+        "주장",
+        "명령",
+        "request"
+      ],
+      [
+        "당위성",
+        "should",
+        "생략"
+      ]
+    ],
+    "show": "요구 동사 request 뒤의 that절에서 당위성을 나타내는 조동사 should가 생략되어 동사원형이 오기 때문이다.",
+    "e": "2. 구문 분석 5번 문장"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 4번(문제 풀이)의 1~3단계를 바탕으로, 필자와 수신인(독자)의 신분 및 두 사람의 사내 업무적 관계를 서술하시오.",
+    "show": "필자 Karen Whitfield는 마케팅 부서의 실무 보조원(마케팅 어시스턴트)이고, 수신인 Ms. Palmer는 사내 비용 승인 권한을 가진 상사 또는 관리자이다. 따라서 두 사람의 관계는 부서 실무 직원이 직무 향상을 위한 연수 수강을 위해 관리자에게 비용 지원을 품의하는 사내 업무적 소통 관계이다.",
+    "crit": "① 필자의 신분(마케팅 부서 보조원/실무자) 명시<br>② 수신인의 신분(비용 승인 권한자/상사/관리자) 명시<br>③ 두 사람의 관계(연수 비용 지원을 품의·요청하는 사내 업무적 관계) 명시 — 각 1점"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "전시회 소개 및 핵심 주제 정독 확인 문항 (#2~#5)",
+ "section": "교과서 본문 · 섹션 1 (#2~#5)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [2, "Many artists are famous for their particular use of color."],
+  [3, "While some artists mix interesting and unique colors, other artists use primary colors to express strong emotions."],
+  [4, "As we walk through our newest exhibition, Colorful Stories of Art, we will explore the use of the three primary colors―yellow, blue, and red―and find out how they were a source of inspiration."],
+  [5, "Open your eyes, listen to the stories, and try to feel the emotions that the colors show."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문 및 요약문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "많은 예술가들은 자신들만의 특별한 색상 사용으로 유명하다.",
+   "모든 예술가는 흥미롭고 독특한 색을 섞어 쓰며 원색 사용을 엄격히 피한다.",
+   "일부 예술가들은 강렬한 감정을 표현하기 위해 원색을 사용한다.",
+   "새로운 전시회의 명칭은 Colorful Stories of Art이다.",
+   "전시회에서는 노랑, 파랑, 빨강의 세 가지 원색이 영감의 원천이 된 방식을 탐구한다"
+  ],
+  "a": 2,
+  "e": "#3 어떤 예술가들은 색을 섞는 반면, 다른 예술가들은 원색을 사용한다고 대조하고 있습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "이번 전시회에서 다루는 세 가지 원색은 노란색, 파란색, 초록색이다.",
+  "a": "X",
+  "e": "#4 the three primary colors―yellow, blue, and red"
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["많은 예술가들에게 색상은 감정을 표현하는 수단으로 사용된다.", "T"],
+   ["4번 문장의 they가 가리키는 대상은 '세 가지 원색'이다.", "T"],
+   ["5번 문장은 관람객에게 색상이 보여주는 감정을 느끼도록 노력할 것을 권유한다.", "T"]
+  ],
+  "e": "#3, #4, #5 본문 문장 내용 일치"
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Artists strictly avoid primary colors because they fail to express strong emotions.",
+   "This exhibition explores how yellow, blue, and red served as sources of inspiration for various artists.",
+   "The exhibition focuses exclusively on how to mix interesting and unique secondary colors.",
+   "Few artists are recognized for their specific or particular use of color."
+  ],
+  "a": 2,
+  "e": "Section 1 English Summary: This exhibition explores how the three primary colors—yellow, blue, and red—served as sources of inspiration for various artists."
+ },
+ {
+  "n": 5,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "specific, special",
+   "blend, combine",
+   "distinctive, special",
+   "basic, main",
+   "investigate"
+  ],
+  "rows": [
+   ["particular", 1],
+   ["mix", 2],
+   ["unique", 3],
+   ["primary", 4],
+   ["explore", 5]
+  ],
+  "e": "분석지 #2, #3, #4 어휘"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "general",
+   "separate",
+   "common",
+   "secondary"
+  ],
+  "rows": [
+   ["particular", 1],
+   ["mix", 2],
+   ["unique", 3],
+   ["primary", 4]
+  ],
+  "e": "분석지 #2, #3 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #3의 primary colors에서 primary가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "초등 교육의",
+   "원색의, 기본의",
+   "최초의, 원시의",
+   "주요하지 않은, 부차적인"
+  ],
+  "a": 2,
+  "e": "#3 어휘: primary (형) 주된, 기본의 (여기서는 '원색'의 의미, syn. basic, main)"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #2의 particular에 대한 설명으로 옳은 것은?",
+  "o": [
+   "본문에서는 '까다로운'이라는 의미로 쓰였다.",
+   "동의어로 specific, special이 제시되어 있으며 반의어는 general이다.",
+   "오직 사람의 성격을 나타낼 때만 쓰는 형용사이다.",
+   "부사 형태로만 쓰이며 명사를 꾸밀 수 없다"
+  ],
+  "a": 2,
+  "e": "#2 particular (형) 특별한, 특정한, syn. specific, special, ant. general"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #4의 source와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "origin"
+  ],
+  "show": "origin",
+  "e": "#4 어휘: source (syn. origin)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #4의 inspiration과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "motivation"
+  ],
+  "show": "motivation",
+  "e": "#4 어휘: inspiration (syn. motivation)"
+ },
+ {
+  "n": 11,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Many artists are famous (for / to) their particular use of color.",
+  "o": [
+   "for",
+   "to"
+  ],
+  "a": "for",
+  "e": "#2 구문 분석: '~때문에 유명하다'라는 원인이나 이유를 나타낼 때는 'be famous for 명사'를 씁니다."
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "While some artists mix interesting colors, (other / another) artists use primary colors.",
+  "o": [
+   "other",
+   "another"
+  ],
+  "a": "other",
+  "e": "#3 구문 분석 ★: 'some ~ others[other + 복수명사]' 구문이며, 복수명사 artists 앞에는 other가 옵니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Other artists use primary colors (to express / express) strong emotions.",
+  "o": [
+   "to express",
+   "express"
+  ],
+  "a": "to express",
+  "e": "#3 구문 분석: 강렬한 감정을 표현하기 '위하여'라는 목적을 나타내는 to부정사의 부사적 용법 자리입니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "We will find out (how they were / how were they) a source of inspiration.",
+  "o": [
+   "how they were",
+   "how were they"
+  ],
+  "a": "how they were",
+  "e": "#4 구문 분석 ★: find out의 목적어로 쓰인 간접의문문 명사절이므로 [의문사(how) + 주어(they) + 동사(were)]의 평서문 어순이어야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Open your eyes, listen to the stories, and (try / trying) to feel the emotions.",
+  "o": [
+   "try",
+   "trying"
+  ],
+  "a": "try",
+  "e": "#5 구문 분석: 명령문 동사원형 Open, listen과 and로 대등하게 병렬 연결되는 동사원형 try 자리입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장의 the emotions that the colors show에서 that의 문법적 기능으로 옳은 것은?",
+  "o": [
+   "동격의 접속사 that",
+   "동사 show의 목적어 역할을 하는 목적격 관계대명사",
+   "결과를 나타내는 부사절 접속사 that",
+   "주어 역할을 하는 주격 관계대명사"
+  ],
+  "a": 2,
+  "e": "#5 구문 분석: 선행사 the emotions를 수식하며 관계사절 내 동사 show의 목적어가 빠져 있으므로 목적격 관계대명사입니다."
+ },
+ {
+  "n": 17,
+  "p": "D",
+  "t": "mc",
+  "s": "3번 문장에 쓰인 While의 문맥적 기능으로 가장 적절한 것은?",
+  "o": [
+   "색을 섞는 행위가 일어나는 시간적 기간을 서술한다.",
+   "독특한 색을 섞는 예술가들과 원색을 사용하는 예술가들의 서로 다른 양상을 대조한다.",
+   "원색을 사용하는 예술가들이 겪는 경제적 원인을 설명한다.",
+   "전시회 관람을 위한 구체적인 시간표를 제시한다"
+  ],
+  "a": 2,
+  "e": "#3 구문 분석: 부사절 접속사 While은 '~인 반면에'라는 대조의 의미로 두 가지 다른 양상을 비교합니다."
+ },
+ {
+  "n": 18,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "색의 특별한 사용으로 유명한 예술가들 소개 → 색을 섞는 예술가와 원색을 쓰는 예술가의 대조 → 세 가지 원색을 탐구하는 신규 전시회 안내 → 관람객에게 감정을 느껴보도록 촉구하는 맺음말",
+   "전시회 입장료 안내 → 원색의 화학적 조합 실패 사례 → 세 가지 원색 폐기 선언 → 맺음말",
+   "노란색의 역사적 기원 설명 → 파란색 안료의 수입 경로 → 빨간색 물감 제작법 → 결론",
+   "예술가들의 시력 저하 경고 → 눈을 감고 듣는 오디오 가이드 소개 → 전시회 일정 변경"
+  ],
+  "a": 1,
+  "e": "#2 색 사용으로 유명한 예술가들 → #3 색 조합파와 원색파의 대조 → #4 전시회에서 세 가지 원색 탐구 예고 → #5 감정을 느껴보라는 권유 순서입니다."
+ },
+ {
+  "n": 19,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "우리는 세 가지 원색의 사용을 탐구하고 그것들이 어떻게 영감의 원천이었는지를 알아낼 것이다.<br><small>「조건」 explore the use of the three primary colors, find out how they were a source of inspiration 활용 (총 20단어)</small>",
+  "ans": [
+   "we will explore the use of the three primary colors and find out how they were a source of inspiration"
+  ],
+  "show": "We will explore the use of the three primary colors and find out how they were a source of inspiration.",
+  "e": "#4 조동사 will 뒤 동사원형 병렬 및 간접의문문(how they were a source of inspiration) 구문"
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "While some artists mix interesting colors, <u>another</u> artists use primary colors. We will explore the colors and find out <u>how were they</u> a source of inspiration.",
+  "keys": [
+   {
+    "k": "other",
+    "show": "another → other"
+   },
+   {
+    "k": "how they were",
+    "show": "how were they → how they were"
+   }
+  ],
+  "e": "#3 복수명사(artists)를 수식하는 other, #4 find out의 목적어 간접의문문 평서문 어순(how they were)"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "kw",
+  "s": "4번 문장의 find out 뒤에서 how were they가 아닌 how they were 어순을 써야 하는 문법적 이유를 문장 성격과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "간접의문문",
+    "명사절"
+   ],
+   [
+    "평서문 어순",
+    "의문사 주어 동사",
+    "의문사+주어+동사"
+   ]
+  ],
+  "show": "find out의 목적어 역할을 하는 간접의문문(명사절)이므로 [의문사 + 주어 + 동사]의 평서문 어순을 따라야 하기 때문이다.",
+  "e": "#4 구문 분석 ★"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Many artists use specific colors, including (A) p________ colors, to express strong emotions. This exhibition explores how they served as sources of (B) i________ for various artists.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "primary"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "inspiration"
+    ]
+   ]
+  ],
+  "show": "(A) primary (B) inspiration",
+  "e": "Section 1 English Summary 및 본문 #3, #4"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

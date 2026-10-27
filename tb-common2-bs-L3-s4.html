@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Kim Whanki & Henri Matisse 정독 확인 문항 (#22~#33)",
+ "section": "교과서 본문 · 섹션 4 (#22~#33)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [22, "Kim Whanki & Henri Matisse"],
+  [23, "The color blue can produce a calming effect."],
+  [24, "Even during his days in Paris and New York, Kim Whanki never forgot his Korean identity."],
+  [25, "The blue sky and blue seas reminded him of Sinan, his home in Korea, which inspired him to create paintings filled with various shades of blue."],
+  [26, "His use of blue was an expression of how much he missed the place he grew up in."],
+  [27, "In Tranquility 5-IV-73 #310, the waves of deep blue and light blue dots bring up images of the sea or the sky."],
+  [28, "Kim Whanki said that he painted each dot as he thought of friends and loved ones from home."],
+  [29, "On the other hand, Henri Matisse’s blue speaks of freedom."],
+  [30, "Polynesia, the Sky and Polynesia, the Sea are two Matisse works that have an interesting similarity."],
+  [31, "In his later years, Matisse had cancer surgery, which left him unable to stand and paint in front of an easel."],
+  [32, "Instead of painting, he created artwork by gluing paper cut-outs and then painting details."],
+  [33, "Although his physical difficulties prevented him from doing many things, he still remembered the freedom he experienced while swimming in the Tahitian sea, looking through the salt water down to the sea floor and up towards the sky."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 김환기(Kim Whanki)에 관한 내용과 일치하지 않는 것은?",
+  "o": [
+   "파리와 뉴욕에 있던 시절에도 한국인으로서의 정체성을 결코 잊지 않았다.",
+   "푸른 하늘과 푸른 바다는 그에게 한국의 고향인 신안을 상기시켰다.",
+   "고향의 친구들과 사랑하는 이들을 생각하면서 작품의 각각의 점을 그렸다.",
+   "Tranquility 5-IV-73 #310의 점들은 바다나 하늘의 이미지를 불러일으킨다.",
+   "파란색을 사용하여 신체적 한계를 극복하고 얻은 해방감을 주로 표현했다"
+  ],
+  "a": 5,
+  "e": "#25, #26, #29 파란색으로 고향에 대한 그리움과 정체성을 표현한 것은 김환기이며, 자유와 해방감을 표현한 것은 앙리 마티스입니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "마티스는 말년에 암 수술을 받은 후 이젤 앞에 서서 그림을 그릴 수 없게 되었다.",
+  "a": "O",
+  "e": "#31 Matisse had cancer surgery, which left him unable to stand and paint in front of an easel."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["파란색은 사람의 마음을 차분하게 진정시키는 효과를 낼 수 있다.", "T"],
+   ["마티스는 암 수술 후 일체의 미술 작품 창작 활동을 완전히 중단했다.", "F"],
+   ["마티스는 타히티 바다에서 수영하며 경험했던 자유의 감정을 여전히 기억했다.", "T"]
+  ],
+  "e": "#23, #32, #33 마티스는 그림을 그리는 대신 종이 오리기 조각들을 붙이고 세부 사항을 칠하는 방식으로 작품을 계속 창작했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Kim Whanki used blue dots to represent his physical limitations after surgery.",
+   "Kim Whanki expressed his longing for his hometown and Korean identity through blue dots and waves.",
+   "Henri Matisse completely forgot his memories of the Tahitian sea in his later years.",
+   "Both artists considered the color blue as an expression of sorrow and anger."
+  ],
+  "a": 2,
+  "e": "Section 4 English Summary: Kim Whanki used blue dots and waves to express his longing for his hometown and his Korean identity."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "Polynesia, the Sky와 Polynesia, the Sea는 흥미로운 유사성을 지닌 앙리 마티스의 두 작품이다.",
+  "a": "O",
+  "e": "#30 Polynesia, the Sky and Polynesia, the Sea are two Matisse works that have an interesting similarity."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "soothing, relaxing",
+   "encourage, motivate",
+   "calmness, peace",
+   "resemblance, likeness",
+   "stop, hinder"
+  ],
+  "rows": [
+   ["calming", 1],
+   ["inspire", 2],
+   ["tranquility", 3],
+   ["similarity", 4],
+   ["prevent", 5]
+  ],
+  "e": "분석지 #23, #25, #27, #30, #33 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "agitating",
+   "cause",
+   "discourage",
+   "uniform",
+   "difference"
+  ],
+  "rows": [
+   ["calming", 1],
+   ["effect", 2],
+   ["inspire", 3],
+   ["various", 4],
+   ["similarity", 5]
+  ],
+  "e": "분석지 #23, #25, #30 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #25의 shade가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "햇빛을 가리는 그늘",
+   "색조, 명암",
+   "블라인드, 차양",
+   "미묘한 차이"
+  ],
+  "a": 2,
+  "e": "#25 various shades of blue에서 shade는 '색조, 그늘, 명암(syn. hue, tone)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #27의 bring up이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "(아이를) 양육하다, 기르다",
+   "(화제를) 제기하다, 꺼내다",
+   "(이미지·기억을) 불러일으키다",
+   "(먹은 것을) 토하다"
+  ],
+  "a": 3,
+  "e": "#27 bring up images of the sea or the sky에서 bring up은 '불러일으키다(syn. raise)'의 의미입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #29의 freedom과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "liberty"
+  ],
+  "show": "liberty",
+  "e": "#29 어휘: freedom (syn. liberty)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #31의 unable과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "incapable"
+  ],
+  "show": "incapable",
+  "e": "#31 어휘: unable (syn. incapable)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Even (during / while) his days in Paris and New York, Kim Whanki never forgot his identity.",
+  "o": [
+   "during",
+   "while"
+  ],
+  "a": "during",
+  "e": "#24 구문 분석: his days in Paris and New York라는 특정 기간의 명사구가 이어지므로 전치사 during이 올바릅니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The blue sky and blue seas reminded him (of / to) Sinan, his home in Korea.",
+  "o": [
+   "of",
+   "to"
+  ],
+  "a": "of",
+  "e": "#25 구문 분석: 'A에게 B를 상기시키다'를 나타내는 동사 숙어는 'remind A of B'입니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The blue sky reminded him of Sinan, (which / that) inspired him to create paintings.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "#25 구문 분석 ★: 콤마 뒤에서 앞의 내용을 선행사로 받는 계속적 용법의 관계대명사이므로 that은 쓸 수 없고 which를 씁니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This inspired him (create / to create) paintings filled with various shades of blue.",
+  "o": [
+   "to create",
+   "create"
+  ],
+  "a": "to create",
+  "e": "#25 구문 분석 ★: 5형식 동사 inspire는 목적격 보어로 to부정사를 취합니다 (inspire + 목적어 + to-v)."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He created paintings (filling / filled) with various shades of blue.",
+  "o": [
+   "filled",
+   "filling"
+  ],
+  "a": "filled",
+  "e": "#25 구문 분석: 그림들이 다양한 색조로 채워진 수동 관계이므로 과거분사구 filled with가 paintings를 후치 수식합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "His use of blue was an expression of (how much he missed / how much did he miss) the place.",
+  "o": [
+   "how much he missed",
+   "how much did he miss"
+  ],
+  "a": "how much he missed",
+  "e": "#26 구문 분석 ★: 전치사 of의 목적어로 쓰인 간접의문문 명사절이므로 [의문사(how much) + 주어(he) + 동사(missed)]의 평서문 어순이어야 합니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In Tranquility 5-IV-73 #310, the waves of blue dots (brings / bring) up images of the sea.",
+  "o": [
+   "bring",
+   "brings"
+  ],
+  "a": "bring",
+  "e": "#27 구문 분석: 주어부의 핵심 명사가 복수인 the waves이므로 복수형 동사 bring up이 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Matisse had cancer surgery, which left him (unable / unably) to stand and paint.",
+  "o": [
+   "unable",
+   "unably"
+  ],
+  "a": "unable",
+  "e": "#31 구문 분석 ★: 5형식 동사 leave는 목적어(him) 뒤에 목적격 보어로 형용사(unable)를 취합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He created artwork by gluing paper cut-outs and then (painting / painted) details.",
+  "o": [
+   "painting",
+   "painted"
+  ],
+  "a": "painting",
+  "e": "#32 구문 분석 ★: 전치사 by의 목적어로 gluing과 and로 병렬 연결되는 동명사 painting 자리입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "His physical difficulties prevented him (from / to) doing many things.",
+  "o": [
+   "from",
+   "to"
+  ],
+  "a": "from",
+  "e": "#33 구문 분석 ★: 'A가 ~하는 것을 막다/못하게 하다'를 뜻하는 동사 구문은 'prevent A from v-ing'입니다."
+ },
+ {
+  "n": 22,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 [연결어 분석]에 근거하여 29번 문장의 On the other hand에 대한 설명으로 가장 적절한 것은?",
+  "o": [
+   "파란색 물감의 제조 방식과 노란색 안료의 제조 기법을 비교한다.",
+   "마티스의 파란색이 지닌 자유라는 의미와 김환기의 파란색이 지닌 고향에 대한 그리움이라는 의미의 대조를 나타낸다.",
+   "마티스가 이젤 앞에서 그림을 그릴 수 없게 된 시간적 원인을 설명한다.",
+   "김환기가 파리와 뉴욕에서 거주하게 된 지리적 배경을 추가로 열거한다"
+  ],
+  "a": 2,
+  "e": "#29 [연결어 분석]: 마티스의 파란색이 자유를 의미한다는 내용과 김환기의 파란색이 고향에 대한 그리움을 의미한다는 내용을 대조하기 위해 쓰였습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "파란색의 차분한 효과 제시 → 김환기의 한국인 정체성과 고향에 대한 파란색 표현 소개 → 점화 작품(Tranquility)과 고향 사람들에 대한 회상 설명 → 대조 연결어(On the other hand)를 통한 마티스의 자유로서의 파란색 도입 → 마티스의 암 수술 투병과 종이 오리기 기법 창작 → 타히티 바다에서 경험한 자유의 표현 결론",
+   "마티스의 암 수술 보고서 분석 → 김환기의 종이 오리기 기법 전수 → 타히티 섬으로의 공동 이주 선언 → 결론",
+   "신안 앞바다의 환경 오염 실태 고발 → 뉴욕 화랑가의 파란색 그림 불매 운동 → 앙리 마티스의 은퇴식",
+   "이젤 제작 공정 설명 → 종이 오리기 도구의 발명 → 김환기의 서양화 수련 과정 비판"
+  ],
+  "a": 1,
+  "e": "#23 파란색의 효과 → #24~#28 김환기의 파란색(정체성과 고향 그리움) → #29~#33 마티스의 파란색(투병 극복과 자유의 표현) 순서입니다."
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "비록 그의 신체적 어려움들이 그가 많은 것들을 하는 것을 막았지만, 그는 여전히 자유를 기억했다.<br><small>「조건」 Although his physical difficulties, prevented him from doing many things, still remembered 활용 (총 15단어)</small>",
+  "ans": [
+   "Although his physical difficulties prevented him from doing many things he still remembered the freedom"
+  ],
+  "show": "Although his physical difficulties prevented him from doing many things, he still remembered the freedom.",
+  "e": "#33 양보 접속사 Although 및 prevent A from v-ing 구문"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "The blue sky reminded him of Sinan, <u>that</u> inspired him to create paintings. His use of blue was an expression of <u>how much did he miss</u> the place. Matisse had cancer surgery, which left him <u>unably</u> to stand and paint.",
+  "keys": [
+   {
+    "k": "which",
+    "show": "that → which"
+   },
+   {
+    "k": "how much he missed",
+    "show": "how much did he miss → how much he missed"
+   },
+   {
+    "k": "unable",
+    "show": "unably → unable"
+   }
+  ],
+  "e": "#25 관계대명사 계속적 용법 which, #26 간접의문문 평서문 어순 how much he missed, #31 leave의 목적격 보어 형용사 unable"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "kw",
+  "s": "31번 문장에서 left him 뒤에 unably가 아닌 unable을 써야 하는 어법적 이유를 동사 leave의 문형과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "5형식",
+    "5형식 동사",
+    "leave"
+   ],
+   [
+    "목적격 보어",
+    "보어"
+   ],
+   [
+    "형용사",
+    "unable"
+   ]
+  ],
+  "show": "leave는 5형식 동사로 목적어(him) 뒤의 목적격 보어 자리에 부사가 아닌 형용사(unable)를 취하기 때문이다.",
+  "e": "#31 구문 분석 ★"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Kim Whanki used blue dots to express his (A) l________ for his hometown. On the other hand, Henri Matisse used paper cut-outs to express the vivid (B) f________ he had experienced.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "longing"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "freedom"
+    ]
+   ]
+  ],
+  "show": "(A) longing (B) freedom",
+  "e": "Section 4 English Summary 및 본문 #26, #29"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

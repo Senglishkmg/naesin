@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "20번 필자의 주장 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 20번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "We might not think of ourselves as global citizens yet, but it's both necessary and possible to do so."],
+    [2, "Some people are skeptical about the idea of global citizenship, but for most of human history, people didn't think of themselves as citizens of nation-states."],
+    [3, "After all, for most of human history, nation-states didn't exist."],
+    [4, "The rise of nation-states over the last few centuries has led people to add state citizenship to other identities, such as family, people group, or religion."],
+    [5, "Given the connections between people around the world and the common challenges we face, we need to layer global citizenship on to these other identities."],
+    [6, "This doesn't mean that global citizenship replaces these other identities."],
+    [7, "There's not a single story about our identities."],
+    [8, "Instead, it's precisely because we have obligations to our families, those in our community, and those around the world"]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 우리가 스스로를 세계 시민으로 생각하는 것이 필요할 뿐만 아니라 가능하다고 본다.",
+    "a": "O",
+    "e": "1번 문장 it's both necessary and possible to do so"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "인류 역사의 대부분 동안 사람들은 자신을 국민국가의 시민으로 여겨왔다.",
+    "a": "X",
+    "e": "2번 문장 people didn't think of themselves as citizens of nation-states"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "인류 역사에서 국민국가는 아주 오랜 태초부터 줄곧 존재해 왔다.",
+    "a": "X",
+    "e": "3번 문장 for most of human history, nation-states didn't exist"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "국민국가의 등장은 사람들이 가족이나 종교 같은 기존 정체성에 국가 시민권을 덧붙이도록 이끌었다.",
+    "a": "O",
+    "e": "4번 문장 led people to add state citizenship to other identities"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 기존의 다른 정체성들 위에 세계 시민권을 겹쳐 놓을 필요가 있다고 주장한다.",
+    "a": "O",
+    "e": "5번 문장 we need to layer global citizenship on to these other identities"
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "세계 시민권을 갖는 것은 가족이나 종교와 같은 기존의 다른 정체성들을 완전히 대체함을 의미한다.",
+    "a": "X",
+    "e": "6번 문장 This doesn't mean that global citizenship replaces these other identities."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 우리의 정체성에 관해 오직 단 하나의 단일한 이야기만 존재한다고 주장한다.",
+    "a": "X",
+    "e": "7번 문장 There's not a single story about our identities."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "필자에 따르면 우리는 가족, 지역사회 구성원, 그리고 전 세계 사람들에 대한 의무를 지니고 있다.",
+    "a": "O",
+    "e": "8번 문장 obligations to our families, those in our community, and those around the world"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 분석지상 의미를 [보기]에서 골라 바르게 짝지으시오.",
+    "box": [
+      "회의적인, 의심 많은",
+      "의무, 책임",
+      "출현, 부상, 등장",
+      "단일하고 고정된 관점을 비유하는 표현"
+    ],
+    "rows": [
+      ["skeptical", 1],
+      ["rise", 3],
+      ["a single story", 4],
+      ["obligation", 2]
+    ],
+    "e": "2. 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지에서 제시된 skeptical(회의적인)의 <b>반의어</b>에 해당하는 어휘는?",
+    "o": [
+      "doubtful",
+      "suspicious",
+      "cynical",
+      "convinced"
+    ],
+    "a": 4,
+    "e": "5. 심화 어휘 (반의어: optimistic, convinced / 동의어: doubtful, suspicious, cynical)"
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 replace(대체하다)의 동의어 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["첫 번째 동의어", ["substitute", "supplant", "displace"]],
+      ["두 번째 동의어", ["substitute", "supplant", "displace"]]
+    ],
+    "show": "substitute, supplant, displace 중 2개",
+    "e": "5. 심화 어휘"
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "형태가 유사한 어휘 중 문맥상 '의무, 책임'의 뜻으로 쓰인 올바른 낱말을 고르시오.",
+    "c":"precisely because we have (obligations / obstacles) to our families",
+    "o": [
+      "obligations",
+      "obstacles"
+    ],
+    "a": "obligations",
+    "e": "5. 심화 어휘 (obligation: 의무, 책임 vs obstacle: 장애물)"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 'A를 B 위에 층으로 겹쳐 얹다, 포개다'를 뜻하는 동사를 고르시오.",
+    "c":"we need to (layer / relay) global citizenship on to these other identities.",
+    "o": [
+      "layer",
+      "relay"
+    ],
+    "a": "layer",
+    "e": "5. 심화 어휘 (layer: 겹쳐 놓다 vs relay: 전달하다, 중계하다)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "1번 문장에 쓰인 표현으로 'A를 B로 생각하다/여기다'를 뜻하는 세 단어의 핵심 숙어를 쓰시오.",
+    "ans": [
+      "think of A as B"
+    ],
+    "show": "think of A as B",
+    "e": "2. 어휘 및 연결어 1번 문장"
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장에서 가주어 it에 상응하는 진주어 자리에 들어갈 알맞은 어형을 고르시오.",
+    "c":"it's both necessary and possible (to do / doing) so.",
+    "o": [
+      "to do",
+      "doing"
+    ],
+    "a": "to do",
+    "e": "2. 구문 분석 1번 문장 (진주어로 쓰인 명사적 용법의 to부정사 to do so)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장에서 주어 people과 목적어가 동일인이므로 알맞은 대명사를 고르시오.",
+    "c":"people didn't think of (them / themselves) as citizens of nation-states.",
+    "o": [
+      "them",
+      "themselves"
+    ],
+    "a": "themselves",
+    "e": "2. 구문 분석 2번 문장 (주어와 목적어가 일치하므로 재귀대명사 themselves)"
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 exist에 대한 어법 설명으로 옳은 것을 고르시오.",
+    "c":"nation-states (didn't exist / weren't existed)",
+    "o": [
+      "didn't exist",
+      "weren't existed"
+    ],
+    "a": "didn't exist",
+    "e": "2. 구문 분석 3번 문장 (exist는 자동사이므로 수동태 불가)"
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 주어부 핵에 수 일치시킬 알맞은 동사 형태를 고르시오.",
+    "c":"The rise of nation-states over the last few centuries (has / have) led people to add state citizenship ...",
+    "o": [
+      "has",
+      "have"
+    ],
+    "a": "has",
+    "e": "2. 구문 분석 4번 문장 (주어부의 핵심 명사가 단수 The rise이므로 has led)"
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 5형식 동사 led의 목적격 보어로 알맞은 형태를 고르시오.",
+    "c":"has led people (to add / add) state citizenship to other identities",
+    "o": [
+      "to add",
+      "add"
+    ],
+    "a": "to add",
+    "e": "2. 구문 분석 4번 문장 (lead + O + to-v 구조)"
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "mc",
+    "s": "5번 문두의 'Given ~'에 대한 분석지의 설명으로 가장 적절한 것은?",
+    "o": [
+      "동명사 주어 역할을 하는 필수 성분이다.",
+      "과거분사에서 출발하여 독립된 전치사처럼 굳어져 '~을 고려할 때(= Considering)'를 나타낸다.",
+      "수동태 완료 분사구문으로 뒤에 목적어를 절대 취할 수 없다.",
+      "명사를 뒤에서 직접 수식하는 한정적 용법의 형용사구이다."
+    ],
+    "a": 2,
+    "e": "2. 구문 분석 5번 문장 (Given 분사구문 설명)"
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "short",
+    "s": "5번 문장의 the common challenges와 we face 사이에 생략된 관계대명사 한 단어를 쓰시오.",
+    "ans": [
+      "that",
+      "which"
+    ],
+    "show": "that (또는 which)",
+    "e": "2. 구문 분석 5번 문장 (challenges와 we 사이에 목적격 관계대명사 that/which 생략)"
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "short",
+    "s": "8번 문장의 'those in our community, and those around the world'에서 대명사 those가 지칭하는 대상을 본문 분석지의 설명에 근거하여 영어 한 단어로 쓰시오.",
+    "ans": [
+      "people"
+    ],
+    "show": "people",
+    "e": "2. 구문 분석 8번 문장 (대명사 those는 문맥상 '사람들(people)'을 지칭)"
+  },
+  {
+    "n": 23,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 분석지에서 분류된 알맞은 키워드를 고르시오.",
+    "box": [
+      "키워드 A (세계 시민권)",
+      "키워드 B (기존 정체성과의 중첩/덧붙임)",
+      "키워드 C (전 세계인의 연결과 공통 과제)"
+    ],
+    "rows": [
+      ["global citizenship", 1],
+      ["layer global citizenship on to these other identities", 2],
+      ["connections between people around the world", 3],
+      ["common challenges we face", 3],
+      ["doesn't mean that global citizenship replaces", 2]
+    ],
+    "e": "1. 키워드 분석을 통한 주제 도출"
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번 항목에서 필자의 핵심 요구가 담긴 중심 문장으로 선정한 문장의 번호를 숫자로 쓰시오.",
+    "ans": [
+      "5",
+      "5번"
+    ],
+    "show": "5",
+    "e": "1. 키워드 분석 (5번 문장 Given the connections ~)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "지문의 각 부분(Chunk)과 분석지에 제시된 역할을 바르게 연결하시오.",
+    "box": [
+      "통념(세계 시민권 회의론)에 대한 역사적 반박 및 논의 출발점 마련 (도입부)",
+      "필자의 핵심 주장 제시 (본론 및 절정)",
+      "발생할 수 있는 오해를 차단하고 다층적 정체성의 필연성을 재확인함 (결론 및 부연)"
+    ],
+    "rows": [
+      ["첫 번째 부분 (1~3번 문장)", 1],
+      ["두 번째 부분 (4~5번 문장)", 2],
+      ["세 번째 부분 (6~8번 문장)", 3]
+    ],
+    "e": "2. 부분(Chunk) 마무리"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식으로 옳은 것은?",
+    "o": [
+      "시간 순서에 따른 사건 서술과 대조적 심경 반전",
+      "통념 반박 - 현실적 당위 제시 - 오해 방지 및 결론",
+      "구체적 사례 나열 - 통계치 제시 - 원인 규명",
+      "문제점 제기 - 원인 분석 - 해결책 비판 - 절충안"
+    ],
+    "a": 2,
+    "e": "3. 서술 전략"
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "8번 문장의 연결어 Instead의 기능으로 분석지에 명시된 설명은?",
+    "o": [
+      "앞 문장의 부정 진술('대체하는 것이 아니다')을 받아 대안적 설명을 전개하는 역접/대체 연결어",
+      "앞 문장의 내용과 동일한 예시를 추가적으로 열거하는 첨가 연결어",
+      "시간적 선후 관계에 따른 행동 절차를 안내하는 시간 순접 연결어",
+      "앞서 언급된 내용의 구체적 결과와 최종 결론을 맺는 인과 연결어"
+    ],
+    "a": 1,
+    "e": "2. 어휘 및 연결어 8번 문장"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지에서 제시된 이 글의 영문 주제로 가장 알맞은 것은?",
+    "o": [
+      "The Historical Process of the Rise and Fall of Modern Nation-States",
+      "The Necessity of Prioritizing Global Citizenship over National Obligations",
+      "The Need to Layer Global Citizenship onto Existing Identities in Response to Global Connections and Common Challenges",
+      "The Importance of Global Citizenship Education for Cultural Harmony"
+    ],
+    "a": 3,
+    "e": "1. 키워드 분석을 통한 주제 도출"
+  },
+  {
+    "n": 29,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번 문제 풀이에서 '국제 사회의 발전을 위해 세계 시민의 의무를 우선시해야 한다'가 오답으로 소거되는 근거는?",
+    "o": [
+      "국가 간 협력 확대는 지문의 논리적 초점이 아니기 때문",
+      "세계 시민 교육이나 문화 존중에 대한 언급이 없기 때문",
+      "가족, 지역사회, 전 세계에 대한 의무가 공존하며 어느 하나를 우선시하라는 서술은 없기 때문",
+      "국가 정체성을 강화해야 한다는 내용과 정면으로 배치되기 때문"
+    ],
+    "a": 3,
+    "e": "4. 문제 풀이 최종 답안 및 선택지 검토 ②번 해설"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번 문제 풀이에서 제시된 정답 선택지 내용으로 알맞은 것은?",
+    "o": [
+      "국제 문제 해결을 위해 국가 정체성을 강화해야 한다.",
+      "국제 사회의 발전을 위해 세계 시민의 의무를 우선시해야 한다.",
+      "세계 시민 정체성을 확립하려면 국가 간 협력을 확대해야 한다.",
+      "세계인의 연결과 공통 과제를 고려해 세계 시민 정체성을 더해야 한다."
+    ],
+    "a": 4,
+    "e": "4. 문제 풀이 ⑤번 설명"
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 고친 것을 쓰시오.",
+    "c":"The rise of nation-states over the last few centuries have led people to add state citizenship to other identities. Given the connections between people around the world, we need to layer global citizenship on to these other identities. This doesn't mean that global citizenship replace these other identities.",
+    "keys": [
+      {
+        "k": "has",
+        "show": "have → has"
+      },
+      {
+        "k": "replaces",
+        "show": "replace → replaces"
+      }
+    ],
+    "e": "2. 구문 분석 4번 문장(핵명사 The rise에 따른 단수동사 has led) 및 6번 문장(that절의 주어 global citizenship에 따른 단수동사 replaces)"
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 10단어의 영어 문장으로 완성하시오.",
+    "c":"이것이 세계 시민권이 이러한 다른 정체성들을 대체한다는 것을 의미하지는 않습니다.<br>「조건」 This, mean, global citizenship, replaces를 활용할 것",
+    "ans": [
+      "This doesn't mean that global citizenship replaces these other identities",
+      "This doesn't mean that global citizenship replaces these other identities."
+    ],
+    "show": "This doesn't mean that global citizenship replaces these other identities.",
+    "e": "0. 지문 원문 6번 문장"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "kw",
+    "s": "4번 문장에서 nation-states나 centuries가 바로 앞에 있음에도 have led가 아닌 has led를 써야 하는 문법적 이유를 쓰시오.",
+    "groups": [
+      [
+        "주어",
+        "The rise",
+        "핵심 명사"
+      ],
+      [
+        "단수",
+        "수 일치"
+      ]
+    ],
+    "show": "주어부의 핵심 명사가 단수 명사인 The rise이므로 동사도 단수형인 has led로 수 일치시켜야 하기 때문이다.",
+    "e": "2. 구문 분석 4번 문장"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번과 4번을 바탕으로, 필자가 주장하는 '세계 시민권(global citizenship)'과 '기존 정체성(가족, 국가 등)'의 올바른 관계를 '대체'와 '중첩(layer)'의 개념을 대조하여 서술하시오.",
+    "show": "세계 시민권은 기존의 가족, 지역사회, 국가 등의 정체성을 없애거나 대체(replace)하는 것이 아니며, 전 세계인의 연결성과 공통 과제에 대응하여 기존 정체성들 위에 세계 시민권을 겹쳐 놓아(layer on to) 다층적 의무들이 함께 공존하도록 하는 것이다.",
+    "crit": "① 세계 시민권이 기존 정체성을 대체(replace)하거나 없애는 것이 아님을 명시<br>② 기존 정체성 위에 겹쳐 놓음(layer on to/중첩)을 명시<br>③ 다층적 의무의 공존 또는 연결성·공통 과제 대응 맥락을 포함 — 각 1점"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

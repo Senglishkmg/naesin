@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Edward Hopper 정독 확인 문항 (#14~#21)",
+ "section": "교과서 본문 · 섹션 3 (#14~#21)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [14, "Edward Hopper"],
+  [15, "Van Gogh used yellow to express joy, but Edward Hopper’s use of yellow expresses loneliness."],
+  [16, "Hopper lived in New York City for nearly six decades, and he created paintings depicting urban scenes that showed how even familiar surroundings could cause the viewer to feel a sense of loneliness."],
+  [17, "Hopper’s Nighthawks is a good example of this."],
+  [18, "There are four people in the same diner, but they’re clearly not together."],
+  [19, "The bright yellow walls create a dramatic contrast to the darkness outside, emphasizing how people can be in the same space and feel apart."],
+  [20, "In Hopper’s Automat, the feeling of loneliness is even more direct."],
+  [21, "The yellow lights lead the viewer’s eye to the yellow hat of the woman, and the cool shades of the other colors contrast with the warm yellow, emphasizing that she’s on her own."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "Edward Hopper의 작품 세계에 대한 본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "반 고흐와 달리 노란색을 외로움을 표현하는 데 사용했다.",
+   "뉴욕시에서 거의 60년 동안 거주했다.",
+   "낯설고 이국적인 시골 풍경만을 화폭에 담아 현대인의 외로움을 드러냈다.",
+   "Nighthawks에서는 같은 식당에 있는 네 사람이 분명히 함께 있지 않은 모습을 보여준다.",
+   "Automat에서는 다른 색들의 차가운 색조와 따뜻한 노란색이 대비를 이룬다"
+  ],
+  "a": 3,
+  "e": "#16 친숙한 주변 환경(familiar surroundings)과 도시 풍경(urban scenes)을 묘사했습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "호퍼의 작품 Nighthawks에서 밝은 노란색 벽은 외부의 어둠과 극적인 대비를 이룬다.",
+  "a": "O",
+  "e": "#19 The bright yellow walls create a dramatic contrast to the darkness outside"
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["17번 문장의 this가 가리키는 것은 친숙한 주변 환경이 관람객에게 외로움을 느끼게 만드는 현상이다.", "T"],
+   ["Automat에서 외로움의 감정은 Nighthawks에 비해 훨씬 덜 직접적이다.", "F"],
+   ["Automat에서 노란색 불빛은 관람객의 시선을 여인의 노란색 모자로 이끈다.", "T"]
+  ],
+  "e": "#16, #17, #20, #21 Automat에서는 외로움의 감정이 훨씬 더 직접적(even more direct)이라고 서술되었습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Like Van Gogh, Edward Hopper used yellow to symbolize vitality and communal harmony.",
+   "Hopper revealed the alienation of modern people by contrasting bright yellow lights and cool shades in urban scenes.",
+   "Hopper avoided using cool shades to keep the emotional tone of his paintings consistently cheerful.",
+   "Modern people's sense of connection was the main theme portrayed in Hopper's paintings."
+  ],
+  "a": 2,
+  "e": "Section 3 English Summary: revealed the alienation of modern people by creating a dramatic contrast between bright yellow lights and cool shades in familiar urban scenes."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "호퍼의 Nighthawks는 같은 공간에 있으면서도 서로 단절되어 외로움을 느끼는 현대인의 모습을 강조한다.",
+  "a": "O",
+  "e": "#19 emphasizing how people can be in the same space and feel apart"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "isolation, solitude",
+   "portray, describe",
+   "environment",
+   "obviously",
+   "striking"
+  ],
+  "rows": [
+   ["loneliness", 1],
+   ["depict", 2],
+   ["surrounding", 3],
+   ["clearly", 4],
+   ["dramatic", 5]
+  ],
+  "e": "분석지 #15, #16, #18, #19 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "rural",
+   "unfamiliar",
+   "vaguely",
+   "together",
+   "indirect"
+  ],
+  "rows": [
+   ["urban", 1],
+   ["familiar", 2],
+   ["clearly", 3],
+   ["apart", 4],
+   ["direct", 5]
+  ],
+  "e": "분석지 #16, #18, #19, #20 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #16의 decade가 뜻하는 기간으로 알맞은 것은?",
+  "o": [
+   "1년",
+   "5년",
+   "10년",
+   "100년"
+  ],
+  "a": 3,
+  "e": "#16 어휘: decade (명) 10년"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #21의 on one's own이 지닌 숙어적 의미로 가장 적절한 것은?",
+  "o": [
+   "자신의 소유로",
+   "혼자서, 단독으로",
+   "자신의 힘을 과시하며",
+   "스스로 자원하여"
+  ],
+  "a": 2,
+  "e": "#21 어휘: on one's own (숙어) 혼자서, 단독으로"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #16의 cause와 바꾸어 쓸 수 있는 분석지상 동의어 숙어 표현을 두 단어로 쓰시오.",
+  "ans": [
+   "bring about"
+  ],
+  "show": "bring about",
+  "e": "#16 어휘: cause (syn. bring about)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #19의 apart와 바꾸어 쓸 수 있는 분석지상 동의어 부사를 한 단어로 쓰시오.",
+  "ans": [
+   "separately"
+  ],
+  "show": "separately",
+  "e": "#19 어휘: apart (syn. separately)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He created paintings (depicting / depicted) urban scenes.",
+  "o": [
+   "depicting",
+   "depicted"
+  ],
+  "a": "depicting",
+  "e": "#16 구문 분석: 도시 풍경을 묘사하는 능동 관계이므로 현재분사 depicting이 paintings를 후치 수식합니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Even familiar surroundings could cause the viewer (to feel / feel) a sense of loneliness.",
+  "o": [
+   "to feel",
+   "feel"
+  ],
+  "a": "to feel",
+  "e": "#16 구문 분석 ★: 5형식 동사 cause는 목적격 보어로 to부정사를 취합니다 (cause + O + to-v)."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The bright yellow walls create a dramatic contrast to the darkness outside, (emphasizing / emphasized) how people can feel apart.",
+  "o": [
+   "emphasizing",
+   "emphasized"
+  ],
+  "a": "emphasizing",
+  "e": "#19 구문 분석 ★: 주절의 상황과 동시에 일어나는 능동의 분사구문 자리이므로 emphasizing이 올바릅니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Emphasizing how people can be in the same space and (feel / feeling) apart.",
+  "o": [
+   "feel",
+   "feeling"
+  ],
+  "a": "feel",
+  "e": "#19 구문 분석: how 절 내부에서 조동사 can에 걸려 동사원형 be와 and로 병렬 연결되는 동사원형 feel 자리입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In Hopper’s Automat, the feeling of loneliness is (even / very) more direct.",
+  "o": [
+   "even",
+   "very"
+  ],
+  "a": "even",
+  "e": "#20 구문 분석 ★: 비교급 more direct를 수식하여 '훨씬'의 의미를 나타내는 부사는 even입니다. very는 비교급을 직접 수식할 수 없습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The cool shades of the other colors contrast with the warm yellow, emphasizing (that / what) she’s on her own.",
+  "o": [
+   "that",
+   "what"
+  ],
+  "a": "that",
+  "e": "#21 구문 분석: emphasizing 뒤에 빠진 문장 성분이 없는 완전한 절(she’s on her own)이 이어지므로 명사절 접속사 that이 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "20번 문장의 even 대신 비교급 수식어로 바꾸어 쓸 수 없는 것은?",
+  "o": [
+   "much",
+   "still",
+   "far",
+   "very",
+   "a lot"
+  ],
+  "a": 4,
+  "e": "#20 구문 분석 ★: 비교급 앞에는 much, still, far, a lot, even 등을 쓸 수 있으나 very는 쓸 수 없습니다."
+ },
+ {
+  "n": 19,
+  "p": "D",
+  "t": "mc",
+  "s": "15번 문장의 등위접속사 but이 갖는 문맥적 기능으로 가장 적절한 것은?",
+  "o": [
+   "반 고흐가 사용한 노란색의 화학적 안료와 호퍼의 물감 성분을 비교한다.",
+   "노란색을 기쁨의 표현으로 쓴 반 고흐와 외로움의 표현으로 쓴 호퍼의 상반된 색채 사용을 대조한다.",
+   "호퍼가 뉴욕에서 60년간 거주하게 된 구체적 계기를 설명한다.",
+   "반 고흐의 예술적 실패 원인을 분석하여 호퍼의 성공을 입증한다"
+  ],
+  "a": 2,
+  "e": "#15 반 고흐의 기쁨을 표현한 노란색과 호퍼의 외로움을 표현한 노란색의 대조를 나타냅니다."
+ },
+ {
+  "n": 20,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "호퍼의 노란색 사용(외로움 표현)과 반 고흐의 대비 제시 → 뉴욕 체류와 친숙한 도시 속 외로움을 묘사한 화풍 소개 → 대표작 Nighthawks를 통한 같은 공간 속 단절감 묘사 → 대표작 Automat을 통한 한층 더 직접적인 고독과 색채 대비 설명",
+   "뉴욕시의 역사적 발전 과정 소개 → 호퍼의 건축학 전공 배경 설명 → 미술 비평가들의 혹평 → 은퇴 선언",
+   "Nighthawks에 등장하는 음식 메뉴 분석 → 식당 내부 조명 설비 비판 → 프랑스 인상주의 화풍 찬양",
+   "Automat에 등장하는 모자의 패션 유행 분석 → 여성 참정권 운동의 전개 → 결론"
+  ],
+  "a": 1,
+  "e": "#15 외로움을 표현한 노란색 소개 → #16 도시 풍경과 외로움 화풍 → #17~#19 Nighthawks 사례 → #20, #21 Automat 사례 순서입니다."
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "호퍼의 Automat에서 외로움의 감정은 훨씬 더 직접적이다.<br><small>「조건」 the feeling of loneliness, is even more direct 활용 (총 11단어)</small>",
+  "ans": [
+   "In Hoppers Automat the feeling of loneliness is even more direct",
+   "In Hopper's Automat the feeling of loneliness is even more direct"
+  ],
+  "show": "In Hopper’s Automat, the feeling of loneliness is even more direct.",
+  "e": "#20 비교급 강조 부사 even 구문"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "He created paintings <u>depicted</u> urban scenes that showed how familiar surroundings could cause the viewer <u>feel</u> a sense of loneliness. In Automat, the feeling of loneliness is <u>very</u> more direct.",
+  "keys": [
+   {
+    "k": "depicting",
+    "show": "depicted → depicting"
+   },
+   {
+    "k": "to feel",
+    "show": "feel → to feel"
+   },
+   {
+    "k": "even",
+    "show": "very → even (또는 much, still, far, a lot)"
+   }
+  ],
+  "e": "#16 능동 현재분사 depicting, #16 cause + O + to-v, #20 비교급 강조 부사 even"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "kw",
+  "s": "16번 문장의 could cause the viewer 뒤에서 feel이 아닌 to feel을 써야 하는 어법적 이유를 동사 cause의 문형과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "cause",
+    "5형식 동사",
+    "5형식"
+   ],
+   [
+    "목적격 보어",
+    "보어"
+   ],
+   [
+    "to부정사",
+    "to-v"
+   ]
+  ],
+  "show": "cause는 5형식 동사로 목적격 보어 자리에 to부정사(to feel)를 취하기 때문이다.",
+  "e": "#16 구문 분석 ★"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Unlike Van Gogh, Edward Hopper used yellow to express (A) l________ and disconnection. By creating a dramatic contrast, he revealed the (B) a________ of modern people.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "loneliness"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "alienation"
+    ]
+   ]
+  ],
+  "show": "(A) loneliness (B) alienation",
+  "e": "Section 3 English Summary 및 본문 #15, #16"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

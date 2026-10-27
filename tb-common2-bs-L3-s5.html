@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "R.C. Gorman & Claude Monet 정독 확인 문항 (#34~#46)",
+ "section": "교과서 본문 · 섹션 5 (#34~#46)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [34, "R.C. Gorman & Claude Monet"],
+  [35, "Our last color is red, which is often associated with life and energy."],
+  [36, "R.C. Gorman, known as the Picasso of Native American art, may have felt the same way when he created Navajo Velvet."],
+  [37, "The painting depicts a woman sitting on the ground, deep in thought."],
+  [38, "Her figure in a red dress resembles a huge mountain against the background of the deep, starry blue night, suggesting the relationship between her and nature."],
+  [39, "Sometimes red is used to express the beauty of nature."],
+  [40, "Claude Monet’s Autumn Effect at Argenteuil shows how the artist celebrated beautiful autumn moments."],
+  [41, "The bright reds in the painting symbolize the amazing and transformative power of nature."],
+  [42, "The painting captures the dramatic moment when the forest turns bright red and is reflected on the surface of the river."],
+  [43, "Color is powerful because it stimulates such an emotional response in us."],
+  [44, "Artists use the same color to express various feelings, so the way we interpret the artwork can be various too."],
+  [45, "Open your eyes and let the emotions of the artwork come to you."],
+  [46, "You may love it or you may hate it, but art will always take you to a place beyond everyday life."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "빨간색은 종종 생명 및 에너지와 결부된다.",
+   "R.C. 고먼은 미국 원주민 예술의 피카소로 알려져 있다.",
+   "고먼의 작품 Navajo Velvet에서 빨간 드레스를 입은 여성의 모습은 거대한 산을 닮았다.",
+   "클로드 모네의 Autumn Effect at Argenteuil 속 밝은 빨간색들은 자연의 파괴적인 공포를 상징한다.",
+   "예술가들이 동일한 색을 사용해 다양한 감정을 표현하므로 예술 작품을 해석하는 방식도 다양할 수 있다"
+  ],
+  "a": 4,
+  "e": "#41 그림 속 밝은 빨간색들은 자연의 놀랍고 변화시키는 힘(amazing and transformative power of nature)을 상징합니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "모네의 그림은 숲이 밝은 빨간색으로 물들고 그것이 강의 수면에 반사되는 극적인 순간을 포착한다.",
+  "a": "O",
+  "e": "#42 The painting captures the dramatic moment when the forest turns bright red and is reflected on the surface of the river."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["Navajo Velvet에 등장하는 여성은 생각에 깊이 잠긴 채 서 있다.", "F"],
+   ["색은 우리 안에서 감정적인 반응을 자극하기 때문에 강력한 힘을 지닌다.", "T"],
+   ["예술은 우리를 항상 일상생활을 넘어선 장소로 데려다줄 것이다.", "T"]
+  ],
+  "e": "#37, #43, #46 37번 문장에서 여성은 땅 위에 앉아 있다(sitting on the ground)고 서술되어 있습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Red is exclusively associated with sadness and anger in Native American art.",
+   "R.C. Gorman used red to suggest the relationship between humans and grand nature.",
+   "Claude Monet rejected the use of bright reds in depicting autumn scenery.",
+   "Both artists believed color has no impact on stimulating human emotions."
+  ],
+  "a": 2,
+  "e": "Section 5 English Summary: R.C. Gorman used red to suggest the relationship between humans and grand nature..."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "고먼의 작품 속 붉은 드레스를 입은 여인의 모습은 그녀와 자연 사이의 관계를 시사한다.",
+  "a": "O",
+  "e": "#38 suggesting the relationship between her and nature"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "connect, link",
+   "indigenous",
+   "portray, describe",
+   "take after, look like",
+   "imply, indicate"
+  ],
+  "rows": [
+   ["associate", 1],
+   ["native", 2],
+   ["depict", 3],
+   ["resemble", 4],
+   ["suggest", 5]
+  ],
+  "e": "분석지 #35, #36, #37, #38 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "honor",
+   "astonishing, wonderful",
+   "catch, seize",
+   "encourage, provoke",
+   "explain, understand"
+  ],
+  "rows": [
+   ["celebrate", 1],
+   ["amazing", 2],
+   ["capture", 3],
+   ["stimulate", 4],
+   ["interpret", 5]
+  ],
+  "e": "분석지 #40, #41, #42, #43, #44 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #38의 huge에 대한 반의어로 분석지에 제시된 것은?",
+  "o": [
+   "massive",
+   "enormous",
+   "tiny",
+   "starry"
+  ],
+  "a": 3,
+  "e": "#38 huge (형) 거대한, 엄청난, syn. massive, enormous, ant. tiny"
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #38의 figure가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "모습, 인물, 형태",
+   "수치, 계산 수",
+   "피겨 스케이팅",
+   "판단하다, 생각하다"
+  ],
+  "a": 1,
+  "e": "#38 Her figure in a red dress에서 figure는 '모습, 인물, 형태'의 뜻입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #41의 symbolize와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "represent"
+  ],
+  "show": "represent",
+  "e": "#41 어휘: symbolize (syn. represent, stand for)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #43의 response와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "reaction",
+   "reply"
+  ],
+  "show": "reaction (또는 reply)",
+  "e": "#43 어휘: response (syn. reaction, reply)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Our last color is red, (which / that) is often associated with life and energy.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "#35 구문 분석: 콤마 뒤의 계속적 용법 관계대명사 자리이므로 that은 쓸 수 없고 which를 씁니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "R.C. Gorman, (knowing / known) as the Picasso of Native American art, created Navajo Velvet.",
+  "o": [
+   "known",
+   "knowing"
+  ],
+  "a": "known",
+  "e": "#36 구문 분석: 피카소로 알려진 수동의 의미이므로 과거분사구 known as가 주어를 부연 설명합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He (may feel / may have felt) the same way when he created Navajo Velvet.",
+  "o": [
+   "may have felt",
+   "may feel"
+  ],
+  "a": "may have felt",
+  "e": "#36 구문 분석 ★: 과거의 사실에 대한 약한 추측을 나타내므로 「may have + p.p.」인 may have felt가 올바릅니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The painting depicts a woman (sitting / sat) on the ground, deep in thought.",
+  "o": [
+   "sitting",
+   "sat"
+  ],
+  "a": "sitting",
+  "e": "#37 구문 분석: 여성이 땅 위에 앉아 있는 능동의 상태이므로 현재분사 sitting이 a woman을 후치 수식합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Her figure in a red dress (resembles / resembles with) a huge mountain.",
+  "o": [
+   "resembles",
+   "resembles with"
+  ],
+  "a": "resembles",
+  "e": "#38 구문 분석: resemble은 전치사 없이 목적어를 바로 취하는 완전타동사입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Her figure resembles a huge mountain, (suggesting / suggested) the relationship between her and nature.",
+  "o": [
+   "suggesting",
+   "suggested"
+  ],
+  "a": "suggesting",
+  "e": "#38 구문 분석: 주절의 주어 Her figure가 관계를 시사한다는 동시동작의 능동 분사구문 자리이므로 suggesting이 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Sometimes red is used (to express / to expressing) the beauty of nature.",
+  "o": [
+   "to express",
+   "to expressing"
+  ],
+  "a": "to express",
+  "e": "#39 구문 분석 ★: '~하기 위해 사용되다'라는 뜻의 수동태 구문이므로 「be used to + 동사원형(to express)」이 맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The painting captures the dramatic moment (when / which) the forest turns bright red.",
+  "o": [
+   "when",
+   "which"
+  ],
+  "a": "when",
+  "e": "#42 구문 분석: 시간의 선행사 the dramatic moment 뒤에 완전한 절이 이어지므로 관계부사 when이 올바릅니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "When the forest turns bright red and (reflects / is reflected) on the surface of the river.",
+  "o": [
+   "is reflected",
+   "reflects"
+  ],
+  "a": "is reflected",
+  "e": "#42 구문 분석: 숲의 모습이 강 수면에 반사되는 수동의 관계이므로 수동태 is reflected가 와야 합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The way (how we / we) interpret the artwork can be various too.",
+  "o": [
+   "we",
+   "how we"
+  ],
+  "a": "we",
+  "e": "#44 구문 분석 ★: the way와 관계부사 how는 함께 나란히 쓸 수 없으므로 the way we로 쓰거나 how we로만 써야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Open your eyes and let the emotions of the artwork (come / to come) to you.",
+  "o": [
+   "come",
+   "to come"
+  ],
+  "a": "come",
+  "e": "#45 구문 분석 ★: 5형식 사역동사 let은 목적격 보어로 동사원형(come)을 취합니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "39번 문장의 Sometimes red is used to express the beauty of nature가 글 전체 흐름에서 수행하는 기능으로 가장 적절한 것은?",
+  "o": [
+   "인간과 자연의 관계를 시사한 고먼의 그림을 반박하며 새로운 기법의 등장을 알린다.",
+   "생명과 에너지를 상징하던 앞선 빨간색의 기능에 이어, 자연의 아름다움을 표현하는 모네의 작품 세계로 화제를 전환한다.",
+   "가을 풍경화가 상업적으로 실패하게 된 이유를 설명한다.",
+   "빨간색 물감의 희소성으로 인해 예술가들이 겪은 재정적 어려움을 도입한다"
+  ],
+  "a": 2,
+  "e": "#35~#38 생명/에너지 및 인간-자연 관계(#36~#38)에 이어, 자연의 아름다움을 표현하는 용례(#40~#42)로 자연스럽게 화제를 연결합니다."
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "빨간색의 일반적 상징(생명과 에너지) 소개 → 고먼의 Navajo Velvet과 인간-자연 관계 묘사 → 자연의 아름다움을 표현하는 빨간색 용례 소개 → 모네의 가을 풍경화와 자연의 변화시키는 힘 묘사 → 색의 정서적 영향력과 다양한 해석 가능성 설명 → 열린 마음으로 예술을 느끼라는 최종 맺음말",
+   "모네의 가을 그림 비판 → 고먼의 작품 표절 의혹 제기 → 빨간색 안료의 유해성 경고 → 예술 관람 포기 권고",
+   "프랑스 아르장퇴유의 환경 파괴 실태 고발 → 숲의 벌채 작업 시작 → 강 수면의 오염 → 결론",
+   "피카소와 고먼의 공동 전시회 안내 → 드레스 디자인 특허 출원 → 예술품 경매 결과 보고"
+  ],
+  "a": 1,
+  "e": "#35 빨간색 소개 → #36~#38 고먼 사례 → #39 자연의 아름다움 표현 도입 → #40~#42 모네 사례 → #43, #44 색의 힘과 다양한 해석 → #45, #46 결론 및 권유 순서입니다."
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그녀의 모습은 거대한 산을 닮았고, 그녀와 자연 사이의 관계를 시사한다.<br><small>「조건」 resembles a huge mountain, suggesting the relationship between her and nature 활용 (총 14단어)</small>",
+  "ans": [
+   "Her figure resembles a huge mountain suggesting the relationship between her and nature"
+  ],
+  "show": "Her figure resembles a huge mountain, suggesting the relationship between her and nature.",
+  "e": "#38 타동사 resemble 및 분사구문 suggesting 구문"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "Her figure in a red dress <u>resembles with</u> a huge mountain. Sometimes red is used <u>to expressing</u> the beauty of nature. Open your eyes and let the emotions of the artwork <u>to come</u> to you.",
+  "keys": [
+   {
+    "k": "resembles",
+    "show": "resembles with → resembles"
+   },
+   {
+    "k": "to express",
+    "show": "to expressing → to express"
+   },
+   {
+    "k": "come",
+    "show": "to come → come"
+   }
+  ],
+  "e": "#38 타동사 resemble, #39 be used to 동사원형, #45 사역동사 let의 목적격 보어 동사원형 come"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "kw",
+  "s": "44번 문장의 the way 뒤에 관계부사 how를 나란히 함께 쓸 수 없는 어법적 이유를 쓰시오.",
+  "groups": [
+   [
+    "the way",
+    "how"
+   ],
+   [
+    "함께 쓸 수 없다",
+    "나란히 쓸 수 없다",
+    "동시에 쓸 수 없다",
+    "둘 중 하나만"
+   ]
+  ],
+  "show": "영어에서 선행사 the way와 관계부사 how는 나란히 함께 쓸 수 없기 때문이다.",
+  "e": "#44 구문 분석 ★"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Red is often associated with life and energy. R.C. Gorman used red to suggest the relationship between humans and grand nature, while Claude Monet captured the amazing beauty and (A) t________ power of nature (B) s________ through bright reds.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "transformative"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "symbolically"
+    ]
+   ]
+  ],
+  "show": "(A) transformative (B) symbolically",
+  "e": "Section 5 English Summary 및 본문 #41"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

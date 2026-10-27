@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Vincent van Gogh 정독 확인 문항 (#6~#13)",
+ "section": "교과서 본문 · 섹션 2 (#6~#13)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [6, "Vincent van Gogh"],
+  [7, "The first artist is Vincent van Gogh."],
+  [8, "According to research, the French city of Arles, where van Gogh spent his later years, had exceptionally bright and intense sunlight."],
+  [9, "Van Gogh expressed the sunlight, energy, and the joy of life he felt there through bright yellow colors."],
+  [10, "During his short life of 37 years, he created more than 900 paintings, around 300 of which feature mostly yellow."],
+  [11, "The series of paintings called Sunflowers includes some of his most recognizable works."],
+  [12, "Some have said that his preference for yellow in his artwork was due to a medical condition that forced him to see mainly yellow."],
+  [13, "While this may be true, we can also see his use of blue, orange, and other colors, and these combinations of colors serve to emphasize his joy being conveyed."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "프랑스 도시 아를은 유난히 밝고 강렬한 햇빛을 가지고 있었다.",
+   "반 고흐는 아를에서 느낀 삶의 기쁨을 어두운 파란색으로 표현했다.",
+   "반 고흐는 37년의 짧은 생애 동안 900점이 넘는 그림을 창작했다.",
+   "반 고흐가 창작한 그림 중 대략 300점은 주로 노란색을 특징으로 한다.",
+   "일부 사람들은 반 고흐의 노란색 선호가 시력 관련 질환 때문이었다고 주장했다"
+  ],
+  "a": 2,
+  "e": "#9 반 고흐는 아를에서 느낀 햇빛, 에너지, 삶의 기쁨을 밝은 노란색(bright yellow colors)을 통해 표현했습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "반 고흐의 작품 Sunflowers는 그의 가장 잘 알아볼 수 있는 작품들 중 일부를 포함하고 있다.",
+  "a": "O",
+  "e": "#11 The series of paintings called Sunflowers includes some of his most recognizable works."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["반 고흐는 그의 말년을 프랑스 도시 아를에서 보냈다.", "T"],
+   ["반 고흐의 작품에서는 노란색 외에 파란색이나 주황색 같은 다른 색의 사용은 전혀 찾아볼 수 없다.", "F"],
+   ["다양한 색상의 조합은 반 고흐가 전달하고자 한 기쁨을 강조하는 역할을 했다.", "T"]
+  ],
+  "e": "#8, #13 파란색, 주황색 및 다른 색들의 사용도 볼 수 있으며, 이러한 조합이 기쁨을 강조하는 역할을 했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Vincent van Gogh avoided yellow colors because of the harsh sunlight in Arles.",
+   "Van Gogh used bright yellow to express the intense sunlight and the joy of life he felt in Arles.",
+   "Medical conditions completely prevented van Gogh from conveying joy in his artwork.",
+   "Van Gogh's color combinations were proven to be entirely accidental rather than emphasizing his joy."
+  ],
+  "a": 2,
+  "e": "Section 2 English Summary: used bright yellow to express the intense sunlight and the joy of life he felt in Arles."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "13번 문장의 this가 가리키는 것은 반 고흐의 노란색 선호가 주로 노란색을 보게 만든 질환 때문이었다는 주장이다.",
+  "a": "O",
+  "e": "#12, #13 this는 앞 문장(#12)에서 언급된 질환으로 인해 노란색을 선호했다는 진술을 가리킵니다."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "unusually",
+   "strong, powerful",
+   "delight, happiness",
+   "characterize",
+   "compel"
+  ],
+  "rows": [
+   ["exceptionally", 1],
+   ["intense", 2],
+   ["joy", 3],
+   ["feature", 4],
+   ["force", 5]
+  ],
+  "e": "분석지 #8, #9, #10, #12 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "normally",
+   "mild",
+   "sorrow",
+   "understate"
+  ],
+  "rows": [
+   ["exceptionally", 1],
+   ["intense", 2],
+   ["joy", 3],
+   ["emphasize", 4]
+  ],
+  "e": "분석지 #8, #9, #13 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #9의 express가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "표현하다, 나타내다",
+   "급행의, 고속의",
+   "(우편을) 속달로 보내다",
+   "명시적인, 분명한"
+  ],
+  "a": 1,
+  "e": "#9 Van Gogh expressed the sunlight에서 express는 '표현하다, 나타내다(syn. show, state)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #10의 feature가 본문에서 쓰인 품사와 의미로 가장 적절한 것은?",
+  "o": [
+   "명사 - 특징, 특색",
+   "명사 - 이목구비, 얼굴 생김새",
+   "동사 - ~을 특징으로 하다, 주로 다루다",
+   "동사 - 특별 기사로 다루다"
+  ],
+  "a": 3,
+  "e": "#10 feature mostly yellow에서 feature는 '~을 특징으로 하다, 주로 다루다(syn. characterize)'라는 동사입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #11의 recognizable과 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "identifiable"
+  ],
+  "show": "identifiable",
+  "e": "#11 어휘: recognizable (syn. identifiable)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #13의 convey와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "communicate",
+   "deliver"
+  ],
+  "show": "communicate (또는 deliver)",
+  "e": "#13 어휘: convey (syn. communicate, deliver)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The French city of Arles, (where / which) van Gogh spent his later years, had bright sunlight.",
+  "o": [
+   "where",
+   "which"
+  ],
+  "a": "where",
+  "e": "#8 구문 분석 ★: 콤마 뒤에 완전한 3형식 절(주어 van Gogh, 동사 spent, 목적어 his later years)이 이어지므로 장소의 관계부사 계속적 용법 where가 올바릅니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The French city of Arles, where van Gogh spent his later years, (had / having) exceptionally bright sunlight.",
+  "o": [
+   "had",
+   "having"
+  ],
+  "a": "had",
+  "e": "#8 구문 분석: 관계사절의 수식을 받는 주어 The French city of Arles의 본동사 자리이므로 과거동사 had가 와야 합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(During / While) his short life of 37 years, he created more than 900 paintings.",
+  "o": [
+   "During",
+   "While"
+  ],
+  "a": "During",
+  "e": "#10 구문 분석: 뒤에 절이 아니라 특정 기간을 나타내는 명사구(his short life of 37 years)가 왔으므로 전치사 During이 올바릅니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "He created more than 900 paintings, around 300 of (which / them) feature mostly yellow.",
+  "o": [
+   "which",
+   "them"
+  ],
+  "a": "which",
+  "e": "#10 구문 분석 ★: 접속사 없이 두 절을 이어주면서 전치사 of의 목적어 역할을 해야 하므로 관계대명사 which가 와야 합니다. (them을 쓰려면 and around 300 of them으로 접속사가 필요함)"
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The series of paintings called Sunflowers (includes / include) some of his most recognizable works.",
+  "o": [
+   "includes",
+   "include"
+  ],
+  "a": "includes",
+  "e": "#11 구문 분석 ★: 주어의 핵심 명사가 단수 명사인 The series이므로 단수 동사 includes가 올바릅니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A medical condition forced him (to see / see) mainly yellow.",
+  "o": [
+   "to see",
+   "see"
+  ],
+  "a": "to see",
+  "e": "#12 구문 분석 ★: 5형식 동사 force는 목적격 보어로 to부정사를 취합니다 (force + 목적어 + to-v)."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "These combinations of colors serve to emphasize his joy (being conveyed / conveying).",
+  "o": [
+   "being conveyed",
+   "conveying"
+  ],
+  "a": "being conveyed",
+  "e": "#13 구문 분석 ★: 기쁨(joy)은 전달되는 수동의 대상이므로 수동형 분사인 being conveyed가 his joy를 후치 수식해야 합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "13번 문장 맨 앞의 While이 지닌 문맥적 기능으로 옳은 것은?",
+  "o": [
+   "동작이 일어나는 시간적 지속 기간을 나타낸다.",
+   "앞 문장의 주장을 '비록 ~이긴 하지만'으로 인정하는 양보의 부사절을 이끈다.",
+   "원인과 결과를 설명하는 이유 부사절을 이끈다.",
+   "조건을 제시하는 가정법 부사절을 이끈다"
+  ],
+  "a": 2,
+  "e": "#13 구문 분석: 여기서 While은 '비록 ~이긴 하지만'이라는 양보의 의미로 쓰였습니다."
+ },
+ {
+  "n": 20,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 [연결어 분석]에 근거하여 13번 문장의 also에 대한 설명으로 가장 적절한 것은?",
+  "o": [
+   "질환 때문에 노란색만 보았다는 주장과 정면으로 모순되는 의학적 증거를 제시한다.",
+   "질환으로 인해 주로 노란색을 보았다는 앞 문장의 주장에 다른 색의 사용도 볼 수 있다는 내용을 덧붙인다.",
+   "반 고흐가 아를을 떠나 다른 도시로 이주하게 된 원인을 부연 설명한다.",
+   "Sunflowers 시리즈의 그림 기법을 다른 화가의 기법과 비교한다"
+  ],
+  "a": 2,
+  "e": "#13 [연결어 분석]: 질환으로 주로 노란색을 보았다는 앞 문장의 내용에 다른 색들의 사용도 볼 수 있다는 점을 대등한 층위에서 추가로 덧붙입니다."
+ },
+ {
+  "n": 21,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "첫 번째 예술가 반 고흐 소개 → 아를의 강렬한 햇빛 환경과 노란색을 통한 기쁨 표현 → 다작의 그림과 노란색 비중 및 대표작 Sunflowers 소개 → 시력 질환설 주장 언급 → 다양한 색채 조합을 통한 전달된 기쁨의 강조 결론",
+   "시력 질환에 대한 의학적 진단 → Sunflowers 시리즈 제작 중단 → 아를 시청의 항의 → 노란색 물감의 성분 분석",
+   "파란색과 주황색의 대비 이론 소개 → 37세 은퇴 선언 → 300편의 소설 출간 → 프랑스 미술계의 비판",
+   "Sunflowers의 위작 판명 → 반 고흐의 변명 → 900점의 그림 폐기 처분 → 새로운 전시회 개최"
+  ],
+  "a": 1,
+  "e": "#6, #7 반 고흐 소개 → #8, #9 아를의 햇빛과 노란색 표현 → #10, #11 작품 수와 Sunflowers → #12 질환설 주장 → #13 색채 조합과 기쁨 강조 순서입니다."
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "이러한 색들의 조합들은 전달되는 그의 기쁨을 강조하도록 역할을 한다.<br><small>「조건」 combinations of colors, serve to emphasize, joy being conveyed 활용 (총 14단어)</small>",
+  "ans": [
+   "these combinations of colors serve to emphasize his joy being conveyed"
+  ],
+  "show": "these combinations of colors serve to emphasize his joy being conveyed.",
+  "e": "#13 serve to-v 구문 및 수동형 분사 being conveyed 후치 수식"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "He created more than 900 paintings, around 300 of <u>them</u> feature mostly yellow. The series of paintings called Sunflowers <u>include</u> some of his most recognizable works. A medical condition forced him <u>see</u> mainly yellow.",
+  "keys": [
+   {
+    "k": "which",
+    "show": "them → which"
+   },
+   {
+    "k": "includes",
+    "show": "include → includes"
+   },
+   {
+    "k": "to see",
+    "show": "see → to see"
+   }
+  ],
+  "e": "#10 관계대명사 계속적 용법 which, #11 The series 단수 주어 수 일치 includes, #12 force의 목적격 보어 to see"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "kw",
+  "s": "10번 문장에서 around 300 of 뒤에 them이 아닌 관계대명사 which를 써야 하는 문법적 이유를 문장 연결 구조와 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "접속사",
+    "접속사가 없다",
+    "접속사 역할"
+   ],
+   [
+    "절",
+    "두 절",
+    "문장 연결"
+   ],
+   [
+    "관계대명사"
+   ]
+  ],
+  "show": "두 개의 절을 연결하는 등위접속사가 없으므로, 접속사와 대명사 역할을 동시에 수행하는 관계대명사 which가 필요하기 때문이다.",
+  "e": "#10 구문 분석 ★"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Vincent van Gogh used bright yellow to express the intense sunlight and the (A) j________ of life. Although some argue his preference stemmed from a medical condition, his color combinations served to (B) e________ his joy.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "joy"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "emphasize"
+    ]
+   ]
+  ],
+  "show": "(A) joy (B) emphasize",
+  "e": "Section 2 English Summary 및 본문 #9, #13"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

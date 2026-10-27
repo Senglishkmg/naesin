@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "19번 심경 변화 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 19번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "It was the last day of school before summer vacation."],
+    [2, "After months of quizzes and assignments, I couldn't wait to leave everything behind."],
+    [3, "Could anything be sweeter?"],
+    [4, "I practically danced while cleaning out my locker, and nothing could ruin my mood."],
+    [5, "As I zipped up my backpack, ready to leave, my science teacher, Mr. Manta, called me aside."],
+    [6, "\"Rafe,\" he said, \"you haven't turned in your final lab report, despite all my warnings this past month.\""],
+    [7, "The words hit me like cold water."],
+    [8, "He was right, but I totally forgot about it."],
+    [9, "\"To make up for it, you must attend summer school,\" he added."],
+    [10, "Instead of lazy mornings and endless free time, I'd be spending my vacation at a lab table—the last thing I wanted to do with my precious summer."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 여름 방학 전 학교의 마지막 날을 맞이하고 있었다.",
+    "a": "O",
+    "e": "1번 문장 It was the last day of school before summer vacation."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 사물함을 정리하는 동안 기분이 몹시 상해 있었다.",
+    "a": "X",
+    "e": "4번 문장 practically danced while cleaning out my locker, nothing could ruin my mood"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "Manta 선생님은 필자의 수학 과목 담당 교사이다.",
+    "a": "X",
+    "e": "5번 문장 my science teacher, Mr. Manta"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "선생님은 지난 한 달 동안 보고서 제출에 대해 필자에게 전혀 경고하지 않았다.",
+    "a": "X",
+    "e": "6번 문장 despite all my warnings this past month"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "선생님의 지적에 대해 필자는 자신이 보고서를 제출했었다고 반박했다.",
+    "a": "X",
+    "e": "8번 문장 He was right, but I totally forgot about it."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "미제출 보고서를 보충하기 위해 필자는 계절 학기(서머스쿨)에 출석해야 한다.",
+    "a": "O",
+    "e": "9번 문장 To make up for it, you must attend summer school"
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 여름 방학 동안 원래 늦잠과 끝없는 자유 시간을 기대하고 있었다.",
+    "a": "O",
+    "e": "10번 문장 Instead of lazy mornings and endless free time"
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 실험실 탁자에서 방학을 보내는 것을 간절히 바라왔다.",
+    "a": "X",
+    "e": "10번 문장 the last thing I wanted to do with my precious summer"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어 및 표현의 분석지상 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "~을 만회하다, 보충하다",
+      "사실상, 거의 (과장적 강조 부사)",
+      "~을 한쪽으로 따로 부르다",
+      "~의 안을 말끔히 비우며 청소하다"
+    ],
+    "rows": [
+      ["practically", 2],
+      ["clean out", 4],
+      ["call aside", 3],
+      ["make up for", 1]
+    ],
+    "e": "2. 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지에서 제시된 ruin(망치다)의 <b>반의어</b>로 알맞은 것은?",
+    "o": [
+      "spoil",
+      "wreck",
+      "destroy",
+      "restore"
+    ],
+    "a": 4,
+    "e": "5. 심화 어휘 (반의어: improve, restore / 동의어: spoil, wreck, destroy)"
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 precious(소중한)의 반의어 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["첫 번째 반의어", ["worthless", "trivial"]],
+      ["두 번째 반의어", ["worthless", "trivial"]]
+    ],
+    "show": "worthless, trivial",
+    "e": "5. 심화 어휘 (반의어: worthless, trivial)"
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "short",
+    "s": "6번 문장에 쓰인 turn in과 동의어로 분석지에 제시된 두 단어의 필수 구동사를 쓰시오.",
+    "ans": [
+      "hand in"
+    ],
+    "show": "hand in",
+    "e": "2. 어휘 및 연결어 6번 문장 (hand in, submit)"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 스펠링에 유의하여 괄호 안에서 알맞은 어휘를 고르시오.",
+    "c":"I'd be spending my (vacation / vocation) at a lab table.",
+    "o": [
+      "vacation",
+      "vocation"
+    ],
+    "a": "vacation",
+    "e": "5. 심화 어휘 (vacation: 방학, 휴가 vs vocation: 천직, 직업)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "choice",
+    "s": "9번 문장의 attend처럼 '출석하다, 참석하다'의 의미로 쓰일 때의 어법상 올바른 어형을 고르시오.",
+    "c":"you must (attend / attend to) summer school",
+    "o": [
+      "attend",
+      "attend to"
+    ],
+    "a": "attend",
+    "e": "5. 심화 어휘 (attend는 타동사로 전치사 없이 목적어를 취함 / attend to는 주의를 기울이다, 처리하다)"
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 to leave everything behind에서 to부정사의 기능상 용법으로 분석지에 제시된 것을 고르시오.",
+    "c":"I couldn't wait (to leave / leaving) everything behind.",
+    "o": [
+      "to leave",
+      "leaving"
+    ],
+    "a": "to leave",
+    "e": "2. 구문 분석 2번 문장 (can't wait to-v의 일부로 동사의 목적어 역할을 하는 명사적 용법)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "mc",
+    "s": "3번 문장 'Could anything be sweeter?'에 대한 구문 분석 설명으로 옳은 것은?",
+    "o": [
+      "과거 사실에 대한 후회를 나타내는 가정법 과거완료 구문이다.",
+      "'그 무엇도 이보다 달콤할 수는 없다'를 강조하는 반어적 의문문(수사 의문문)이다.",
+      "불확실한 미래 사건에 대한 단순 의구심을 나타내는 의문문이다.",
+      "타인의 의견을 묻기 위한 전형적인 권유 의문문이다."
+    ],
+    "a": 2,
+    "e": "2. 구문 분석 3번 문장"
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "short",
+    "s": "4번 문장의 분사구문 while cleaning out my locker를 분석지에 제시된 대로 주어와 동사를 갖춘 부사절 6단어로 풀어 쓰시오.",
+    "ans": [
+      "while I was cleaning out my locker",
+      "while i was cleaning out my locker"
+    ],
+    "show": "while I was cleaning out my locker",
+    "e": "2. 구문 분석 4번 문장"
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 빈칸에 들어갈 알맞은 분사구문 어형을 고르시오.",
+    "c":"As I zipped up my backpack, (ready / readied) to leave, my science teacher called me aside.",
+    "o": [
+      "ready",
+      "readied"
+    ],
+    "a": "ready",
+    "e": "2. 구문 분석 5번 문장 (as I was ready to leave에서 접속사와 be동사가 생략된 형용사구 분사구문)"
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장에서 명사구 all my warnings를 목적어로 취하는 알맞은 말을 고르시오.",
+    "c":"you haven't turned in your final lab report, (despite / although) all my warnings this past month.",
+    "o": [
+      "despite",
+      "although"
+    ],
+    "a": "despite",
+    "e": "2. 구문 분석 6번 문장 (despite는 명사구를 목적어로 취하는 양보의 전치사)"
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "mc",
+    "s": "9번 문장의 To make up for it에서 to부정사의 문법적 용법으로 옳은 것은?",
+    "o": [
+      "명사적 용법 (주어)",
+      "형용사적 용법 (명사 수식)",
+      "부사적 용법 (목적)",
+      "부사적 용법 (감정의 원인)"
+    ],
+    "a": 3,
+    "e": "2. 구문 분석 9번 문장 ('그것을 만회하기 위하여'라는 목적을 나타내는 to부정사의 부사적 용법)"
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "short",
+    "s": "10번 문장의 the last thing과 I wanted 사이에 생략된 관계대명사 한 단어를 쓰시오.",
+    "ans": [
+      "that",
+      "which"
+    ],
+    "show": "that (또는 which)",
+    "e": "2. 구문 분석 10번 문장 (목적격 관계대명사 that 또는 which 생략)"
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "mc",
+    "s": "10번 문장의 'the last + 명사 + 관계사절' 구문이 전달하는 본문 속 의미로 가장 적절한 것은?",
+    "o": [
+      "방학 동안 가장 먼저 완료해야 하는 과제",
+      "결코 하고 싶지 않은 일",
+      "마지막에 마지못해 선택한 최선의 방안",
+      "시간이 흐른 뒤 가장 기억에 남는 추억"
+    ],
+    "a": 2,
+    "e": "2. 구문 분석 10번 문장 (결코 원치 않는 일, 최후의 것)"
+  },
+  {
+    "n": 23,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 분석지에서 분류된 알맞은 키워드를 고르시오.",
+    "box": [
+      "키워드 A (방학 전의 해방감과 들뜸)",
+      "키워드 B (실험 보고서 미제출 통보와 서머스쿨 출석)"
+    ],
+    "rows": [
+      ["practically danced", 1],
+      ["hit me like cold water", 2],
+      ["nothing could ruin my mood", 1],
+      ["spending my vacation at a lab table", 2]
+    ],
+    "e": "1. 키워드 분석을 통한 주제 도출"
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번 항목에서 여름 방학 계획의 좌절을 극명하게 보여주는 중심 문장으로 선정한 문장의 번호를 숫자로 쓰시오.",
+    "ans": [
+      "10",
+      "10번"
+    ],
+    "show": "10",
+    "e": "1. 키워드 분석 중심 문장 (10번 문장)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "지문의 각 부분(Chunk)과 분석지에 제시된 역할을 바르게 연결하시오.",
+    "box": [
+      "초기 긍정적 심경 조성 및 방학에 대한 환희 묘사 (상황 전반부)",
+      "급작스러운 사건 발생으로 분위기가 반전되는 계기 마련 (전개부/갈등)",
+      "결말 도출 및 변화된 심경의 확정 (결론부)"
+    ],
+    "rows": [
+      ["첫 번째 부분 (1~4번 문장)", 1],
+      ["두 번째 부분 (5~8번 문장)", 2],
+      ["세 번째 부분 (9~10번 문장)", 3]
+    ],
+    "e": "2. 부분(Chunk) 마무리"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식으로 옳은 것은?",
+    "o": [
+      "통념 제시 후 실험 결과를 통한 반박",
+      "원인 분석에 따른 점진적 해결책 제시",
+      "시간 순서에 따른 사건 서술과 대조적 심경 반전",
+      "공간 이동에 따른 인물의 객관적 행동 묘사"
+    ],
+    "a": 3,
+    "e": "3. 서술 전략"
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "choice",
+    "s": "분석지 2번 부분 마무리에서 두 번째 부분(5~8번 문장)을 거치며 안도감이 전환된 감정 상태를 고르시오.",
+    "c":"두 번째 부분의 키워드 코멘트: 안도감이 (충격 / 지루함)으로 뒤바뀜",
+    "o": [
+      "충격",
+      "지루함"
+    ],
+    "a": "충격",
+    "e": "2. 두 번째 부분 마무리 키워드 코멘트"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지에서 제시된 이 글의 영문 주제로 알맞은 것은?",
+    "o": [
+      "Importance of Submitting Science Lab Reports on Time",
+      "Effective Ways to Enjoy Summer Vacation School Programs",
+      "Sudden Shift from Vacation Excitement to Distress Over Mandatory Summer School",
+      "Conflict Between a Student and a Teacher Regarding Quizzes"
+    ],
+    "a": 3,
+    "e": "1. 키워드 분석을 통한 주제 도출"
+  },
+  {
+    "n": 29,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 문제 풀이 3단계에서 제시된 원래 문제의 정답 심경 변화로 알맞은 것은?",
+    "o": [
+      "indifferent → thrilled",
+      "pleased → worried",
+      "jealous → relieved",
+      "frightened → confident"
+    ],
+    "a": 2,
+    "e": "4. 문제 풀이 3) 정답 제시"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "match",
+    "s": "분석지 4번에 제시된 정답 단어의 유사 어휘를 올바른 감정 상태와 연결하시오.",
+    "box": [
+      "원래 감정(pleased)을 표현하는 다른 단어",
+      "변화된 감정(worried)을 표현하는 다른 단어"
+    ],
+    "rows": [
+      ["Delighted / Elated", 1],
+      ["Anxious / Distressed", 2],
+      ["Joyful", 1],
+      ["Apprehensive", 2]
+    ],
+    "e": "4. 문제 풀이 4) 유사 어휘 제시"
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 고친 것을 쓰시오.",
+    "c":"\"Rafe,\" he said, \"you haven't turned in your final lab report, although all my warnings this past month.\" The words hit me like cold water. He was right, but I totally forgot about it. \"To make up for it, you must attend to summer school,\" he added.",
+    "keys": [
+      {
+        "k": "despite",
+        "show": "although → despite"
+      },
+      {
+        "k": "attend",
+        "show": "attend to → attend"
+      }
+    ],
+    "e": "2. 구문 분석 6번 문장(전치사 despite) 및 5. 심화 어휘(타동사 attend)"
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 8단어의 영어 문장으로 완성하시오.",
+    "c":"그것을 만회하려면 계절 학기에 출석해야만 한다.<br>「조건」 To make up for, attend, must를 활용할 것",
+    "ans": [
+      "To make up for it, you must attend summer school",
+      "To make up for it, you must attend summer school."
+    ],
+    "show": "To make up for it, you must attend summer school.",
+    "e": "0. 지문 원문 9번 문장"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "kw",
+    "s": "6번 문장에서 although 대신 despite를 써야 하는 문법적 이유를 쓰시오.",
+    "groups": [
+      [
+        "전치사",
+        "접속사"
+      ],
+      [
+        "명사구",
+        "절"
+      ]
+    ],
+    "show": "뒤에 주어와 동사를 갖춘 절이 아니라 all my warnings라는 명사구가 목적어로 이어지므로 접속사 although가 아닌 전치사 despite를 써야 한다.",
+    "e": "2. 구문 분석 6번 문장"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 4번(문제 풀이)을 바탕으로, 필자의 '원래 상황 및 감정'과 '변화된 상황 및 감정'을 구체적으로 대조하여 서술하시오.",
+    "show": "필자는 모든 시험과 과제가 끝나 방학을 맞이하여 기대감과 해방감으로 매우 기쁘고 들떠 있는 상태였으나(pleased), 과학 선생님으로부터 최종 실험 보고서 미제출 사실을 통보받고 이를 만회하기 위해 방학 동안 서머스쿨에 출석해야 하는 상황에 처하면서 큰 충격을 받고 걱정스럽고 심란한 상태(worried)로 변화하였다.",
+    "crit": "① 원래 상황 및 감정(방학에 대한 해방감과 극도의 기쁨/들뜸) 명시<br>② 상황 변화의 계기(보고서 미제출 통보 및 서머스쿨 출석 의무) 명시<br>③ 변화된 감정(충격, 근심/걱정) 명시 — 각 1점"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
