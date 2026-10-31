@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "새로운 개척지로서의 우주 정독 확인 문항 (#2~#6)",
+ "section": "교과서 본문 · 섹션 1 (#2~#6)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [2, "The need to explore new frontiers like the Arctic and the American West may have been sparked by curiosity, but a major reason was to discover new resources."],
+  [3, "Without new resources and technology, the Industrial Revolution of the 19th century would not have led to the rise of new industries and the growth of cities."],
+  [4, "In the late 20th century, the Information Technology Revolution connected the world and transformed economies."],
+  [5, "Now, it seems that space is the latest frontier for entrepreneurs to explore."],
+  [6, "Finding new resources and exploring the unique environment are new opportunities for those who dare to take up the challenge."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "북극이나 미국 서부 같은 새로운 프런티어를 탐험하려는 주된 이유는 새로운 자원을 발견하는 것이었다.",
+   "19세기 산업혁명은 새로운 자원과 기술 없이도 새로운 산업의 부상과 도시의 성장을 이끌어 냈다.",
+   "20세기 후반 정보기술 혁명은 세상을 연결하고 경제들을 변혁시켰다.",
+   "오늘날 우주는 기업가들이 탐험할 최신의 개척지로 여겨진다.",
+   "새로운 자원을 찾고 독특한 환경을 탐험하는 것은 도전을 감행하는 이들에게 새로운 기회이다"
+  ],
+  "a": 2,
+  "e": "#3 새로운 자원과 기술이 없었다면 19세기 산업혁명은 새로운 산업의 부상과 도시의 성장으로 이어지지 못했을 것입니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "본문에 따르면 새로운 프런티어를 탐험하려는 필요성은 호기심에 의해 촉발되었을 수도 있다.",
+  "a": "O",
+  "e": "#2 may have been sparked by curiosity"
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["인류 역사에서 새로운 개척지 탐험은 자원 확보와 혁신을 이끌어 왔다.", "T"],
+   ["21세기 우주 탐험은 모험심 있는 기업가들에게 새로운 기회를 제공한다.", "T"],
+   ["정보기술 혁명은 19세기 초반에 일어나 도시의 성장을 촉진했다.", "F"]
+  ],
+  "e": "#3, #4, Section 1 Summary. 정보기술 혁명은 20세기 후반(late 20th century)에 일어났습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Exploration of new frontiers has strictly avoided the search for physical resources.",
+   "Outer space serves as the ultimate frontier, presenting revolutionary opportunities for ambitious entrepreneurs.",
+   "Technological revolutions occurred entirely independently of the exploration of new frontiers.",
+   "Modern entrepreneurs show little interest in taking up the challenge of space exploration."
+  ],
+  "a": 2,
+  "e": "Section 1 English Summary: Today, outer space serves as the ultimate frontier, presenting revolutionary opportunities for ambitious entrepreneurs ready to take on the challenge."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "6번 문장의 those who dare to take up the challenge는 도전을 감히 받아들이는 사람들을 의미한다.",
+  "a": "O",
+  "e": "#6 those who dare to take up the challenge (구문 분석: those who = people who)"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "trigger, ignite",
+   "inquisitiveness",
+   "result in, bring about",
+   "alter, revolutionize",
+   "singular, distinctive"
+  ],
+  "rows": [
+   ["spark", 1],
+   ["curiosity", 2],
+   ["lead to", 3],
+   ["transform", 4],
+   ["unique", 5]
+  ],
+  "e": "분석지 #2, #3, #4, #6 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "Antarctic",
+   "indifference",
+   "minor",
+   "fall, decline",
+   "earliest, oldest"
+  ],
+  "rows": [
+   ["arctic", 1],
+   ["curiosity", 2],
+   ["major", 3],
+   ["rise", 4],
+   ["latest", 5]
+  ],
+  "e": "분석지 #2, #3, #5 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #6의 take up이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "(공간이나 시간을) 차지하다",
+   "(도전·제의를) 받아들이다, 착수하다",
+   "(옷의 길이를) 줄이다",
+   "(취미로) 시작하다"
+  ],
+  "a": 2,
+  "e": "#6 take up the challenge에서 take up은 '(도전·제의를) 받아들이다, 착수하다(syn. accept, undertake)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #2의 major에 대한 설명으로 옳은 것은?",
+  "o": [
+   "본문에서는 '전공하다'라는 동사로 쓰였다.",
+   "동의어로 primary, main이 제시되어 있으며 반의어는 minor이다.",
+   "오직 군대 계급의 소령을 의미하는 명사로만 쓰인다.",
+   "부사 형태로만 쓰이며 명사를 꾸밀 수 없다"
+  ],
+  "a": 2,
+  "e": "#2 major (a.) 주된, 주요한, syn. primary, main, ant. minor"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #2의 explore와 바꾸어 쓸 수 있는 분석지상 동의어 한 단어를 쓰시오.",
+  "ans": [
+   "investigate",
+   "probe"
+  ],
+  "show": "investigate (또는 probe)",
+  "e": "#2 어휘: explore (syn. investigate, probe)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #4의 connect와 반대되는 뜻을 가진 분석지상 반의어 한 단어를 쓰시오.",
+  "ans": [
+   "disconnect",
+   "separate"
+  ],
+  "show": "disconnect (또는 separate)",
+  "e": "#4 어휘: connect (ant. disconnect, separate)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The need to explore new frontiers (may spark / may have been sparked) by curiosity.",
+  "o": [
+   "may have been sparked",
+   "may spark"
+  ],
+  "a": "may have been sparked",
+  "e": "#2 구문 분석 ★: 과거 사실에 대한 불확실한 추측이면서 필요성이 호기심에 의해 촉발된 수동 관계이므로 「may have been p.p.」가 올바릅니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A major reason was (discover / to discover) new resources.",
+  "o": [
+   "to discover",
+   "discover"
+  ],
+  "a": "to discover",
+  "e": "#2 구문 분석: be동사 was의 주격 보어 자리이므로 명사적 용법의 to부정사 to discover가 알맞습니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Without new resources and technology, the Industrial Revolution (would not lead / would not have led) to the rise of new industries.",
+  "o": [
+   "would not have led",
+   "would not lead"
+  ],
+  "a": "would not have led",
+  "e": "#3 구문 분석 ★: 19세기 과거 사실의 반대를 가정하는 Without 가정법 과거완료 귀결절이므로 「would not have p.p.」가 올바릅니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Now, it seems that space is the latest frontier for entrepreneurs (to explore / exploring).",
+  "o": [
+   "to explore",
+   "exploring"
+  ],
+  "a": "to explore",
+  "e": "#5 구문 분석: 앞에 의미상 주어 for entrepreneurs를 동반하여 명사 the latest frontier를 수식하는 to부정사 형용사적 용법 자리입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Finding new resources and exploring the unique environment (is / are) new opportunities.",
+  "o": [
+   "are",
+   "is"
+  ],
+  "a": "are",
+  "e": "#6 구문 분석 ★: Finding ~과 exploring ~ 두 개의 동명사구가 and로 연결되어 별개의 행위로 간주되므로 복수 동사 are가 올바릅니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "New opportunities are for those who (dare / dares) to take up the challenge.",
+  "o": [
+   "dare",
+   "dares"
+  ],
+  "a": "dare",
+  "e": "#6 구문 분석: 주격 관계대명사 who의 선행사가 복수 대명사인 those(=people)이므로 복수형 동사 dare가 쓰여야 합니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "3번 문장의 Without new resources and technology와 바꾸어 쓸 수 없는 것은?",
+  "o": [
+   "But for new resources and technology",
+   "If it had not been for new resources and technology",
+   "Had it not been for new resources and technology",
+   "If it were not for new resources and technology"
+  ],
+  "a": 4,
+  "e": "#3 구문 분석 ★: 19세기 과거 사실에 대한 가정법 과거완료이므로 If it were not for(현재 사실 반대 가정)는 바른 전환 표현이 될 수 없습니다."
+ },
+ {
+  "n": 19,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "지리적 탐험의 주된 동기(자원 발견) 제시 → 19세기 산업혁명에서 자원과 기술의 역할 → 20세기 정보기술 혁명의 경제 변혁 → 21세기 새로운 개척지로서의 우주 대두 → 도전하는 기업가들을 위한 기회로서의 우주 환경 강조",
+   "우주 쓰레기 문제의 심각성 고발 → 북극 항로 개척의 실패 원인 분석 → 19세기 공장 노동자들의 파업 → 결론",
+   "정보기술 혁명에 따른 부작용 분석 → 19세기 산업혁명의 환경 파괴 지적 → 미국 서부 개척 반대 운동",
+   "기업가들의 우주 탐험 독점 비판 → 각국 정부의 규제 조치 안내 → 신자원 개발의 경제적 비효율성 지적"
+  ],
+  "a": 1,
+  "e": "#2 과거 탐험과 자원 발견 동기 → #3 19세기 산업혁명 → #4 20세기 정보기술 혁명 → #5, #6 최신 개척지 우주와 기업가들의 기회 순서입니다."
+ },
+ {
+  "n": 20,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "새로운 자원들과 기술이 없었다면, 19세기의 산업혁명은 새로운 산업들의 부상으로 이어지지 않았을 것이다.<br><small>「조건」 Without new resources and technology, the Industrial Revolution of the 19th century would not have led to the rise of new industries 활용 (총 22단어)</small>",
+  "ans": [
+   "Without new resources and technology the Industrial Revolution of the 19th century would not have led to the rise of new industries"
+  ],
+  "show": "Without new resources and technology, the Industrial Revolution of the 19th century would not have led to the rise of new industries.",
+  "e": "#3 Without 가정법 과거완료 구문"
+ },
+ {
+  "n": 21,
+  "p": "E",
+  "t": "sent",
+  "s": "5번 문장의 It seems that space is the latest frontier for entrepreneurs to explore를 space를 주어로 하는 단문으로 전환하시오.<br><small>「조건」 Space seems to be로 시작할 것 (총 12단어)</small>",
+  "ans": [
+   "Space seems to be the latest frontier for entrepreneurs to explore"
+  ],
+  "show": "Space seems to be the latest frontier for entrepreneurs to explore.",
+  "e": "#5 It seems that S + V = S seems to-v 단문 전환 구문"
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "The need to explore new frontiers may have <u>sparked</u> by curiosity. Without new resources, the Industrial Revolution <u>would not lead</u> to the growth of cities. Finding new resources and exploring the environment <u>is</u> new opportunities.",
+  "keys": [
+   {
+    "k": "been sparked",
+    "show": "sparked → been sparked"
+   },
+   {
+    "k": "would not have led",
+    "show": "would not lead → would not have led"
+   },
+   {
+    "k": "are",
+    "show": "is → are"
+   }
+  ],
+  "e": "#2 수동태 may have been sparked, #3 가정법 과거완료 would not have led, #6 동명사구 병렬 주어 복수 수 일치 are"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "kw",
+  "s": "6번 문장에서 Finding ~ and exploring ~ 주어 뒤에 단수 동사 is가 아닌 복수 동사 are를 쓴 어법적 이유를 쓰시오.",
+  "groups": [
+   [
+    "동명사구",
+    "동명사",
+    "Finding",
+    "exploring"
+   ],
+   [
+    "병렬",
+    "and",
+    "두 개"
+   ],
+   [
+    "복수",
+    "별개",
+    "별개의 행위"
+   ]
+  ],
+  "show": "Finding과 exploring 두 개의 동명사구가 and로 연결되어 별개의 행위로 간주되므로 복수 동사 are를 쓴다.",
+  "e": "#6 구문 분석 ★"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Throughout human history, exploring new (A) f________ has been driven by the search for resources. Today, outer space serves as the ultimate frontier for ambitious (B) e________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "frontiers"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "entrepreneurs"
+    ]
+   ]
+  ],
+  "show": "(A) frontiers (B) entrepreneurs",
+  "e": "Section 1 English Summary 및 본문 #2, #5"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
