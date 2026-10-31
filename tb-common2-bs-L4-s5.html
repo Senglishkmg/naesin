@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "우주 경제의 현실화와 우주 쓰레기의 위협 정독 확인 문항 (#34~#50)",
+ "section": "교과서 본문 · 섹션 5 & 6 (#34~#50)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [34, "Space technology has advanced greatly, and it seems that the cost of running a space program and improving it has decreased substantially since ambitious entrepreneurs have joined the adventure."],
+  [35, "The conditions in space open up the possibility of manufacturing newer and better products."],
+  [36, "Challenges remain, but it’s not unreasonable to imagine sending a message from a device equipped with semiconductors that were produced in space."],
+  [37, "The space project will ultimately reach a point where adventurous minds and their technological innovations will be able to travel safely to stars beyond the solar system."],
+  [38, "The resources required to drive economic activity that have existed far beyond the reach of humanity are becoming much more reachable."],
+  [39, "The question is no longer about how; it’s about when."],
+  [40, "Read More"],
+  [41, "Cleaning Up the Skies"],
+  [42, "Since the beginning of the space age in the 1950s, thousands of rockets and satellites have been launched into space."],
+  [43, "Most have functioned as they were designed to, but over time, some machines have broken down and remain floating around in space because they are difficult to bring back."],
+  [44, "Dead satellites, used rocket parts, and small pieces of dirt are in orbit."],
+  [45, "Those objects left unattended in space are collectively referred to as space junk."],
+  [46, "The presence of space junk significantly increases risks to space activities and the safety of astronauts."],
+  [47, "For example, small pieces of junk might not seem like a big issue, but they move at 6.7 kilometers per second."],
+  [48, "At that speed, even a small piece of metal can seriously harm satellites that provide services across the world."],
+  [49, "In addition, each crash has the potential to generate more space junk."],
+  [50, "Without active efforts to remove the junk, traveling in space would be extremely dangerous."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "야심 찬 기업가들의 참여 이후 우주 프로그램을 운영하고 개선하는 비용이 상당히 감소했다.",
+   "우주에서 생산된 반도체가 장착된 기기로 메시지를 보내는 상상은 비합리적이고 불가능하다.",
+   "1950년대 우주 시대가 시작된 이래 수천 개의 로켓과 인공위성이 우주로 발사되었다.",
+   "작은 우주 쓰레기 조각들은 초당 6.7킬로미터라는 엄청난 속도로 이동한다.",
+   "우주 쓰레기를 제거하려는 적극적인 노력이 없다면 우주 여행은 극도로 위험할 것이다"
+  ],
+  "a": 2,
+  "e": "#36 it’s not unreasonable to imagine sending a message from a device equipped with semiconductors that were produced in space (비합리적이지 않다 = 충분히 합리적이고 타당하다)."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "우주 자원 활용과 심우주 탐사에 관한 질문은 더 이상 '어떻게(how)'의 문제가 아니라 '언제(when)'의 문제이다.",
+  "a": "O",
+  "e": "#39 The question is no longer about how; it’s about when."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["우주에 방치된 수명이 다한 위성, 로켓 부품, 먼지 조각 등은 총칭하여 우주 쓰레기(space junk)라 불린다.", "T"],
+   ["고장 난 기계들은 지구로 회수하기가 매우 쉽기 때문에 궤도에 거의 남아 있지 않다.", "F"],
+   ["각각의 우주 쓰레기 충돌은 더 많은 우주 쓰레기를 발생시킬 수 있는 잠재력을 지니고 있다.", "T"]
+  ],
+  "e": "#43, #45, #49 43번 문장에서 고장 난 기계들은 다시 가져오기 어렵기 때문에(difficult to bring back) 우주에 떠다니는 채로 남아 있다고 설명합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Private entrepreneurs failed to lower the operational costs of recent space missions.",
+   "Accessing deep-space resources is fundamentally impossible due to physical laws.",
+   "Space junk orbiting at 6.7 km per second poses catastrophic risks to active space assets and astronauts.",
+   "Decades of space exploration have left outer space completely free of debris and derelict satellites."
+  ],
+  "a": 3,
+  "e": "Section 6 English Summary: Orbiting at astronomical speeds of 6.7 km per second, these pieces of space junk pose catastrophic risks to active space assets, astronauts..."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "초당 6.7킬로미터의 속도에서는 작은 금속 조각 하나만으로도 전 세계에 서비스를 제공하는 인공위성에 심각한 손상을 입힐 수 있다.",
+  "a": "O",
+  "e": "#48 At that speed, even a small piece of metal can seriously harm satellites that provide services across the world."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "considerably, significantly",
+   "gadget, appliance",
+   "eventually, finally",
+   "accessible, attainable",
+   "abandoned, neglected"
+  ],
+  "rows": [
+   ["substantially", 1],
+   ["device", 2],
+   ["ultimately", 3],
+   ["reachable", 4],
+   ["unattended", 5]
+  ],
+  "e": "분석지 #34, #36, #37, #38, #45 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "reasonable, logical",
+   "cautious",
+   "alive, active",
+   "attended",
+   "perilous, hazardous"
+  ],
+  "rows": [
+   ["unreasonable", 1],
+   ["adventurous", 2],
+   ["dead", 3],
+   ["unattended", 4],
+   ["safe", 5]
+  ],
+  "e": "분석지 #36, #37, #44, #45, #50 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #38의 drive가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "(자동차를) 운전하다, 조종하다",
+   "이끌다, 추진하다, 동력을 제공하다",
+   "(어떤 상태로) 몰아가다",
+   "(골프 등에서) 공을 치다"
+  ],
+  "a": 2,
+  "e": "#38 drive economic activity에서 drive는 '이끌다, 추진하다, 동력을 제공하다(syn. propel, motivate, steer)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #46의 presence에 대한 설명으로 옳은 것은?",
+  "o": [
+   "반의어로 absence가 제시되어 있으며 '존재, 있음'을 뜻한다.",
+   "본문에서는 '선물'이라는 의미의 명사로 쓰였다.",
+   "동의어로 hazard, danger가 제시되어 있다.",
+   "동사로 쓰여 '발표하다, 제출하다'를 뜻한다"
+  ],
+  "a": 1,
+  "e": "#46 presence (n.) 존재, 있음, syn. existence, ant. absence"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #43의 break down과 바꾸어 쓸 수 있는 분석지상 동의어 한 단어를 쓰시오.",
+  "ans": [
+   "malfunction",
+   "fail"
+  ],
+  "show": "malfunction (또는 fail)",
+  "e": "#43 어휘: break down (syn. malfunction, fail)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #49의 crash와 바꾸어 쓸 수 있는 분석지상 동의어 한 단어를 쓰시오.",
+  "ans": [
+   "collision",
+   "smash"
+  ],
+  "show": "collision (또는 smash)",
+  "e": "#49 어휘: crash (syn. collision, smash)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The cost of running a space program and improving it (has / have) decreased substantially.",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "has",
+  "e": "#34 구문 분석 ★: 주어의 핵이 단수 명사인 The cost이므로 단수 동사 has가 알맞습니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It is not unreasonable to imagine (to send / sending) a message from the device.",
+  "o": [
+   "sending",
+   "to send"
+  ],
+  "a": "sending",
+  "e": "#36 구문 분석: 동사 imagine은 목적어로 동명사를 취하므로 sending이 맞습니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "A device (equipping / equipped) with semiconductors that were produced in space.",
+  "o": [
+   "equipped",
+   "equipping"
+  ],
+  "a": "equipped",
+  "e": "#36 구문 분석 ★: 기기가 반도체로 갖추어진 수동 관계이므로 과거분사 equipped가 device를 후치 수식합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The space project will ultimately reach (a point / at a point) where minds travel safely.",
+  "o": [
+   "a point",
+   "at a point"
+  ],
+  "a": "a point",
+  "e": "#37 구문 분석 ★: reach는 타동사이므로 목적어 앞에 전치사 at이나 to를 쓰지 않습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The space project will reach a point (where / which) innovations will be able to travel safely.",
+  "o": [
+   "where",
+   "which"
+  ],
+  "a": "where",
+  "e": "#37 구문 분석: 추상적인 장소/지점을 나타내는 a point 뒤에 완전한 절이 이어지므로 관계부사 where가 올바릅니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The resources required to drive activity that (has / have) existed are becoming reachable.",
+  "o": [
+   "have",
+   "has"
+  ],
+  "a": "have",
+  "e": "#38 구문 분석 ★: 관계대명사절의 선행사는 복수 명사인 The resources이므로 복수 동사 have existed가 맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Thousands of rockets and satellites (have launched / have been launched) into space.",
+  "o": [
+   "have been launched",
+   "have launched"
+  ],
+  "a": "have been launched",
+  "e": "#42 구문 분석 ★: 로켓과 위성은 발사되는 수동의 대상이므로 현재완료 수동태 have been launched가 쓰여야 합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Most have functioned as they were designed (to / to function it).",
+  "o": [
+   "to",
+   "to function it"
+  ],
+  "a": "to",
+  "e": "#43 구문 분석 ★: 반복되는 동사구 function이 생략되고 to만 남은 대부정사 구조입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Some machines have broken down and remain (floating / to float) around in space.",
+  "o": [
+   "floating",
+   "to float"
+  ],
+  "a": "floating",
+  "e": "#43 구문 분석: remain의 보어로 현재분사 floating이 와서 '떠다니는 채로 남아 있다'는 지속 상태를 나타냅니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Those objects left unattended in space are collectively referred (to as / as) space junk.",
+  "o": [
+   "to as",
+   "as"
+  ],
+  "a": "to as",
+  "e": "#45 구문 분석 ★: 'refer to A as B'의 수동태 구문이므로 전치사 to와 as가 연달아 붙은 'are referred to as'가 바른 형태입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The presence of space junk significantly (increase / increases) risks to space activities.",
+  "o": [
+   "increases",
+   "increase"
+  ],
+  "a": "increases",
+  "e": "#46 구문 분석: 주어의 핵심 명사가 단수인 The presence이므로 단수 동사 increases가 알맞습니다."
+ },
+ {
+  "n": 23,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In addition, each crash (has / have) the potential to generate more space junk.",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "has",
+  "e": "#49 구문 분석 ★: each 뒤에는 단수 명사(crash)와 단수 동사(has)가 와야 합니다."
+ },
+ {
+  "n": 24,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Without active efforts to remove the junk, traveling in space (would be / would have been) extremely dangerous.",
+  "o": [
+   "would be",
+   "would have been"
+  ],
+  "a": "would be",
+  "e": "#50 구문 분석 ★: 현재 사실에 대한 반대 가정을 나타내는 Without 가정법 과거이므로 [would + 동사원형]인 would be가 올바릅니다."
+ },
+ {
+  "n": 25,
+  "p": "D

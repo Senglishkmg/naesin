@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "우주 쓰레기 수거 기술과 지속 가능한 우주 탐사 정독 확인 문항 (#51~#56)",
+ "section": "교과서 본문 · 섹션 7 (#51~#56)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [51, "To ensure the safe operation of space activities, it is critical to address the space junk problem."],
+  [52, "Various space institutions and even entrepreneurs are actively working on solutions to reduce the amount of space junk in orbit."],
+  [53, "These efforts include the development of innovative technologies such as robotic arms to capture and remove large pieces of space junk as well as the improvement of tracking systems to better avoid space junk."],
+  [54, "What’s more, researchers are also investigating recycling existing space junk to reduce its impact on future space activities."],
+  [55, "This approach not only helps in reducing the space junk problem but also promotes sustainability in space exploration."],
+  [56, "The long journey toward finding a solution to the space junk problem has only just begun."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "우주 쓰레기 문제 해결을 위한 노력으로 본문에 언급되지 않은 것은?",
+  "o": [
+   "우주 쓰레기를 더 잘 회피하기 위한 추적 시스템의 개선",
+   "거대한 우주 쓰레기 파편들을 포획하고 제거하기 위한 로봇 팔 개발",
+   "미래 우주 활동에 미치는 충격을 줄이기 위한 기존 우주 쓰레기의 재활용 방안 조사",
+   "궤도에 레이저 요격 위성을 대거 배치하여 우주 쓰레기를 공중 폭파하는 기술 개발",
+   "궤도 내 우주 쓰레기의 양을 줄이기 위한 우주 기관 및 기업가들의 다각적 해결책 모색"
+  ],
+  "a": 4,
+  "e": "#52, #53, #54 추적 시스템 개선, 로봇 팔 개발, 기존 쓰레기 재활용 조사 등이 언급되었으며 레이저 폭파 요격 위성은 언급되지 않았습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "기존 우주 쓰레기를 재활용하는 접근법은 쓰레기 문제를 줄이는 데 도움이 될 뿐 아니라 우주 탐사의 지속 가능성을 촉진한다.",
+  "a": "O",
+  "e": "#55 This approach not only helps in reducing the space junk problem but also promotes sustainability in space exploration."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["우주 활동의 안전한 운영을 보장하기 위해 우주 쓰레기 문제를 해결하는 것은 대단히 중요하다.", "T"],
+   ["우주 쓰레기 문제의 완전한 해결책을 찾는 긴 여정은 이미 모든 기술적 완성을 끝마쳤다.", "F"],
+   ["정부 우주 기관뿐만 아니라 민간 기업가들 역시 궤도 내 쓰레기를 줄이기 위한 해결책에 적극적으로 참여하고 있다.", "T"]
+  ],
+  "e": "#51, #52, #56 56번 문장에서 해결책을 찾는 긴 여정은 이제 막 시작되었을 뿐(has only just begun)이라고 명시했습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary 및 Final Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Global agencies decided to abandon active debris removal due to high costs.",
+   "In-space recycling is emerging as a game-changer, laying the foundation for long-term orbital sustainability.",
+   "Asteroid mining is limited strictly to collecting precious metals rather than water.",
+   "Space junk removal requires halting all forms of off-earth manufacturing permanently."
+  ],
+  "a": 2,
+  "e": "Section 7 English Summary: in-space recycling is emerging as a game-changer, laying the foundation for long-term orbital sustainability."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "55번 문장의 This approach가 가리키는 구체적 내용은 '기존 우주 쓰레기를 재활용하는 것'이다.",
+  "a": "O",
+  "e": "#54, #55 앞 문장(#54)의 recycling existing space junk to reduce its impact를 가리킵니다."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "guarantee, secure",
+   "crucial, vital",
+   "tackle, deal with",
+   "groundbreaking, inventive",
+   "foster, encourage"
+  ],
+  "rows": [
+   ["ensure", 1],
+   ["critical", 2],
+   ["address", 3],
+   ["innovative", 4],
+   ["promote", 5]
+  ],
+  "e": "분석지 #51, #53, #55 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "trivial",
+   "passively",
+   "increase, expand",
+   "release",
+   "hinder"
+  ],
+  "rows": [
+   ["critical", 1],
+   ["actively", 2],
+   ["reduce", 3],
+   ["capture", 4],
+   ["promote", 5]
+  ],
+  "e": "분석지 #51, #52, #53, #55 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #51의 address가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "거주지 주소, 행선지",
+   "(문제를) 해결하다, 다루다",
+   "(대중 앞에서) 연설하다",
+   "우편물을 발송하다"
+  ],
+  "a": 2,
+  "e": "#51 to address the space junk problem에서 address는 '(문제를) 해결하다, 다루다(syn. tackle, deal with, handle)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #53의 avoid에 대한 설명으로 옳은 것은?",
+  "o": [
+   "동의어로 confront, encounter가 제시되어 있다.",
+   "본문에서는 '무효로 하다'라는 법률적 의미로 쓰였다.",
+   "동의어로 evade, shun, dodge가 있으며 반의어는 confront, encounter이다.",
+   "명사 형태로만 쓰이며 동사로는 쓰이지 않는다"
+  ],
+  "a": 3,
+  "e": "#53 avoid (v.) 피하다, 회피하다, syn. evade, shun, dodge, ant. confront, encounter"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #54의 investigate와 바꾸어 쓸 수 있는 분석지상 동의어 한 단어를 쓰시오.",
+  "ans": [
+   "examine",
+   "inspect",
+   "probe"
+  ],
+  "show": "examine (또는 inspect, probe)",
+  "e": "#54 어휘: investigate (syn. examine, inspect, probe)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #53의 improvement와 반대되는 뜻을 가진 분석지상 반의어 한 단어를 쓰시오.",
+  "ans": [
+   "deterioration"
+  ],
+  "show": "deterioration",
+  "e": "#53 어휘: improvement (ant. deterioration)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "(To ensure / Ensure) the safe operation of space activities, it is critical to address the problem.",
+  "o": [
+   "To ensure",
+   "Ensure"
+  ],
+  "a": "To ensure",
+  "e": "#51 구문 분석: 안전한 운영을 보장하기 '위하여'라는 목적을 나타내는 to부정사의 부사적 용법 자리입니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It is critical (address / to address) the space junk problem.",
+  "o": [
+   "to address",
+   "address"
+  ],
+  "a": "to address",
+  "e": "#51 구문 분석 ★: 형식상의 가주어 It에 호응하는 진짜 주어 자리이므로 to address가 올바릅니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Working on solutions to reduce the (amount / number) of space junk in orbit.",
+  "o": [
+   "amount",
+   "number"
+  ],
+  "a": "amount",
+  "e": "#52 구문 분석: space junk는 셀 수 없는 집합적 물질명사이므로 number가 아닌 amount로 수량을 수식합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Robotic arms to capture and (remove / removing) large pieces of space junk.",
+  "o": [
+   "remove",
+   "removing"
+  ],
+  "a": "remove",
+  "e": "#53 구문 분석: to capture와 and로 병렬 연결되어 robotic arms를 수식하는 원형부정사 remove 자리입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Researchers are also investigating (to recycle / recycling) existing space junk.",
+  "o": [
+   "recycling",
+   "to recycle"
+  ],
+  "a": "recycling",
+  "e": "#54 구문 분석 ★: 동사 investigate는 목적어로 동명사를 취하므로 recycling이 올바릅니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "This approach not only helps in reducing the space junk problem but also (promotes / promote) sustainability.",
+  "o": [
+   "promotes",
+   "promote"
+  ],
+  "a": "promotes",
+  "e": "#55 구문 분석 ★: 단수 주어 This approach에 호응하여 not only helps와 병렬을 이루는 3인칭 단수 현재 동사 promotes 자리입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The long journey toward finding a solution to the space junk problem (has / have) only just begun.",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "has",
+  "e": "#56 구문 분석: 주어의 핵심 명사가 단수인 The long journey이므로 단수 동사 has가 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Toward finding a solution (to / of) the space junk problem.",
+  "o": [
+   "to",
+   "of"
+  ],
+  "a": "to",
+  "e": "#56 구문 분석: '~에 대한 해결책'을 표현할 때는 명사 solution 뒤에 전치사 to를 씁니다."
+ },
+ {
+  "n": 20,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 [연결어 분석]에 근거하여 54번 문장의 What’s more에 대한 설명으로 가장 적절한 것은?",
+  "o": [
+   "로봇 팔을 이용한 포획 기술이 현실적으로 불가능함을 입증하는 반대 논거를 제시한다.",
+   "로봇 팔 개발과 추적 시스템 개선이라는 기존 대책에 더해, 기존 쓰레기의 재활용이라는 한 단계 더 진보된 방안을 추가한다.",
+   "우주 쓰레기 발생의 역사적 기원을 시간순으로 거슬러 올라가 설명한다.",
+   "추적 시스템 개선에 소요되는 구체적 예산 규모를 비교 분석한다"
+  ],
+  "a": 2,
+  "e": "#54 [연결어 분석]: 로봇 팔 제거 및 추적 시스템 개선 노력에 덧붙여 기존 쓰레기의 재활용 방안이라는 혁신적 대응책을 추가하기 위해 쓰였습니다."
+ },
+ {
+  "n": 21,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "우주 쓰레기 문제 해결의 결정적 중요성 제시 → 기관과 기업가들의 쓰레기 감축 노력 소개 → 로봇 팔 포획 및 추적 시스템 개선 기술 열거 → 재활용 연구를 통한 추가적 혁신 방안 제시 → 문제 해결 및 지속 가능성 촉진 효과 설명 → 해결을 향한 여정의 출발 선언으로 결론",
+   "우주 쓰레기 재활용 실패 보고 → 로봇 팔 장치 폐기 → 추적 시스템 고장 발생 → 연구 중단 선언",
+   "우주비행사들의 안전 귀환 축하 → 로봇 기술자들의 표창 수여 → 쓰레기 문제 방치 결정",
+   "추적 시스템의 군사적 전용 발표 → 민간 기업 퇴출 조치 → 우주 탐사 프로젝트 영구 동결"
+  ],
+  "a": 1,
+  "e": "#51 문제 해결의 중요성 → #52 기관과 기업가들의 감축 노력 → #53 로봇 팔과 추적 시스템 → #54 재활용 방안 추가 → #55 감축 및 지속 가능성 촉진 → #56 이제 막 시작된 긴 여정 순서입니다."
+ },
+ {
+  "n": 22,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "이 접근법은 우주 쓰레기 문제를 줄이는 데 도움이 될 뿐만 아니라 우주 탐사에서의 지속 가능성을 촉진한다.<br><small>「조건」 not only helps in reducing, but also promotes sustainability 활용 (총 17단어)</small>",
+  "ans": [
+   "This approach not only helps in reducing the space junk problem but also promotes sustainability in space exploration"
+  ],
+  "show": "This approach not only helps in reducing the space junk problem but also promotes sustainability in space exploration.",
+  "e": "#55 상관접속사 not only A but also B 및 3인칭 단수 동사 병렬구조"
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "It is critical <u>address</u> the space junk problem. Researchers are also investigating <u>to recycle</u> existing space junk. This approach not only helps in reducing the problem but also <u>promote</u> sustainability.",
+  "keys": [
+   {
+    "k": "to address",
+    "show": "address → to address"
+   },
+   {
+    "k": "recycling",
+    "show": "to recycle → recycling"
+   },
+   {
+    "k": "promotes",
+    "show": "promote → promotes"
+   }
+  ],
+  "e": "#51 가주어-진주어 to address, #54 investigate의 동명사 목적어 recycling, #55 단수 주어에 호응하는 동사 병렬 promotes"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "kw",
+  "s": "55번 문장에서 not only helps와 호응하는 but also 뒤의 동사로 promote가 아닌 promotes를 써야 하는 어법적 이유를 주어와의 수 일치 관점에서 쓰시오.",
+  "groups": [
+   [
+    "주어",
+    "This approach",
+    "단수 주어"
+   ],
+   [
+    "단수",
+    "단수형",
+    "3인칭 단수"
+   ],
+   [
+    "병렬",
+    "수 일치",
+    "helps"
+   ]
+  ],
+  "show": "주어인 This approach가 3인칭 단수이므로, not only 뒤의 helps와 마찬가지로 but also 뒤에도 3인칭 단수 현재형 동사 promotes를 써서 병렬 수 일치를 맞추어야 하기 때문이다.",
+  "e": "#55 구문 분석 ★"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Global space agencies and private innovators are engineering active debris removal solutions to maintain safe operations. Furthermore, in-space (A) r________ is emerging as a game-changer, laying the foundation for long-term orbital (B) s________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "recycling"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "sustainability"
+    ]
+   ]
+  ],
+  "show": "(A) recycling (B) sustainability",
+  "e": "Section 7 English Summary 및 본문 #54, #55"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "로봇 소행성 채굴의 전망과 기술적 과제 정독 확인 문항 (#16~#21)",
+ "section": "교과서 본문 · 섹션 3 (#16~#21)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [16, "No one knows for sure what asteroid mining will look like, but it seems that robotic mining is most likely."],
+  [17, "Robots will be sent to dig for target materials and send them back towards Earth."],
+  [18, "They will be programmed to explore the surface and identify materials, and be equipped for tasks such as drilling, collecting, and transporting."],
+  [19, "They may work independently or be controlled remotely from Earth."],
+  [20, "Unfortunately, these types of robots have yet to be developed since the technology is still young."],
+  [21, "As technology continues to develop, better methods for obtaining materials will undoubtedly emerge."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "소행성 채굴이 어떤 모습일지 정확히 아는 사람은 없다.",
+   "로봇에 의한 채굴 방식이 가장 가능성이 높은 것으로 보인다.",
+   "채굴 로봇들은 목표 물질을 발굴하여 지구를 향해 다시 보내도록 파견될 것이다.",
+   "채굴 로봇들은 이미 완벽히 개발되어 현재 소행성 표면에서 상업적 시추 작업을 수행 중이다.",
+   "기술이 계속 발전함에 따라 물질을 획득하는 더 나은 방법들이 틀림없이 나타날 것이다"
+  ],
+  "a": 4,
+  "e": "#20 기술이 아직 초기 단계이기 때문에 이러한 유형의 로봇들은 아직 개발되지 않았다(have yet to be developed)고 명시되어 있습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "소행성 채굴 로봇들은 자율적으로 작업하거나 지구에서 원격으로 제어될 수도 있다.",
+  "a": "O",
+  "e": "#19 They may work independently or be controlled remotely from Earth."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["로봇들은 표면을 탐사하고 물질을 식별하도록 프로그램될 것이다.", "T"],
+   ["로봇들이 수행할 과업의 예시로 시추, 수집, 운반 등이 언급되었다.", "T"],
+   ["소행성 채굴 기술은 이미 성숙 단계에 도달하여 추가적인 기술 혁신이 필요하지 않다.", "F"]
+  ],
+  "e": "#18, #20 기술은 여전히 초기(still young) 단계이며, 지속적인 혁신을 통해 점차 나타날 것입니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Asteroid mining has already been successfully accomplished by human astronauts without machines.",
+   "Space mining technology is currently in its nascent stages, but continuous innovation will turn it into reality.",
+   "Autonomous robots have proven completely ineffective in digging and transporting space materials.",
+   "Remote control from Earth is technically impossible due to communication lag."
+  ],
+  "a": 2,
+  "e": "Section 3 English Summary: Although this technology is currently in its nascent stages, continuous innovation will inevitably turn space mining into a practical reality."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "17번 문장의 them이 가리키는 대상은 발굴된 '목표 물질들(target materials)'이다.",
+  "a": "O",
+  "e": "#17 to dig for target materials and send them back towards Earth."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "excavate, burrow",
+   "recognize, distinguish",
+   "autonomously",
+   "nascent, early",
+   "acquire, gain, get"
+  ],
+  "rows": [
+   ["dig", 1],
+   ["identify", 2],
+   ["independently", 3],
+   ["young", 4],
+   ["obtain", 5]
+  ],
+  "e": "분석지 #17, #18, #19, #20, #21 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "unlikely",
+   "interior",
+   "scatter",
+   "dependently",
+   "disappear, vanish"
+  ],
+  "rows": [
+   ["likely", 1],
+   ["surface", 2],
+   ["collect", 3],
+   ["independently", 4],
+   ["emerge", 5]
+  ],
+  "e": "분석지 #16, #18, #19, #21 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #20의 young이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "나이가 어린, 청소년의",
+   "혈기 왕성한",
+   "초기의, 미숙한",
+   "젊은이, 새끼"
+  ],
+  "a": 3,
+  "e": "#20 since the technology is still young에서 young은 '초기의, 미숙한(syn. nascent, early)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #18의 drill이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "구멍을 뚫는 송곳 도구",
+   "반복적인 군사 훈련",
+   "시추하다, 구멍을 뚫다",
+   "엄격하게 주입 훈련시키다"
+  ],
+  "a": 3,
+  "e": "#18 drilling, collecting, and transporting에서 drill은 동명사로 쓰여 '시추하다, 구멍을 뚫다(syn. bore, pierce)'의 뜻입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #16의 for sure와 바꾸어 쓸 수 있는 분석지상 동의어 한 단어를 쓰시오.",
+  "ans": [
+   "certainly",
+   "definitely"
+  ],
+  "show": "certainly (또는 definitely)",
+  "e": "#16 어휘: for sure (syn. certainly, definitely)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #19의 remotely와 반대되는 뜻을 가진 분석지상 반의어 한 단어를 쓰시오.",
+  "ans": [
+   "locally"
+  ],
+  "show": "locally",
+  "e": "#19 어휘: remotely (ant. locally)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "No one knows for sure (what asteroid mining will look like / how asteroid mining will look like).",
+  "o": [
+   "what asteroid mining will look like",
+   "how asteroid mining will look like"
+  ],
+  "a": "what asteroid mining will look like",
+  "e": "#16 구문 분석 ★: 전치사 like의 목적어 역할을 해야 하므로 의문대명사 what이 쓰인 'what ~ look like'가 바른 어순입니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Robots will (send / be sent) to dig for target materials.",
+  "o": [
+   "be sent",
+   "send"
+  ],
+  "a": "be sent",
+  "e": "#17 구문 분석: 주어 Robots는 파견되는 수동의 대상이므로 미래 수동태 will be sent가 올바릅니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Robots will be sent to dig for materials and (send them back / send back them) towards Earth.",
+  "o": [
+   "send them back",
+   "send back them"
+  ],
+  "a": "send them back",
+  "e": "#17 구문 분석 ★: 이어동사에서 대명사 목적어(them)는 반드시 동사와 부사 사이에 와야 합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They will be programmed to explore the surface and (identify / identified) materials.",
+  "o": [
+   "identify",
+   "identified"
+  ],
+  "a": "identify",
+  "e": "#18 구문 분석: to explore와 and로 병렬 연결되는 원형부정사 자리이므로 identify가 맞습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They will be programmed and (be equipped / equipped) for tasks such as drilling.",
+  "o": [
+   "be equipped",
+   "equipped"
+  ],
+  "a": "be equipped",
+  "e": "#18 구문 분석 ★: 조동사 will 뒤에 be programmed와 and로 병렬 연결되는 be equipped 자리입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Tasks such as drilling, collecting, and (transport / transporting).",
+  "o": [
+   "transporting",
+   "transport"
+  ],
+  "a": "transporting",
+  "e": "#18 구문 분석: 전치사 such as 뒤에서 drilling, collecting과 콤마/and로 병렬 연결되는 동명사 transporting 자리입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "They may work independently or (control / be controlled) remotely from Earth.",
+  "o": [
+   "be controlled",
+   "control"
+  ],
+  "a": "be controlled",
+  "e": "#19 구문 분석: 로봇이 지구로부터 제어받는 수동의 상황이므로 조동사 may 뒤에 수동태 be controlled가 와야 합니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "These types of robots have yet (to be developed / to develop) since the technology is young.",
+  "o": [
+   "to be developed",
+   "to develop"
+  ],
+  "a": "to be developed",
+  "e": "#20 구문 분석 ★: 로봇은 개발되는 수동의 대상이므로 have yet to 뒤에 수동형 부정사 to be developed가 와야 합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Better methods for obtaining materials will undoubtedly (emerge / be emerged).",
+  "o": [
+   "emerge",
+   "be emerged"
+  ],
+  "a": "emerge",
+  "e": "#21 구문 분석: emerge는 1형식 완전자동사로 수동태(be emerged)가 불가능하므로 능동형 emerge가 맞습니다."
+ },
+ {
+  "n": 21,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "로봇 채굴의 유력한 가능성 제시 → 로봇의 주요 임무(발굴 및 지구 운송) 설명 → 구체적 프로그래밍과 기능 장비 나열 → 작업 방식(자율 및 원격 제어) 설명 → 미개발 현실과 기술의 미숙함 지적 → 기술 발전에 따른 새로운 방식 출현 전망",
+   "채굴 로봇의 전량 리콜 사태 보고 → 지구 원격 제어망의 붕괴 → 우주선 엔진 결함 발표 → 결론",
+   "소행성 충돌의 위험성 경고 → 국제 규제 법안 제정 → 로봇 개발 전면 중단 선언",
+   "인간 우주비행사의 현장 투입 결정 → 로봇 채굴 기법의 폐기 → 금 가격 급락 사태 분석"
+  ],
+  "a": 1,
+  "e": "#16 로봇 채굴 가능성 → #17 발굴 및 운송 임무 → #18 기능 및 장비 → #19 자율/원격 운용 방식 → #20 현재 기술의 미숙함 → #21 미래 발전 전망 순서입니다."
+ },
+ {
+  "n": 22,
+  "p": "D",
+  "t": "mc",
+  "s": "20번 문장 맨 앞의 Unfortunately가 글의 흐름에서 수행하는 기능으로 가장 적절한 것은?",
+  "o": [
+   "앞서 열거된 로봇들의 이상적인 청사진과 대조하여, 아직 개발되지 못한 현재의 기술적 한계를 드러낸다.",
+   "로봇들이 우주 공간에서 영구적으로 조난당했음을 선언한다.",
+   "지구의 자원 고갈이 해결 불가능함을 입증한다.",
+   "소행성 채굴 사업이 경제적으로 파산했음을 설명한다"
+  ],
+  "a": 1,
+  "e": "#17~#19에서 설명한 로봇의 이상적 기능들에 이어, #20에서는 아직 기술이 초기 단계라 미개발 상태라는 현실적 한계를 도입합니다."
+ },
+ {
+  "n": 23,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "아무도 소행성 채굴이 어떤 모습일지 확실히 알지 못하지만, 로봇 채굴이 가장 가능성이 높은 것처럼 보인다.<br><small>「조건」 No one knows for sure what, will look like, it seems that robotic mining is most likely 활용 (총 19단어)</small>",
+  "ans": [
+   "No one knows for sure what asteroid mining will look like but it seems that robotic mining is most likely"
+  ],
+  "show": "No one knows for sure what asteroid mining will look like, but it seems that robotic mining is most likely.",
+  "e": "#16 간접의문문(what asteroid mining will look like) 및 It seems that 구문"
+ },
+ {
+  "n": 24,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "Robots will be sent to dig for target materials and send <u>back them</u> towards Earth. Unfortunately, these types of robots have yet to <u>develop</u> since the technology is still young. Better methods will undoubtedly <u>be emerged</u>.",
+  "keys": [
+   {
+    "k": "them back",
+    "show": "back them → them back"
+   },
+   {
+    "k": "be developed",
+    "show": "develop → be developed"
+   },
+   {
+    "k": "emerge",
+    "show": "be emerged → emerge"
+   }
+  ],
+  "e": "#17 이어동사 대명사 목적어 위치(send them back), #20 have yet to 수동형(to be developed), #21 수동태 불가 자동사 emerge"
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "kw",
+  "s": "17번 문장에서 send back them이 아닌 send them back 어순으로 써야 하는 어법적 이유를 목적어의 성격과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "이어동사",
+    "타동사+부사",
+    "타동사와 부사"
+   ],
+   [
+    "대명사 목적어",
+    "대명사",
+    "them"
+   ],
+   [
+    "사이",
+    "사이에 위치",
+    "중간"
+   ]
+  ],
+  "show": "이어동사(동사+부사) 구문에서 목적어가 대명사(them)인 경우 반드시 동사와 부사 사이에 위치해야 하기 때문이다.",
+  "e": "#17 구문 분석 ★"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Future asteroid mining will most likely be executed by (A) a________ or remotely operated robots. Although this technology is currently in its (B) n________ stages, continuous innovation will turn it into reality.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "autonomous"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "nascent"
+    ]
+   ]
+  ],
+  "show": "(A) autonomous (B) nascent",
+  "e": "Section 3 English Summary 및 본문 #19, #20"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

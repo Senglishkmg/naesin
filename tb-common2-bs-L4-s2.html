@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "소행성 채굴의 무한한 가치와 물의 중요성 정독 확인 문항 (#7~#15)",
+ "section": "교과서 본문 · 섹션 2 (#7~#15)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 연결어·논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [7, "Asteroid Mining"],
+  [8, "The solar system is composed of many rocks floating in space."],
+  [9, "The large ones are called planets, and the smaller ones are called asteroids."],
+  [10, "Research has shown that asteroids contain valuable resources like gold and rare earth elements."],
+  [11, "For example, one asteroid, 16 Psyche, is reported to consist mainly of gold and other precious metals, whose value is equal to billions of dollars per person on Earth."],
+  [12, "From a space explorers’ perspective, however, the most valuable resources from asteroids are neither valuable precious metals nor rare mineral deposits."],
+  [13, "That valuable resource could actually be water, and it seems to have been overlooked because it doesn’t seem as exciting as gold."],
+  [14, "Water is expensive to transport into space due to its weight and volume."],
+  [15, "Having a space station with sufficient water supplies in orbit around Earth would make space explorations much easier."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 내용과 일치하지 않는 것은?",
+  "o": [
+   "태양계는 우주에 떠다니는 많은 암석들로 구성되어 있다.",
+   "태양계의 암석 중 큰 것들은 행성, 더 작은 것들은 소행성이라 불린다.",
+   "소행성 16 프시케의 가치는 지구상의 1인당 수십억 달러에 달하는 것으로 보고된다.",
+   "우주 탐험가의 관점에서 가장 가치 있는 자원은 금과 같은 귀금속이다.",
+   "지구 주변 궤도에 충분한 물을 보유한 우주 정거장이 있다면 우주 탐사가 훨씬 쉬워질 것이다"
+  ],
+  "a": 4,
+  "e": "#12, #13 우주 탐험가의 관점에서 가장 가치 있는 자원은 귀금속이나 희귀 광물이 아닌 실제로는 물(water)이라고 명시되어 있습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "물이 우주로 수송하기에 비싼 이유는 그것의 무게와 부피 때문이다.",
+  "a": "O",
+  "e": "#14 Water is expensive to transport into space due to its weight and volume."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["연구에 따르면 소행성에는 금과 희토류 원소 같은 귀중한 자원이 포함되어 있다.", "T"],
+   ["물은 금만큼이나 흥미진진해 보이기 때문에 학계의 집중적인 주목을 받아 왔다.", "F"],
+   ["9번 문장의 대명사 ones가 가리키는 대상은 태양계의 '암석들(rocks)'이다.", "T"]
+  ],
+  "e": "#9, #10, #13 물은 금만큼 흥미진진해 보이지 않기 때문에 간과되어 온 것처럼 보인다고 서술되었습니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Asteroids contain no precious metals or valuable rare earth elements.",
+   "From the perspective of space exploration, water is the most vital and strategic resource.",
+   "Transporting water from Earth is considered the cheapest way to supply space stations.",
+   "Precious metals from asteroids are necessary to drastically reduce the cost of orbital spaceflights."
+  ],
+  "a": 2,
+  "e": "Section 2 English Summary: from the perspective of space exploration, the most vital and strategic resource is actually water..."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "13번 문장의 That valuable resource가 실제로 가리키는 대상은 '물(water)'이다.",
+  "a": "O",
+  "e": "#13 That valuable resource could actually be water"
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "drift, hover",
+   "precious, priceless",
+   "component, constituent",
+   "viewpoint, standpoint",
+   "enough, adequate"
+  ],
+  "rows": [
+   ["float", 1],
+   ["valuable", 2],
+   ["element", 3],
+   ["perspective", 4],
+   ["sufficient", 5]
+  ],
+  "e": "분석지 #8, #10, #12, #15 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "sink",
+   "exclude",
+   "worthless",
+   "notice",
+   "insufficient, lacking"
+  ],
+  "rows": [
+   ["float", 1],
+   ["contain", 2],
+   ["valuable", 3],
+   ["overlook", 4],
+   ["sufficient", 5]
+  ],
+  "e": "분석지 #8, #10, #13, #15 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #14의 volume이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "(서적의) 권, 책",
+   "부피, 용량",
+   "(라디오·음향의) 음량",
+   "총량, 대량"
+  ],
+  "a": 2,
+  "e": "#14 due to its weight and volume에서 volume은 '부피, 용량(syn. capacity, size)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #12의 deposit이 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "은행 예금, 예금액",
+   "(계약) 보증금, 착수금",
+   "(광물 등의) 매장층, 침전물",
+   "퇴적시키다, 맡기다"
+  ],
+  "a": 3,
+  "e": "#12 rare mineral deposits에서 deposits는 '매장층, 침전물(syn. accumulation)'의 뜻입니다."
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #11의 precious와 바꾸어 쓸 수 있는 분석지상 동의어를 한 단어로 쓰시오.",
+  "ans": [
+   "valuable",
+   "prized"
+  ],
+  "show": "valuable (또는 prized)",
+  "e": "#11 어휘: precious (syn. valuable, prized)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #10의 rare와 반대되는 뜻을 가진 분석지상 반의어 한 단어를 쓰시오.",
+  "ans": [
+   "common"
+  ],
+  "show": "common",
+  "e": "#10 어휘: rare (ant. common)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The solar system (composed / is composed) of many rocks floating in space.",
+  "o": [
+   "is composed",
+   "composed"
+  ],
+  "a": "is composed",
+  "e": "#8 구문 분석 ★: '~로 구성되다'라는 의미의 수동태 구문은 be composed of입니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The solar system is composed of many rocks (floating / floated) in space.",
+  "o": [
+   "floating",
+   "floated"
+  ],
+  "a": "floating",
+  "e": "#8 구문 분석: 암석들이 우주에서 능동적으로 떠다니는 것이므로 현재분사 floating이 rocks를 후치 수식합니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The large ones (call / are called) planets.",
+  "o": [
+   "are called",
+   "call"
+  ],
+  "a": "are called",
+  "e": "#9 구문 분석 ★: 주어인 '큰 것들(The large ones)'은 행성이라고 불리는 대상이므로 5형식 수동태 are called가 올바릅니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "16 Psyche is reported to (consist of / be consisted of) gold and other precious metals.",
+  "o": [
+   "consist of",
+   "be consisted of"
+  ],
+  "a": "consist of",
+  "e": "#11 구문 분석 ★: consist of는 자동사 구문이므로 수동태(be consisted of)로 쓸 수 없습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Gold and other precious metals, (whose / which) value is equal to billions of dollars.",
+  "o": [
+   "whose",
+   "which"
+  ],
+  "a": "whose",
+  "e": "#11 구문 분석: 선행사 precious metals의 가치(and their value)를 나타내는 소유격 관계대명사이므로 whose가 맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The most valuable resources are (neither / either) valuable precious metals nor rare mineral deposits.",
+  "o": [
+   "neither",
+   "either"
+  ],
+  "a": "neither",
+  "e": "#12 구문 분석 ★: 뒤의 nor과 호응하여 'A도 B도 아닌'이라는 양자 부정을 나타내는 상관접속사는 neither입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It seems to (have been overlooked / have overlooked) because it doesn’t seem exciting.",
+  "o": [
+   "have been overlooked",
+   "have overlooked"
+  ],
+  "a": "have been overlooked",
+  "e": "#13 구문 분석 ★: 주어 it(물)은 사람들에 의해 간과된 대상이므로 완료 수동 부정사 to have been overlooked가 올바릅니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "It seems to have been overlooked because it doesn’t seem as (exciting / excited) as gold.",
+  "o": [
+   "exciting",
+   "excited"
+  ],
+  "a": "exciting",
+  "e": "#13 구문 분석: 물이라는 사물이 사람들에게 흥미진진함을 주는 감정의 주체이므로 현재분사 형용사 exciting이 쓰여야 합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Water is expensive to transport into space (due to / because) its weight and volume.",
+  "o": [
+   "due to",
+   "because"
+  ],
+  "a": "due to",
+  "e": "#14 구문 분석: 뒤에 절이 아니라 명사구(its weight and volume)가 이어지므로 전치사 due to가 맞습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Having a space station in orbit around Earth would make space explorations much (easier / easily).",
+  "o": [
+   "easier",
+   "easily"
+  ],
+  "a": "easier",
+  "e": "#15 구문 분석 ★: 5형식 make의 목적어(space explorations)를 설명하는 목적격 보어 자리이므로 부사가 아닌 형용사의 비교급 easier가 와야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Having a space station would make space explorations (much / very) easier.",
+  "o": [
+   "much",
+   "very"
+  ],
+  "a": "much",
+  "e": "#15 구문 분석: 비교급 easier를 수식하여 '훨씬'의 의미를 나타내는 부사는 much입니다 (very는 비교급 수식 불가)."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "match",
+  "s": "분석지 [연결어 분석]에 근거하여 각 연결어의 기능과 문장 간 관계를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "소행성이 금과 희토류를 포함한다는 일반적 설명에 대해 16 프시케라는 특정 소행성의 실례를 제시",
+   "지구 기준의 막대한 경제적 가치와 우주 탐험가 관점에서의 상반된 가치 인식을 대조"
+  ],
+  "rows": [
+   ["For example (#11)", 1],
+   ["however (#12)", 2]
+  ],
+  "e": "분석지 #11, #12 [연결어 분석]"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "소행성의 개념 정의 → 소행성의 귀중한 광물 매장 사실 제시 → 16 프시케의 구체적 귀금속 가치 사례 → 우주 탐험가 관점에서의 가치 전환(귀금속 배제) → 가장 귀중한 자원으로서의 물 지목 및 간과 이유 → 물의 수송 한계와 궤도 우주 정거장의 필요성 제시",
+   "우주 정거장 설계도 발표 → 소행성 충돌 경보 발령 → 16 프시케로의 탐사선 발사 → 물의 화학적 분해 실패 보고",
+   "지구 자원 고갈 선언 → 금 채굴 금지 조약 체결 → 소행성 탐험 포기 선언 → 결론",
+   "16 프시케의 궤도 이탈 보고 → 소행성 광물 경매 개시 → 물 부족 사태 해결"
+  ],
+  "a": 1,
+  "e": "#8, #9 태양계 암석과 소행성 정의 → #10, #11 광물 자원과 16 프시케 사례 → #12, #13 탐험가 관점의 전환과 물의 가치 → #14, #15 수송 난점과 궤도 정거장 구축의 이점 순서입니다."
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "지구 주변 궤도에 충분한 물 공급량을 가진 우주 정거장을 갖는 것은 우주 탐사들을 훨씬 더 쉽게 만들 것이다.<br><small>「조건」 Having a space station with, in orbit around Earth, would make space explorations much easier 활용 (총 17단어)</small>",
+  "ans": [
+   "Having a space station with sufficient water supplies in orbit around Earth would make space explorations much easier"
+  ],
+  "show": "Having a space station with sufficient water supplies in orbit around Earth would make space explorations much easier.",
+  "e": "#15 동명사 주어, 5형식 make 구문 및 비교급 강조 부사 much"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "The large ones are called planets, and the smaller ones <u>call</u> asteroids. 16 Psyche is reported to <u>be consisted of</u> gold. Having a space station would make space explorations much <u>easily</u>.",
+  "keys": [
+   {
+    "k": "are called",
+    "show": "call → are called"
+   },
+   {
+    "k": "consist of",
+    "show": "be consisted of → consist of"
+   },
+   {
+    "k": "easier",
+    "show": "easily → easier"
+   }
+  ],
+  "e": "#9 수동태 are called, #11 수동태 불가 자동사 consist of, #15 5형식 make의 목적격 보어 형용사 easier"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "kw",
+  "s": "11번 문장에서 is reported to be consisted of가 아닌 is reported to consist of를 써야 하는 어법적 이유를 동사의 성격과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "자동사",
+    "자동사 구문"
+   ],
+   [
+    "수동태",
+    "수동태 불가",
+    "수동태로 쓸 수 없다"
+   ]
+  ],
+  "show": "consist of는 자동사이므로 수동태(be consisted of)로 쓸 수 없기 때문이다.",
+  "e": "#11 구문 분석 ★"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Asteroids are floating deposits of immense wealth. However, from the perspective of space exploration, the most (A) v________ and strategic resource is actually (B) w________.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "vital"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "water"
+    ]
+   ]
+  ],
+  "show": "(A) vital (B) water",
+  "e": "Section 2 English Summary 및 본문 #12, #13"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

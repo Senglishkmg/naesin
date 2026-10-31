@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "우주 쓰레기의 치명적 위협 정독 확인 문항 (#40~#50)",
+ "section": "교과서 본문 · 섹션 6 (#40~#50)",
+ "parts": {
+  "A": "Part A. 내용 이해",
+  "B": "Part B. 어휘",
+  "C": "Part C. 구문·어법",
+  "D": "Part D. 논리 흐름",
+  "E": "Part E. 서술형"
+ },
+ "passage": [
+  [40, "Read More"],
+  [41, "Cleaning Up the Skies"],
+  [42, "Since the beginning of the space age in the 1950s, thousands of rockets and satellites have been launched into space."],
+  [43, "Most have functioned as they were designed to, but over time, some machines have broken down and remain floating around in space because they are difficult to bring back."],
+  [44, "Dead satellites, used rocket parts, and small pieces of dirt are in orbit."],
+  [45, "Those objects left unattended in space are collectively referred to as space junk."],
+  [46, "The presence of space junk significantly increases risks to space activities and the safety of astronauts."],
+  [47, "For example, small pieces of junk might not seem like a big issue, but they move at 6.7 kilometers per second."],
+  [48, "At that speed, even a small piece of metal can seriously harm satellites that provide services across the world."],
+  [49, "In addition, each crash has the potential to generate more space junk."],
+  [50, "Without active efforts to remove the junk, traveling in space would be extremely dangerous."]
+ ]
+};
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "mc",
+  "s": "본문의 우주 쓰레기(space junk)에 관한 내용과 일치하지 않는 것은?",
+  "o": [
+   "1950년대 우주 시대가 시작된 이래 수천 개의 로켓과 인공위성이 발사되었다.",
+   "고장 난 기계들은 다시 가져오기가 어렵기 때문에 우주에 떠다니는 채로 남아 있다.",
+   "우주 쓰레기는 궤도에 머무르지 않고 지구 대기권으로 즉시 진입해 모두 소멸한다.",
+   "작은 쓰레기 조각들은 초당 6.7킬로미터라는 엄청난 속도로 이동한다.",
+   "각각의 충돌은 더 많은 우주 쓰레기를 만들어낼 수 있는 잠재력을 지닌다"
+  ],
+  "a": 3,
+  "e": "#44 수명이 다한 위성, 로켓 부품, 먼지 조각 등은 궤도에 남아 있다(are in orbit)고 명시되어 있습니다."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "우주 쓰레기의 존재는 우주 활동에 대한 위험과 우주비행사들의 안전을 상당히 증가시킨다.",
+  "a": "O",
+  "e": "#46 The presence of space junk significantly increases risks to space activities and the safety of astronauts."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "tf",
+  "s": "본문 및 요약문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+  "items": [
+   ["우주로 발사된 대부분의 기계들은 본래 설계된 대로 정상 기능해 왔다.", "T"],
+   ["초당 6.7km의 속도에서는 아주 작은 금속 조각조차 인공위성에 심각한 손상을 입힐 수 있다.", "T"],
+   ["우주 쓰레기 충돌 사고는 일회성으로 끝나며 새로운 잔해를 전혀 만들어내지 않는다.", "F"]
+  ],
+  "e": "#43, #48, #49 49번 문장에서 각 충돌은 더 많은 우주 쓰레기를 발생시킬 잠재력을 갖는다고 설명합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "mc",
+  "s": "English Summary의 내용과 일치하는 것만을 고른 것은?",
+  "o": [
+   "Thousands of derelict satellites have all been completely removed from orbit.",
+   "Space junk moves at astronomical speeds of 6.7 km per second, posing catastrophic risks.",
+   "Space debris poses no danger to active communication satellites or astronauts.",
+   "The threat of space collisions has ended naturally without human intervention."
+  ],
+  "a": 2,
+  "e": "Section 6 English Summary: Orbiting at astronomical speeds of 6.7 km per second, these pieces of space junk pose catastrophic risks to active space assets, astronauts..."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "우주에 방치된 수명이 다한 위성과 사용된 로켓 부품 등은 총칭하여 'space junk'라고 불린다.",
+  "a": "O",
+  "e": "#45 Those objects left unattended in space are collectively referred to as space junk."
+ },
+ {
+  "n": 6,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 동의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "fire, shoot",
+   "malfunction, fail",
+   "inactive, defunct",
+   "debris, dust",
+   "severely, gravely"
+  ],
+  "rows": [
+   ["launch", 1],
+   ["break down", 2],
+   ["dead", 3],
+   ["dirt", 4],
+   ["seriously", 5]
+  ],
+  "e": "분석지 #42, #43, #44, #48 어휘"
+ },
+ {
+  "n": 7,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어의 분석지상 반의어를 「보기」에서 골라 짝지으시오.",
+  "box": [
+   "alive, active",
+   "attended",
+   "absence",
+   "decrease, reduce",
+   "perilous, hazardous"
+  ],
+  "rows": [
+   ["dead", 1],
+   ["unattended", 2],
+   ["presence", 3],
+   ["increase", 4],
+   ["safe", 5]
+  ],
+  "e": "분석지 #44, #45, #46, #50 어휘"
+ },
+ {
+  "n": 8,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #44의 dead가 본문에서 쓰인 의미로 가장 적절한 것은?",
+  "o": [
+   "생명이 다해 죽은",
+   "수명이 다한, 작동하지 않는",
+   "완전한, 절대적인",
+   "감각이 마비된"
+  ],
+  "a": 2,
+  "e": "#44 Dead satellites에서 dead는 '수명이 다한, 작동하지 않는(syn. inactive, defunct)'의 뜻입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "mc",
+  "s": "분석지 #45의 unattended에 대한 설명으로 옳은 것은?",
+  "o": [
+   "동의어로 abandoned, neglected가 제시되어 있으며 '방치된, 돌보지 않는'을 뜻한다.",
+   "본문에서는 '참석하지 않은'이라는 뜻으로만 쓰였다.",
+   "반의어로 individually가 제시되어 있다.",
+   "동사로 쓰여 '수행하다'를 뜻한다"
+  ],
+  "a": 1,
+  "e": "#45 unattended (a.) 방치된, 돌보지 않는, syn. abandoned, neglected, ant. attended"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #49의 crash와 바꾸어 쓸 수 있는 분석지상 동의어 한 단어를 쓰시오.",
+  "ans": [
+   "collision",
+   "smash"
+  ],
+  "show": "collision (또는 smash)",
+  "e": "#49 어휘: crash (syn. collision, smash)"
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 #50의 remove와 반대되는 뜻을 가진 분석지상 반의어 한 단어를 쓰시오.",
+  "ans": [
+   "install"
+  ],
+  "show": "install",
+  "e": "#50 어휘: remove (ant. install)"
+ },
+ {
+  "n": 12,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Thousands of rockets and satellites (have launched / have been launched) into space.",
+  "o": [
+   "have been launched",
+   "have launched"
+  ],
+  "a": "have been launched",
+  "e": "#42 구문 분석 ★: 1950년대 이래로 로켓과 위성이 발사되어 온 수동의 상황이므로 현재완료 수동태 have been launched가 맞습니다."
+ },
+ {
+  "n": 13,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Most have functioned as they were designed (to / to function it).",
+  "o": [
+   "to",
+   "to function it"
+  ],
+  "a": "to",
+  "e": "#43 구문 분석 ★: 반복되는 동사구 function이 생략되고 to만 남아 있는 대부정사 구조입니다."
+ },
+ {
+  "n": 14,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Some machines have broken down and remain (floating / to float) around in space.",
+  "o": [
+   "floating",
+   "to float"
+  ],
+  "a": "floating",
+  "e": "#43 구문 분석: remain의 보어로 현재분사 floating이 와서 '떠다니는 채로 남아 있다'는 지속 상태를 나타냅니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Those objects (left / leaving) unattended in space are referred to as space junk.",
+  "o": [
+   "left",
+   "leaving"
+  ],
+  "a": "left",
+  "e": "#45 구문 분석: 물체들이 우주에 방치된 수동 관계이므로 과거분사 left가 objects를 수식합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Those objects are collectively referred (to as / as) space junk.",
+  "o": [
+   "to as",
+   "as"
+  ],
+  "a": "to as",
+  "e": "#45 구문 분석 ★: refer to A as B가 수동태로 바뀌어 'be referred to as' 형태를 취해야 합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "The presence of space junk significantly (increase / increases) risks to space activities.",
+  "o": [
+   "increases",
+   "increase"
+  ],
+  "a": "increases",
+  "e": "#46 구문 분석: 주어의 핵이 단수인 The presence이므로 단수 동사 increases가 올바릅니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Small pieces of junk might not seem (like / as) a big issue.",
+  "o": [
+   "like",
+   "as"
+  ],
+  "a": "like",
+  "e": "#47 구문 분석: seem 뒤에 명사구가 이어지므로 전치사 like를 동반한 seem like 형태가 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Even a small piece of metal can seriously harm satellites that (provide / provides) services.",
+  "o": [
+   "provide",
+   "provides"
+  ],
+  "a": "provide",
+  "e": "#48 구문 분석: 주격 관계대명사 that의 선행사가 복수명사인 satellites이므로 복수 동사 provide가 쓰입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "In addition, each (crash / crashes) has the potential to generate more space junk.",
+  "o": [
+   "crash",
+   "crashes"
+  ],
+  "a": "crash",
+  "e": "#49 구문 분석 ★: each 뒤에는 반드시 단수 가산명사(crash)가 와야 합니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Without active efforts to remove the junk, traveling in space (would be / would have been) extremely dangerous.",
+  "o": [
+   "would be",
+   "would have been"
+  ],
+  "a": "would be",
+  "e": "#50 구문 분석 ★: 현재 사실에 대한 반대 가정을 나타내는 Without 가정법 과거이므로 귀결절에 [would + 동사원형]인 would be가 쓰여야 합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "mc",
+  "s": "50번 문장의 Without active efforts to remove the junk와 바꾸어 쓸 수 있는 가정법 표현으로 가장 적절한 것은?",
+  "o": [
+   "If it had not been for active efforts to remove the junk",
+   "Had it not been for active efforts to remove the junk",
+   "If it were not for active efforts to remove the junk",
+   "If it were for active efforts to remove the junk"
+  ],
+  "a": 3,
+  "e": "#50 구문 분석 ★: 현재 사실에 대한 반대를 가정하는 가정법 과거 구문이므로 If it were not for active efforts ~가 올바른 전환 표현입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "49번 문장의 In addition이 갖는 문맥적 기능으로 가장 적절한 것은?",
+  "o": [
+   "우주 쓰레기의 속도가 초속 6.7km에 달한다는 사실을 반박한다.",
+   "단일 파편의 충돌 피해에 더해, 각 충돌이 더 많은 우주 쓰레기를 연쇄 생성한다는 추가적 위험을 덧붙인다.",
+   "인공위성의 궤도 수정 작업이 성공적으로 완료되었음을 알린다.",
+   "1950년대 로켓 발사 비용의 과다 지출을 지적한다"
+  ],
+  "a": 2,
+  "e": "#48 단일 파편의 파괴력에 이어, #49 충돌 시 파편이 연쇄 증식된다는 부가적인 위험을 덧붙입니다."
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "본문의 문장 간 논리 전개 순서로 가장 적절한 것은?",
+  "o": [
+   "1950년대 이래 로켓 발사와 고장 난 기계들의 궤도 방치 현상 → 우주 쓰레기(space junk)의 정의 및 안전 위협 제시 → 초당 6.7km의 속도와 인공위성 손상 위험 예시 → 충돌에 따른 쓰레기 연쇄 생성 위험 추가 → 적극적 쓰레기 제거 노력의 필요성 촉구",
+   "인공위성의 발사 성공 보고 → 우주 쓰레기 자동 소멸 확인 → 우주 여행 경비 인하 발표 → 결론",
+   "우주비행사들의 복귀 파업 → 1950년대 로켓 엔진 설계 결함 폭로 → 우주 개발 프로그램 전면 중단",
+   "금속 파편의 궤도 이탈 보고 → 청소 위성의 제조 공정 설명 → 초당 이동 속도 감소 선언"
+  ],
+  "a": 1,
+  "e": "#42, #43 발사와 고장 잔해 발생 → #44~#46 우주 쓰레기 정의 및 위험 → #47, #48 고속 이동과 위성 손상 → #49 연쇄 증식 위험 → #50 제거 노력 촉구 순서입니다."
+ },
+ {
+  "n": 25,
+  "p": "E",
+  "t": "sent",
+  "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+  "c": "그 쓰레기를 제거하려는 적극적인 노력들이 없다면, 우주에서 여행하는 것은 극도로 위험할 것이다.<br><small>「조건」 Without active efforts to remove the junk, traveling in space would be extremely dangerous 활용 (총 15단어)</small>",
+  "ans": [
+   "Without active efforts to remove the junk traveling in space would be extremely dangerous"
+  ],
+  "show": "Without active efforts to remove the junk, traveling in space would be extremely dangerous.",
+  "e": "#50 Without 가정법 과거 구문"
+ },
+ {
+  "n": 26,
+  "p": "E",
+  "t": "fix",
+  "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고쳐 쓰시오. (순서 무관)",
+  "c": "Thousands of satellites have <u>launched</u> into space. Those objects left unattended are collectively referred <u>as</u> space junk. In addition, each crash <u>have</u> the potential to generate more space junk.",
+  "keys": [
+   {
+    "k": "been launched",
+    "show": "launched → been launched"
+   },
+   {
+    "k": "to as",
+    "show": "as → to as"
+   },
+   {
+    "k": "has",
+    "show": "have → has"
+   }
+  ],
+  "e": "#42 현재완료 수동태 have been launched, #45 refer to A as B의 수동태 referred to as, #49 each + 단수명사 뒤의 단수동사 has"
+ },
+ {
+  "n": 27,
+  "p": "E",
+  "t": "kw",
+  "s": "45번 문장에서 referred as가 아닌 referred to as를 써야 하는 어법적 이유를 능동태 숙어 구문과 연관 지어 쓰시오.",
+  "groups": [
+   [
+    "refer to A as B",
+    "refer to",
+    "능동태 구문"
+   ],
+   [
+    "수동태",
+    "전치사 to",
+    "to 누락"
+   ]
+  ],
+  "show": "능동태 숙어가 'refer to A as B'이므로, 수동태로 전환되어 목적어 A가 주어로 나가더라도 전치사 to가 누락되지 않고 'be referred to as B' 형태가 되어야 하기 때문이다.",
+  "e": "#45 구문 분석 ★"
+ },
+ {
+  "n": 28,
+  "p": "E",
+  "t": "blanks",
+  "s": "English Summary를 바탕으로 빈칸 (A), (B)에 들어갈 알맞은 말을 쓰시오. (첫 글자 힌트 준수)",
+  "c": "Decades of space missions have left thousands of (A) d________ satellites and debris. Orbiting at 6.7 km per second, space junk poses (B) c________ risks to active space assets and astronauts.",
+  "blanks": [
+   [
+    "(A)",
+    [
+     "derelict"
+    ]
+   ],
+   [
+    "(B)",
+    [
+     "catastrophic"
+    ]
+   ]
+  ],
+  "show": "(A) derelict (B) catastrophic",
+  "e": "Section 6 English Summary 및 본문 #44, #48"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
