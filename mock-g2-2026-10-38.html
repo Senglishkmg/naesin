@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "38번 문장 삽입 심층 분석지 확인 문제",
+  "section": "수능 영어 · 38번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 38번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "When we say that water is \"clean,\" we don't just mean that it looks like a glass of water."],
+    [2, "Water quality is about following a certain set of criteria, or \"benchmarks.\""],
+    [3, "These guidelines inform us exactly how much physical, chemical, or biological stuff can be in the water."],
+    [4, "These rules ensure the water is safe for anything we want to do with it, whether that's drinking it at home, watering crops on a farm, or running it through a huge industrial boiler."],
+    [5, "We can't utilize the same \"one size fits all\" rule for everyone because we use water for so many diverse things."],
+    [6, "For instance, the water that cools down a huge power plant generator doesn't need to be as clean as the water you drink from the kitchen tap."],
+    [7, "This is why groups set different \"safety limits\" for the water dependent on how it will be utilized."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "물이 깨끗하다고 말할 때 그것은 단지 겉보기에 한 잔의 맑은 물처럼 보인다는 것만을 뜻하는 것은 아니다.",
+    "a": "O",
+    "e": "1번 문장(don't just mean that it looks like a glass of water)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "수질은 특정한 일련의 기준, 즉 벤치마크를 준수하는 것과 관련이 있다.",
+    "a": "O",
+    "e": "2번 문장(following a certain set of criteria, or \"benchmarks\")과 일치합니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "수질 지침은 물속에 물리적, 화학적, 생물학적 물질이 전혀 들어있지 않아야 함만을 규정한다.",
+    "a": "X",
+    "e": "3번 문장에 따르면 그러한 물질이 물속에 '정확히 얼마나 많이 들어있어도 되는지(exactly how much ... can be in the water)'를 알려주는 허용치에 관한 것입니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "수질 규칙들은 가정에서 마시는 물뿐만 아니라 농작물에 주는 물이나 산업용 보일러에 쓰는 물의 안전도 보장한다.",
+    "a": "O",
+    "e": "4번 문장(drinking it at home, watering crops on a farm, or running it through a huge industrial boiler)과 일치합니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "인간은 물을 매우 다양한 용도로 사용하기 때문에 모든 용도에 일괄적으로 똑같은 규칙을 적용할 수 있다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 물을 다양한 용도로 쓰기 때문에 똑같은 획일적인 규칙을 활용할 수 없습니다(can't utilize the same \"one size fits all\" rule)."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "발전소 발전기를 식히는 물은 주방 수도꼭지에서 마시는 물만큼 깨끗할 필요는 없다.",
+    "a": "O",
+    "e": "6번 문장(doesn't need to be as clean as the water you drink from the kitchen tap)과 일치합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "여러 집단이나 기관들은 물의 용도와 상관없이 항상 단 하나의 동일한 안전 한계치만을 설정한다.",
+    "a": "X",
+    "e": "7번 문장에 따르면 물이 어떻게 활용될지에 따라 '서로 다른 안전 한계치(different \"safety limits\")'를 설정합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "물이 냉각수나 공업용수로 쓰일 때 요구되는 청결도와 음용수로 쓰일 때 요구되는 청결도는 서로 다르다.",
+    "a": "O",
+    "e": "6번 문장의 발전소 냉각수와 주방 식수의 대비 설명과 일치합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "기준점, 벤치마크 (평가나 판단의 표준)",
+      "보장하다, 확실하게 하다",
+      "모든 것에 두루 적용되는, 일괄적인, 획일적인",
+      "활용하다, 이용하다"
+    ],
+    "rows": [
+      ["benchmark", 1],
+      ["ensure", 2],
+      ["one size fits all", 3],
+      ["utilize", 4]
+    ],
+    "e": "분석지 2번 및 5번 어휘: benchmark(기준점, 벤치마크), ensure(보장하다), one size fits all(일괄적인, 획일적인), utilize(활용하다)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>benchmark</b>와 <b>landmark</b>의 의미 구별로 옳은 것은?",
+    "o": [
+      "benchmark는 측정과 품질 평가의 기준을 뜻하고, landmark는 주요 지형지물이나 역사적 전환점을 뜻한다.",
+      "benchmark는 토지의 면적을 측량하는 도구를 뜻하고, landmark는 물의 수질 등급을 뜻한다.",
+      "두 단어는 철자와 어원이 동일하여 문맥상 항상 교체하여 쓸 수 있는 유의어이다.",
+      "본문의 benchmark는 발전소가 위치한 지리적 경계 표지를 의미한다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동하기 쉬운 어휘: benchmark는 측정과 품질 평가의 기준을, landmark는 주요 지형지물이나 역사적 획기적 사건을 뜻합니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>diverse</b>(다양한)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "various, manifold",
+      "assorted, varied",
+      "identical, uniform, homogeneous",
+      "guarantee, secure"
+    ],
+    "a": 3,
+    "e": "분석지 5번 동의어 및 반의어: diverse의 동의어는 various, manifold, assorted이며 반의어는 identical, uniform, homogeneous입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>ensure</b>(보장하다)의 동의어 세 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["guarantee", "secure", "assure"]],
+      ["②", ["guarantee", "secure", "assure"]]
+    ],
+    "show": "guarantee, secure, assure 중 두 개",
+    "e": "분석지 5번 동의어: guarantee, secure, assure"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>one size fits all</b>(일괄적인, 획일적인)의 동의어 세 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["uniform", "standardized", "blanket"]],
+      ["②", ["uniform", "standardized", "blanket"]]
+    ],
+    "show": "uniform, standardized, blanket 중 두 개",
+    "e": "분석지 5번 동의어: uniform, standardized, blanket"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "2번 문장의 <b>criteria</b>의 단수형 명사 단어를 쓰시오.",
+    "ans": [
+      "criterion"
+    ],
+    "show": "criterion",
+    "e": "분석지 2번 문장 2 어휘: criterion의 복수형이 criteria입니다."
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "7번 문장에서 '~에 좌우되는, ~에 따라'라는 뜻을 지닌 두 단어의 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "dependent on"
+    ],
+    "show": "dependent on",
+    "e": "분석지 2번 문장 7 어휘: dependent on(~에 좌우되는, ~에 따라)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장에서 감각동사 look 뒤에 명사구가 이어질 때 알맞은 형태를 고르시오.",
+    "c": "...we don't just mean that it (looks / looks like) a glass of water.",
+    "o": [
+      "looks",
+      "looks like"
+    ],
+    "a": "looks like",
+    "e": "분석지 2번 문장 1 구문 분석: 명사구 a glass of water 앞이므로 전치사 like가 결합된 look like가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 전치사 about 뒤에 올바른 목적어 형태를 고르시오.",
+    "c": "Water quality is about (follow / following) a certain set of criteria...",
+    "o": [
+      "follow",
+      "following"
+    ],
+    "a": "following",
+    "e": "분석지 2번 문장 2 구문 분석: 전치사 about의 목적어 자리이므로 동명사 following이 와야 합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 4형식 구조에서 직접목적어로 쓰인 간접의문문 내부의 셀 수 없는 명사 stuff를 수식하는 의문형용사를 고르시오.",
+    "c": "...inform us exactly (how much / how many) physical, chemical, or biological stuff can be in the water.",
+    "o": [
+      "how much",
+      "how many"
+    ],
+    "a": "how much",
+    "e": "분석지 2번 문장 3 구문 분석: stuff는 셀 수 없는 불가산 명사이므로 양을 묻는 how much가 쓰여야 합니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 whether가 이끄는 양보 부사절 내부에서 be동사 뒤에 병렬 연결되는 동명사 형태를 고르시오.",
+    "c": "...whether that's drinking it at home, watering crops on a farm, or (run / running) it through a huge industrial boiler.",
+    "o": [
+      "run",
+      "running"
+    ],
+    "a": "running",
+    "e": "분석지 2번 문장 4 구문 분석: drinking it ~, watering crops ~와 병렬 연결되므로 동명사 running이 올바릅니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장의 주어부 the water that cools down a huge power plant generator의 핵심 주어 명사에 호응하는 술어 동사 형태를 고르시오.",
+    "c": "the water that cools down a huge power plant generator (doesn't / don't) need to be as clean as the water you drink...",
+    "o": [
+      "doesn't",
+      "don't"
+    ],
+    "a": "doesn't",
+    "e": "분석지 2번 문장 6 구문 분석: 핵심 주어 명사가 단수명사 the water이므로 단수 부정 조동사 doesn't need가 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장의 원급 비교 구문에서 as와 as 사이에 들어갈 알맞은 어형을 고르시오.",
+    "c": "...doesn't need to be as (clean / cleanly) as the water you drink from the kitchen tap.",
+    "o": [
+      "clean",
+      "cleanly"
+    ],
+    "a": "clean",
+    "e": "분석지 2번 문장 6 구문 분석: be동사의 보어 자리이므로 형용사 원급 clean이 와야 합니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "7번 문장의 간접의문문 내부에서 물(it)이 인간에 의해 '활용될 것이다'라는 알맞은 수동태 시제를 고르시오.",
+    "c": "...dependent on how it (will utilize / will be utilized).",
+    "o": [
+      "will utilize",
+      "will be utilized"
+    ],
+    "a": "will be utilized",
+    "e": "분석지 2번 문장 7 구문 분석: 물(it)이 활용되는 수동 관계이므로 미래 수동태 will be utilized가 쓰여야 합니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "4번 문장의 <b>to do with it</b>은 타동사 want의 목적어 역할을 합니다. 이 to부정사의 용법을 네 글자로 쓰시오.",
+    "ans": [
+      "명사적",
+      "명사적용법",
+      "명사적 용법"
+    ],
+    "show": "명사적 용법",
+    "e": "분석지 2번 문장 4 구문 분석: want의 목적어로 쓰인 to부정사의 명사적 용법입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (용도에 따른 수질 기준)",
+      "키워드 B (일괄 적용의 불가성과 용도별 다양성)"
+    ],
+    "rows": [
+      ["following a certain set of criteria", 1],
+      ["can't utilize the same one size fits all rule", 2],
+      ["different safety limits dependent on how it will be utilized", 1],
+      ["use water for so many diverse things", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: set of criteria/different safety limits(키워드 A), one size fits all/so many diverse things(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "When we say that water is \"clean,\" we don't just mean that it looks like a glass of water.",
+      "Water quality is about following a certain set of criteria, or \"benchmarks.\"",
+      "We can't utilize the same \"one size fits all\" rule for everyone because we use water for so many diverse things.",
+      "For instance, the water that cools down a huge power plant generator doesn't need to be as clean..."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 5번 문장 \"We can't utilize the same 'one size fits all' rule for everyone because we use water for so many diverse things.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "상식 비판 및 정의 제시 - 사용처 열거 - 획일적 기준 거부 - 구체적 대조 예시 - 인과적 결론 도출",
+      "수질 오염의 원인을 통계적으로 고발 - 수질 정화 기술 소개 - 국제 협약 체결 촉구",
+      "상수도 요금 인상의 타당성 검토 - 발전소 용수 공급 절차 안내 - 경제적 효과 분석",
+      "고대 수로 시설의 역사적 기원 추적 - 현대 정수 시설과의 효율성 비교"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '상식 비판 및 정의 제시 - 사용처 열거 - 획일적 기준 거부 - 구체적 대조 예시 - 인과적 결론 도출'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분]과 [두 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입부(수질과 벤치마크 지침의 과학적 정의 제시 및 다채로운 사용 예시 나열) → 결론부(일괄적 기준의 한계 지적 및 용도별 차등 기준 설정의 필연성 설명)",
+      "문제 제기 → 통계적 오차 검증 → 이론 폐기",
+      "배경 설명 → 전문가 인터뷰 소개 → 향후 과제 제시",
+      "원인 분석 → 결과 도출 → 법적 처벌 규정 제정"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입부) → 두 번째 부분(결론부)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 제시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "Different Water Quality Safety Limits Set According to (A) ________ Uses Rather than a \"One Size (B) ________ All\" Rule",
+    "ans": [
+      "Diverse Fits",
+      "diverse fits",
+      "Diverse, Fits",
+      "diverse, fits"
+    ],
+    "show": "Diverse Fits (전체: Different Water Quality Safety Limits Set According to Diverse Uses Rather than a \"One Size Fits All\" Rule)",
+    "e": "분석지 1번 주제: Diverse, Fits"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "6번 문장의 <b>For instance</b>가 글에서 수행하는 논리적 연결 기능으로 옳은 것은?",
+    "o": [
+      "앞 문장의 '일괄 규칙 불가'와 '다양한 사용처'를 입증하기 위해 발전소 냉각수와 주방 식수의 청결도 차이를 대조하는 예시 기능",
+      "수질 측정 장비의 구체적 조작법을 순서대로 안내하는 시간 순서 기능",
+      "앞선 주장을 전면 철회하고 새로운 환경 기준을 도입하는 역접 기능",
+      "물의 화학적 성분을 원자 기호로 나열하는 단순 열거 기능"
+    ],
+    "a": 1,
+    "e": "분석지 2번 문장 6 연결어 기능: 앞 문장의 일괄 규칙 불가와 다양한 사용을 입증하기 위해 발전소 냉각수와 주방 식수를 대조하는 예시 기능입니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "원래 시험 문제에서 주어진 문장(\"We can't utilize the same 'one size fits all' rule for everyone because we use water for so many diverse things.\")이 들어가기에 가장 적절한 위치이자 분석지 4번에서 제시된 정답 번호는?",
+    "o": [
+      "①번 위치",
+      "②번 위치",
+      "③번 위치",
+      "④번 위치",
+      "⑤번 위치"
+    ],
+    "a": 4,
+    "e": "분석지 4번 문제 풀이: 정답은 ④번입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 1단계(연결어의 논리성)에서 주어진 문장이 ④번에 들어가야 하는 이유로 설명된 것은?",
+    "o": [
+      "④번 뒤의 For instance는 '어떤 용도든 안전을 보장한다'는 서술의 예시가 아니라 '획일적 규칙을 쓸 수 없다'는 주장의 구체적 대조 예시여야 하므로",
+      "④번 앞에 쓰인 지시어가 복수 대명사 them을 가리키기 때문에",
+      "④번 문장의 시제가 현재완료 수동태로 바뀌기 때문에",
+      "④번 뒤 문장에 역접 접속사 However가 생략되어 있기 때문에"
+    ],
+    "a": 1,
+    "e": "분석지 4번 1단계: For instance 뒤에서 발전소 물은 식수만큼 깨끗할 필요가 없다는 청결도 차이를 예시로 들고 있으므로, 앞에는 '획일적 규칙을 쓸 수 없다'는 주어진 문장이 와야 논리적으로 완벽히 들어맞습니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "5번 문장의 앞부분 주절과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "우리는 모든 사람을 위해 똑같은 일괄적인 규칙을 활용할 수 없다.<br><small>「조건」 utilize, the same \"one size fits all\" rule, for everyone 활용 (총 12단어)</small>",
+    "ans": [
+      "We can't utilize the same \"one size fits all\" rule for everyone",
+      "we can't utilize the same \"one size fits all\" rule for everyone",
+      "We cannot utilize the same \"one size fits all\" rule for everyone",
+      "we cannot utilize the same \"one size fits all\" rule for everyone"
+    ],
+    "show": "We can't utilize the same \"one size fits all\" rule for everyone",
+    "e": "5번 문장 앞부분 원문: We can't utilize the same \"one size fits all\" rule for everyone"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "These guidelines inform us exactly how many physical, chemical, or biological stuff can be in the water... the water that cools down a huge power plant generator don't need to be as clean as the water you drink...",
+    "keys": [
+      {
+        "k": "how much",
+        "show": "how many → how much"
+      },
+      {
+        "k": "doesn't",
+        "show": "don't → doesn't"
+      }
+    ],
+    "e": "3번과 6번 문장: stuff는 셀 수 없는 명사이므로 how much가 와야 하며, 단수명사 the water에 호응하는 동사는 doesn't need여야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 1번과 2번 문장을 바탕으로, 필자가 말하는 <b>'수질(Water quality)'의 진정한 의미</b>를 '단순한 외관'과 '기준 준수'의 관점에서 대조하여 서술하시오.",
+    "show": "수질이란 단순히 겉보기에 한 잔의 맑은 물처럼 보이는 것만을 뜻하는 것이 아니라, 특정한 일련의 기준, 즉 '벤치마크(benchmarks)'를 준수하는 것을 의미한다.",
+    "crit": "① 단순히 겉보기에 맑아 보이는 외관에 그치지 않는다는 점 언급 (1.5점) ② 특정한 일련의 기준(벤치마크)을 준수하는 것이라는 본질 서술 (1.5점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 1번과 2번의 5·6·7번 문장을 바탕으로, <b>수질 관리에 있어 'one size fits all(만능의 획일적인)' 규칙을 적용할 수 없는 근본적인 이유</b>와 그로 인해 <b>각 기관들이 취하는 구체적인 수질 관리 방식</b>을 서술하시오.",
+    "show": "인간이 물을 마시는 것부터 발전소 발전기 냉각까지 매우 다양하고 서로 다른 용도로 사용하기 때문에 획일적인 단일 규칙을 적용할 수 없으며, 이에 따라 각 기관들은 물이 구체적으로 어떻게 활용될지에 맞추어 서로 다른 '안전 한계치(safety limits)'를 차등적으로 설정한다.",
+    "crit": "① 물을 사용하는 용도가 극도로 다양하기 때문이라는 이유 서술 (1.5점) ② 용도에 따라 서로 다른 안전 한계치를 차등적으로 설정한다는 관리 방식 서술 (1.5점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

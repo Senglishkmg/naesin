@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "40번 요약문 완성 심층 분석지 확인 문제",
+  "section": "수능 영어 · 40번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 40번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Dolphins' brains have evolved specialized areas dedicated to echolocation, allowing them to process acoustic information more quickly and with less energy."],
+    [2, "One key adaptation is the structure of the dolphin's auditory pathway."],
+    [3, "The signals from the ears are rapidly transmitted to the auditory cortex, the brain region responsible for processing sound."],
+    [4, "However, unlike many other mammals, dolphins have a highly specialized auditory cortex with distinct areas dedicated to processing different aspects of echolocation signals."],
+    [5, "Some areas may be responsible for analyzing the timing of echoes, while others focus on the frequency content or the intensity of the sound."],
+    [6, "This specialization allows the dolphin's brain to process echo information in parallel, rather than sequentially."],
+    [7, "Imagine a factory assembly line, where different workers are responsible for different tasks."],
+    [8, "By dividing the work among specialized areas, the brain can process information much faster and more efficiently."],
+    [9, "This parallel processing reduces the cognitive load associated with echolocation, allowing dolphins to react quickly to changes in their environment."],
+    [10, "A dolphin's auditory cortex processes the different aspects of echolocation signals <u>(A) simultaneously</u> in its distinct areas, thereby <u>(B) enabling</u> the reduction of the cognitive load and the rapid responses to changes in its environment."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "돌고래의 뇌는 반향 정위에 특화된 전용 영역들을 진화시켜 음향 정보를 더 빠르고 적은 에너지로 처리한다.",
+    "a": "O",
+    "e": "1번 문장(evolved specialized areas dedicated to echolocation, allowing them to process acoustic information more quickly and with less energy)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "귀로부터 들어온 음향 신호는 소리를 처리하는 뇌 영역인 청각 피질로 매우 느리게 지연되어 전달된다.",
+    "a": "X",
+    "e": "3번 문장에 따르면 신호들은 청각 피질로 '신속하게 전달(rapidly transmitted)'됩니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "돌고래는 다른 많은 포유류와 마찬가지로 청각 피질 전체가 구분 없이 하나의 단일한 작업만을 수행한다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 다른 많은 포유류와 달리 서로 다른 측면들을 처리하는 구별된 영역들(distinct areas)을 지니고 있습니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "돌고래 청각 피질의 어떤 영역은 반향의 타이밍을 분석하고, 다른 영역들은 주파수 성분이나 소리의 강도에 집중한다.",
+    "a": "O",
+    "e": "5번 문장(Some areas may be responsible for analyzing the timing of echoes, while others focus on the frequency content or the intensity of the sound)과 일치합니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "돌고래의 뇌는 반향 정보를 병렬적이 아니라 순차적으로 하나씩 차례대로 처리한다.",
+    "a": "X",
+    "e": "6번 문장에 따르면 순차적이라기보다는 병렬적으로(in parallel, rather than sequentially) 처리합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 돌고래 뇌의 정보 분업 방식을 노동자들이 각자의 작업을 맡는 공장 조립 라인에 비유하여 설명한다.",
+    "a": "O",
+    "e": "7번 문장(Imagine a factory assembly line, where different workers are responsible for different tasks)과 일치합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "여러 특화된 영역 사이에 작업을 분할하여 처리하면 정보 처리 속도가 느려지고 에너지 소모가 극대화된다.",
+    "a": "X",
+    "e": "8번 문장에 따르면 정보를 훨씬 더 빠르고 더 효율적으로(much faster and more efficiently) 처리할 수 있습니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "병렬 처리를 통해 반향 정위와 관련된 인지적 부하가 줄어들면 돌고래는 환경 변화에 신속하게 반응할 수 있다.",
+    "a": "O",
+    "e": "9번 문장(reduces the cognitive load ... allowing dolphins to react quickly to changes in their environment)과 일치합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "초음파의 반사파로 위치를 파악하는 방식, 반향 정위",
+      "뚜렷한, 구별되는, 별개의",
+      "순차적으로, 연속적으로",
+      "인지적 부담, 인지 부하"
+    ],
+    "rows": [
+      ["echolocation", 1],
+      ["distinct", 2],
+      ["sequentially", 3],
+      ["cognitive load", 4]
+    ],
+    "e": "분석지 2번 및 5번 어휘: echolocation(반향 정위), distinct(뚜렷한, 구별되는), sequentially(순차적으로), cognitive load(인지적 부담)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>sequentially</b>와 <b>subsequently</b>의 의미 구별로 옳은 것은?",
+    "o": [
+      "sequentially는 1번, 2번처럼 차례대로 하나씩 진행되는 '순차적으로'를 뜻하고, subsequently는 '그 뒤에, 이어서'를 뜻한다.",
+      "sequentially는 공간적인 평행성을 뜻하고, subsequently는 기생 생물의 침입을 뜻한다.",
+      "두 단어는 철자와 어원이 동일하여 문맥상 항상 교체하여 쓸 수 있는 동의어이다.",
+      "본문의 sequentially는 동시에 일어나는 병렬 처리를 뜻하는 전문 용어이다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동하기 쉬운 어휘: sequentially는 순서대로 하나씩 차례차례 진행되는 양태를 강조하고, subsequently는 시간상 '그 뒤에, 이어서'를 의미합니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>parallel</b>과 <b>parasite</b>의 어휘 설명으로 알맞은 것은?",
+    "o": [
+      "parallel은 데이터가 '동시에 나란히 처리되는 방식'을 의미하고, parasite는 '기생충, 기생 생물'을 뜻한다.",
+      "parallel은 숙주 생물을 공격하는 바이러스를 뜻하고, parasite는 뇌 신경망의 직선 경로를 뜻한다.",
+      "두 단어는 접미사에 따른 상호 반의어 관계이다.",
+      "본문의 parallel processing은 기생충 감염으로 인한 인지 부하 증가를 뜻한다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: parallel은 '평행의, 병렬의(동시에 나란히 처리되는 방식)'이며, parasite는 '기생충, 기생 생물'입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>simultaneously</b>(동시에)의 동의어 표현 세 개 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["at the same time", "concurrently", "in parallel"]],
+      ["②", ["at the same time", "concurrently", "in parallel"]]
+    ],
+    "show": "at the same time, concurrently, in parallel 중 두 개",
+    "e": "분석지 5번 동의어: at the same time, concurrently, in parallel"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>enable</b>(가능하게 하다)의 반의어 네 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["prevent", "hinder", "inhibit", "disable"]],
+      ["②", ["prevent", "hinder", "inhibit", "disable"]]
+    ],
+    "show": "prevent, hinder, inhibit, disable 중 두 개",
+    "e": "분석지 5번 반의어: prevent, hinder, inhibit, disable"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "1번 문장에서 '~에 전념하는, ~ 전용의'라는 뜻을 지니고 전치사 to를 수반하는 두 단어의 분사 표현을 쓰시오.",
+    "ans": [
+      "dedicated to"
+    ],
+    "show": "dedicated to",
+    "e": "분석지 2번 문장 1 어휘: dedicated to(~에 전념하는, ~ 전용의)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "10번 문장에서 '그것 때문에, 그렇게 함으로써'라는 뜻을 지닌 한 단어의 접속부사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "thereby"
+    ],
+    "show": "thereby",
+    "e": "분석지 2번 문장 10 어휘: thereby(그렇게 함으로써, 그것 때문에)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 능동 분사구문 내부에서 5형식 동사 allowing의 목적격 보어로 알맞은 준동사 형태를 고르시오.",
+    "c": "...allowing them (process / to process) acoustic information more quickly...",
+    "o": [
+      "process",
+      "to process"
+    ],
+    "a": "to process",
+    "e": "분석지 2번 문장 1 구문 분석: allow + 목적어 + to부정사(to process) 구조입니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장에서 복수 주어 The signals에 호응하여 '신속하게 전달된다'라는 수동태를 이루는 be동사를 고르시오.",
+    "c": "The signals from the ears (is / are) rapidly transmitted to the auditory cortex...",
+    "o": [
+      "is",
+      "are"
+    ],
+    "a": "are",
+    "e": "분석지 2번 문장 3 구문 분석: 주어가 복수명사 The signals이므로 복수 be동사 are가 올바릅니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 전치사 to 뒤에 결합하여 '서로 다른 측면들을 처리하는 것에 전념하는'을 완성하는 동명사 형태를 고르시오.",
+    "c": "...with distinct areas dedicated to (process / processing) different aspects of echolocation signals.",
+    "o": [
+      "process",
+      "processing"
+    ],
+    "a": "processing",
+    "e": "분석지 2번 문장 4 구문 분석: dedicated to에서 to는 전치사이므로 뒤에 동명사 processing이 와야 합니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장의 rather than 뒤에서 in parallel과 대조를 이루는 알맞은 부사 형태를 고르시오.",
+    "c": "...process echo information in parallel, rather than (sequential / sequentially).",
+    "o": [
+      "sequential",
+      "sequentially"
+    ],
+    "a": "sequentially",
+    "e": "분석지 2번 문장 6 구문 분석: 부사구 in parallel과 대등하게 대조되므로 부사 sequentially가 올바릅니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "7번 문장에서 선행사 a factory assembly line 뒤에 완전한 절을 이끄는 계속적 용법의 관계사를 고르시오.",
+    "c": "Imagine a factory assembly line, (which / where) different workers are responsible for different tasks.",
+    "o": [
+      "which",
+      "where"
+    ],
+    "a": "where",
+    "e": "분석지 2번 문장 7 구문 분석: 장소 선행사 뒤에 완전한 2형식 절이 이어지므로 관계부사 where가 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "8번 문장에서 비교급 부사 faster를 수식하여 '훨씬'의 의미를 더하는 알맞은 강조 부사를 고르시오.",
+    "c": "...the brain can process information (much / very) faster and more efficiently.",
+    "o": [
+      "much",
+      "very"
+    ],
+    "a": "much",
+    "e": "분석지 2번 문장 8 구문 분석: 비교급 수식에는 much가 쓰이며 very는 비교급을 직접 수식할 수 없습니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "9번 문장에서 the cognitive load를 뒤에서 수식하는 '반향 정위와 연관된' 수동 분사 형태를 고르시오.",
+    "c": "This parallel processing reduces the cognitive load (associating / associated) with echolocation...",
+    "o": [
+      "associating",
+      "associated"
+    ],
+    "a": "associated",
+    "e": "분석지 2번 문장 9 구문 분석: load를 수동으로 수식하는 과거분사 associated with입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "5번 문장의 <b>while others focus on the frequency content</b>에서 부정대명사 <b>others</b>가 가리키는 대상 명사구를 본문 표현을 활용하여 두 단어로 쓰시오.",
+    "ans": [
+      "other areas"
+    ],
+    "show": "other areas",
+    "e": "분석지 2번 문장 5 구문 분석: others는 앞의 Some areas와 대조되는 other areas를 뜻합니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (청각 피질의 특화 영역들을 통한 병렬 처리)",
+      "키워드 B (인지적 부담 감소와 환경 변화에 대한 신속한 반응)"
+    ],
+    "rows": [
+      ["auditory cortex with distinct areas", 1],
+      ["reduces the cognitive load", 2],
+      ["process echo information in parallel", 1],
+      ["react quickly to changes in their environment", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: distinct areas/in parallel(키워드 A), reduces cognitive load/react quickly(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "4번 문장의 <b>However</b>가 수행하는 논리적 전환 기능으로 옳은 것은?",
+    "o": [
+      "일반 포유류의 보편적 청각 경로와 구별되는 돌고래만의 특화된 피질 분할을 대조 도입하는 역접 기능",
+      "돌고래의 시각 정보 처리 방식을 추가로 나열하는 단순 첨가 기능",
+      "반향 정위의 기원을 진화론적 연대표로 설명하는 시간 순서 기능",
+      "소리의 물리적 파장을 계산하는 공식을 안내하는 인과 기능"
+    ],
+    "a": 1,
+    "e": "분석지 2번 문장 4 연결어 기능: 일반 포유류와 구별되는 돌고래만의 특화된 피질 분할을 대조 도입하는 역접 기능입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Dolphins' brains have evolved specialized areas dedicated to echolocation...",
+      "The signals from the ears are rapidly transmitted to the auditory cortex...",
+      "This parallel processing reduces the cognitive load associated with echolocation, allowing dolphins to react quickly to changes in their environment.",
+      "Imagine a factory assembly line, where different workers are responsible for different tasks."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 9번 문장 \"This parallel processing reduces the cognitive load associated with echolocation, allowing dolphins to react quickly to changes in their environment.\"입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "일반적 적응 제시 - 청각 피질의 특화 구조 및 병렬 처리 상술 - 조립 라인 비유를 통한 입증 - 인지적 이점 및 결론 도출",
+      "해양 오염 실태 고발 - 돌고래 청각 손상 통계 보고 - 보호 구역 지정 촉구",
+      "포유류의 초음파 발사 실험 검증 - 오차 분석 - 새로운 음향 탐지 장비 개발 제안",
+      "수족관 사육 환경 비판 - 야생 방사 절차 안내 - 생태계 보전 대책 제시"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '일반적 적응 제시 - 청각 피질의 특화 구조 및 병렬 처리 상술 - 조립 라인 비유를 통한 입증 - 인지적 이점 및 결론 도출'의 전개 방식입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입부(진화적 배경 및 기본 뇌 신경 경로 소개) → 핵심 메커니즘 전개(특화 피질 영역의 분업 및 병렬 처리 규명) → 결론부 완성(비유를 통한 직관적 설명 및 최종 혜택 요약)",
+      "가설 설정 → 통계 검증 → 이론 폐기",
+      "문제 제기 → 책임자 문책 → 제도 개선",
+      "배경 설명 → 전문가 인터뷰 → 향후 과제 제시"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입부) → 두 번째 부분(핵심 메커니즘 전개) → 세 번째 부분(결론부 완성)"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "Specialization of Dolphin Auditory Cortex Enabling Simultaneous (A) ________ Processing to Reduce (B) ________ Load and Prompt Quick Reactions",
+    "ans": [
+      "Parallel Cognitive",
+      "parallel cognitive",
+      "Parallel, Cognitive",
+      "parallel, cognitive"
+    ],
+    "show": "Parallel Cognitive (전체: Specialization of Dolphin Auditory Cortex Enabling Simultaneous Parallel Processing to Reduce Cognitive Load and Prompt Quick Reactions)",
+    "e": "분석지 1번 주제: Parallel, Cognitive"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "10번 요약문 빈칸 (A), (B)에 들어갈 말로 가장 적절한 짝이자 원래 시험 문제의 정답으로 제시된 것은?",
+    "o": [
+      "serially — disrupting",
+      "randomly — facilitating",
+      "independently — preventing",
+      "simultaneously — enabling",
+      "sequentially — allowing"
+    ],
+    "a": 4,
+    "e": "분석지 4번 3단계: 정답은 ④ simultaneously — enabling입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>①번(serially — disrupting)</b>과 <b>⑤번(sequentially — allowing)</b>이 (A)에서 오답이 되는 결정적 이유로 설명된 것은?",
+    "o": [
+      "돌고래의 뇌는 정보를 순차적으로(sequentially) 처리하는 것이 아니라 병렬적으로(in parallel) 처리한다고 본문에서 명시했으므로",
+      "인지 부하가 증가한다는 서술이 본문과 충돌하기 때문에",
+      "초음파의 주파수를 분석할 수 없다는 오류를 담고 있기 때문에",
+      "공장 조립 라인의 효율성을 부정하는 설명이기 때문에"
+    ],
+    "a": 1,
+    "e": "분석지 4번 3단계: 본문 6번 문장에서 순차적이 아니라 병렬적으로(in parallel, rather than sequentially) 처리한다고 명시했으므로 serially나 sequentially는 정반대 오답입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "6번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "이러한 특화는 돌고래의 뇌가 반향 정보를 순차적으로라기보다는 병렬로 처리하도록 허락한다.<br><small>「조건」 This specialization, allows, to process, in parallel, rather than sequentially 활용 (총 14단어)</small>",
+    "ans": [
+      "This specialization allows the dolphin's brain to process echo information in parallel, rather than sequentially.",
+      "this specialization allows the dolphin's brain to process echo information in parallel, rather than sequentially"
+    ],
+    "show": "This specialization allows the dolphin's brain to process echo information in parallel, rather than sequentially.",
+    "e": "6번 문장 원문: This specialization allows the dolphin's brain to process echo information in parallel, rather than sequentially."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "The signals from the ears are rapidly transmitted to the auditory cortex, the brain region responsible for process sound... Imagine a factory assembly line, which different workers are responsible for different tasks.",
+    "keys": [
+      {
+        "k": "processing",
+        "show": "process → processing"
+      },
+      {
+        "k": "where",
+        "show": "which → where"
+      }
+    ],
+    "e": "3번과 7번 문장: 전치사 for 뒤에는 동명사 processing이 와야 하며, 선행사 assembly line 뒤에 완전한 절이 이어지므로 관계부사 where가 와야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 5번 문장을 바탕으로, 돌고래 청각 피질의 구별된 영역들이 <b>반향(echoes) 신호의 서로 다른 측면들을 어떻게 나누어 분석하는지 세 가지 구체적인 요소</b>를 서술하시오.",
+    "show": "어떤 영역들은 반향의 시간적 타이밍(timing)을 분석하는 역할을 맡으며, 다른 영역들은 소리의 주파수 성분(frequency content)이나 소리의 강도(intensity)에 집중하여 분석한다.",
+    "crit": "① 반향의 타이밍 분석 명시 (1점) ② 주파수 성분 분석 명시 (1점) ③ 소리의 강도 분석 명시 (1점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 1번과 2번의 8·9번 문장을 바탕으로, <b>특화된 영역들 사이의 병렬 처리(parallel processing)가 돌고래에게 제공하는 두 가지 핵심적인 이점</b>을 인지적 측면과 생태학적 행동 측면에서 서술하시오.",
+    "show": "인지적 측면에서는 반향 정위와 관련된 뇌의 인지적 부담(부하)을 줄여 정보를 훨씬 더 빠르고 효율적으로 처리할 수 있게 해 주며, 생태학적 행동 측면에서는 돌고래들이 주변 환경의 변화에 신속하게 반응할 수 있도록 해 준다.",
+    "crit": "① 인지적 부담 감소 및 빠르고 효율적인 정보 처리 서술 (1.5점) ② 환경 변화에 대한 신속한 반응 서술 (1.5점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
