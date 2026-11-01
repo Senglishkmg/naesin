@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "34번 빈칸 추론 심층 분석지 확인 문제",
+  "section": "수능 영어 · 34번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 34번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Social media has altered business, politics, and friendships, making going viral a household term."],
+    [2, "The global financial industry links every bank and countless households in every country, making us vulnerable to human error taking place on the other side of the world."],
+    [3, "As Columbia University strategy professor Rita McGrath explains, years ago most of our institutions were separate and thereby buffered from the effects of errors outside their walls."],
+    [4, "That is no longer the case."],
+    [5, "The digitization of massive amounts of information has continued to grow enormously as the cost of computing power has decreased."],
+    [6, "The development of smart systems that communicate autonomously gave rise to an infinite variety of potential breakdowns."],
+    [7, "This interdependence is a breeding ground for complex failure."],
+    [8, "As Rita puts it, when \"things that used to be kept separate bump up against each other, it becomes far more difficult to predict what's going to happen next.\""],
+    [9, "Information technology creates new vulnerabilities because <u>     </u>."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "소셜 미디어의 영향으로 '바이럴이 되다'라는 표현은 일상적인 용어가 되었다.",
+    "a": "O",
+    "e": "1번 문장(making going viral a household term)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "글로벌 금융망의 연결로 인해 지구 반대편에서 일어나는 인간의 실수에도 우리가 취약해지게 되었다.",
+    "a": "O",
+    "e": "2번 문장(making us vulnerable to human error taking place on the other side of the world)과 일치합니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "수년 전 과거의 기관들은 서로 분리되어 있지 않아 외부 오류의 충격에 항상 그대로 노출되어 있었다.",
+    "a": "X",
+    "e": "3번 문장에 따르면 수년 전에는 기관들이 서로 분리되어 담장 밖 오류의 영향으로부터 보호받았습니다(separate and thereby buffered)."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "컴퓨터 연산 능력의 비용이 증가함에 따라 정보의 디지털화 작업은 크게 축소되었다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 컴퓨팅 파워의 비용은 감소했으며(cost ... has decreased), 디지털화는 계속 엄청나게 성장했습니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "자율적으로 통신하는 스마트 시스템의 발전은 잠재적 고장의 무한한 다양성을 낳았다.",
+    "a": "O",
+    "e": "6번 문장(gave rise to an infinite variety of potential breakdowns)과 일치합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 기관들 사이의 상호의존성이 복합적인 실패를 방지하는 훌륭한 방패 역할을 한다고 본다.",
+    "a": "X",
+    "e": "7번 문장에 따르면 상호의존성은 복합적 실패를 위한 온상(a breeding ground for complex failure)이 됩니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "과거에 분리되어 유지되던 것들이 서로 부딪힐 때 다음에 일어날 일을 예측하는 것은 훨씬 더 어려워진다.",
+    "a": "O",
+    "e": "8번 문장(far more difficult to predict what's going to happen next)과 일치합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "정보기술 환경에서는 작은 실패의 영향이 국소적인 영역에만 영구적으로 격리된다.",
+    "a": "X",
+    "e": "9번 문장에 따르면 상호연결성이 작은 실패들의 충격을 '즉각적으로 확산(instantly spreads)'시킵니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "누구나 다 아는 말, 일상어",
+      "보호하다, 완충 작용을 하다",
+      "~을 낳다, 일으키다, 유발하다",
+      "온상, 번식지"
+    ],
+    "rows": [
+      ["household term", 1],
+      ["buffer", 2],
+      ["give rise to", 3],
+      ["breeding ground", 4]
+    ],
+    "e": "분석지 2번 어휘: household term(일상어), buffer(보호하다, 완충하다), give rise to(유발하다), breeding ground(온상)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>interdependence</b>와 <b>independence</b>의 의미 관계에 관한 설명으로 옳은 것은?",
+    "o": [
+      "interdependence는 개별 주체들이 서로 얽혀 있는 '상호의존성'을 뜻하고, independence는 '독립, 자립'을 뜻한다.",
+      "interdependence는 국가 간의 무역 단절을 뜻하고, independence는 금융 기관 간의 연계를 뜻한다.",
+      "두 단어는 철자와 어원이 동일하여 문맥상 언제나 상호 교체 가능한 유의어이다.",
+      "본문의 interdependence는 개별 시스템이 외부와 완벽히 격리된 상태를 지칭한다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: interdependence는 접두사 inter-가 붙어 서로 얽혀 있는 '상호의존성'을, independence는 '독립, 자립'을 의미합니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>vulnerable</b>(취약한)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "susceptible, exposed",
+      "defenseless, fragile",
+      "invulnerable, immune, resistant",
+      "independently, spontaneously"
+    ],
+    "a": 3,
+    "e": "분석지 5번 동의어 및 반의어: vulnerable의 동의어는 susceptible, exposed, fragile이며 반의어는 invulnerable, immune, resistant입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>autonomously</b>(자율적으로)의 유의어 두 단어를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["independently", "spontaneously"]],
+      ["②", ["independently", "spontaneously"]]
+    ],
+    "show": "independently, spontaneously",
+    "e": "분석지 5번 동의어: independently, spontaneously"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "1번 문장에서 '(온라인상에서) 입소문이 퍼지다, 급속히 확산되다'라는 뜻을 지닌 두 단어의 숙어 표현을 쓰시오.",
+    "ans": [
+      "go viral",
+      "going viral"
+    ],
+    "show": "go viral",
+    "e": "분석지 2번 문장 1 어휘: go viral(입소문이 퍼지다, 급속히 확산되다)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "3번 문장에서 '그렇게 함으로써, 그것 때문에'라는 뜻을 나타내는 한 단어의 부사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "thereby"
+    ],
+    "show": "thereby",
+    "e": "분석지 2번 문장 3 어휘: thereby(그렇게 함으로써, 그것 때문에)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "8번 문장에서 '~와 부딪히다, 충돌하다'라는 뜻을 지닌 세 단어의 구동사 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "bump up against"
+    ],
+    "show": "bump up against",
+    "e": "분석지 2번 문장 8 어휘: bump up against(~와 부딪히다, 충돌하다)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 능동 분사구문 내부에서 making의 목적격 보어로 알맞은 어형을 고르시오.",
+    "c": "...making us (vulnerable / vulnerably) to human error...",
+    "o": [
+      "vulnerable",
+      "vulnerably"
+    ],
+    "a": "vulnerable",
+    "e": "분석지 2번 문장 2 구문 분석: making(동사) + us(목적어) + 목적격 보어로 형용사 vulnerable이 와야 합니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장에서 human error를 뒤에서 능동으로 수식하는 알맞은 분사 형태를 고르시오.",
+    "c": "...human error (taking / taken) place on the other side of the world.",
+    "o": [
+      "taking",
+      "taken"
+    ],
+    "a": "taking",
+    "e": "분석지 2번 문장 2 구문 분석: take place는 완전자동사로 수동태가 불가능하므로 능동 현재분사구 taking place가 올바릅니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 술어 자리에서 기관들이 외부 오류로부터 '보호받았다'는 수동 관계를 나타내는 알맞은 형태를 고르시오.",
+    "c": "...institutions were separate and thereby (buffering / buffered) from the effects of errors...",
+    "o": [
+      "buffering",
+      "buffered"
+    ],
+    "a": "buffered",
+    "e": "분석지 2번 문장 3 구문 분석: were separate와 병렬을 이루어 수동태 were buffered from이 되어야 합니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 주어부 핵심 명사인 단수명사 The digitization에 호응하는 현재완료 동사를 고르시오.",
+    "c": "The digitization of massive amounts of information (has / have) continued to grow...",
+    "o": [
+      "has",
+      "have"
+    ],
+    "a": "has",
+    "e": "분석지 2번 문장 5 구문 분석: 주어의 핵심 명사가 단수명사 The digitization이므로 단수 현재완료 has continued가 쓰입니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장의 주격 관계대명사 that 뒤에서 복수 선행사 smart systems에 호응하는 동사 형태를 고르시오.",
+    "c": "...smart systems that (communicates / communicate) autonomously...",
+    "o": [
+      "communicates",
+      "communicate"
+    ],
+    "a": "communicate",
+    "e": "분석지 2번 문장 6 구문 분석: 선행사가 복수명사 smart systems이므로 복수 동사 communicate가 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "8번 문장의 주절에서 가주어 it에 호응하는 알맞은 진주어 형태를 고르시오.",
+    "c": "...it becomes far more difficult (to predict / predicting) what's going to happen next.",
+    "o": [
+      "to predict",
+      "predicting"
+    ],
+    "a": "to predict",
+    "e": "분석지 2번 문장 8 구문 분석: 가주어 it에 호응하는 진주어로 to부정사 to predict가 쓰였습니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "8번 문장의 비교급 more difficult를 강조하기 위해 앞에 올 수 있는 알맞은 부사를 고르시오.",
+    "c": "...it becomes (far / very) more difficult to predict...",
+    "o": [
+      "far",
+      "very"
+    ],
+    "a": "far",
+    "e": "분석지 2번 문장 8 구문 분석: 비교급 수식 강조 부사로는 far, much, still, even, a lot이 쓰이며 very는 불가합니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "8번 문장의 <b>to predict what's going to happen next</b>는 문장의 진주어 역할을 합니다. 이 to부정사의 용법을 네 글자로 쓰시오.",
+    "ans": [
+      "명사적",
+      "명사적용법",
+      "명사적 용법"
+    ],
+    "show": "명사적 용법",
+    "e": "분석지 2번 문장 8 구문 분석: 진주어로 쓰인 to부정사의 명사적 용법입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (초상호연결성과 완충 장치의 소멸)",
+      "키워드 B (소규모 오류의 즉각적 확산과 복합적 취약성)"
+    ],
+    "rows": [
+      ["links every bank and countless households", 1],
+      ["vulnerable to human error", 2],
+      ["separate and thereby buffered", 1],
+      ["breeding ground for complex failure", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: links every bank/separate and buffered(키워드 A), vulnerable/breeding ground for failure(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Social media has altered business, politics, and friendships, making going viral a household term.",
+      "The global financial industry links every bank and countless households in every country...",
+      "This interdependence is a breeding ground for complex failure.",
+      "Information technology creates new vulnerabilities because interconnectedness instantly spreads the impact of small failures."
+    ],
+    "a": 4,
+    "e": "분석지 1번: 중심 문장은 9번 문장 \"Information technology creates new vulnerabilities because interconnectedness instantly spreads the impact of small failures.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "구체적 현상 제시 - 과거와 현재의 대조 - 구조적 원인(상호의존성) 분석 - 학자 인용 및 인과적 결론 도출",
+      "금융 위기의 원인을 국가별 통계로 비교 분석 - 새로운 규제 법안 제안",
+      "스마트 시스템의 작동 알고리즘 분석 - 하드웨어 결함 수리 절차 안내",
+      "소셜 미디어 중독 실태 조사 - 개인 정보 유출의 법적 처벌 규정 촉구"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '구체적 현상 제시 - 과거와 현재의 대조 - 구조적 원인 분석 - 학자 인용 및 인과적 결론 도출'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입 및 현실의 변화 선언(과거 완충벽과 대조되는 초연결) → 원인 분석 및 위험 심화(상호의존성이 유발하는 구조적 위험) → 결론부(권위자 인용을 통한 취약점 메커니즘 확인 및 결론)",
+      "가설 설정 → 실험 데이터 검증 → 이론 폐기",
+      "문제 제기 → 통계 오차 분석 → 제도적 대안 마련",
+      "배경 설명 → 전문가 인터뷰 소개 → 향후 과제 제시"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입 및 현실 변화) → 두 번째 부분(원인 분석 및 위험 심화) → 세 번째 부분(결론부)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 제시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "New (A) ________ Created by Information Technology as Interconnectedness Instantly Spreads the Impact of (B) ________ Failures",
+    "ans": [
+      "Vulnerabilities Small",
+      "vulnerabilities small",
+      "Vulnerabilities, Small",
+      "vulnerabilities, small"
+    ],
+    "show": "Vulnerabilities Small (전체: New Vulnerabilities Created by Information Technology as Interconnectedness Instantly Spreads the Impact of Small Failures)",
+    "e": "분석지 1번 주제: Vulnerabilities, Small"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "ox",
+    "s": "과거에는 담장 밖 오류로부터 기관을 보호해 주던 분리 장치가 있었으나, 오늘날 초상호연결성은 작은 실패의 충격을 즉각 확산시킨다.",
+    "a": "O",
+    "e": "분석지 1번 주제 및 3번, 9번 문장 설명에 완벽히 부합합니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 9번 문장의 빈칸에 들어갈 어구이자 원래 시험 문제의 정답으로 제시된 것은?",
+    "o": [
+      "complex issues involving smart systems are oversimplified",
+      "vast amounts of online information destroy social hierarchy",
+      "digitization widens the information gap between institutions",
+      "interconnectedness instantly spreads the impact of small failures",
+      "digital networks fall like dominoes due to increasing computing costs"
+    ],
+    "a": 4,
+    "e": "분석지 4번 5단계: 정답은 ④번 \"interconnectedness instantly spreads the impact of small failures\"입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>⑤번(computing costs 증가로 인한 붕괴)</b>이 정답이 될 수 <u>없는</u> 이유로 설명된 것은?",
+    "o": [
+      "온라인 정보가 사회적 위계를 파괴한다는 진술이 본문에 없기 때문에",
+      "스마트 시스템의 문제가 단순화된다는 내용이 지문에 전혀 없기 때문에",
+      "5번 문장에서 컴퓨팅 비용은 증가한 것이 아니라 감소했다(has decreased)고 명시했으므로 사실관계 자체가 정반대이기 때문에",
+      "기관 간 정보 격차 확대를 논하는 글이 아니기 때문에"
+    ],
+    "a": 3,
+    "e": "분석지 4번 5단계 오답 분석: 5번 문장에서 컴퓨팅 파워의 비용은 '감소했다(has decreased)'고 명시했으므로 사실관계 자체가 정반대입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "7번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "이러한 상호의존성은 복합적인 실패를 위한 온상이다.<br><small>「조건」 This interdependence, breeding ground, complex failure 활용 (총 9단어)</small>",
+    "ans": [
+      "This interdependence is a breeding ground for complex failure.",
+      "this interdependence is a breeding ground for complex failure"
+    ],
+    "show": "This interdependence is a breeding ground for complex failure.",
+    "e": "7번 문장 원문: This interdependence is a breeding ground for complex failure."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "making us vulnerably to human error taken place on the other side of the world.",
+    "keys": [
+      {
+        "k": "vulnerable",
+        "show": "vulnerably → vulnerable"
+      },
+      {
+        "k": "taking",
+        "show": "taken → taking"
+      }
+    ],
+    "e": "2번 문장: making의 목적격 보어로 형용사 vulnerable이 와야 하며, take place는 자동사이므로 능동 현재분사 taking place가 와야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 3번 문장을 바탕으로, <b>수년 전 과거의 기관들이 외부 오류의 영향으로부터 안전할 수 있었던 구조적 이유</b>를 서술하시오.",
+    "show": "수년 전에는 대부분의 기관이 서로 분리(격리)되어 있었기 때문에, 자신들의 담장 밖에서 일어난 오류의 영향으로부터 완충되어 보호받을 수 있었다.",
+    "crit": "① 기관들이 서로 분리되어 있었다는 점 명시 (1점) ② 담장 밖 외부 오류로부터 완충/보호받았다는 점 서술 (2점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 1번과 2번의 8·9번 문장을 바탕으로, 현대 정보기술 환경에서 <b>'상호의존성(interdependence)'과 '상호연결성(interconnectedness)'이 시스템 전체에 새로운 취약점을 초래하는 근본적인 메커니즘</b>을 서술하시오.",
+    "show": "과거에는 분리되어 있던 것들이 서로 연결되어 부딪히면서 미래 예측이 극도로 어려워졌으며, 상호연결성으로 인해 국소적인 사소한 실패의 충격이 연결망을 타고 전체 시스템으로 즉각 확산되기 때문이다.",
+    "crit": "① 분리되던 것들이 연결되어 예측 불가능성이 증가했다는 점 서술 (1점) ② 상호연결성으로 인해 작은 실패의 충격이 즉각 확산된다는 인과 메커니즘 명시 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

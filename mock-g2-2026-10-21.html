@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "21번 함축의미추론 심층 분석지 확인 문제",
+  "section": "수능 영어 · 21번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 21번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "To see how borrowing and lending changes a person's worldview, consider what the rate of interest does to people's perception of time."],
+    [2, "Imagine you are lending to somebody at an interest rate of 10 percent per year for five years."],
+    [3, "This rate tells us that the money lent has a cost that reflects the risk of you not being repaid and the opportunity cost of not spending that money yourself."],
+    [4, "The longer the term of the loan, the higher the chance you won't be paid back because it is further into the future which by definition is unknowable and the longer you will have to wait before spending the money yourself."],
+    [5, "In order to make this worthwhile for the lender, money has to have a price—a cost to the borrower and income to the lender."],
+    [6, "This price factors in the value of time."],
+    [7, "To put it another way, <u>a bird in the hand is worth two in the bush</u>."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "이자율이 시간에 대한 사람들의 인식에 미치는 영향을 통해 돈을 빌리고 빌려주는 행위가 세계관을 바꾸는 방식을 살펴볼 수 있다.",
+    "a": "O",
+    "e": "1번 문장(consider what the rate of interest does to people's perception of time)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "이자율에는 돈을 돌려받지 못할 위험은 포함되지만, 대출자 자신이 돈을 직접 쓰지 못하는 기회비용은 배제된다.",
+    "a": "X",
+    "e": "3번 문장에 따르면 돈을 돌려받지 못할 위험과 그 돈을 직접 쓰지 못하는 기회비용(the opportunity cost of not spending that money yourself)이 둘 다 반영됩니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "대출 기간이 길어질수록 미래의 불확실성 때문에 돈을 상환받지 못할 가능성이 더 높아진다.",
+    "a": "O",
+    "e": "4번 문장(The longer the term of the loan, the higher the chance you won't be paid back)과 일치합니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "정의상 미래는 누구나 정확하게 예측하고 미리 알 수 있는 영역에 속한다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 미래는 '정의상 알 수 없는 것(which by definition is unknowable)'입니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "대출 기간이 길어지면 대출자가 그 돈을 직접 쓰기 전까지 기다려야 하는 시간도 더 길어진다.",
+    "a": "O",
+    "e": "4번 문장(the longer you will have to wait before spending the money yourself)과 일치합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "돈에 매겨지는 가격은 빌리는 사람과 빌려주는 사람 모두에게 순수한 지출 비용으로만 작용한다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 돈의 가격은 빌리는 사람에게는 비용(a cost to the borrower)이지만, 빌려주는 사람에게는 수입(income to the lender)이 됩니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "돈에 매겨지는 가격(이자)은 시간의 가치를 계산에 넣어 감안한 것이다.",
+    "a": "O",
+    "e": "6번 문장(This price factors in the value of time)과 일치합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "글쓴이는 돈을 빌리는 행위가 개인의 신용도를 즉각적으로 떨어뜨리므로 대출을 피해야 한다고 경고한다.",
+    "a": "X",
+    "e": "분석지 4번 5단계 오답 분석에 명시되어 있듯, 신용도를 떨어뜨릴 위험에 관한 내용은 지문에 전혀 언급되지 않았습니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "(돈을) 빌려주다",
+      "인식, 지각",
+      "알 수 없는, 불가지의",
+      "가치 있는, 보람 있는"
+    ],
+    "rows": [
+      ["lend", 1],
+      ["perception", 2],
+      ["unknowable", 3],
+      ["worthwhile", 4]
+    ],
+    "e": "분석지 2번 어휘: lend((돈을) 빌려주다), perception(인식), unknowable(알 수 없는), worthwhile(가치 있는)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>worthwhile</b>과 <b>worthless</b>의 의미 관계에 대한 설명으로 옳은 것은?",
+    "o": [
+      "worthwhile과 worthless는 접미사의 차이로 인해 의미가 정반대인 반의어 관계이다.",
+      "worthwhile과 worthless는 둘 다 가치가 없음을 나타내는 동의어이다.",
+      "worthwhile은 금전적 부를 뜻하고 worthless는 시간의 촉박함을 뜻한다.",
+      "두 단어는 문맥에서 차용인과 대여인을 구별하는 어휘로 상호 대체된다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동하기 쉬운 어휘: worthwhile(가치 있는) vs worthless(가치 없는)는 접미사 -while과 -less의 차이로 의미가 정반대입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>unknowable</b>의 유의어(동의어)에 해당하지 <u>않는</u> 것은?",
+    "o": [
+      "unpredictable",
+      "uncertain",
+      "predictable",
+      "inscrutable"
+    ],
+    "a": 3,
+    "e": "분석지 5번 동의어 및 반의어: predictable은 knowable, certain과 함께 unknowable의 '반의어'입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>factor in</b>(~을 감안하다)의 동의어 표현 세 개 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["take into account", "consider", "allow for"]],
+      ["②", ["take into account", "consider", "allow for"]]
+    ],
+    "show": "take into account, consider, allow for 중 두 개",
+    "e": "분석지 5번 동의어: take into account, consider, allow for"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "3번 문장에서 '어떤 선택으로 인해 포기해야 하는 다른 기회의 잠재적 가치'를 뜻하는 두 단어의 경제학적 전문 어구를 쓰시오.",
+    "ans": [
+      "opportunity cost",
+      "the opportunity cost"
+    ],
+    "show": "opportunity cost",
+    "e": "분석지 2번 문장 3 어휘: opportunity cost(기회비용)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "4번 문장에서 '말 그대로의 성질상 필연적임을 나타내는 표현'으로 쓰인 두 단어의 전치사구를 쓰시오.",
+    "ans": [
+      "by definition"
+    ],
+    "show": "by definition",
+    "e": "분석지 2번 문장 4 어휘: by definition(정의상, 당연히)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "7번 문장에서 앞선 내용을 친숙한 비유로 요약·재진술하기 위해 쓰인 다섯 단어의 연결 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "To put it another way",
+      "to put it another way"
+    ],
+    "show": "To put it another way",
+    "e": "분석지 2번 문장 7 어휘: To put it another way(다른 방식으로 말하자면)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 시작 부분에서 '이해하기 위해'라는 목적을 나타내도록 괄호 안에서 알맞은 형태를 고르시오.",
+    "c": "(To see / Seeing) how borrowing and lending changes a person's worldview, consider what the rate of interest does...",
+    "o": [
+      "To see",
+      "Seeing"
+    ],
+    "a": "To see",
+    "e": "분석지 2번 문장 1 구문 분석: 목적을 나타내는 to부정사의 부사적 용법(To see)입니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 the money 뒤에서 단독으로 명사를 수식하는 알맞은 분사 형태를 고르시오.",
+    "c": "This rate tells us that the money (lent / lending) has a cost...",
+    "o": [
+      "lent",
+      "lending"
+    ],
+    "a": "lent",
+    "e": "분석지 2번 문장 3 구문 분석: the money lent에서 과거분사 lent가 단독으로 앞의 명사 the money를 후치 수식합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장에서 전치사 of 뒤에 대출자가 돈을 '상환받는' 수동 의미를 나타내는 동명사 형태를 고르시오.",
+    "c": "...reflects the risk of you not (repaying / being repaid)...",
+    "o": [
+      "repaying",
+      "being repaid"
+    ],
+    "a": "being repaid",
+    "e": "분석지 2번 문장 3 구문 분석: 대출자가 돈을 '상환받다'라는 수동 의미이므로 동명사의 수동태 being repaid가 올바릅니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "mc",
+    "s": "3번 문장의 <b>the risk of you not being repaid</b>에서 <b>you</b>의 문법적 역할로 옳은 것은?",
+    "o": [
+      "전치사 of의 직접 목적어",
+      "동명사구 not being repaid의 의미상 주어",
+      "명사 the risk와 동격을 이루는 대명사",
+      "reflects의 간접 목적어"
+    ],
+    "a": 2,
+    "e": "분석지 2번 문장 3 구문 분석: you는 동명사구 not being repaid의 동작 주체를 나타내는 '동명사의 의미상 주어'입니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 '더 길어질수록, 가능성이 더 높아진다'라는 상관관계를 완성하도록 괄호 안에서 알맞은 비교급 형태를 고르시오.",
+    "c": "(The longer / The longest) the term of the loan, the higher the chance you won't be paid back...",
+    "o": [
+      "The longer",
+      "The longest"
+    ],
+    "a": "The longer",
+    "e": "분석지 2번 문장 4 구문 분석: 'the 비교급, the 비교급' 구문이므로 The longer가 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 선행사 the future를 부연 설명하는 계속적 용법의 관계대명사를 고르시오.",
+    "c": "...it is further into the future, (which / that) by definition is unknowable...",
+    "o": [
+      "which",
+      "that"
+    ],
+    "a": "which",
+    "e": "분석지 2번 문장 4 구문 분석: 콤마 뒤 계속적 용법의 주격 관계대명사이므로 that은 쓸 수 없고 which만 가능합니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 5형식 구조에서 make의 목적격 보어로 알맞은 어형을 고르시오.",
+    "c": "In order to make this (worthwhile / worthwhilely) for the lender...",
+    "o": [
+      "worthwhile",
+      "worthwhilely"
+    ],
+    "a": "worthwhile",
+    "e": "분석지 2번 문장 5 구문 분석: make + 목적어(this) + 목적격 보어로 형용사 worthwhile이 쓰여야 합니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "3번 문장 끝의 <b>yourself</b>는 생략이 가능한 용법입니다. 이 재귀대명사의 구체적인 용법 명칭을 세 글자로 쓰시오.",
+    "ans": [
+      "강조적",
+      "강조용법",
+      "강조 용법"
+    ],
+    "show": "강조 용법",
+    "e": "분석지 2번 문장 3 구문 분석: 주어 you가 직접 소비하지 못한다는 점을 강조하기 위한 부사적 '강조 용법'입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (시간의 가치를 반영하는 이자율)",
+      "키워드 B (미래의 위험과 기회비용)",
+      "키워드 C (현재 돈의 우월한 가치)"
+    ],
+    "rows": [
+      ["perception of time", 1],
+      ["opportunity cost of not spending that money yourself", 2],
+      ["a bird in the hand is worth two in the bush", 3],
+      ["factors in the value of time", 1]
+    ],
+    "e": "분석지 1번 키워드 분석: perception of time/factors in the value of time(키워드 A), opportunity cost(키워드 B), a bird in the hand...(키워드 C)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 도출한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Imagine you are lending to somebody at an interest rate of 10 percent per year for five years.",
+      "The longer the term of the loan, the higher the chance you won't be paid back...",
+      "This price factors in the value of time. To put it another way, a bird in the hand is worth two in the bush.",
+      "To see how borrowing and lending changes a person's worldview, consider what the rate of interest does to people's perception of time."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 \"This price factors in the value of time. To put it another way, a bird in the hand is worth two in the bush.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "대출 금리의 역사적 변천사를 시대순으로 고찰하는 연대기적 서술",
+      "사고 실험 제시 - 경제학적 인과 분석 - 속담을 통한 비유적 요약의 3단계 전개 방식",
+      "두 가지 상반된 경제학 학파의 이론을 대조하여 절충안을 제시하는 비교 분석",
+      "금융 사기 피해 사례를 나열하고 법적 규제 방안을 촉구하는 문제 해결식 구성"
+    ],
+    "a": 2,
+    "e": "분석지 3번 서술 전략: '사고 실험 제시 - 경제학적 인과 분석 - 속담을 통한 비유적 요약' 전개 방식을 취하고 있습니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분]과 [두 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "구체적인 대출 상황 설정을 통한 문제 제기 및 이자율의 구성 요소 설명 → 기간과 위험의 비례 관계 제시 및 시간 가치와 속담 비유를 통한 글의 최종 결론 도출",
+      "이자율의 폐해 고발 → 국가 금융 감독 정책의 필요성 역설",
+      "소비 지출의 미덕 강조 → 저축의 위험성에 대한 통계적 증명",
+      "채무자의 도덕적 해이 비판 → 대출 상환 기간 강제 축소 방안 제안"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입 및 개념 규명) → 두 번째 부분(원인 심화 및 결론)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 제시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "The Value of Time Reflected in Interest Rates: Why (A) ________ Money Is Worth More than (B) ________ Money",
+    "ans": [
+      "Present Future",
+      "present future",
+      "Present, Future",
+      "present, future"
+    ],
+    "show": "Present Future (전체: The Value of Time Reflected in Interest Rates: Why Present Money Is Worth More than Future Money)",
+    "e": "분석지 1번 주제: Present, Future"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "ox",
+    "s": "화폐의 가격(이자)은 대출자에게는 수입이 되고 차용인에게는 비용이 됨으로써 대출 행위를 가치 있게 만든다.",
+    "a": "O",
+    "e": "5번 문장과 분석지 2번 설명에 완전히 부합합니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 밑줄 친 속담 <b>a bird in the hand is worth two in the bush</b>가 함축하는 의미이자 원래 시험 문제의 정답으로 제시된 것은?",
+    "o": [
+      "Lenders and borrowers benefit from each other.",
+      "Spending money now is wiser than keeping it for later.",
+      "The lender decides the interest rate for the borrower.",
+      "Money you have now is more valuable than the same amount later."
+    ],
+    "a": 4,
+    "e": "분석지 4번 5단계: 정답은 ⑤번 \"Money you have now is more valuable than the same amount later.\"입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>①번(Lenders and borrowers benefit from each other)</b>이 정답이 될 수 <u>없는</u> 이유로 설명된 것은?",
+    "o": [
+      "현재 돈을 탕진하는 것이 저축보다 현명하다는 소비 권장 논리이기 때문에",
+      "이자율 결정 권한에 관한 내용은 본문의 핵심 논지가 아니기 때문에",
+      "대출자와 차용자가 서로 이익을 본다는 것은 부수적 설명일 뿐, 속담 비유가 나타내는 시간 가치의 본질이 아니기 때문에",
+      "신용 손상 위험에 관한 진술이 지문에서 완전히 빠져 있기 때문에"
+    ],
+    "a": 3,
+    "e": "분석지 4번 5단계 오답 분석: 대출자와 차용자의 상호 이익은 부수적 설명일 뿐, 속담 비유가 나타내는 시간 가치의 본질이 아닙니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "6번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "이 가격은 시간의 가치를 감안한다.<br><small>「조건」 factors in, the value 활용 (총 7단어)</small>",
+    "ans": [
+      "This price factors in the value of time.",
+      "this price factors in the value of time"
+    ],
+    "show": "This price factors in the value of time.",
+    "e": "6번 문장 원문: 주어(This price) + 동사구(factors in) + 목적어(the value of time)"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "This rate tells us that the money lend has a cost that reflects the risk of you not being repaid and the opportunity cost of not spending that money yourself. In order to make this worthwhilely for the lender, money has to have a price...",
+    "keys": [
+      {
+        "k": "lent",
+        "show": "lend → lent"
+      },
+      {
+        "k": "worthwhile",
+        "show": "worthwhilely → worthwhile"
+      }
+    ],
+    "e": "3번과 5번 문장: the money 뒤에는 과거분사 lent가 와야 하며, make의 목적격 보어 자리에는 형용사 worthwhile이 와야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 4번의 4단계(인과 관계 및 논리적 흐름 검증)를 바탕으로, 밑줄 친 속담 속 <b>a bird in the hand</b>와 <b>two in the bush</b>가 각각 무엇을 비유하는지 원관념을 밝혀 적으시오.",
+    "show": "a bird in the hand(손안의 새 한 마리)는 당장 지금 내가 확실하게 쥐고 있는 현재의 돈을 의미하며, two in the bush(덤불 속의 두 마리 새)는 미래에 돌려받을지 모르지만 떼일 위험과 기다림이 따르는 불확실한 미래의 돈을 비유한다.",
+    "crit": "① a bird in the hand의 원관념(현재의 확실한 돈) 서술 (2점) ② two in the bush의 원관념(불확실한 미래의 돈) 서술 (2점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 3번 문장 내용을 바탕으로, 누군가에게 돈을 빌려줄 때 발생하는 <b>비용(a cost)의 두 가지 구체적 구성 요소</b>를 우리말로 서술하시오.",
+    "show": "첫째, 돈을 빌려주고 나서 돌려받지 못할(원금을 떼일) 위험이고, 둘째, 그 돈을 대출자 본인이 직접 쓰지 못하는 기회비용이다.",
+    "crit": "① 상환받지 못할 위험(원금을 떼일 위험) 명시 (2점) ② 대출자 자신이 직접 소비하지 못하는 기회비용 명시 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "33번 빈칸 추론 심층 분석지 확인 문제",
+  "section": "수능 영어 · 33번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 33번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Human development is now increasingly understood as an ongoing, flexible, and evolving process rather than a fixed sequence of stages."],
+    [2, "At the core of this perspective lies the concept of plasticity."],
+    [3, "Plasticity refers to the human capacity to change, adapt, and reorganize cognitive, emotional, and behavioural patterns in response to life experiences, environmental demands, and biological changes."],
+    [4, "It highlights that individuals are not merely passive recipients of development but active agents capable of growth throughout their lives."],
+    [5, "In earlier views, development was believed to occur mainly during childhood, with adulthood seen as a period of stability and old age as a phase of decline."],
+    [6, "The concept of plasticity challenges this rigid outlook by emphasizing that development continues across the entire lifespan."],
+    [7, "Although the extent of change may vary at different stages, every phase of life <u>     </u>."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "오늘날 인간 발달은 고정된 단계들의 연속으로만 이해된다.",
+    "a": "X",
+    "e": "1번 문장에 따르면 고정된 단계들의 연속이라기보다는 계속 진행 중이고 유연하며 진화하는 과정(ongoing, flexible, and evolving process rather than a fixed sequence)으로 이해됩니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "인간 발달을 유연한 과정으로 보는 새로운 관점의 중심에는 가소성(plasticity) 개념이 자리 잡고 있다.",
+    "a": "O",
+    "e": "2번 문장(At the core of this perspective lies the concept of plasticity)과 일치합니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "가소성은 인간이 삶의 경험이나 환경적 요구에 반응하여 인지적, 감정적, 행동적 패턴을 재구성할 수 있는 능력이다.",
+    "a": "O",
+    "e": "3번 문장(capacity to change, adapt, and reorganize cognitive, emotional, and behavioural patterns in response to...)과 일치합니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "가소성 개념에 따르면 개인은 발달 과정에서 외부 자극을 수동적으로 받아들이기만 하는 존재이다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 개인은 단지 수동적 수용자가 아니라 평생에 걸쳐 스스로 성장할 수 있는 능동적 주체(active agents capable of growth)입니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "과거의 관점에서는 발달이 주로 유년기 동안에만 일어나는 것으로 믿어졌다.",
+    "a": "O",
+    "e": "5번 문장(development was believed to occur mainly during childhood)과 일치합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "과거에는 성인기를 지속적인 변형과 성장의 시기로, 노년기를 지혜의 극치로 간주했다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 과거에는 성인기를 안정의 시기(a period of stability), 노년기를 쇠퇴의 단계(a phase of decline)로 보았습니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "가소성 개념은 발달이 전 생애에 걸쳐 지속된다는 점을 강조함으로써 과거의 완고한 시각에 도전한다.",
+    "a": "O",
+    "e": "6번 문장(challenges this rigid outlook by emphasizing that development continues across the entire lifespan)과 일치합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "인간 발달에서 일어나는 변화의 정도는 삶의 모든 단계에서 완전히 동일하게 유지된다.",
+    "a": "X",
+    "e": "7번 문장의 양보절(the extent of change may vary at different stages)에 따르면 변화의 정도는 서로 다른 발달 단계마다 다를 수 있습니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "외부 자극에 의해 영구적으로 변형되거나 적응할 수 있는 성질, 가소성",
+      "재구성하다, 개편하다",
+      "완고한, 융통성 없는, 경직된",
+      "변형, 탈바꿈"
+    ],
+    "rows": [
+      ["plasticity", 1],
+      ["reorganize", 2],
+      ["rigid", 3],
+      ["transformation", 4]
+    ],
+    "e": "분석지 2번 어휘: plasticity(가소성), reorganize(재구성하다), rigid(완고한, 경직된), transformation(변형, 탈바꿈)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>plasticity</b>와 <b>plausibility</b>의 의미 구별로 옳은 것은?",
+    "o": [
+      "plasticity는 환경에 따라 스스로 구조를 바꾸는 유연성을 뜻하고, plausibility는 타당성이나 그럴듯함을 뜻한다.",
+      "plasticity는 논리적 타당성을 뜻하고, plausibility는 고무나 플라스틱의 화학적 특성을 뜻한다.",
+      "두 단어는 철자와 어원이 동일하여 발달심리학에서 항상 교체하여 쓸 수 있다.",
+      "본문의 plasticity는 도덕적 원칙에 타협하지 않는 단호함을 나타낸다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: plasticity는 환경에 따라 구조를 바꾸는 유연성(가소성)을, plausibility는 '타당성, 그럴듯함'을 의미합니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>flexible</b>(유연한)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "elastic, adaptable",
+      "malleable, pliable",
+      "rigid, inflexible, stiff",
+      "ability, competence"
+    ],
+    "a": 3,
+    "e": "분석지 5번 동의어 및 반의어: flexible의 동의어는 elastic, adaptable, malleable이며 반의어는 rigid, inflexible, stiff입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>capacity</b>(능력, 역량)의 동의어 네 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["ability", "capability", "potential", "competence"]],
+      ["②", ["ability", "capability", "potential", "competence"]]
+    ],
+    "show": "ability, capability, potential, competence 중 두 개",
+    "e": "분석지 5번 동의어: ability, capability, potential, competence"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "3번 문장에서 '~에 반응하여, 부응하여'라는 뜻을 지닌 세 단어의 전치사구를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "in response to"
+    ],
+    "show": "in response to",
+    "e": "분석지 2번 문장 3 어휘: in response to(~에 반응하여)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "7번 문장에서 '~을 위한 여지를 남겨두다, 허용하다'라는 뜻을 지닌 세 단어의 관용 표현을 본문에서 찾아 쓰시오. (동사원형 기준)",
+    "ans": [
+      "allow room for",
+      "allows room for"
+    ],
+    "show": "allow room for",
+    "e": "분석지 2번 문장 7 어휘: allow room for(~을 위한 여지를 남겨두다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "4번 문장에서 '수동적 수용자'와 대조를 이루며 일생에 걸쳐 스스로 성장할 수 있는 주체를 가리킨 두 단어의 영문 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "active agents",
+      "active agent"
+    ],
+    "show": "active agents",
+    "e": "분석지 2번 문장 4 어휘: active agents(능동적 행위자, 능동적 주체)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장에서 장소 부사구 At the core of this perspective가 문두로 전치되었을 때 단수 주어 the concept of plasticity에 호응하는 올바른 동사 형태를 고르시오.",
+    "c": "At the core of this perspective (lie / lies) the concept of plasticity.",
+    "o": [
+      "lie",
+      "lies"
+    ],
+    "a": "lies",
+    "e": "분석지 2번 문장 2 구문 분석: 장소 부사구 도치 문장으로, 진짜 주어가 단수명사 the concept of plasticity이므로 단수 동사 lies가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 추상명사 the human capacity를 뒤에서 수식하는 준동사의 알맞은 형태를 고르시오.",
+    "c": "Plasticity refers to the human capacity (to change / changing), adapt, and reorganize...",
+    "o": [
+      "to change",
+      "changing"
+    ],
+    "a": "to change",
+    "e": "분석지 2번 문장 3 구문 분석: capacity를 수식하는 to부정사의 형용사적 용법(to change)입니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 not merely A but B 상관접속사 구문에서 능동적 주체를 수식하는 알맞은 형용사구를 고르시오.",
+    "c": "...active agents (capable / capably) of growth throughout their lives.",
+    "o": [
+      "capable",
+      "capably"
+    ],
+    "a": "capable",
+    "e": "분석지 2번 문장 4 구문 분석: 명사 active agents를 후치 수식하는 형용사구 capable of growth입니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 'with + 명사 + 분사' 부대상황 구문으로 성인기가 안정의 시기로 여겨지는 수동 관계를 나타내는 알맞은 분사 형태를 고르시오.",
+    "c": "...with adulthood (seeing / seen) as a period of stability...",
+    "o": [
+      "seeing",
+      "seen"
+    ],
+    "a": "seen",
+    "e": "분석지 2번 문장 5 구문 분석: 목적어 adulthood가 그렇게 간주되는 수동 관계이므로 과거분사 seen이 올바릅니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장의 주어부 핵심 명사인 The concept에 호응하는 알맞은 술어 동사를 고르시오.",
+    "c": "The concept of plasticity (challenge / challenges) this rigid outlook...",
+    "o": [
+      "challenge",
+      "challenges"
+    ],
+    "a": "challenges",
+    "e": "분석지 2번 문장 6 구문 분석: 주어가 단수명사 The concept이므로 3인칭 단수 현재형 동사 challenges가 쓰여야 합니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "7번 문장의 주절에서 every 뒤에 오는 알맞은 명사 형태를 고르시오.",
+    "c": "...(every phase / every phases) of life allows room for adaptation and transformation.",
+    "o": [
+      "every phase",
+      "every phases"
+    ],
+    "a": "every phase",
+    "e": "분석지 2번 문장 7 구문 분석: every 뒤에는 단수명사가 와야 하므로 every phase가 올바릅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "7번 문장의 주절 주어 every phase of life에 호응하는 알맞은 본동사를 고르시오.",
+    "c": "...every phase of life (allow / allows) room for adaptation and transformation.",
+    "o": [
+      "allow",
+      "allows"
+    ],
+    "a": "allows",
+    "e": "분석지 2번 문장 7 구문 분석: every phase는 단수 취급하므로 단수 동사 allows가 올바릅니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "ox",
+    "s": "5번 문장의 occur는 완전자동사이므로 수동태(was occurred)로 쓸 수 없다.",
+    "a": "O",
+    "e": "분석지 2번 문장 5 구문 분석: occur는 완전자동사로 목적어를 취하지 않아 수동태가 불가능합니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (인간 발달의 가소성)",
+      "키워드 B (전 생애에 걸친 적응과 변형의 가능성)"
+    ],
+    "rows": [
+      ["capacity to change, adapt, and reorganize", 1],
+      ["growth throughout their lives", 2],
+      ["ongoing, flexible, and evolving process", 1],
+      ["continues across the entire lifespan", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: capacity to change/ongoing process(키워드 A), growth throughout lives/entire lifespan(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Human development is now increasingly understood as an ongoing, flexible, and evolving process...",
+      "At the core of this perspective lies the concept of plasticity.",
+      "The concept of plasticity challenges this rigid outlook by emphasizing that development continues across the entire lifespan.",
+      "In earlier views, development was believed to occur mainly during childhood..."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 6번 문장 \"The concept of plasticity challenges this rigid outlook by emphasizing that development continues across the entire lifespan.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "새로운 개념 도입 - 과거 통념 제시 - 통념 반박 및 전 생애 발달 결론 도출",
+      "유전과 환경의 상호작용에 관한 실험 데이터 제시 - 통계적 한계 비판 - 새로운 검증법 제안",
+      "아동기 발달 장애의 원인 분석 - 임상 치료 사례 보고 - 예방 대책 제시",
+      "전통적 교육 제도의 역사적 기원 추적 - 단계별 승급 제도의 장단점 비교"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '새로운 개념 도입 - 과거 통념 제시 - 통념 반박 및 전 생애 발달 결론 도출'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분]과 [두 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입 및 개념 규명(가소성의 정의와 새로운 인간관) → 결론부(과거 통념의 오류 논박 및 전 생애 발달 가능성 최종 확인)",
+      "문제 제기 → 통계적 오차 검증 → 이론 폐기",
+      "배경 설명 → 전문가 찬반 인터뷰 소개 → 향후 과제 도출",
+      "원인 분석 → 결과 도출 → 법적 제도 마련"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입 및 개념 규명) → 두 번째 부분(결론부)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "The Concept of Plasticity Enabling Ongoing Adaptation and Transformation Across the Entire (A) ________ (B) ________",
+    "ans": [
+      "Entire Lifespan",
+      "entire lifespan",
+      "Lifespan",
+      "lifespan"
+    ],
+    "show": "Lifespan (전체: The Concept of Plasticity Enabling Ongoing Adaptation and Transformation Across the Entire Lifespan)",
+    "e": "분석지 1번 주제: Entire Lifespan"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "ox",
+    "s": "가소성 개념은 인간이 유년기뿐만 아니라 성인기와 노년기를 포함한 삶의 모든 단계에서 스스로 적응하고 변화할 수 있음을 보여준다.",
+    "a": "O",
+    "e": "분석지 1번 주제 및 6번, 7번 문장과 완벽히 일치합니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 7번 문장의 빈칸에 들어갈 어구이자 원래 시험 문제의 정답으로 제시된 것은?",
+    "o": [
+      "is independent of the previous change",
+      "allows room for adaptation and transformation",
+      "leads to less variation in human development",
+      "requires stability for meaningful growth to occur",
+      "has its own limit in adjusting to new experiences"
+    ],
+    "a": 2,
+    "e": "분석지 4번 5단계: 정답은 ②번 allows room for adaptation and transformation입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>①번(is independent of the previous change)</b>이 정답이 될 수 <u>없는</u> 이유로 설명된 것은?",
+    "o": [
+      "발달 과정이 이전 변화와 무관하게 단절된다는 내용은 지속적이고 진화하는 과정이라는 본문의 서술과 모순되기 때문에",
+      "성인기를 안정의 시기로 보았던 과거의 잘못된 시각에 해당하기 때문에",
+      "인간 발달의 변이나 다양성을 줄인다는 진술이 지문에서 다루어지지 않았기 때문에",
+      "새로운 경험에 적응하는 데 고유한 한계가 있다는 결론으로 이어지기 때문에"
+    ],
+    "a": 1,
+    "e": "분석지 4번 5단계 오답 분석: 발달이 이전 변화와 무관하게 단절된다는 진술은 지속적이고 진화하는 과정(ongoing, evolving process)이라는 본문 서술과 모순됩니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "2번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 장소 부사구 도치 문장으로 영작하시오.",
+    "c": "이러한 관점의 핵심에는 가소성의 개념이 놓여 있다.<br><small>「조건」 At the core of, lies, the concept of plasticity 활용 (총 9단어)</small>",
+    "ans": [
+      "At the core of this perspective lies the concept of plasticity.",
+      "at the core of this perspective lies the concept of plasticity"
+    ],
+    "show": "At the core of this perspective lies the concept of plasticity.",
+    "e": "2번 문장 원문: At the core of this perspective lies the concept of plasticity."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "Human development is now increasingly understood as an ongoing, flexible, and evolving process rather than a fixed sequence of stages... with adulthood seeing as a period of stability and old age as a phase of decline. The concept of plasticity challenge this rigid outlook...",
+    "keys": [
+      {
+        "k": "seen",
+        "show": "seeing → seen"
+      },
+      {
+        "k": "challenges",
+        "show": "challenge → challenges"
+      }
+    ],
+    "e": "5번과 6번 문장: adulthood 뒤에는 수동 의미의 과거분사 seen이 와야 하며, 단수명사 The concept에 호응하는 동사는 challenges여야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 5번 문장을 바탕으로, 가소성 개념이 등장하기 전 <b>과거의 전통적 관점에서 인간 발달의 세 단계(유년기, 성인기, 노년기)를 각각 어떻게 규정했는지</b> 서술하시오.",
+    "show": "과거의 관점에서는 발달이란 주로 유년기 동안에만 일어나는 것으로 보았으며, 성인기는 더 이상의 발달이 없는 안정의 시기로, 노년기는 신체적·정신적 쇠퇴의 단계로 여겼다.",
+    "crit": "① 유년기(주로 발달이 일어나는 시기) 명시 (1점) ② 성인기(안정의 시기) 명시 (1점) ③ 노년기(쇠퇴의 단계) 명시 (1점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 1번과 2번의 6·7번 문장을 바탕으로, <b>가소성(plasticity) 개념이 과거의 경직된 관점을 깨뜨리고 제시한 새로운 인간 발달의 핵심 명제</b>를 '발달의 지속 기간'과 '삶의 각 단계에서의 가능성'의 관점에서 서술하시오.",
+    "show": "가소성 개념은 발달이 유년기에 멈추지 않고 전 생애에 걸쳐 지속된다는 점을 강조하며, 비록 발달 단계마다 변화의 정도에는 차이가 있을지라도 노년기를 포함한 삶의 모든 단계가 적응과 변형을 위한 여지를 남겨 두고 있다고 역설한다.",
+    "crit": "① 발달이 전 생애에 걸쳐 지속된다는 점 서술 (2점) ② 삶의 모든 단계가 적응과 변형을 위한 여지를 가진다는 점 서술 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

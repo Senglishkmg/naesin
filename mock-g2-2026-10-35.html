@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "35번 무관한 문장 파악 심층 분석지 확인 문제",
+  "section": "수능 영어 · 35번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 35번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Scientific developments and technologies in medical practice have brought us enormous progress in the treatment and prevention of infectious diseases."],
+    [2, "The discovery of penicillin in 1928 by Alexander Fleming, for which he later received the Nobel Prize, was one of the biggest breakthroughs in the battle against infectious diseases."],
+    [3, "Edward Jenner discovered around 1796 that humans were protected against the deadly smallpox virus after exposure to the cowpox virus, which is harmless to humans."],
+    [4, "A human's average life expectancy has increased, but relying too much on medicine damages our body system."],
+    [5, "Vaccines developed in laboratories have contributed enormously to the reduction of the burden of bacterial and viral diseases and have even led to the elimination of poxvirus."],
+    [6, "For other infectious diseases (for example cholera and malaria), control and hygiene management measures have reduced their burden, while for others treatment therapies turned viral diseases that were deadly into chronic manageable diseases."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "의료 행위에서의 과학적 발전과 기술은 감염병의 치료와 예방에서 거대한 진보를 가져왔다.",
+    "a": "O",
+    "e": "1번 문장(brought us enormous progress in the treatment and prevention of infectious diseases)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "Alexander Fleming은 1928년에 페니실린을 발견한 공로로 노벨상을 수상했다.",
+    "a": "O",
+    "e": "2번 문장(for which he later received the Nobel Prize)과 일치합니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "Edward Jenner는 우두 바이러스가 인간에게 치명적인 해를 끼친다는 사실을 발견했다.",
+    "a": "X",
+    "e": "3번 문장에 따르면 우두 바이러스는 인간에게 무해합니다(which is harmless to humans)."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "인간은 우두 바이러스에 노출된 후 치명적인 천연두 바이러스로부터 보호받을 수 있었다.",
+    "a": "O",
+    "e": "3번 문장(humans were protected against the deadly smallpox virus after exposure to the cowpox virus)과 일치합니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "실험실에서 개발된 백신들은 두창바이러스를 완전히 근절시키는 데까지 이르렀다.",
+    "a": "O",
+    "e": "5번 문장(have even led to the elimination of poxvirus)과 일치합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "콜레라와 말라리아의 질병 부담을 줄이는 데는 백신보다 주로 통제 및 위생 관리 조치가 기여했다.",
+    "a": "O",
+    "e": "6번 문장(control and hygiene management measures have reduced their burden)과 일치합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "현대의 치료 요법들은 치명적이었던 바이러스성 질병들을 완치할 수 없어 치료를 전면 포기하게 만들었다.",
+    "a": "X",
+    "e": "6번 문장에 따르면 치료 요법들은 치명적이었던 바이러스성 질병들을 만성적이고 관리가 가능한 질병으로 바꾸어 놓았습니다(into chronic manageable diseases)."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 4번 문장에서 약물에 과도하게 의존하는 것이 인간의 신체 체계를 손상시킨다는 내용을 글의 핵심 주장으로 옹호한다.",
+    "a": "X",
+    "e": "분석지 4번 문제 풀이에 따르면 4번 문장은 감염병 극복 성과를 다루는 전체 주제 흐름을 방해하는 '무관한 문장'입니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "획기적 발전, 돌파구",
+      "박멸, 근절, 제거",
+      "만성의, 오랫동안 지속되는",
+      "치명적인"
+    ],
+    "rows": [
+      ["breakthrough", 1],
+      ["elimination", 2],
+      ["chronic", 3],
+      ["deadly", 4]
+    ],
+    "e": "분석지 2번 및 5번 어휘: breakthrough(획기적 발전), elimination(박멸, 근절), chronic(만성의), deadly(치명적인)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>chronic</b>과 <b>acute</b>의 의학적 의미 구별로 옳은 것은?",
+    "o": [
+      "chronic은 오랜 기간 서서히 진행되며 관리하는 '만성의' 질병을 뜻하고, acute는 '급성의' 질환을 뜻한다.",
+      "chronic은 전염성이 매우 강한 질병을 뜻하고, acute는 비전염성 질환을 뜻한다.",
+      "두 단어는 철자만 다를 뿐 문맥상 완전히 동일한 의미의 유의어이다.",
+      "본문의 chronic manageable diseases는 치료가 불가능한 급성 말기 질환을 뜻한다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동하기 쉬운 어휘: chronic(만성의) vs acute(급성의)는 의학에서 정반대 개념으로 쓰입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>infectious</b>와 <b>contagious</b>의 뉘앙스 차이로 옳은 것은?",
+    "o": [
+      "infectious는 신체적 접촉에 의해서만 전염되는 질병에 국한된다.",
+      "contagious는 신체적 접촉에 의한 전염에 국한되는 경향이 있고, infectious는 물·공기·병원균 전반을 아우르는 넓은 개념이다.",
+      "infectious는 동물에게만 발생하는 질병이고, contagious는 인간에게만 나타나는 질병이다.",
+      "두 단어는 접미사에 따른 상호 반의어 관계이다."
+    ],
+    "a": 2,
+    "e": "분석지 5번 혼동 어휘: contagious는 주로 접촉 전염성을, infectious는 병원균 감염 질병 전반을 아우릅니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>elimination</b>(박멸, 근절)의 동의어 네 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["eradication", "extermination", "extinction", "abolition"]],
+      ["②", ["eradication", "extermination", "extinction", "abolition"]]
+    ],
+    "show": "eradication, extermination, extinction, abolition 중 두 개",
+    "e": "분석지 5번 동의어: eradication, extermination, extinction, abolition"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>deadly</b>(치명적인)의 동의어 세 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["fatal", "lethal", "mortal"]],
+      ["②", ["fatal", "lethal", "mortal"]]
+    ],
+    "show": "fatal, lethal, mortal 중 두 개",
+    "e": "분석지 5번 동의어: fatal, lethal, mortal"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "3번 문장에서 소의 천연두를 뜻하는 영단어를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "cowpox",
+      "the cowpox"
+    ],
+    "show": "cowpox",
+    "e": "분석지 2번 문장 3 어휘: cowpox(우두)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "6번 문장에서 'A를 B로 바꾸어 놓다'라는 뜻을 지닌 네 단어의 표현을 본문에서 찾아 쓰시오. (전치사 포함, 동사원형 기준)",
+    "ans": [
+      "turn into",
+      "turn A into B"
+    ],
+    "show": "turn A into B (또는 turn into)",
+    "e": "분석지 2번 문장 6 어휘: turn A into B(A를 B로 바꾸다)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 주어부 핵심 명사인 복수명사 developments and technologies에 호응하는 완료형 조동사를 고르시오.",
+    "c": "Scientific developments and technologies in medical practice (has / have) brought us enormous progress...",
+    "o": [
+      "has",
+      "have"
+    ],
+    "a": "have",
+    "e": "분석지 2번 문장 1 구문 분석: 주어부의 핵심 명사가 복수이므로 have brought가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 선행사 The discovery of penicillin을 부연 설명하는 알맞은 관계사 형태를 고르시오.",
+    "c": "The discovery of penicillin in 1928 by Alexander Fleming, (for which / which) he later received the Nobel Prize, was one of...",
+    "o": [
+      "for which",
+      "which"
+    ],
+    "a": "for which",
+    "e": "분석지 2번 문장 2 구문 분석: he received the Nobel Prize for this discovery이므로 [전치사 + 관계대명사] for which가 올바릅니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장에서 주어부의 핵심 명사인 The discovery에 호응하는 알맞은 be동사를 고르시오.",
+    "c": "The discovery of penicillin ... (was / were) one of the biggest breakthroughs...",
+    "o": [
+      "was",
+      "were"
+    ],
+    "a": "was",
+    "e": "분석지 2번 문장 2 구문 분석: 주어의 핵심 명사가 단수명사 The discovery이므로 단수 동사 was가 올바릅니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장에서 인간이 천연두 바이러스로부터 '보호받았다'는 수동 관계를 나타내는 알맞은 형태를 고르시오.",
+    "c": "...that humans (protected / were protected) against the deadly smallpox virus...",
+    "o": [
+      "protected",
+      "were protected"
+    ],
+    "a": "were protected",
+    "e": "분석지 2번 문장 3 구문 분석: 인간이 바이러스로부터 보호받은 수동 관계이므로 were protected가 올바릅니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 but 뒤 절에서 동명사구 주어 relying too much on medicine에 호응하는 본동사를 고르시오.",
+    "c": "...relying too much on medicine (damage / damages) our body system.",
+    "o": [
+      "damage",
+      "damages"
+    ],
+    "a": "damages",
+    "e": "분석지 2번 문장 4 구문 분석: 동명사구 주어는 단수 취급하므로 단수 동사 damages가 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 Vaccines를 뒤에서 수식하는 '실험실에서 개발된' 수동 관계의 분사 형태를 고르시오.",
+    "c": "Vaccines (developing / developed) in laboratories have contributed enormously...",
+    "o": [
+      "developing",
+      "developed"
+    ],
+    "a": "developed",
+    "e": "분석지 2번 문장 5 구문 분석: Vaccines를 수동으로 후치 수식하는 과거분사 developed가 올바릅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "ox",
+    "s": "2번 문장의 one of the biggest breakthroughs는 'one of the + 최상급 + 복수명사' 구문이 바르게 적용된 형태이다.",
+    "a": "O",
+    "e": "분석지 2번 문장 2 구문 분석: one of the + 최상급 + 복수명사(breakthroughs) 구조입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "3번 문장 끝의 <b>which is harmless to humans</b>는 선행사를 부연 설명합니다. 이 관계대명사 which가 가리키는 구체적인 선행사 명사구를 본문에서 찾아 세 단어로 쓰시오.",
+    "ans": [
+      "the cowpox virus",
+      "cowpox virus"
+    ],
+    "show": "the cowpox virus",
+    "e": "분석지 2번 문장 3 구문 분석: which의 선행사는 바로 앞의 명사구 the cowpox virus입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (의학 및 과학기술의 발전)",
+      "키워드 B (감염병의 치료와 예방에서의 거대한 진보)"
+    ],
+    "rows": [
+      ["discovery of penicillin", 1],
+      ["breakthroughs in the battle against infectious diseases", 2],
+      ["Vaccines developed in laboratories", 1],
+      ["elimination of poxvirus", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: penicillin/Vaccines(키워드 A), breakthroughs/elimination of poxvirus(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Scientific developments and technologies in medical practice have brought us enormous progress in the treatment and prevention of infectious diseases.",
+      "The discovery of penicillin in 1928 by Alexander Fleming... was one of the biggest breakthroughs in the battle against infectious diseases.",
+      "Edward Jenner discovered around 1796 that humans were protected against the deadly smallpox virus...",
+      "Vaccines developed in laboratories have contributed enormously to the reduction of the burden of bacterial and viral diseases..."
+    ],
+    "a": 1,
+    "e": "분석지 1번: 중심 문장은 1번 문장 \"Scientific developments and technologies in medical practice have brought us enormous progress in the treatment and prevention of infectious diseases.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "대전제 제시 - 역사적 돌파구 예시 - 현대 기술과 공중보건 성과의 다각적 상술",
+      "신약 개발의 경제적 비용 분석 - 제약 회사의 독점 폐해 고발 - 국가 통제 촉구",
+      "바이러스의 돌연변이 메커니즘 설명 - 백신 무용론 검증 - 대안 치료법 제시",
+      "동물 실험의 윤리적 논쟁 소개 - 찬반 입장 비교 - 절충안 도출"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '대전제 제시 - 역사적 돌파구 예시 - 현대 기술과 공중보건 성과의 다각적 상술'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입 및 1차 예시(의학 발전 총론과 역사적 획기점) → 세부 논거 심화(백신의 질병 퇴치 성과) → 결론부 완성(위생 관리 및 현대적 치료 요법의 성과 총괄)",
+      "가설 설정 → 임상 시험 → 부작용 보고",
+      "원인 분석 → 결과 도출 → 법적 제재 제안",
+      "배경 설명 → 전문가 인터뷰 → 향후 과제 제시"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입 및 1차 예시) → 두 번째 부분(세부 논거 심화) → 세 번째 부분(결론부 완성)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "Enormous Progress in the Treatment and Prevention of (A) ________ Diseases Driven by (B) ________ Developments and Technologies",
+    "ans": [
+      "Infectious Medical",
+      "infectious medical",
+      "Infectious, Medical",
+      "infectious, medical"
+    ],
+    "show": "Infectious Medical (전체: Enormous Progress in the Treatment and Prevention of Infectious Diseases Driven by Medical Developments and Technologies)",
+    "e": "분석지 1번 주제: Infectious, Medical"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "ox",
+    "s": "글 전체의 핵심 주제는 의료 과학기술의 발전이 감염병의 치료와 예방에 가져온 거대한 진보와 혜택이다.",
+    "a": "O",
+    "e": "분석지 1번 주제 및 4번 문제 풀이 3단계 설명과 완벽히 일치합니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 전체 흐름과 무관한 문장으로 판정된 번호는?",
+    "o": [
+      "(1)번 문장 (페니실린 발견)",
+      "(2)번 문장 (제너의 우두법 발견)",
+      "(3)번 문장 (약물 과다 의존의 신체 체계 손상)",
+      "(4)번 문장 (실험실 백신 개발과 두창바이러스 박멸)",
+      "(5)번 문장 (위생 관리 및 만성 관리 치료 요법)"
+    ],
+    "a": 3,
+    "e": "분석지 4번 문제 풀이: 정답은 ③번((3)번 문장)입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 문제 풀이 중 <b>1단계(연결어의 논리성)</b>와 <b>2단계(지시어의 연결성)</b>에서 (3)번 문장이 무관한 이유로 설명된 것은?",
+    "o": [
+      "약물 부작용 언급 뒤에 역접 연결어 없이 백신의 긍정적 공헌으로 복귀하며, (2)번의 smallpox가 (4)번의 poxvirus 박멸로 직결되기 때문에",
+      "페니실린의 화학적 구조가 백신과 전혀 일치하지 않기 때문에",
+      "콜레라와 말라리아의 전염 경로가 천연두와 다르기 때문에",
+      "노벨상 수상 기록의 연대가 역사적 사실과 모순되기 때문에"
+    ],
+    "a": 1,
+    "e": "분석지 4번 1·2단계: 역접 연결어 없이 백신의 긍정적 공헌으로 복귀하며, (2)번의 smallpox가 (4)번의 poxvirus 박멸과 직접 연결되기 때문입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "1번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 4형식 현재완료로 영작하시오.",
+    "c": "의료 행위에서의 과학적 발전과 기술은 감염병의 치료와 예방에서 우리에게 거대한 진보를 가져다주었다.<br><small>「조건」 Scientific developments, have brought us enormous progress, infectious diseases 활용 (총 18단어)</small>",
+    "ans": [
+      "Scientific developments and technologies in medical practice have brought us enormous progress in the treatment and prevention of infectious diseases.",
+      "scientific developments and technologies in medical practice have brought us enormous progress in the treatment and prevention of infectious diseases"
+    ],
+    "show": "Scientific developments and technologies in medical practice have brought us enormous progress in the treatment and prevention of infectious diseases.",
+    "e": "1번 문장 원문: Scientific developments and technologies in medical practice have brought us enormous progress in the treatment and prevention of infectious diseases."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "The discovery of penicillin in 1928 by Alexander Fleming, for which he later received the Nobel Prize, were one of the biggest breakthroughs... Vaccines developing in laboratories have contributed enormously to the reduction of the burden...",
+    "keys": [
+      {
+        "k": "was",
+        "show": "were → was"
+      },
+      {
+        "k": "developed",
+        "show": "developing → developed"
+      }
+    ],
+    "e": "2번과 5번 문장: 단수명사 The discovery에 호응하는 동사는 was여야 하며, Vaccines를 수동으로 수식하는 과거분사는 developed여야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 2번과 3번 문장을 바탕으로, 감염병과의 싸움에서 이루어진 <b>두 가지 역사적 돌파구</b>를 각각의 인물과 발견 내용으로 나누어 서술하시오.",
+    "show": "첫째, 1928년 Alexander Fleming이 항생 물질인 페니실린을 발견한 것이며, 둘째, 1796년경 Edward Jenner가 인간에게 무해한 우두 바이러스에 노출되면 치명적인 천연두 바이러스로부터 보호받는다는 사실을 발견한 것이다.",
+    "crit": "① Alexander Fleming의 페니실린 발견 명시 (1.5점) ② Edward Jenner의 우두 바이러스를 통한 천연두 예방 발견 명시 (1.5점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 4번의 3단계를 바탕으로, (3)번 문장(\"A human's average life expectancy has increased, but relying too much on medicine damages our body system.\")이 <b>글 전체의 주제 흐름에서 벗어나 무관한 문장인 이유</b>를 서술하시오.",
+    "show": "글 전체의 핵심 주제는 의료 과학기술의 발전(페니실린, 백신, 위생 관리, 치료 요법)이 감염병의 치료와 예방에 가져온 거대한 진보와 혜택을 다루고 있는데, (3)번 문장은 감염병 정복의 과학적 성과와 무관하게 약물 과다 의존에 따른 신체적 폐해라는 엉뚱한 부작용을 지적하고 있기 때문이다.",
+    "crit": "① 글 전체의 주제(감염병 치료와 예방을 이끈 의료 과학기술의 진보와 성과) 언급 (1.5점) ② (3)번 문장이 약물 과다 의존의 신체적 폐해를 다루어 주제의 일관성을 해친다는 점 서술 (1.5점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

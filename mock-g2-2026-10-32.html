@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "32번 빈칸 추론 심층 분석지 확인 문제",
+  "section": "수능 영어 · 32번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 32번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "If we understand mass culture as a weakening factor of the cultural ties that unite people to their traditions, mass culture weakens the intermediary institutions in society (e.g. the family or the school), diminishing their role and overlapping these institutions."],
+    [2, "For example, courts are traditional social institutions and important for the normal and harmonious functioning of collective life."],
+    [3, "However, when people turn to social networks to put pressure on judicial decisions in certain mediated and politicized processes, this practice is popularized and becomes a habitual form of culture, which is harmful."],
+    [4, "Justice must not be done in the public square, which today is converted into a virtual dimension, the social networks."],
+    [5, "In a democratic state of law, the appropriate place to judge and make justice is the court and in a way that is <u>     </u>."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "대중문화는 가족이나 학교와 같은 사회의 매개 기관들을 강화하고 그들의 전통적 권위를 높여준다.",
+    "a": "X",
+    "e": "1번 문장에 따르면 대중문화는 매개 기관들을 약화시키고(weakens the intermediary institutions) 그 역할을 축소합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "법원은 집단생활이 정상적이고 조화롭게 기능하는 데 중요한 전통적 사회 기관이다.",
+    "a": "O",
+    "e": "2번 문장(courts are traditional social institutions and important for the normal and harmonious functioning of collective life)과 일치합니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "소셜 네트워크를 통해 사법적 결정에 압박을 가하는 관행은 민주주의의 발전에 매우 유익한 문화로 권장된다.",
+    "a": "X",
+    "e": "3번 문장 끝에 따르면 이러한 관행이 습관적인 문화 형태로 자리 잡는 것은 해롭습니다(which is harmful)."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "오늘날 공공의 광장은 소셜 네트워크라는 가상적 차원으로 변모하였다.",
+    "a": "O",
+    "e": "4번 문장(the public square, which today is converted into a virtual dimension, the social networks)과 일치합니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 사법적 정의가 대중의 여론이 집결하는 공공 광장에서 실현되어야 한다고 역설한다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 정의는 공공 광장에서 행해져서는 결코 안 됩니다(Justice must not be done in the public square)."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "민주적 법치국가에서 판결을 내리고 정의를 실현하기 위한 적절한 장소는 법원이다.",
+    "a": "O",
+    "e": "5번 문장(the appropriate place to judge and make justice is the court)과 일치합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "법원의 판결은 대중의 정치적 기대와 여론의 압박에 기민하게 반응하고 순응하는 방식으로 이루어져야 한다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 판결은 대중의 압력에 영향을 받지 않는 방식(immune to popular pressure)으로 이루어져야 합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "사법적 결정에 압력을 가하려는 사람들의 시도는 주로 소셜 네트워크를 통해 일어난다.",
+    "a": "O",
+    "e": "3번 문장(when people turn to social networks to put pressure on judicial decisions)과 일치합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "매개하는, 중간의",
+      "줄이다, 감소시키다",
+      "사법의, 재판의",
+      "습관적인, 만성적인"
+    ],
+    "rows": [
+      ["intermediary", 1],
+      ["diminish", 2],
+      ["judicial", 3],
+      ["habitual", 4]
+    ],
+    "e": "분석지 2번 어휘: intermediary(매개하는), diminish(줄이다), judicial(사법의), habitual(습관적인)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>judicial</b>과 <b>judicious</b>의 의미 구별로 옳은 것은?",
+    "o": [
+      "judicial은 '사법의, 재판의'를 뜻하고, judicious는 '현명한, 신중한'을 뜻한다.",
+      "judicial은 '편파적인'을 뜻하고, judicious는 '법률적인'을 뜻한다.",
+      "두 단어는 철자와 의미가 모두 같아 문맥상 항상 교체하여 쓸 수 있다.",
+      "본문의 judicial decisions는 '신중하고 현명한 타협'을 의미한다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: judicial은 법원·재판과 관련된 '사법의'를 뜻하며, judicious는 '현명한, 신중한'을 뜻합니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>diminish</b>(감소시키다, 줄이다)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "decrease, reduce",
+      "lessen, shrink",
+      "increase, amplify",
+      "resistant, unaffected"
+    ],
+    "a": 3,
+    "e": "분석지 5번 동의어 및 반의어: diminish의 동의어는 decrease, reduce이며 반의어는 increase, amplify, augment입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>immune to</b>(~에 영향을 받지 않는)의 동의어 네 표현 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["resistant to", "unaffected by", "invulnerable to", "impervious to"]],
+      ["②", ["resistant to", "unaffected by", "invulnerable to", "impervious to"]]
+    ],
+    "show": "resistant to, unaffected by, invulnerable to, impervious to 중 두 개",
+    "e": "분석지 5번 동의어: resistant to, unaffected by, invulnerable to, impervious to"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "3번 문장에서 '~에 의존하다, ~로 향하다'라는 뜻을 지닌 두 단어의 구동사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "turn to"
+    ],
+    "show": "turn to",
+    "e": "분석지 2번 문장 3 어휘: turn to(~에 의존하다)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "3번 문장에서 '~에 압박을 가하다'라는 뜻을 지닌 세 단어의 숙어 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "put pressure on"
+    ],
+    "show": "put pressure on",
+    "e": "분석지 2번 문장 3 어휘: put pressure on(~에 압박을 가하다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "1번 문장의 괄호 안에 쓰여 라틴어 exempli gratia의 약어로 '예를 들어'를 나타내는 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "e.g.",
+      "e.g"
+    ],
+    "show": "e.g.",
+    "e": "분석지 2번 문장 1 구문 분석: e.g.는 라틴어 exempli gratia의 약어로 '예를 들어'를 뜻합니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 주격 관계대명사 that 뒤에서 복수 선행사 the cultural ties에 호응하는 동사 형태를 고르시오.",
+    "c": "...the cultural ties that (unite / unites) people to their traditions...",
+    "o": [
+      "unite",
+      "unites"
+    ],
+    "a": "unite",
+    "e": "분석지 2번 문장 1 구문 분석: 선행사가 복수명사 the cultural ties이므로 복수 동사 unite가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 끝에서 주절의 결과를 나타내는 능동 분사구문의 알맞은 병렬 형태를 고르시오.",
+    "c": "...diminishing their role and (overlap / overlapping) these institutions.",
+    "o": [
+      "overlap",
+      "overlapping"
+    ],
+    "a": "overlapping",
+    "e": "분석지 2번 문장 1 구문 분석: 등위접속사 and에 의해 현재분사 diminishing과 overlapping이 병렬 연결됩니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 주어 this practice에 걸려 is popularized와 병렬 연결되는 알맞은 술어 동사를 고르시오.",
+    "c": "...this practice is popularized and (become / becomes) a habitual form of culture...",
+    "o": [
+      "become",
+      "becomes"
+    ],
+    "a": "becomes",
+    "e": "분석지 2번 문장 3 구문 분석: 단수 주어 this practice에 걸리는 동사이므로 단수 현재형 becomes가 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장에서 앞 절 전체의 내용을 선행사로 받는 계속적 용법의 주격 관계대명사를 고르시오.",
+    "c": "...becomes a habitual form of culture, (which / that) is harmful.",
+    "o": [
+      "which",
+      "that"
+    ],
+    "a": "which",
+    "e": "분석지 2번 문장 3 구문 분석: 콤마 뒤 계속적 용법이므로 that은 불가하며 which만 올바릅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 주어인 정의(Justice)가 공공 광장에서 '행해져서는 안 된다'는 수동태 형태를 고르시오.",
+    "c": "Justice must not (do / be done) in the public square...",
+    "o": [
+      "do",
+      "be done"
+    ],
+    "a": "be done",
+    "e": "분석지 2번 문장 4 구문 분석: 정의가 행해지는 대상이므로 조동사 수동태 must not be done이 올바릅니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 관계사절 내부에서 공공 광장이 가상 차원으로 '전환되어 있다'는 알맞은 형태를 고르시오.",
+    "c": "...which today (converts / is converted) into a virtual dimension...",
+    "o": [
+      "converts",
+      "is converted"
+    ],
+    "a": "is converted",
+    "e": "분석지 2번 문장 4 구문 분석: 공공 광장이 전환된 상태를 나타내므로 수동태 is converted into가 올바릅니다."
+  },
+  {
+    "n": 24,
+    "p": "C",
+    "t": "short",
+    "s": "3번 문장의 <b>to put pressure on judicial decisions</b>는 목적을 나타냅니다. 이 to부정사의 용법을 네 글자로 쓰시오.",
+    "ans": [
+      "부사적",
+      "부사적용법",
+      "부사적 용법"
+    ],
+    "show": "부사적 용법",
+    "e": "분석지 2번 문장 3 구문 분석: 목적(~하기 위하여)을 나타내는 to부정사의 부사적 용법입니다."
+  },
+  {
+    "n": 25,
+    "p": "C",
+    "t": "short",
+    "s": "5번 문장의 <b>to judge and make justice</b>는 앞의 the appropriate place를 뒤에서 수식합니다. 이 to부정사의 용법을 네 글자로 쓰시오.",
+    "ans": [
+      "형용사적",
+      "형용사적용법",
+      "형용사적 용법"
+    ],
+    "show": "형용사적 용법",
+    "e": "분석지 2번 문장 5 구문 분석: 명사 the appropriate place를 수식하는 to부정사의 형용사적 용법입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (사법 기관과 전통적 사법 절차)",
+      "키워드 B (대중적 압력에 대한 면역과 사법 독립성)"
+    ],
+    "rows": [
+      ["courts are traditional social institutions", 1],
+      ["Justice must not be done in the public square", 2],
+      ["make justice is the court", 1],
+      ["immune to popular pressure", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: courts traditional/make justice(키워드 A), public square/immune to popular pressure(키워드 B)"
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "3번 문장의 <b>However</b>가 수행하는 논리적 전환 기능으로 옳은 것은?",
+    "o": [
+      "정상적인 법원의 기능에 대한 설명에서 소셜 미디어의 왜곡된 사법 압박이라는 문제점으로 화제를 전환하는 역접 기능",
+      "대중문화의 긍정적 결속 효과를 추가로 나열하는 단순 첨가 기능",
+      "법원의 역사적 판결 사례를 시대순으로 소개하는 연대기적 기능",
+      "글 전체의 논의를 끝맺으며 사법 제도의 폐지를 제안하는 결론 기능"
+    ],
+    "a": 1,
+    "e": "분석지 2번 문장 3 연결어 기능: 정상적인 법원 기능에서 소셜 미디어의 왜곡된 사법 압박이라는 문제점으로 화제를 전환하는 역접 기능입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "If we understand mass culture as a weakening factor of the cultural ties that unite people to their traditions...",
+      "For example, courts are traditional social institutions and important for the normal and harmonious functioning of collective life.",
+      "However, when people turn to social networks to put pressure on judicial decisions...",
+      "In a democratic state of law, the appropriate place to judge and make justice is the court and in a way that is immune to popular pressure."
+    ],
+    "a": 4,
+    "e": "분석지 1번: 중심 문장은 5번 문장 \"In a democratic state of law, the appropriate place to judge and make justice is the court and in a way that is immune to popular pressure.\"입니다."
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "일반적 문제 제기 - 구체적 위험성(소셜 미디어 사법 압박) 비판 - 당위적 해결 원칙 제시",
+      "고대 법전의 조항 분석 - 현대 민법과의 비교 - 개선 방안 제시",
+      "배심원 제도의 찬반 논쟁 소개 - 여론조사 통계 검토 - 절충안 도출",
+      "온라인 소셜 미디어의 기술적 알고리즘 분석 - 정보 보안 대책 촉구"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '일반적 문제 제기 - 구체적 위험성 비판 - 당위적 해결 원칙 제시'의 전개 방식입니다."
+  },
+  {
+    "n": 30,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입부(기본 전제 및 법원의 위상 확립) → 문제점 지적 및 경고(사법 개입의 해악성 비판) → 결론부(사법 독립과 법치주의 수호 원리 명시)",
+      "가설 설정 → 통계 검증 → 이론 폐기",
+      "원인 분석 → 결과 도출 → 처벌 규정 제정",
+      "배경 설명 → 인물 인터뷰 → 향후 과제 도출"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입부) → 두 번째 부분(문제점 지적 및 경고) → 세 번째 부분(결론부)"
+  },
+  {
+    "n": 31,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "The Necessity of Preserving Judicial (A) ________ from (B) ________ Pressure in a Democratic State of Law",
+    "ans": [
+      "Independence Popular",
+      "independence popular",
+      "Independence, Popular",
+      "independence, popular"
+    ],
+    "show": "Independence Popular (전체: The Necessity of Preserving Judicial Independence from Popular Pressure in a Democratic State of Law)",
+    "e": "분석지 1번 주제: Independence, Popular"
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 5번 문장의 빈칸에 들어갈 어구이자 원래 시험 문제의 정답으로 제시된 것은?",
+    "o": [
+      "immune to popular pressure",
+      "supportive for the minority",
+      "responsive to social change",
+      "open to political negotiation",
+      "aligned with public expectations"
+    ],
+    "a": 1,
+    "e": "분석지 4번 5단계: 정답은 ①번 immune to popular pressure입니다."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>⑤번(aligned with public expectations)</b>이 정답이 될 수 <u>없는</u> 이유로 설명된 것은?",
+    "o": [
+      "소수자 보호를 다루지 않았기 때문에",
+      "대중의 기대에 부합하는 판결은 본문이 강력히 비판한 '광장 재판'에 굴복하는 것이므로 정반대 오답이기 때문에",
+      "정치적 협상에 열려 있어야 한다는 필자의 논지와 배치되기 때문에",
+      "시대적 변화에 기민하게 반응하는 태도를 지문이 옹호하고 있기 때문에"
+    ],
+    "a": 2,
+    "e": "분석지 4번 5단계 오답 분석: 대중의 기대에 부합하는 판결을 내리는 것은 본문이 강력히 비판한 광장 재판에 굴복하는 것이므로 정반대입니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "sent",
+    "s": "4번 문장의 앞부분 주절과 같은 뜻이 되도록 「조건」에 맞게 수동태로 영작하시오.",
+    "c": "정의는 공공 광장에서 행해져서는 안 된다.<br><small>「조건」 Justice, must not be done, public square 활용 (총 9단어)</small>",
+    "ans": [
+      "Justice must not be done in the public square",
+      "justice must not be done in the public square",
+      "Justice must not be done in the public square.",
+      "justice must not be done in the public square."
+    ],
+    "show": "Justice must not be done in the public square",
+    "e": "4번 문장 앞부분 원문: Justice must not be done in the public square"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "However, when people turn to social networks to put pressure on judicial decisions... this practice is popularized and becomes a habitual form of culture, that is harmful. Justice must not do in the public square...",
+    "keys": [
+      {
+        "k": "which",
+        "show": "that → which"
+      },
+      {
+        "k": "be done",
+        "show": "do → be done"
+      }
+    ],
+    "e": "3번과 4번 문장: 콤마 뒤 계속적 용법의 관계대명사로는 that 대신 which가 와야 하며, 정의가 행해지는 수동 관계이므로 must not be done이 되어야 합니다."
+  },
+  {
+    "n": 36,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 3번과 4번 문장을 바탕으로, 사람들이 사법적 결정에 압박을 가하기 위해 <b>의존하는 수단</b>과 <b>그로 인해 나타나는 위험한 현상 및 필자의 경고</b>를 서술하시오.",
+    "show": "사람들은 소셜 네트워크에 의존하여 사법적 결정에 압박을 가하며, 이로 인해 판결에 외압을 넣는 관행이 대중화되고 습관적인 문화 형태로 굳어지는 해로운 현상이 나타난다. 이에 대해 필자는 오늘날 가상 공간으로 변모한 공공 광장에서 정의가 행해져서는 결코 안 된다고 경고한다.",
+    "crit": "① 의존 수단(소셜 네트워크) 명시 (1점) ② 사법 압박 관행의 대중화/습관화라는 위험한 현상 서술 (1점) ③ 공공 광장에서 정의가 실현되어서는 안 된다는 경고 서술 (1점)"
+  },
+  {
+    "n": 37,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 1번과 2번의 5번 문장을 참고하여, 민주적 법치국가에서 <b>판결을 내리고 정의를 실현해야 하는 적절한 장소</b>와 <b>그 판결이 집행되어야 하는 방식의 핵심 조건</b>을 서술하시오.",
+    "show": "정의를 실현하고 판결을 내릴 적절한 장소는 '법원(the court)'이어야 하며, 그 방식은 소셜 미디어나 광장의 여론 몰이와 같은 '대중의 압력에 영향을 받지 않는(immune to popular pressure)' 독립적인 방식이어야 한다.",
+    "crit": "① 적절한 장소로 법원 명시 (1점) ② 판결 방식의 핵심 조건으로 대중의 압력에 영향을 받지 않는 독립적 방식 서술 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

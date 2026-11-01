@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "24번 제목 파악 심층 분석지 확인 문제",
+  "section": "수능 영어 · 24번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 24번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Consistent though he may be, some of Aristotle's ideas meet us today as strange."],
+    [2, "He had no difficulty justifying slavery, for example, and in his era, philosophers enjoyed positions of high privilege and influence."],
+    [3, "Because of their practice of contemplation for the highest human good, philosophers were considered worthy to have all the best things in life."],
+    [4, "Somehow that assertion seems oddly self-serving."],
+    [5, "It serves us to remember that every great thinker is of her own time and speaks to a particular audience, and certainly Aristotle is no exception."],
+    [6, "Human flourishing as he understood it probably would not be nearly as inclusive as we would want it to be today."],
+    [7, "How he understood right and good is best taken to be an indicator of how the privileged elite of ancient Greek society tended to understand right and good."],
+    [8, "As a result, for all it does well, it is also deeply flawed."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "아리스토텔레스의 사상 중 일부는 오늘날 우리에게 낯설게 다가온다.",
+    "a": "O",
+    "e": "1번 문장(some of Aristotle's ideas meet us today as strange)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "아리스토텔레스는 자신의 시대에 노예제를 폐지하고 비판하는 데 앞장섰다.",
+    "a": "X",
+    "e": "2번 문장에 따르면 그는 노예제를 정당화하는 데 전혀 어려움을 겪지 않았습니다(had no difficulty justifying slavery)."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "아리스토텔레스의 시대에 철학자들은 높은 특권과 영향력을 가진 지위를 누렸다.",
+    "a": "O",
+    "e": "2번 문장(philosophers enjoyed positions of high privilege and influence)과 일치합니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "철학자들이 삶의 가장 좋은 것을 누릴 자격이 있다는 주장은 필자에게 묘하게 자기 잇속만 챙기는 것으로 보인다.",
+    "a": "O",
+    "e": "4번 문장(that assertion seems oddly self-serving)과 일치합니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "아리스토텔레스는 자신이 속한 시대와 독자층의 한계를 완전히 뛰어넘은 유일한 예외적 사상가이다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 아리스토텔레스 역시 확실히 예외가 아닙니다(certainly Aristotle is no exception)."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "아리스토텔레스가 이해했던 인간 번영은 오늘날 우리가 바라는 만큼 결코 포용적이지는 못할 것이다.",
+    "a": "O",
+    "e": "6번 문장(probably would not be nearly as inclusive as we would want it to be today)과 일치합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "아리스토텔레스의 도덕관은 고대 그리스 소외 계층의 입장을 대변하는 핵심 지표이다.",
+    "a": "X",
+    "e": "7번 문장에 따르면 고대 그리스 사회의 '특권층 엘리트(the privileged elite)'가 옳음과 선함을 이해했던 방식을 보여주는 지표입니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "아리스토텔레스의 사상은 잘해낸 모든 점에도 불구하고 깊은 결함을 안고 있다.",
+    "a": "O",
+    "e": "8번 문장(for all it does well, it is also deeply flawed)과 일치합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "사유, 명상, 심사숙고",
+      "자기 이익만 챙기는, 이기적인",
+      "포용적인, 모든 사람을 포함하는",
+      "결함이 있는, 흠이 있는"
+    ],
+    "rows": [
+      ["contemplation", 1],
+      ["self-serving", 2],
+      ["inclusive", 3],
+      ["flawed", 4]
+    ],
+    "e": "분석지 2번 어휘: contemplation(사유, 숙고), self-serving(자기 잇속만 챙기는), inclusive(포용적인), flawed(결함이 있는)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>flawed</b>와 <b>flowed</b>의 어휘 설명으로 옳은 것은?",
+    "o": [
+      "flawed와 flowed는 철자와 의미가 완전히 같은 유의어이다.",
+      "flawed는 명사 flaw에서 파생되어 '결함이 있는'을 뜻하고, flowed는 동사 flow의 과거형으로 '흘렀다'를 뜻한다.",
+      "flawed는 물의 흐름을 나타내는 형용사이고 flowed는 도덕적 결함을 의미한다.",
+      "본문의 flawed는 사상가의 학문적 계보가 면면히 이어졌음을 뜻한다."
+    ],
+    "a": 2,
+    "e": "분석지 5번 혼동하기 쉬운 어휘: flawed(결함이 있는) vs flowed(동사 flow의 과거형)는 발음이 유사하나 의미가 완전히 다릅니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>inclusive</b>의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "comprehensive, all-embracing",
+      "exclusive, restrictive",
+      "self-interested, opportunistic",
+      "vindicate, defend"
+    ],
+    "a": 2,
+    "e": "분석지 5번 동의어 및 반의어: inclusive(포용적인)의 반의어로 exclusive, restrictive, segregated가 제시되어 있습니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>self-serving</b>의 유의어(동의어)에 해당하지 <u>않는</u> 것은?",
+    "o": [
+      "self-interested",
+      "opportunistic",
+      "self-seeking",
+      "altruistic"
+    ],
+    "a": 4,
+    "e": "분석지 5번 동의어 및 반의어: altruistic은 selfless와 함께 self-serving(이기적인)의 '반의어'입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>justify</b>(정당화하다)의 동의어 네 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["vindicate", "defend", "rationalize", "legitimize"]],
+      ["②", ["vindicate", "defend", "rationalize", "legitimize"]]
+    ],
+    "show": "vindicate, defend, rationalize, legitimize 중 두 개",
+    "e": "분석지 5번 동의어: vindicate, defend, rationalize, legitimize"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "2번 문장에서 '~하는 데 전혀 어려움을 겪지 않다'라는 뜻을 지닌 네 단어의 관용 어구를 본문에서 찾아 쓰시오. (동명사 포함)",
+    "ans": [
+      "had no difficulty justifying",
+      "have no difficulty justifying"
+    ],
+    "show": "had no difficulty justifying",
+    "e": "분석지 2번 문장 2 관용 표현: have no difficulty (in) -ing"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "8번 문장에서 '~에도 불구하고(= despite)'라는 뜻을 나타내는 두 단어의 양보 전치사구를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "for all",
+      "For all"
+    ],
+    "show": "for all",
+    "e": "분석지 2번 문장 8 어휘: for all(~에도 불구하고)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 주어구 some of Aristotle's ideas에서 핵심 명사인 복수명사 ideas를 대신하는 some에 호응하는 알맞은 본동사를 고르시오.",
+    "c": "Consistent though he may be, some of Aristotle's ideas (meets / meet) us today as strange.",
+    "o": [
+      "meets",
+      "meet"
+    ],
+    "a": "meet",
+    "e": "분석지 2번 문장 1 구문 분석: 복수명사 ideas를 대신하는 부정대명사 some이 주어이므로 복수 본동사 meet가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 수동태 전환 구조에서 주격 보어로 남은 알맞은 형용사 형태를 고르시오.",
+    "c": "philosophers were considered (worthy / worthily) to have all the best things in life.",
+    "o": [
+      "worthy",
+      "worthily"
+    ],
+    "a": "worthy",
+    "e": "분석지 2번 문장 3 구문 분석: 5형식 consider의 수동태 전환 후 주격 보어로 형용사 worthy가 쓰여야 합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 2형식 연결동사 seems 뒤 주격 보어 자리에 들어갈 알맞은 어형을 고르시오.",
+    "c": "Somehow that assertion seems oddly (self-serving / self-servingly).",
+    "o": [
+      "self-serving",
+      "self-servingly"
+    ],
+    "a": "self-serving",
+    "e": "분석지 2번 문장 4 구문 분석: 연결동사 seem 뒤 주격 보어 자리에는 형용사 self-serving이 와야 하며 부사 oddly의 수식을 받습니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 가주어 It에 대응하는 알맞은 진주어 형태를 고르시오.",
+    "c": "It serves us (to remember / remembering) that every great thinker is of her own time...",
+    "o": [
+      "to remember",
+      "remembering"
+    ],
+    "a": "to remember",
+    "e": "분석지 2번 문장 5 구문 분석: 가주어 It에 호응하는 진주어로 to부정사 to remember가 쓰였습니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 that절 내부에서 주어 every great thinker에 걸려 is와 병렬 연결되는 알맞은 동사 형태를 고르시오.",
+    "c": "...that every great thinker is of her own time and (speak / speaks) to a particular audience...",
+    "o": [
+      "speak",
+      "speaks"
+    ],
+    "a": "speaks",
+    "e": "분석지 2번 문장 5 구문 분석: 단수 주어 every great thinker에 걸리는 술어 동사이므로 단수 현재형 speaks가 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "7번 문장에서 주어 역할을 하는 의문사절 How he understood right and good에 호응하는 알맞은 be동사를 고르시오.",
+    "c": "How he understood right and good (is / are) best taken to be an indicator...",
+    "o": [
+      "is",
+      "are"
+    ],
+    "a": "is",
+    "e": "분석지 2번 문장 7 구문 분석: 명사절(간접의문문) 주어는 단수 취급하므로 단수 be동사 is가 올바릅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "ox",
+    "s": "1번 문두의 Consistent though he may be는 형용사 보어 Consistent가 양보 접속사 though 앞으로 도치된 양보 구문이다.",
+    "a": "O",
+    "e": "분석지 2번 문장 1 구문 분석: Though he may be consistent에서 형용사 보어가 앞으로 도치된 양보 구문입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "3번 문장의 <b>to have all the best things in life</b>는 형용사 worthy를 뒤에서 수식합니다. 이 to부정사의 용법을 네 글자로 쓰시오.",
+    "ans": [
+      "부사적",
+      "부사적용법",
+      "부사적 용법"
+    ],
+    "show": "부사적 용법",
+    "e": "분석지 2번 문장 3 구문 분석: 형용사 worthy를 수식하는 to부정사의 부사적 용법입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (시대와 계급에 갇힌 아리스토텔레스의 사상)",
+      "키워드 B (포용성의 결여와 깊은 결함)"
+    ],
+    "rows": [
+      ["justifying slavery", 1],
+      ["oddly self-serving", 2],
+      ["privileged elite of ancient Greek society", 1],
+      ["deeply flawed", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: justifying slavery/privileged elite(키워드 A), oddly self-serving/deeply flawed(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 도출한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Consistent though he may be, some of Aristotle's ideas meet us today as strange.",
+      "Because of their practice of contemplation for the highest human good, philosophers were considered worthy to have all the best things in life.",
+      "How he understood right and good is best taken to be an indicator of how the privileged elite of ancient Greek society tended to understand right and good. As a result, for all it does well, it is also deeply flawed.",
+      "It serves us to remember that every great thinker is of her own time and speaks to a particular audience..."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 7·8번 문장 결합부인 \"How he understood right and good is best taken to be an indicator... As a result, for all it does well, it is also deeply flawed.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "문제 사례 제시 - 시대적·계급적 배경 분석 - 비판적 결론 도출",
+      "인물 간의 논쟁 대화 소개 - 감정적 갈등의 심화 - 극적 화해의 종결",
+      "자연 과학적 가설 설정 - 실험 데이터 검증 - 보편 법칙의 확립",
+      "고대 그리스 건축 양식의 분류 - 지역별 특징 비교 - 보존 대책 촉구"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '문제 사례 제시 - 시대적·계급적 배경 분석 - 비판적 결론 도출'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분]과 [두 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "문제 제기 및 역사적 사례 도입(비현대적이고 편향된 성격 제시) → 원인 심화 및 결론(시대적·계급적 한계 규명 및 최종 결론 도출)",
+      "철학적 최고선의 정의 → 현대 복지 국가 모델로의 확장",
+      "노예제 폐지 운동의 기원 설명 → 계몽주의 사상가들의 기여 평가",
+      "고대 민주주의의 우수성 찬양 → 현대 선거 제도의 결함 비판"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(문제 제기 및 역사적 사례 도입) → 두 번째 부분(원인 심화 및 결론)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 제시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "Flaws in Aristotle's Ethics Trapped in His (A) ________ and Class (B) ________",
+    "ans": [
+      "Time Privileges",
+      "time privileges",
+      "Time, Privileges",
+      "time, privileges"
+    ],
+    "show": "Time Privileges (전체: Flaws in Aristotle's Ethics Trapped in His Time and Class Privileges)",
+    "e": "분석지 1번 주제: Time, Privileges"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "8번 문장의 <b>As a result</b>가 수행하는 논리적 연결 기능으로 옳은 것은?",
+    "o": [
+      "앞서 언급된 역사적·계급적 편향성으로부터 아리스토텔레스 철학의 내재적 결함이라는 최종 결론을 이끌어내는 인과 기능",
+      "앞선 주장을 전면 철회하고 새로운 역사적 사실을 소개하는 역접 기능",
+      "고대 그리스 철학자들의 일상생활을 묘사하는 단순한 시간 경과 기능",
+      "철학 연구의 방법론적 우수성을 추가로 나열하는 첨가 기능"
+    ],
+    "a": 1,
+    "e": "분석지 2번 문장 8 연결어 기능: 앞선 역사적·계급적 편향성으로부터 내재적 결함이라는 최종 결론을 이끌어내는 인과 연결어구입니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 원래 시험 문제의 정답이자 글의 가장 알맞은 제목으로 제시된 것은?",
+    "o": [
+      "Aristotle's Ethics Trapped in His Time and Class",
+      "Aristotle's Highest Good for the Underprivileged",
+      "Why Philosophers Deserve the Best Things in Life",
+      "Aristotle's Lonely Struggle to Build an Inclusive Society",
+      "Limits of Greek Philosophers: Thoughts Without Actions"
+    ],
+    "a": 1,
+    "e": "분석지 4번 문제 풀이: 정답은 ①번 \"Aristotle's Ethics Trapped in His Time and Class\"입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>②번(소외 계층을 위한 아리스토텔레스의 최고선)</b>이 정답이 될 수 <u>없는</u> 이유로 설명된 것은?",
+    "o": [
+      "철학자가 최고의 것들을 누릴 자격이 있다는 자기 잇속 챙기기 주장이기 때문에",
+      "소외 계층을 위해 최고선을 추구한 것이 아니라 오히려 노예제를 정당화하고 특권층의 이익을 대변했다고 비판하므로 정반대의 왜곡된 진술이기 때문에",
+      "실천 없는 생각에 머물렀다는 지행합일의 한계를 다룬 글이기 때문에",
+      "포용적 사회를 건설하기 위해 외로운 투쟁을 벌였다는 사실이 빠져 있기 때문에"
+    ],
+    "a": 2,
+    "e": "분석지 4번 오답 분석: 아리스토텔레스는 소외 계층을 위하지 않았고 노예제를 정당화하며 특권층 이익을 대변했으므로 정반대 진술입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "4번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "어쩐지 그 주장은 이상하게 자기 잇속만 챙기는 것으로 보인다.<br><small>「조건」 Somehow, that assertion, oddly self-serving 활용 (총 6단어)</small>",
+    "ans": [
+      "Somehow that assertion seems oddly self-serving.",
+      "somehow that assertion seems oddly self-serving"
+    ],
+    "show": "Somehow that assertion seems oddly self-serving.",
+    "e": "4번 문장 원문: Somehow that assertion seems oddly self-serving."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "He had no difficulty to justify slavery, for example... How he understood right and good are best taken to be an indicator of how the privileged elite of ancient Greek society tended to understand right and good.",
+    "keys": [
+      {
+        "k": "justifying",
+        "show": "to justify → justifying"
+      },
+      {
+        "k": "is",
+        "show": "are → is"
+      }
+    ],
+    "e": "2번과 7번 문장: have no difficulty 뒤에는 동명사 justifying이 와야 하며, How he understood right and good 명사절 주어는 단수 취급하므로 is가 와야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 2번부터 4번 문장 내용을 바탕으로, 오늘날 관점에서 보았을 때 <b>아리스토텔레스의 사상이 기이하고 자기 잇속만 챙기는(self-serving) 것으로 여겨지는 이유 2가지</b>를 서술하시오.",
+    "show": "첫째, 인간 불평등의 대표적 제도인 노예제를 아무렇지도 않게 정당화했기 때문이고, 둘째, 철학자들의 최고선을 위한 사유를 구실로 자신들이 삶의 가장 좋은 모든 특권과 혜택을 누릴 자격이 있다고 주장했기 때문이다.",
+    "crit": "① 노예제 정당화 언급 (2점) ② 철학자들의 사유를 구실로 삶의 온갖 좋은 특권을 누릴 자격이 있다고 주장한 점 언급 (2점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 1번과 2번(7·8번 문장)을 바탕으로, 필자가 <b>아리스토텔레스의 윤리학을 '깊이 결함이 있다(deeply flawed)'고 평가한 근본적인 이유</b>를 '시대'와 '계급'의 관점에서 서술하시오.",
+    "show": "모든 위대한 사상가가 자기 시대의 산물이듯, 아리스토텔레스의 도덕관 역시 보편타당한 진리가 아니라 고대 그리스 사회 특권층 엘리트들의 편향된 시각과 이해관계를 대변한 것에 불과하여 현대 사회가 요구하는 보편적 포용성을 갖추지 못했기 때문이다.",
+    "crit": "① 자기 시대의 산물이라는 점 언급 (1점) ② 고대 그리스 특권층 엘리트의 시각/이해관계를 대변했다는 점 명시 (1점) ③ 현대적 포용성 결여 서술 (1점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

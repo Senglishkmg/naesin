@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "22번 요지 파악 심층 분석지 확인 문제",
+  "section": "수능 영어 · 22번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 22번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Social and environmental responsibility has become an increasingly important ethical consideration for content creators."],
+    [2, "As global awareness of social, environmental, and sustainability issues grows, many content creators are being called upon to consider the broader impact of their work."],
+    [3, "This includes addressing topics such as climate change, social justice, and ethical consumerism in their content."],
+    [4, "Content creators have a platform that can influence their audience's attitudes and behaviors, and they have a responsibility to use that platform for positive change."],
+    [5, "For example, promoting environmentally sustainable products or supporting causes related to equality and justice can help raise awareness and drive meaningful social impact."],
+    [6, "Ethical content creators not only focus on promoting their products or services but also consider the values and causes they support, ensuring that their content aligns with their social and environmental principles."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "사회적 및 환경적 책임은 콘텐츠 제작자들에게 점차 중요한 윤리적 고려 사항이 되고 있다.",
+    "a": "O",
+    "e": "1번 문장(an increasingly important ethical consideration for content creators)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "콘텐츠 제작자가 다루어야 할 주제의 예시로 기후 변화, 사회 정의, 윤리적 소비주의가 언급되었다.",
+    "a": "O",
+    "e": "3번 문장(climate change, social justice, and ethical consumerism)과 일치합니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "콘텐츠 제작자들의 플랫폼은 청중의 태도와 행동에 어떠한 실질적 영향도 미칠 수 없다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 플랫폼은 청중의 태도와 행동에 영향을 미칠 수 있습니다(can influence their audience's attitudes and behaviors)."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "콘텐츠 제작자들은 자신들의 플랫폼을 오직 개인적 이윤 창출을 위해서만 사용해야 할 법적 의무를 진다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 긍정적인 변화를 위해 그 플랫폼을 사용해야 할 책임(a responsibility to use that platform for positive change)이 있습니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "환경적으로 지속 가능한 제품을 홍보하는 것은 인식을 높이고 의미 있는 사회적 영향을 이끌어내는 데 도움이 될 수 있다.",
+    "a": "O",
+    "e": "5번 문장(promoting environmentally sustainable products... can help raise awareness and drive meaningful social impact)과 일치합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "윤리적인 콘텐츠 제작자는 상품이나 서비스를 홍보하는 행위를 전면 중단해야만 한다.",
+    "a": "X",
+    "e": "6번 문장에 따르면 상품이나 서비스 홍보에만 집중하는 것이 아니라(not only focus on promoting their products or services) 지지하는 가치도 고려하는 것입니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "윤리적인 제작자는 자신의 콘텐츠가 사회적·환경적 원칙에 부합하도록 확실히 해야 한다.",
+    "a": "O",
+    "e": "6번 문장(ensuring that their content aligns with their social and environmental principles)과 일치합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 콘텐츠 소비자들에게 정보의 비판적 수용 태도를 기를 것을 본문에서 직접 권고하고 있다.",
+    "a": "X",
+    "e": "분석지 4번 5단계 오답 분석에 명시되어 있듯, 글의 주체는 소비자가 아닌 콘텐츠 제작자이며 소비자 태도는 본문 내용이 아닙니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "환경 파괴 없이 유지 가능한 발전, 지속 가능성",
+      "(문제·주제를) 다루다, 처리하다",
+      "대의명분, 공익적 목적",
+      "원칙, 신념"
+    ],
+    "rows": [
+      ["sustainability", 1],
+      ["address", 2],
+      ["cause", 3],
+      ["principle", 4]
+    ],
+    "e": "분석지 2번 어휘: sustainability(지속 가능성), address(다루다), cause(대의명분), principle(원칙, 신념)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>principle</b>과 <b>principal</b>의 쓰임에 관한 설명으로 옳은 것은?",
+    "o": [
+      "principle과 principal은 철자와 뜻이 모두 같아 문맥상 항상 교체하여 쓸 수 있다.",
+      "principle은 '원칙, 신념'을 뜻하고, principal은 형용사로 '주요한', 명사로 '교장'을 뜻한다.",
+      "principle은 학교장을 뜻하는 직함 명사이고 principal은 물리 법칙의 원리를 뜻한다.",
+      "두 단어는 발음이 완전히 다르며 둘 다 부정적인 의미만을 나타내는 형용사이다."
+    ],
+    "a": 2,
+    "e": "분석지 5번 혼동하기 쉬운 어휘: principle(원칙, 신념) vs principal(주요한, 학교장)은 발음은 같으나 의미가 완전히 다릅니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>ethical</b>과 <b>ethnic</b>의 어휘 설명으로 알맞은 것은?",
+    "o": [
+      "ethical은 도덕률에 관한 단어이고, ethnic은 민족 집단에 관한 단어이다.",
+      "ethical은 민족 고유의 풍습을 뜻하고, ethnic은 개인의 양심을 뜻한다.",
+      "두 단어는 접두사가 결합된 상호 반의어 관계이다.",
+      "본문의 ethical은 인종적 다양성을 의미하는 명사로 사용되었다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: ethical은 도덕률에 관한 '윤리적인'이고, ethnic은 '민족의, 인종의'를 뜻합니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>align with</b>(~와 일치하다, 부합하다)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "accord with, correspond to",
+      "conform to, match",
+      "conflict with, deviate from",
+      "consciousness, perception"
+    ],
+    "a": 3,
+    "e": "분석지 5번 동의어 및 반의어: align with의 반의어로 conflict with, deviate from이 정리되어 있습니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>awareness</b>(인식, 의식)의 동의어 네 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["consciousness", "recognition", "perception", "mindfulness"]],
+      ["②", ["consciousness", "recognition", "perception", "mindfulness"]]
+    ],
+    "show": "consciousness, recognition, perception, mindfulness 중 두 개",
+    "e": "분석지 5번 동의어: consciousness, recognition, perception, mindfulness"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "2번 문장에서 '(공식적으로) 요구하다, 촉구하다'라는 뜻을 지닌 두 단어의 구동사 표현을 쓰시오.",
+    "ans": [
+      "call upon"
+    ],
+    "show": "call upon",
+    "e": "분석지 2번 문장 2 어휘: call upon(공식적으로 요구하다, 촉구하다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "6번 문장에서 '~와 일치하다, 부합하다'라는 뜻을 지닌 두 단어의 필수 관용 숙어를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "align with",
+      "aligns with"
+    ],
+    "show": "align with",
+    "e": "분석지 2번 문장 6 어휘: align with(~와 일치하다, 부합하다)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 주어 Social and environmental responsibility를 하나의 복합 개념으로 보았을 때 단수 현재완료 동사로 알맞은 형태를 고르시오.",
+    "c": "Social and environmental responsibility (has / have) become an increasingly important ethical consideration...",
+    "o": [
+      "has",
+      "have"
+    ],
+    "a": "has",
+    "e": "분석지 2번 문장 1 구문 분석: 사회적 및 환경적 책임을 하나의 복합적 개념으로 단수 취급하여 has become이 쓰였습니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장에서 콘텐츠 제작자들이 사회적으로 강력하게 요구받고 있는 '진행 수동'의 의미를 나타내는 알맞은 형태를 고르시오.",
+    "c": "...many content creators (are calling upon / are being called upon) to consider the broader impact of their work.",
+    "o": [
+      "are calling upon",
+      "are being called upon"
+    ],
+    "a": "are being called upon",
+    "e": "분석지 2번 문장 2 구문 분석: 'be being p.p.' 구문으로 요구받고 있는 중임을 나타내는 are being called upon이 올바릅니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 타동사 includes의 목적어로 알맞은 동명사 형태를 고르시오.",
+    "c": "This includes (addressing / address) topics such as climate change...",
+    "o": [
+      "addressing",
+      "address"
+    ],
+    "a": "addressing",
+    "e": "분석지 2번 문장 3 구문 분석: include는 동명사를 목적어로 취하므로 addressing이 올바릅니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "mc",
+    "s": "4번 문장의 <b>to use that platform for positive change</b>의 문법적 용법으로 옳은 것은?",
+    "o": [
+      "원인을 나타내는 to부정사의 부사적 용법",
+      "명사 a responsibility를 뒤에서 수식하는 to부정사의 형용사적 용법",
+      "동사 have의 직접 목적어로 쓰인 명사적 용법",
+      "결과를 나타내는 to부정사의 독립부정사 용법"
+    ],
+    "a": 2,
+    "e": "분석지 2번 문장 4 구문 분석: a responsibility를 뒤에서 수식하는 to부정사의 형용사적 용법입니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 causes를 뒤에서 수식하여 '평등과 정의에 관련된 대의들'이라는 수동 관계를 나타내는 알맞은 분사 형태를 고르시오.",
+    "c": "...or supporting causes (relating / related) to equality and justice...",
+    "o": [
+      "relating",
+      "related"
+    ],
+    "a": "related",
+    "e": "분석지 2번 문장 5 구문 분석: causes를 수식하는 과거분사구 related to equality and justice입니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장에서 상관접속사 not only A but also B 구문으로 병렬 연결되는 알맞은 동사구를 고르시오.",
+    "c": "Ethical content creators not only (focus / focusing) on promoting their products or services but also consider...",
+    "o": [
+      "focus",
+      "focusing"
+    ],
+    "a": "focus",
+    "e": "분석지 2번 문장 6 구문 분석: 주어 Ethical content creators에 걸리는 본동사 focus on과 consider가 병렬 연결되어야 합니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "ox",
+    "s": "6번 문장의 the values and causes they support에서 causes와 they 사이에는 주격 관계대명사가 생략되어 있다.",
+    "a": "X",
+    "e": "분석지 2번 문장 6 구문 분석: 타동사 support의 목적어 역할을 하는 '목적격 관계대명사(that/which)'가 생략된 것입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "6번 문장 끝의 <b>ensuring that their content aligns...</b>에서 ensuring은 주절의 주어 Ethical content creators를 의미상 주어로 하는 문법 요소입니다. 이 문법 명칭을 네 글자로 쓰시오.",
+    "ans": [
+      "분사구문"
+    ],
+    "show": "분사구문",
+    "e": "분석지 2번 문장 6 구문 분석: 능동 분사구문 ensuring that ~입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (콘텐츠 제작자의 사회·환경적 책임)",
+      "키워드 B (긍정적 변화를 위한 플랫폼 활용)"
+    ],
+    "rows": [
+      ["ethical consideration for content creators", 1],
+      ["influence their audience's attitudes and behaviors", 2],
+      ["broader impact of their work", 1],
+      ["drive meaningful social impact", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: ethical consideration/broader impact(키워드 A), influence attitudes/drive meaningful social impact(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 도출한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Social and environmental responsibility has become an increasingly important ethical consideration for content creators.",
+      "This includes addressing topics such as climate change, social justice, and ethical consumerism in their content.",
+      "Content creators have a platform that can influence their audience's attitudes and behaviors, and they have a responsibility to use that platform for positive change.",
+      "Ethical content creators not only focus on promoting their products or services but also consider the values and causes they support..."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 \"Content creators have a platform that can influence their audience's attitudes and behaviors, and they have a responsibility to use that platform for positive change.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "상반된 두 예술 사조의 기원을 비교 대조하여 독창성을 평가하는 전개 방식",
+      "시대적 배경 제시 - 핵심 주장(당위성) 제시 - 구체적 예시 - 결론 및 재강조의 논리 전개 방식",
+      "자연 재해의 피해 실태를 통계적으로 분석하고 국가 예산 확충을 요구하는 방식",
+      "가상의 주인공의 실패담을 통해 윤리적 삶의 소중함을 깨닫게 하는 서사적 방식"
+    ],
+    "a": 2,
+    "e": "분석지 3번 서술 전략: '시대적 배경 제시 - 핵심 주장(당위성) 제시 - 구체적 예시 - 결론 및 재강조'의 논리 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분]과 [두 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입 및 화제 설정(시대적 배경과 윤리적 고려 범위 제시) → 본론 및 결론(플랫폼 파급력 제시 및 구체적 실천 방안과 결론 도출)",
+      "소비자의 권익 신장 방안 안내 → 미디어 기업의 과점 구조 비판",
+      "전문가 집단과의 협업 사례 소개 → 창작물의 예술적 가치 검증",
+      "환경 파괴의 심각성 고발 → 콘텐츠 제작 중단 촉구"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입 및 화제 설정) → 두 번째 부분(본론 및 결론)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 제시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "The (A) ________ Responsibility of Content Creators to Drive Positive Social and (B) ________ Change",
+    "ans": [
+      "Ethical Environmental",
+      "ethical environmental",
+      "Ethical, Environmental",
+      "ethical, environmental"
+    ],
+    "show": "Ethical Environmental (전체: The Ethical Responsibility of Content Creators to Drive Positive Social and Environmental Change)",
+    "e": "분석지 1번 주제: Ethical, Environmental"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "5번 문장의 <b>For example</b>이 글에서 수행하는 논리적 기능으로 옳은 것은?",
+    "o": [
+      "앞 문장의 '긍정적인 변화를 위한 플랫폼 활용'에 대한 구체적 실천 사례를 도입하는 기능",
+      "콘텐츠 제작자의 상업적 이익 추구 방식을 상세히 열거하는 기능",
+      "기존 주장을 전면 반박하고 새로운 반론을 제기하는 역접 기능",
+      "글 전체를 마무리하며 제도를 강제 도입하는 요약 기능"
+    ],
+    "a": 1,
+    "e": "분석지 2번 문장 5 연결어 기능: 앞 문장의 긍정적 변화를 위한 플랫폼 활용에 대한 구체적 실천 사례를 도입하는 기능입니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 원래 시험 문제의 정답이자 글의 핵심 요지로 제시된 것은?",
+    "o": [
+      "콘텐츠 제작자는 사회와 환경 개선에 기여하는 창작물을 만들 책임이 있다.",
+      "공익을 위한 콘텐츠는 특정 이익 집단에 편향되지 않는 중립성이 요구된다.",
+      "콘텐츠 플랫폼은 사회적으로 유해한 콘텐츠를 엄격히 규제할 의무가 있다.",
+      "콘텐츠 소비자에게는 정보를 비판적으로 수용하는 태도가 필요하다."
+    ],
+    "a": 1,
+    "e": "분석지 4번 문제 풀이: 정답은 ①번 \"콘텐츠 제작자는 사회와 환경 개선에 기여하는 창작물을 만들 책임이 있다.\"입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>③번(플랫폼의 유해 콘텐츠 규제 의무)</b>이 정답이 될 수 <u>없는</u> 이유로 기술된 것은?",
+    "o": [
+      "특정 이익 집단 배제에 관한 내용이 지문에 없기 때문에",
+      "플랫폼 기업의 유해 콘텐츠 검열이나 법적 규제 의무를 다룬 글이 아니기 때문에",
+      "글의 주체가 소비자가 아니라 제작자이기 때문에",
+      "전문가와의 협업 내용이 지문에 전혀 나타나 있지 않기 때문에"
+    ],
+    "a": 2,
+    "e": "분석지 4번 오답 분석: 플랫폼 기업의 유해 콘텐츠 검열이나 법적 규제 의무를 다룬 글이 아니므로 오답입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "4번 문장의 후반부 절과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "그리고 그들은 긍정적인 변화를 위해 그 플랫폼을 사용할 책임을 가지고 있다.<br><small>「조건」 have a responsibility, to use, positive change 활용 (총 12단어)</small>",
+    "ans": [
+      "and they have a responsibility to use that platform for positive change",
+      "And they have a responsibility to use that platform for positive change.",
+      "and they have a responsibility to use that platform for positive change."
+    ],
+    "show": "and they have a responsibility to use that platform for positive change",
+    "e": "4번 문장 후반부 원문: and they have a responsibility to use that platform for positive change"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "This includes to address topics such as climate change... Ethical content creators not only focus on promoting their products or services but also consider the values and causes they support, ensure that their content aligns with their social and environmental principles.",
+    "keys": [
+      {
+        "k": "addressing",
+        "show": "to address → addressing"
+      },
+      {
+        "k": "ensuring",
+        "show": "ensure → ensuring"
+      }
+    ],
+    "e": "3번과 6번 문장: include는 동명사 addressing을 목적어로 취하며, 문장 끝에는 능동 분사구문 ensuring이 와야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 4번과 5번 문장 내용을 바탕으로, 콘텐츠 제작자가 <b>자신의 플랫폼을 긍정적 변화를 위해 사용해야 하는 이유</b>와 이를 실천할 수 있는 <b>구체적 방법 2가지</b>를 서술하시오.",
+    "show": "이유는 콘텐츠 제작자의 플랫폼이 청중의 태도와 행동에 영향을 미칠 수 있는 강력한 파급력을 지니고 있기 때문이다. 구체적 실천 방법으로는 첫째, 환경적으로 지속 가능한 제품을 홍보하는 것이고, 둘째, 평등 및 정의와 관련된 공익적 명분을 지지하는 것이다.",
+    "crit": "① 플랫폼이 청중의 태도와 행동에 영향을 미친다는 이유 서술 (1점) ② 지속 가능한 제품 홍보 명시 (1점) ③ 평등과 정의 관련 대의명분 지지 명시 (1점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 6번 문장을 참고하여, <b>'윤리적인 콘텐츠 제작자(Ethical content creators)'</b>가 단순한 상업적 제작자와 구별되는 차이점을 'not only A but also B' 구문의 의미를 살려 설명하시오.",
+    "show": "윤리적인 콘텐츠 제작자는 단순히 자신의 제품이나 서비스를 홍보하는 데만 집중하는 것이 아니라, 자신이 지지하는 가치와 대의명분을 함께 고려하여 자신의 콘텐츠가 사회적·환경적 원칙에 부합하도록 확실히 보장한다는 점에서 차이가 있다.",
+    "crit": "① 제품/서비스 홍보에만 치중하지 않는다는 점 언급 (1점) ② 지지하는 가치와 대의명분을 고려한다는 점 명시 (1점) ③ 콘텐츠가 사회적·환경적 원칙에 부합하도록 한다는 점 서술 (1점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "29번 어법 추론 심층 분석지 확인 문제",
+  "section": "수능 영어 · 29번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 29번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "You might think of survival as a race in which a hurdle has to be jumped every year."],
+    [2, "The early hurdles were once very high, and many people fell before clearing the first few."],
+    [3, "Demographically, humankind was living close to a state of nature, and nature is extremely wasteful of life."],
+    [4, "From only a very small number of figs will even one of many seeds become a fig tree."],
+    [5, "Almost a quarter of baboons born in the wild die before they are a year old, which is fairly typical for primates."],
+    [6, "Infant mortality rates for humans in pre-modern agricultural societies were similar to, and sometimes higher, than those of apes."],
+    [7, "Things were little better for our hunter-gatherer ancestors, a quarter of them failed to reach their first birthday, while another quarter didn't live long enough to reproduce just about everywhere until the nineteenth century."],
+    [8, "Had it been otherwise, the huge recent growth in human population would have occurred much earlier."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "생존의 초기 허들은 한때 매우 높아서 많은 사람들이 처음 몇 개를 넘기도 전에 쓰러졌다.",
+    "a": "O",
+    "e": "2번 문장(The early hurdles were once very high, and many people fell before clearing the first few)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "무화과의 수많은 씨앗 중 대다수는 아무런 손실 없이 무화과나무로 자라난다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 오직 극소수의 무화과에서만 수많은 씨앗 중 단 하나라도 나무로 자라납니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "야생에서 태어난 개코원숭이의 거의 4분의 1은 한 살이 되기 전에 사망한다.",
+    "a": "O",
+    "e": "5번 문장(Almost a quarter of baboons born in the wild die before they are a year old)과 일치합니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "개코원숭이가 겪는 높은 영아 사망률은 영장류 전체에서 매우 드문 극단적 예외이다.",
+    "a": "X",
+    "e": "5번 문장 끝에 따르면 이는 영장류에게 꽤 전형적인 일(fairly typical for primates)입니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "근대 이전 농경 사회에서 인간의 영아 사망률은 유인원의 영아 사망률보다 항상 훨씬 낮았다.",
+    "a": "X",
+    "e": "6번 문장에 따르면 유인원의 영아 사망률과 유사했고 때로는 더 높았습니다(similar to, and sometimes higher, than those of apes)."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "수렵 채집인 조상들의 경우 4분의 1은 첫 번째 생일에도 도달하지 못했다.",
+    "a": "O",
+    "e": "7번 문장(a quarter of them failed to reach their first birthday)과 일치합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "19세기까지 많은 지역에서 또 다른 4분의 1의 사람들은 번식할 수 있을 만큼 오래 살지 못했다.",
+    "a": "O",
+    "e": "7번 문장(another quarter didn't live long enough to reproduce just about everywhere until the nineteenth century)과 일치합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "과거의 높은 초기 사망률에도 불구하고 최근의 급격한 인구 증가는 고대부터 이미 일어났다.",
+    "a": "X",
+    "e": "8번 문장에 따르면 만약 그렇지 않았더라면 인구 성장이 훨씬 더 일찍 일어났을 것이므로, 과거의 높은 사망률 때문에 인구 폭발이 지연되었습니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "(장애물 따위를) 뛰어넘다, 통과하다",
+      "~을 낭비하는, 허비하는",
+      "꽤, 상당히",
+      "번식하다, 재생산하다"
+    ],
+    "rows": [
+      ["clear", 1],
+      ["wasteful of", 2],
+      ["fairly", 3],
+      ["reproduce", 4]
+    ],
+    "e": "분석지 2번 어휘: clear(뛰어넘다), wasteful of(낭비하는), fairly(꽤), reproduce(번식하다)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>mortality</b>와 <b>morality</b>의 의미 차이로 옳은 것은?",
+    "o": [
+      "mortality는 '사망률, 죽을 운명'을 뜻하고, morality는 '도덕, 도덕성'을 뜻한다.",
+      "mortality는 '도덕률'을 뜻하고, morality는 '치사율'을 뜻한다.",
+      "두 단어는 어근이 동일하여 문맥에 따라 항상 상호 교체하여 사용할 수 있다.",
+      "본문의 infant mortality는 '유아기의 도덕성 발달 단계'를 의미한다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: mortality는 어근 mort(죽음)에서 파생된 '사망률', morality는 moral(도덕)에서 파생된 '도덕, 도덕성'입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>wasteful</b>(낭비적인)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "profligate, extravagant",
+      "squandering, excessive",
+      "frugal, thrifty, economical",
+      "happen, take place"
+    ],
+    "a": 3,
+    "e": "분석지 5번 동의어 및 반의어: wasteful의 동의어는 profligate, extravagant이며 반의어는 frugal, thrifty, economical입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>occur</b>(일어나다, 발생하다)의 동의어 세 표현 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["happen", "take place", "arise"]],
+      ["②", ["happen", "take place", "arise"]]
+    ],
+    "show": "happen, take place, arise 중 두 개",
+    "e": "분석지 5번 동의어: happen, take place, arise"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "3번 문장에서 문명 이전의 원시적 생존 상태를 가리키는 네 단어의 영문 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "a state of nature",
+      "state of nature"
+    ],
+    "show": "a state of nature",
+    "e": "분석지 2번 문장 3 어휘: a state of nature(자연 상태)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "8번 문장에서 '그렇지 않았다면, 딴판이었다면'이라는 뜻을 지닌 한 단어의 접속부사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "otherwise"
+    ],
+    "show": "otherwise",
+    "e": "분석지 2번 문장 8 어휘: otherwise(그렇지 않았다면)"
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 선행사 a race 뒤에서 완전한 수동태 절을 이끄는 알맞은 관계사 형태를 고르시오.",
+    "c": "...a race (which / in which) a hurdle has to be jumped every year.",
+    "o": [
+      "which",
+      "in which"
+    ],
+    "a": "in which",
+    "e": "분석지 2번 문장 1 구문 분석: 뒤에 완전한 절(a hurdle has to be jumped)이 오므로 전치사+관계대명사 in which가 올바릅니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 문두에 한정 어구 From only a very small number of figs가 전치되었을 때 알맞은 어순을 고르시오.",
+    "c": "From only a very small number of figs (will even one / even one will) of many seeds become a fig tree.",
+    "o": [
+      "will even one",
+      "even one will"
+    ],
+    "a": "will even one",
+    "e": "분석지 2번 문장 4 구문 분석: 한정 어구가 문두로 전치되어 [조동사(will) + 주어(even one ~)]로 도치됩니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 복수명사 baboons를 선행사로 하여 '야생에서 태어난' 수동 수식 관계를 이루는 알맞은 분사 형태를 고르시오.",
+    "c": "Almost a quarter of baboons (bearing / born) in the wild die before they are a year old...",
+    "o": [
+      "bearing",
+      "born"
+    ],
+    "a": "born",
+    "e": "분석지 2번 문장 5 구문 분석: baboons를 수동으로 수식하는 과거분사구 born in the wild입니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 앞 절 전체의 사실을 선행사로 받는 계속적 용법의 주격 관계대명사를 고르시오.",
+    "c": "...before they are a year old, (which / that) is fairly typical for primates.",
+    "o": [
+      "which",
+      "that"
+    ],
+    "a": "which",
+    "e": "분석지 2번 문장 5 구문 분석: 콤마 뒤 계속적 용법이므로 that은 불가하며 which만 올바릅니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장에서 앞에 나온 복수명사 Infant mortality rates를 대신하는 알맞은 지시대명사를 고르시오.",
+    "c": "...were similar to, and sometimes higher, than (that / those) of apes.",
+    "o": [
+      "that",
+      "those"
+    ],
+    "a": "those",
+    "e": "분석지 2번 문장 6 구문 분석: 복수명사 rates를 대신하므로 복수 지시대명사 those가 쓰여야 합니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "8번 문장의 비교급 earlier 앞에 올 수 있는 비교급 강조 부사를 고르시오.",
+    "c": "...would have occurred (much / very) earlier.",
+    "o": [
+      "much",
+      "very"
+    ],
+    "a": "much",
+    "e": "분석지 2번 문장 8 구문 분석: 비교급 강조에는 much, still, even, far, a lot을 쓰며 very는 비교급을 직접 수식할 수 없습니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "ox",
+    "s": "8번 문장의 occur는 완전자동사이므로 수동태(would have been occurred)로 쓸 수 없다.",
+    "a": "O",
+    "e": "분석지 2번 문장 8 어휘: occur는 완전자동사로 수동태가 불가능합니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "short",
+    "s": "7번 문장의 <b>didn't live long enough to reproduce</b>에서 to reproduce는 부사 enough를 수식합니다. 이 to부정사의 용법을 네 글자로 쓰시오.",
+    "ans": [
+      "부사적",
+      "부사적용법",
+      "부사적 용법"
+    ],
+    "show": "부사적 용법",
+    "e": "분석지 2번 문장 7 구문 분석: 부사 enough를 수식하는 to부정사의 부사적 용법입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "8번 문두의 <b>Had it been otherwise</b>는 if가 생략되어 도치된 형태입니다. 생략된 접속사 if를 살려 원래의 조건절 형태를 총 5단어로 쓰시오.",
+    "ans": [
+      "If it had been otherwise",
+      "if it had been otherwise"
+    ],
+    "show": "If it had been otherwise",
+    "e": "분석지 2번 문장 8 구문 분석: Had it been otherwise는 If it had been otherwise에서 if가 생략되어 도치된 형태입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (과거 인류와 자연계의 극심한 영유아 사망률)",
+      "키워드 B (초기 생존 관문 통과의 어려움과 인구 억제)"
+    ],
+    "rows": [
+      ["extremely wasteful of life", 1],
+      ["clearing the first few", 2],
+      ["failed to reach their first birthday", 1],
+      ["didn't live long enough to reproduce", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: wasteful of life/failed to reach birthday(키워드 A), clearing first few/didn't live to reproduce(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "You might think of survival as a race in which a hurdle has to be jumped every year.",
+      "Demographically, humankind was living close to a state of nature, and nature is extremely wasteful of life.",
+      "Had it been otherwise, the huge recent growth in human population would have occurred much earlier.",
+      "Infant mortality rates for humans in pre-modern agricultural societies were similar to, and sometimes higher, than those of apes."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 8번 문장 \"Had it been otherwise, the huge recent growth in human population would have occurred much earlier.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "비유 - 자연계 예시 논증 - 인간 역사 적용 및 결론 도출의 전개 방식",
+      "두 가지 상반된 진화론 학설의 대립 - 실험 데이터 비교 - 절충안 도출",
+      "현대 농업 기술의 발전 과정 소개 - 수확량 증가 통계 제시 - 식량 안보 촉구",
+      "고대 수렵 채집인의 이동 경로 추적 - 유적지 발굴 성과 보고 - 보존 대책 제시"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '비유 - 자연계 예시 논증 - 인간 역사 적용 및 결론 도출'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입부(중심 비유 제시 및 원시적 생존 환경 설명) → 구체적 예시(자연의 생명 낭비 실증) → 결론부(인간 역사 적용 및 인구 억제 메커니즘 확인)",
+      "문제 제기 → 해결책 제시 → 한계점 비판",
+      "가설 설정 → 실험군 대조군 검증 → 오차 분석",
+      "원인 분석 → 결과 도출 → 제도적 대안 마련"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입부) → 두 번째 부분(구체적 예시) → 세 번째 부분(결론부)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 제시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "High Early (A) ________ and Survival (B) ________ in Pre-Modern Humans and Nature",
+    "ans": [
+      "Mortality Hurdles",
+      "mortality hurdles",
+      "Mortality, Hurdles",
+      "mortality, hurdles"
+    ],
+    "show": "Mortality Hurdles (전체: High Early Mortality and Survival Hurdles in Pre-Modern Humans and Nature)",
+    "e": "분석지 1번 주제: Mortality, Hurdles"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "ox",
+    "s": "자연 상태에 가까웠던 과거 인류는 자연계의 높은 초기 사망률이라는 가혹한 생존 장벽을 함께 겪었다.",
+    "a": "O",
+    "e": "분석지 1번 주제 및 3번, 6번 문장 설명과 완벽히 일치합니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번 문제 풀이에서 7번 문장의 <b>a quarter of them failed to reach...</b>가 어법상 틀린 이유로 설명된 것은?",
+    "o": [
+      "수일치에서 a quarter 뒤에 단수 동사가 와야 하는데 복수 동사가 쓰였기 때문에",
+      "두 개의 완전한 절이 접속사 없이 콤마로만 연결되어 있어 대명사 them만으로는 문장을 이어줄 수 없기 때문에",
+      "fail 뒤에는 반드시 동명사가 목적어로 와야 하는데 to부정사가 쓰였기 때문에",
+      "while 절 내부의 시제가 주절의 과거 시제와 불일치하기 때문에"
+    ],
+    "a": 2,
+    "e": "분석지 4번 문제 풀이: 두 개의 독립된 절이 접속사 없이 콤마로만 이어져 있으므로, 접속사와 대명사 역할을 동시에 하는 관계대명사 whom을 쓰거나 접속사를 보충해야 합니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "choice",
+    "s": "7번 문장의 앞 절과 뒤 절을 문법적으로 올바르게 연결하기 위해 a quarter of them을 고칠 때 알맞은 관계대명사 형태를 고르시오.",
+    "c": "Things were little better for our hunter-gatherer ancestors, a quarter of (whom / them) failed to reach their first birthday...",
+    "o": [
+      "whom",
+      "them"
+    ],
+    "a": "whom",
+    "e": "분석지 4번 문제 풀이: 선행사 ancestors를 받아 두 문장을 연결하는 계속적 용법의 관계대명사 목적격 whom이 쓰여야 합니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "8번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 도치 구문으로 영작하시오.",
+    "c": "만약 그렇지 않았더라면, 최근 인간 인구의 거대한 성장은 훨씬 더 일찍 일어났을 것이다.<br><small>「조건」 Had it been otherwise, would have occurred, much earlier 활용 (총 15단어)</small>",
+    "ans": [
+      "Had it been otherwise, the huge recent growth in human population would have occurred much earlier.",
+      "had it been otherwise, the huge recent growth in human population would have occurred much earlier."
+    ],
+    "show": "Had it been otherwise, the huge recent growth in human population would have occurred much earlier.",
+    "e": "8번 문장 원문: Had it been otherwise, the huge recent growth in human population would have occurred much earlier."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "Almost a quarter of baboons bearing in the wild die before they are a year old... Infant mortality rates for humans in pre-modern agricultural societies were similar to, and sometimes higher, than that of apes.",
+    "keys": [
+      {
+        "k": "born",
+        "show": "bearing → born"
+      },
+      {
+        "k": "those",
+        "show": "that → those"
+      }
+    ],
+    "e": "5번과 6번 문장: baboons를 수동 수식하는 과거분사 born이 와야 하며, 복수명사 Infant mortality rates를 대신하므로 those가 와야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 1번과 2번 문장을 참고하여, 필자가 <b>'생존(survival)'을 무엇에 비유했는지</b> 밝히고, <b>'초기 허들이 매우 높았다'는 비유적 표현이 함축하는 실제 역사적 사실</b>을 서술하시오.",
+    "show": "필자는 생존을 매년 하나의 허들을 뛰어넘어야만 하는 '경주'에 비유했다. '초기 허들이 매우 높았다'는 것은 과거 인류가 태어나서 1세가 되기 전이나 생식 연령에 도달하기 전의 초기 영유아 사망률이 극심하게 높았음을 의미한다.",
+    "crit": "① 생존을 매년 허들을 넘는 경주에 비유했음을 명시 (1점) ② 초기 영유아 사망률(또는 1세 미만 사망률)이 극심하게 높았다는 실제 사실 서술 (2점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 8번 문장(\"Had it been otherwise, the huge recent growth in human population would have occurred much earlier.\")을 바탕으로, <b>이 문장의 가정법이 전제하고 있는 실제 역사적 사실</b>과 <b>이 사실이 인류 인구 성장에 미친 영향</b>을 서술하시오.",
+    "show": "실제로는 과거 인류의 초기 사망률이 매우 높아서 수많은 사람이 생식 연령에 도달하기 전에 사망했다. 이로 인해 인류의 폭발적인 인구 성장은 일찍 일어나지 못하고 오랫동안 억제되다가 최근에 이르러서야 나타나게 되었다.",
+    "crit": "① 과거 인류의 초기 사망률이 매우 높았다는 실제 사실 명시 (2점) ② 폭발적인 인구 성장이 오랫동안 억제되다가 최근에야 일어났다는 인과적 영향 서술 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

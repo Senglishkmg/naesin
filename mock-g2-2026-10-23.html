@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "23번 주제 추론 심층 분석지 확인 문제",
+  "section": "수능 영어 · 23번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 23번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Research on cephalopod neurobiology suggests that an octopus possesses roughly five hundred million neurons."],
+    [2, "What makes this system unusual is where many of those neurons are located."],
+    [3, "More than half are distributed throughout the arms rather than concentrated entirely in the central brain."],
+    [4, "Each arm contains networks of nerve cells capable of controlling complex movements and responding to sensory input locally."],
+    [5, "This means that many actions do not require detailed instructions from the brain itself."],
+    [6, "Instead, the arms function as highly capable extensions of the nervous system that interact with the environment directly."],
+    [7, "The suckers lining each arm play an important role in this process."],
+    [8, "These structures provide strong grip but also detect chemical signals on surfaces they contact."],
+    [9, "Marine biologists studying octopus behavior have shown that this allows the animal to gather chemical information through touch."],
+    [10, "In practical terms, an octopus can effectively taste what it touches."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "문어는 약 5억 개의 뉴런을 가지고 있는 것으로 연구에서 제시된다.",
+    "a": "O",
+    "e": "1번 문장(possesses roughly five hundred million neurons)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "문어의 뉴런 대부분은 팔이 아닌 중앙 뇌에 온전히 집중되어 있다.",
+    "a": "X",
+    "e": "3번 문장에 따르면 뉴런의 절반 이상이 중앙 뇌에 집중되기보다는 팔 전체에 분포(distributed throughout the arms)되어 있습니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "문어의 각 팔에 있는 신경세포망은 감각 입력에 국소적으로 반응할 수 있는 능력이 있다.",
+    "a": "O",
+    "e": "4번 문장(capable of controlling complex movements and responding to sensory input locally)과 일치합니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "문어의 모든 신체 동작은 반드시 뇌 자체로부터의 상세한 지침을 받아야만 실행될 수 있다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 많은 동작이 뇌 자체로부터의 상세한 지침을 필요로 하지 않습니다(do not require detailed instructions from the brain itself)."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "문어의 팔은 환경과 직접 상호작용하는 신경계의 유능한 확장체로서 기능한다.",
+    "a": "O",
+    "e": "6번 문장(function as highly capable extensions of the nervous system that interact with the environment directly)과 일치합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "문어 팔에 줄지어 있는 빨판은 물체를 붙잡는 흡착 기능만 수행할 뿐 화학 물질은 감지하지 못한다.",
+    "a": "X",
+    "e": "8번 문장에 따르면 빨판은 강한 접지력을 제공할 뿐만 아니라 접촉하는 표면의 화학적 신호 또한 감지합니다(detect chemical signals)."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "빨판의 구조 덕분에 문어는 접촉(촉각)을 통해 화학 정보를 수집할 수 있다.",
+    "a": "O",
+    "e": "9번 문장(gather chemical information through touch)과 일치합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "실질적인 관점에서 볼 때 문어는 시각에만 의존하여 먹이의 화학적 정보를 분석한다.",
+    "a": "X",
+    "e": "10번 문장과 분석지 4번 오답 분석에 따르면 시각이 아니라 자신이 만지는 것을 사실상 맛보는(taste what it touches) 촉각 및 화학 감각입니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "국소적으로, 부분적으로",
+      "(문어 등의) 빨판",
+      "확장체, 연장선",
+      "두족류 동물"
+    ],
+    "rows": [
+      ["locally", 1],
+      ["sucker", 2],
+      ["extension", 3],
+      ["cephalopod", 4]
+    ],
+    "e": "분석지 2번 어휘: locally(국소적으로), sucker(빨판), extension(확장체), cephalopod(두족류 동물)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>effectively</b>와 <b>efficiently</b>의 의미 차이로 옳은 것은?",
+    "o": [
+      "effectively는 시간과 자원의 낭비가 없는 방식을 뜻하고, efficiently는 법적 효력을 의미한다.",
+      "effectively는 본문에서 '사실상, 실질적으로'라는 결과적 상태를 뜻하며, efficiently는 '효율적으로'를 의미한다.",
+      "effectively와 efficiently는 철자만 다를 뿐 문맥상 완전히 동일하게 치환되는 동의어이다.",
+      "본문의 effectively는 감각 기관의 민감도를 측정하는 생물학적 단위로 쓰였다."
+    ],
+    "a": 2,
+    "e": "분석지 5번 혼동 어휘: effectively는 본문에서 '어떤 일의 실질적인 귀결이나 사실상의 상태(virtually, in practice)'를 뜻하며, efficiently는 시간·자원의 낭비 없이 '효율적으로'를 의미합니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>sensory</b>와 <b>sensitive</b>의 설명으로 알맞은 것은?",
+    "o": [
+      "sensory는 신경계의 '감각 기관이나 감각 입력' 자체를 뜻하는 형용사이고, sensitive는 자극에 '민감하거나 섬세한' 것을 뜻한다.",
+      "sensory는 외부 자극에 상처받기 쉬운 성격을 뜻하고, sensitive는 기계적 센서를 의미한다.",
+      "두 단어는 접미사에 따른 상호 반의어 관계이다.",
+      "본문의 sensory input은 '예민한 감정적 입력'이라는 비유적 표현이다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: sensory는 생물학적 '감각의', sensitive는 '민감한, 예민한'을 뜻합니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>distribute</b>(분포시키다, 분배하다)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "disperse, scatter",
+      "concentrate, centralize",
+      "interrelate, communicate",
+      "approximately, around"
+    ],
+    "a": 2,
+    "e": "분석지 5번 동의어 및 반의어: distribute의 동의어는 disperse, scatter, allocate이며 반의어는 concentrate, gather, centralize입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>roughly</b>(대략, 어림잡아)의 반의어 두 단어를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["exactly", "precisely"]],
+      ["②", ["exactly", "precisely"]]
+    ],
+    "show": "exactly, precisely",
+    "e": "분석지 5번 동의어 및 반의어: roughly의 반의어로 exactly, precisely가 제시되어 있습니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "6번 문장에서 '그 대신에'라는 뜻으로 앞선 부정 서술을 받아 팔의 능동적 대안 기능을 제시하는 접속부사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "Instead",
+      "instead"
+    ],
+    "show": "Instead",
+    "e": "분석지 2번 문장 6 어휘: Instead(대신에)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "10번 문장에서 '실질적인 면에서, 현실적으로 말하자면'이라는 뜻을 지닌 세 단어의 전치사구를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "In practical terms",
+      "in practical terms"
+    ],
+    "show": "In practical terms",
+    "e": "분석지 2번 문장 10 어휘: In practical terms(실질적인 면에서)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 주어부 핵심 명사인 단수명사 Research에 호응하는 알맞은 술어동사를 고르시오.",
+    "c": "Research on cephalopod neurobiology (suggest / suggests) that an octopus possesses...",
+    "o": [
+      "suggest",
+      "suggests"
+    ],
+    "a": "suggests",
+    "e": "분석지 2번 문장 1 구문 분석: 단수명사 Research가 주어이므로 3인칭 단수 현재형 동사 suggests가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 5형식 구조에서 makes의 목적격 보어로 알맞은 어형을 고르시오.",
+    "c": "What makes this system (unusual / unusually) is where many of those neurons are located.",
+    "o": [
+      "unusual",
+      "unusually"
+    ],
+    "a": "unusual",
+    "e": "분석지 2번 문장 2 구문 분석: makes + 목적어(this system) + 목적격 보어로 형용사 unusual이 와야 합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장에서 복수명사 those neurons를 가리키는 주어 More than half에 호응하는 be동사를 고르시오.",
+    "c": "More than half (is / are) distributed throughout the arms...",
+    "o": [
+      "is",
+      "are"
+    ],
+    "a": "are",
+    "e": "분석지 2번 문장 3 구문 분석: 셀 수 있는 복수명사 those neurons의 절반 이상을 나타내므로 복수 be동사 are가 쓰입니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 주어가 단수 한정사 Each의 수식을 받을 때 알맞은 동사 형태를 고르시오.",
+    "c": "Each arm (contains / contain) networks of nerve cells...",
+    "o": [
+      "contains",
+      "contain"
+    ],
+    "a": "contains",
+    "e": "분석지 2번 문장 4 구문 분석: Each arm은 단수 취급하므로 단수 동사 contains가 올바릅니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "7번 문장에서 The suckers를 수식하여 '각각의 팔에 줄지어 서 있는' 능동 수식 관계를 나타내는 분사 형태를 고르시오.",
+    "c": "The suckers (lined / lining) each arm play an important role in this process.",
+    "o": [
+      "lined",
+      "lining"
+    ],
+    "a": "lining",
+    "e": "분석지 2번 문장 7 구문 분석: 타동사 line이 능동으로 수식하므로 현재분사 lining이 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "9번 문장의 5형식 동사 allows에 이어지는 목적격 보어 형태로 알맞은 것을 고르시오.",
+    "c": "...allows the animal (gathering / to gather) chemical information through touch.",
+    "o": [
+      "gathering",
+      "to gather"
+    ],
+    "a": "to gather",
+    "e": "분석지 2번 문장 9 구문 분석: allow + 목적어 + 목적격 보어로 to부정사(to gather)를 취합니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "ox",
+    "s": "5번 문장 끝의 the brain itself에서 itself는 생략하면 비문이 되는 목적어 역할을 하는 재귀대명사이다.",
+    "a": "X",
+    "e": "분석지 2번 문장 5 구문 분석: itself는 the brain을 강조하기 위해 덧붙은 부사적 '강조 용법'이므로 생략이 가능합니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "10번 문장의 <b>taste what it touches</b>에서 what은 선행사를 자체에 포함하며 touches의 목적어 역할을 합니다. what의 문법적 명칭을 여섯 글자로 쓰시오.",
+    "ans": [
+      "관계대명사"
+    ],
+    "show": "관계대명사",
+    "e": "분석지 2번 문장 10 구문 분석: 선행사를 포함하는 관계대명사 what입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (팔에 분산된 신경계)",
+      "키워드 B (주변 환경과의 직접적 상호작용)"
+    ],
+    "rows": [
+      ["distributed throughout the arms", 1],
+      ["networks of nerve cells", 1],
+      ["interact with the environment directly", 2],
+      ["gather chemical information through touch", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: distributed/networks(키워드 A), interact directly/gather chemical information(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 도출한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Research on cephalopod neurobiology suggests that an octopus possesses roughly five hundred million neurons.",
+      "What makes this system unusual is where many of those neurons are located.",
+      "Instead, the arms function as highly capable extensions of the nervous system that interact with the environment directly.",
+      "In practical terms, an octopus can effectively taste what it touches."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 6번 문장 \"Instead, the arms function as highly capable extensions of the nervous system that interact with the environment directly.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "특이한 신경 구조 제시 - 독립적 상호작용 원리 설명 - 빨판의 구체적 감각 메커니즘 제시",
+      "해양 생태계의 파괴 실태 고발 - 두족류의 멸종 위기 분석 - 보호 구역 지정 촉구",
+      "동물 훈련 실험의 통계적 오차 분석 - 연구 방법론의 한계 비판 - 새로운 실험 모델 제안",
+      "문어와 오징어의 해부학적 차이점 열거 - 시각과 촉각의 기능적 우열 비교"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '특이한 신경 구조 제시 - 독립적 상호작용 원리 설명 - 빨판의 구체적 감각 메커니즘 제시'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분]과 [두 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입 및 해부학적 특성 설명(신경계 분산 배치와 팔의 독립적 제어) → 본론 심화 및 구체적 결론(팔의 자율적 기능과 빨판의 감각 수집 기제 실증)",
+      "포식자 회피 기제 소개 → 서식지 환경과의 연관성 증명",
+      "신경 재생 능력의 유전학적 분석 → 의학적 응용 가능성 타진",
+      "기억력 측정 실험 안내 → 지능 발달 단계 제시"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입 및 해부학적 특성 설명) → 두 번째 부분(본론 심화 및 구체적 결론)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "Mechanism Behind an Octopus Arm's (A) ________ Interaction with Its (B) ________",
+    "ans": [
+      "Direct Surroundings",
+      "direct surroundings",
+      "Direct, Surroundings",
+      "direct, surroundings"
+    ],
+    "show": "Direct Surroundings (전체: Mechanism Behind an Octopus Arm's Direct Interaction with Its Surroundings)",
+    "e": "분석지 1번 주제: Direct, Surroundings"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "ox",
+    "s": "문어의 팔에 분산된 신경망 덕분에 많은 동작이 뇌의 지시 없이도 환경과 직접 상호작용할 수 있다.",
+    "a": "O",
+    "e": "분석지 1번 중심 문장 설명 및 5·6번 문장과 완전히 일치합니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 원래 시험 문제의 정답이자 글의 주제로 제시된 것은?",
+    "o": [
+      "characteristics of an environment that suits an octopus",
+      "function of the octopus's central brain in controlling its arms",
+      "benefit of an octopus relying more on vision than touch for survival",
+      "reasons for octopuses having more neurons than other marine animals",
+      "mechanism behind an octopus arm's direct interaction with its surroundings"
+    ],
+    "a": 5,
+    "e": "분석지 4번 문제 풀이: 정답은 ⑤번 \"mechanism behind an octopus arm's direct interaction with its surroundings\"입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>②번(중앙 뇌가 팔을 통제하는 기능)</b>이 정답이 될 수 <u>없는</u> 이유로 설명된 것은?",
+    "o": [
+      "문어가 살기에 적합한 서식지 환경을 다루지 않았기 때문에",
+      "본문은 뇌가 통제하는 것이 아니라 팔이 뇌의 지시 없이 자율적으로 국소 제어한다고 설명했으므로 정반대 진술이기 때문에",
+      "시각 의존성에 대한 서술이 본문에 전혀 없기 때문에",
+      "다른 해양 동물과의 뉴런 수 비교가 빠져 있기 때문에"
+    ],
+    "a": 2,
+    "e": "분석지 4번 오답 분석: 팔이 뇌의 상세한 지시 없이 자율적으로 국소 제어(do not require detailed instructions from the brain)한다고 했으므로 정반대 진술입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "10번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "실제적인 면에서, 문어는 그것이 접촉하는 것을 사실상 맛볼 수 있다.<br><small>「조건」 In practical terms, effectively, taste what 활용 (총 10단어)</small>",
+    "ans": [
+      "In practical terms, an octopus can effectively taste what it touches.",
+      "in practical terms, an octopus can effectively taste what it touches."
+    ],
+    "show": "In practical terms, an octopus can effectively taste what it touches.",
+    "e": "10번 문장 원문: In practical terms, an octopus can effectively taste what it touches."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "What makes this system unusually is where many of those neurons are located... The suckers lining each arm play an important role in this process. These structures provide strong grip but also detects chemical signals on surfaces they contact.",
+    "keys": [
+      {
+        "k": "unusual",
+        "show": "unusually → unusual"
+      },
+      {
+        "k": "detect",
+        "show": "detects → detect"
+      }
+    ],
+    "e": "2번과 8번 문장: make의 목적격 보어 자리에는 형용사 unusual이 와야 하며, 8번 문장의 복수 주어 These structures에 걸려 provide와 병렬 연결되는 동사는 복수형 detect여야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 2번부터 5번 문장을 바탕으로, 문어의 신경계가 지닌 <b>해부학적 분산 구조의 특징</b>과 그로 인해 팔의 동작에서 나타나는 <b>기능적 특징</b>을 각각 서술하시오.",
+    "show": "해부학적으로는 약 5억 개의 뉴런 중 절반 이상이 중앙 뇌에 집중되지 않고 팔 전체에 걸쳐 분산 배치되어 있다. 이로 인해 기능적으로는 많은 신체 동작들이 중앙 뇌 자체로부터의 상세한 지침을 거치지 않고도 팔 자체의 국소적 신경세포망을 통해 독립적으로 제어된다.",
+    "crit": "① 절반 이상의 뉴런이 중앙 뇌가 아닌 팔 전체에 분산 배치되어 있다는 점 서술 (2점) ② 뇌의 상세한 지시 없이 팔 자체에서 국소적·자율적으로 제어된다는 점 서술 (2점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 8번부터 10번 문장을 바탕으로, 문어의 <b>빨판(suckers)이 수행하는 두 가지 감각·운동 기능</b>을 설명하고 이것이 실질적인 관점에서 어떤 의미를 갖는지 서술하시오.",
+    "show": "빨판은 물체를 단단히 붙잡는 강력한 접지력(흡착력)을 제공함과 동시에 맞닿는 표면의 화학적 신호를 감지하는 기능을 수행한다. 이는 접촉(촉각)을 통해 화학 정보를 수집할 수 있게 해 주며, 실질적인 관점에서는 문어가 만지는 것을 사실상 맛볼 수 있음을 의미한다.",
+    "crit": "① 물리적 접지력(흡착력)과 화학적 신호 감지 기능 명시 (2점) ② 접촉을 통한 화학 정보 수집 및 '만지는 것을 맛본다'는 실질적 의미 서술 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "31번 빈칸 추론 심층 분석지 확인 문제",
+  "section": "수능 영어 · 31번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 31번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "A person who lives eighty years lives some twenty-nine thousand days, and the overwhelming majority of the behaviour packed into them runs on settings laid down, most of them, decades earlier and rarely inspected since."],
+    [2, "This need not be a hopeless thought."],
+    [3, "In one light it is a triumph of engineering."],
+    [4, "If you had to consciously decide every footstep and every fork-grip and every word, you would never make it out of bed; the deliberate mind is far too slow and too costly to run a whole life in real time, and any creature that tried would be outcompeted by a creature that didn't."],
+    [5, "The <u>     </u> is precisely what frees the captain to come up on deck for the few problems that actually require him."],
+    [6, "The default is not a flaw in the human design."],
+    [7, "It is arguably the central feature, the thing that makes a complex life affordable at all."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "80년을 사는 사람의 행동 대다수는 수십 년 전에 정해진 설정에 따라 작동한다.",
+    "a": "O",
+    "e": "1번 문장(runs on settings laid down ... decades earlier)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "인간의 행동을 지배하는 무의식적 기본 설정들은 매일 세심하게 점검된다.",
+    "a": "X",
+    "e": "1번 문장에 따르면 수십 년 일찍 정해져 그 이후로는 거의 점검되지 않습니다(rarely inspected since)."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "우리의 행동 대부분이 무의식적 설정에 의해 작동한다는 것은 절망적인 생각일 필요가 없다.",
+    "a": "O",
+    "e": "2번 문장(This need not be a hopeless thought)과 일치합니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "어떤 관점에서 보면 행동의 자동 설정 체계는 공학의 위대한 승리이다.",
+    "a": "O",
+    "e": "3번 문장(In one light it is a triumph of engineering)과 일치합니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "신중하게 생각하는 마음은 실시간으로 전체 삶을 영위하기에 매우 빠르고 경제적이다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 신중한 마음은 실시간으로 전체 삶을 운영하기에 너무 느리고 비용이 많이 듭니다(far too slow and too costly)."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "모든 동작을 의식적으로 결정하려고 시도했던 생명체는 그렇지 않은 생명체와의 경쟁에서 살아남아 번성했다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 그렇게 시도했던 어떤 생명체라도 그렇지 않은 생명체에 의해 경쟁에서 완전히 도태되었을 것입니다(would be outcompeted)."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "자동화는 선장이 실제로 자신을 필요로 하는 소수의 문제를 처리하기 위해 갑판 위로 올라올 여유를 마련해 준다.",
+    "a": "O",
+    "e": "5번 문장(frees the captain to come up on deck for the few problems that actually require him)과 일치합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 뇌의 기본 설정(default)이 인간 설계에서 발생한 치명적인 결함이라고 주장한다.",
+    "a": "X",
+    "e": "6번 문장에 따르면 기본 설정은 인간 설계상의 결함이 아닙니다(The default is not a flaw in the human design)."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "(규칙·설정을) 정하다, 확립하다",
+      "의도적인, 신중한",
+      "경쟁에서 이기다",
+      "감당할 수 있는, 비용을 치를 수 있는"
+    ],
+    "rows": [
+      ["lay down", 1],
+      ["deliberate", 2],
+      ["outcompete", 3],
+      ["affordable", 4]
+    ],
+    "e": "분석지 2번 및 5번 어휘: lay down(정하다), deliberate(신중한, 의도적인), outcompete(경쟁에서 이기다), affordable(감당할 수 있는)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>deliberate</b>와 <b>desperate</b>의 의미 구별로 옳은 것은?",
+    "o": [
+      "deliberate는 깊이 생각하여 행동하는 신중함을 뜻하고, desperate는 필사적인, 자포자기의 상태를 뜻한다.",
+      "deliberate는 절망적인 상태를 뜻하고, desperate는 자동화된 기계 설계를 뜻한다.",
+      "두 단어는 철자와 발음이 동일한 완전한 동의어이다.",
+      "본문의 deliberate는 타인을 속이려는 악의적인 의도를 의미한다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: deliberate는 깊이 생각하는 신중함(의식적 숙고)을, desperate는 '필사적인, 자포자기의'를 뜻합니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>deliberate</b>(신중한, 의도적인)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "intentional, conscious",
+      "calculated, ponderous",
+      "automatic, spontaneous, instinctive",
+      "manageable, bearable, feasible"
+    ],
+    "a": 3,
+    "e": "분석지 5번 동의어 및 반의어: deliberate의 반의어로 automatic, spontaneous, instinctive가 정리되어 있습니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>affordable</b>(감당할 수 있는)의 동의어 세 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["manageable", "bearable", "feasible"]],
+      ["②", ["manageable", "bearable", "feasible"]]
+    ],
+    "show": "manageable, bearable, feasible 중 두 개",
+    "e": "분석지 5번 동의어: manageable, bearable, feasible"
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "3번 문장에서 '한 가지 관점에서 보면, 어떤 면에서는'이라는 뜻을 지닌 세 단어의 전치사구를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "In one light",
+      "in one light"
+    ],
+    "show": "In one light",
+    "e": "분석지 2번 문장 3 어휘: in one light(한 가지 관점에서 보면)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "6번 문장에서 구조나 설계상의 '결함, 흠'을 뜻하는 네 글자의 영단어를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "flaw"
+    ],
+    "show": "flaw",
+    "e": "분석지 2번 문장 6 어휘: flaw(결함, 흠)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "7번 문장에서 '거의 틀림없이, 주장하건대'라는 뜻을 지닌 부사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "arguably"
+    ],
+    "show": "arguably",
+    "e": "분석지 2번 문장 7 어휘: arguably(거의 틀림없이)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 주어 the overwhelming majority of the behaviour에 호응하는 알맞은 본동사를 고르시오.",
+    "c": "...the overwhelming majority of the behaviour packed into them (run / runs) on settings...",
+    "o": [
+      "run",
+      "runs"
+    ],
+    "a": "runs",
+    "e": "분석지 2번 문장 1 구문 분석: majority of 뒤에 셀 수 없는 명사 the behaviour가 왔으므로 단수 취급하여 단수 동사 runs가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 settings 뒤에서 '정해진' 수동 수식 관계를 나타내는 알맞은 분사 형태를 고르시오.",
+    "c": "...runs on settings (laying / laid) down, most of them, decades earlier...",
+    "o": [
+      "laying",
+      "laid"
+    ],
+    "a": "laid",
+    "e": "분석지 2번 문장 1 구문 분석: settings를 뒤에서 수식하는 과거분사 laid down입니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 조동사 need not 뒤에 올바른 본동사 형태를 고르시오.",
+    "c": "This need not (be / to be) a hopeless thought.",
+    "o": [
+      "be",
+      "to be"
+    ],
+    "a": "be",
+    "e": "분석지 2번 문장 2 구문 분석: 조동사 need 뒤에 부정어 not과 결합할 때는 동사원형 be가 옵니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 가정법 과거 귀결절에서 조동사 과거형 would 뒤에 알맞은 수동태 형태를 고르시오.",
+    "c": "...any creature that tried would (outcompete / be outcompeted) by a creature that didn't.",
+    "o": [
+      "outcompete",
+      "be outcompeted"
+    ],
+    "a": "be outcompeted",
+    "e": "분석지 2번 문장 4 구문 분석: 경쟁에서 도태되는 수동 관계이므로 would be outcompeted가 올바릅니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 선행사를 자체에 포함하며 be동사 is의 주격 보어 절을 이끄는 알맞은 관계대명사를 고르시오.",
+    "c": "The automation is precisely (that / what) frees the captain to come up on deck...",
+    "o": [
+      "that",
+      "what"
+    ],
+    "a": "what",
+    "e": "분석지 2번 문장 5 구문 분석: 선행사가 없고 절 내에서 주어 역할을 하므로 관계대명사 what이 쓰여야 합니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 주격 관계대명사 that 뒤에서 복수 선행사 the few problems에 호응하는 동사 형태를 고르시오.",
+    "c": "...for the few problems that actually (require / requires) him.",
+    "o": [
+      "require",
+      "requires"
+    ],
+    "a": "require",
+    "e": "분석지 2번 문장 5 구문 분석: 선행사가 복수명사 the few problems이므로 복수 동사 require가 올바릅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "7번 문장의 5형식 구조에서 makes의 목적격 보어로 알맞은 어형을 고르시오.",
+    "c": "...the thing that makes a complex life (affordable / affordably) at all.",
+    "o": [
+      "affordable",
+      "affordably"
+    ],
+    "a": "affordable",
+    "e": "분석지 2번 문장 7 구문 분석: make + 목적어(a complex life) + 목적격 보어로 형용사 affordable이 와야 합니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "4번 문장의 <b>to run a whole life in real time</b>은 too slow and too costly를 뒤에서 수식합니다. 이 to부정사의 용법을 네 글자로 쓰시오.",
+    "ans": [
+      "부사적",
+      "부사적용법",
+      "부사적 용법"
+    ],
+    "show": "부사적 용법",
+    "e": "분석지 2번 문장 4 구문 분석: too 형용사를 수식하는 to부정사의 부사적 용법입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (자동화된 기본 설정)",
+      "키워드 B (복잡한 삶의 실시간 영위 가능성)"
+    ],
+    "rows": [
+      ["runs on settings laid down", 1],
+      ["triumph of engineering", 2],
+      ["The default", 1],
+      ["makes a complex life affordable", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: runs on settings/The default(키워드 A), triumph of engineering/makes complex life affordable(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "A person who lives eighty years lives some twenty-nine thousand days...",
+      "In one light it is a triumph of engineering.",
+      "The default is not a flaw in the human design. It is arguably the central feature, the thing that makes a complex life affordable at all.",
+      "The automation is precisely what frees the captain to come up on deck for the few problems that actually require him."
+    ],
+    "a": 3,
+    "e": "분석지 1번: 중심 문장은 6·7번 문장인 \"The default is not a flaw in the human design. It is arguably the central feature, the thing that makes a complex life affordable at all.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "현상 제시 - 반대 가정(가정법)을 통한 논거 제시 - 비유를 통한 핵심 가치 규명 및 결론",
+      "두 학자의 뇌과학 이론 대조 - 임상 실험 결과 비교 - 절충안 도출",
+      "인간 의식의 진화 과정 시대순 나열 - 인공지능과의 차이점 분석",
+      "수면 장애의 원인 분석 - 의식적 통제의 문제점 고발 - 치료법 제안"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '현상 제시 - 반대 가정(가정법)을 통한 논거 제시 - 비유를 통한 핵심 가치 규명 및 결론'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입부(자동화 현상 소개 및 긍정적 재해석) → 사고 실험 및 반대 가정을 통한 논거 강화(의식적 제어의 한계 입증) → 결론부(선장 비유를 통한 자동화의 진정한 가치 입증)",
+      "문제 제기 → 실험 검증 → 이론 폐기",
+      "원인 분석 → 결과 도출 → 제도적 대안 마련",
+      "배경 설명 → 전문가 인터뷰 소개 → 향후 과제 제시"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입부) → 두 번째 부분(논거 강화) → 세 번째 부분(결론부)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "The Efficiency and Value of Automated (A) ________ Settings Enabling (B) ________ Human Life",
+    "ans": [
+      "Default Complex",
+      "default complex",
+      "Default, Complex",
+      "default, complex"
+    ],
+    "show": "Default Complex (전체: The Efficiency and Value of Automated Default Settings Enabling Complex Human Life)",
+    "e": "분석지 1번 주제: Default, Complex"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "ox",
+    "s": "인간의 자동화된 기본 설정은 복잡한 삶을 감당 가능하게 만들어 주는 중심적 특징이다.",
+    "a": "O",
+    "e": "7번 문장과 분석지 1번 중심 문장 설명에 완벽히 일치합니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 5번 문장의 빈칸에 들어갈 단어이자 원래 시험 문제의 정답으로 제시된 것은?",
+    "o": [
+      "reflection",
+      "prediction",
+      "calculation",
+      "automation",
+      "manipulation"
+    ],
+    "a": 4,
+    "e": "분석지 4번 5단계: 정답은 ④번 automation입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 분석 중 <b>①번(reflection)</b>과 <b>③번(calculation)</b>이 정답이 될 수 <u>없는</u> 공통된 이유로 설명된 것은?",
+    "o": [
+      "타인을 조종하는 사회적 관계를 나타내기 때문에",
+      "미래 사건을 예견하는 수리적 예측에 불과하기 때문에",
+      "지문에서 비효율적이라고 지적한 의식적인 마음(deliberate mind / consciously decide)의 범주에 해당하여 에너지를 고갈시키기 때문에",
+      "선장의 권한을 완전히 박탈하는 행위이기 때문에"
+    ],
+    "a": 3,
+    "e": "분석지 4번 5단계 오답 분석: reflection과 calculation은 지문에서 너무 느리고 비용이 많이 든다고 지적한 의식적 마음의 범주에 해당하므로 오답입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "6번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "기본 설정은 인간 설계에서의 결함이 아니다.<br><small>「조건」 The default, a flaw, human design 활용 (총 9단어)</small>",
+    "ans": [
+      "The default is not a flaw in the human design.",
+      "the default is not a flaw in the human design"
+    ],
+    "show": "The default is not a flaw in the human design.",
+    "e": "6번 문장 원문: The default is not a flaw in the human design."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "The automation is precisely that frees the captain to come up on deck... the thing that makes a complex life affordably at all.",
+    "keys": [
+      {
+        "k": "what",
+        "show": "that → what"
+      },
+      {
+        "k": "affordable",
+        "show": "affordably → affordable"
+      }
+    ],
+    "e": "5번과 7번 문장: 선행사가 없으므로 관계대명사 what이 와야 하며, makes의 목적격 보어 자리에는 형용사 affordable이 와야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 4번 문장을 바탕으로, <b>만약 인간이 모든 행동을 의식적으로 결정해야 한다면 발생하는 두 가지 치명적인 문제점</b>을 서술하시오.",
+    "show": "첫째, 신중하게 생각하는 마음은 너무 느리고 에너지가 너무 많이 들어 침대 밖으로 나오지도 못하고 삶을 실시간으로 영위할 수 없게 되며, 둘째, 그렇게 시도하는 생명체는 무의식적으로 행동을 자동 처리하는 생명체와의 생존 경쟁에서 완전히 도태된다.",
+    "crit": "① 의식적 사고의 속도와 에너지 비용 한계로 실시간 삶이 마비된다는 점 서술 (2점) ② 행동을 자동 처리하는 생명체와의 경쟁에서 도태된다는 점 서술 (2점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 5번 문장에 등장하는 <b>'선장(the captain)'의 비유적 의미</b>를 밝히고, <b>'자동화(The automation)'가 선장에게 제공하는 핵심적인 역할</b>을 서술하시오.",
+    "show": "'선장'은 인간의 의식적인 생각과 고차원적 판단 체계를 비유한다. 자동화는 사소한 일상적 행동들을 무의식적으로 대신 처리해 줌으로써, 선장이 실제로 자신을 필요로 하는 중대하고 결정적인 소수의 문제들을 처리하기 위해 갑판 위로 올라올 수 있는 여유를 마련해 준다.",
+    "crit": "① 선장의 비유적 의미(의식/고차원적 사고 체계) 서술 (1점) ② 사소한 일을 대신 처리하여 중대한 문제에 집중할 여유를 준다는 역할 서술 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

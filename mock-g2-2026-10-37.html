@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "37번 순서 배열 심층 분석지 확인 문제",
+  "section": "수능 영어 · 37번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 37번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Reappraisal—changing the way one thinks about emotional situations—might present a particularly effective avenue to regulating emotions because it transforms emotions at their root."],
+    [2, "Take, for example, someone who is going through a divorce."],
+    [3, "This is often an adverse event, and yet, it can be construed in different ways."],
+    [4, "One might view it as an overpowering loss that will mark one's family for life."],
+    [5, "Alternatively, one might see it as something that is painful but that might lead to positive outcomes in the long run, such as improved relationships."],
+    [6, "As a result of these different construals, one might feel different emotions."],
+    [7, "The first construal may bring intense sadness and anger."],
+    [8, "The second construal might also bring sadness and anger but perhaps at lower levels."],
+    [9, "Crucially, it might also bring some positive emotions, such as hope, strength, or gratitude."],
+    [10, "This example illustrates how reappraisal might powerfully transform short-term emotional responses."],
+    [11, "When repeated over time, these short-term emotional consequences of reappraisal might accumulate to shape people's psychological health."],
+    [12, "Thereby, reappraisal might be a key to resilience."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "재평가는 감정적 상황에 대해 생각하는 방식을 바꾸는 것으로, 감정을 뿌리에서부터 변형시킨다.",
+    "a": "O",
+    "e": "1번 문장(changing the way one thinks about emotional situations, transforms emotions at their root)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "이혼과 같은 역경은 단 하나의 고정된 방식으로만 해석될 수 있다.",
+    "a": "X",
+    "e": "3번 문장에 따르면 서로 다른 방식들로 해석될 수 있습니다(it can be construed in different ways)."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "이혼을 평생 가족에게 상처를 남길 압도적인 상실로 바라보는 해석 방식이 있을 수 있다.",
+    "a": "O",
+    "e": "4번 문장(an overpowering loss that will mark one's family for life)과 일치합니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "두 번째 해석 방식은 이혼을 고통이 전혀 없는 순수한 축복으로만 간주한다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 고통스럽기는 하지만 장기적으로 긍정적인 결과로 이어질 수도 있는 것(something that is painful but...)으로 봅니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "첫 번째 해석은 극심한 슬픔과 분노를 불러올 수 있다.",
+    "a": "O",
+    "e": "7번 문장(bring intense sadness and anger)과 일치합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "두 번째 해석에서는 슬픔이나 분노와 같은 부정적 감정이 완전히 사라져 전혀 발생하지 않는다.",
+    "a": "X",
+    "e": "8번 문장에 따르면 두 번째 해석 역시 슬픔과 분노를 가져오지만 더 낮은 수준(at lower levels)에서 불러옵니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "두 번째 해석은 희망, 내면의 힘, 감사와 같은 긍정적인 감정들을 불러올 수도 있다.",
+    "a": "O",
+    "e": "9번 문장(bring some positive emotions, such as hope, strength, or gratitude)과 일치합니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "재평가의 단기적인 감정적 결과들은 시간이 지나도 축적되지 않고 매번 즉시 사라진다.",
+    "a": "X",
+    "e": "11번 문장에 따르면 반복될 때 이러한 결과들이 축적되어 사람들의 심리적 건강을 형성합니다(accumulate to shape people's psychological health)."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "해석하다, 이해하다",
+      "압도적인, 저항할 수 없는",
+      "축적되다, 쌓이다",
+      "회복 탄력성"
+    ],
+    "rows": [
+      ["construe", 1],
+      ["overpowering", 2],
+      ["accumulate", 3],
+      ["resilience", 4]
+    ],
+    "e": "분석지 2번 및 5번 어휘: construe(해석하다), overpowering(압도적인), accumulate(축적되다), resilience(회복 탄력성)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>construe</b>와 <b>construct</b>의 의미 구별로 옳은 것은?",
+    "o": [
+      "construe는 텍스트나 사건의 의미를 '해석하다'를 뜻하고, construct는 건물 등을 '건설하다, 구성하다'를 뜻한다.",
+      "construe는 물질을 파괴함을 뜻하고, construct는 감정을 억누름을 뜻한다.",
+      "두 단어는 철자와 뜻이 완전히 동일하여 문맥상 항상 교체 가능한 유의어이다.",
+      "본문의 construed는 법률 조항을 물리적으로 건축한다는 의미로 쓰였다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동하기 쉬운 어휘: construe는 의미를 '해석하다, 이해하다'이며, construct는 '건설하다, 구성하다'입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>adverse</b>와 <b>averse</b>의 어휘 설명으로 알맞은 것은?",
+    "o": [
+      "adverse는 상황이나 조건이 '불리한' 것을 뜻하고, averse는 사람의 태도가 무언가를 '꺼리는, 싫어하는' 것을 뜻한다.",
+      "adverse는 호의적인 태도를 뜻하고, averse는 자연재해를 뜻한다.",
+      "두 단어는 접미사에 따른 상호 반의어 관계이다.",
+      "본문의 adverse event는 '참가자 모두가 선호하는 행사'를 의미한다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: adverse는 상황이 '불리한(adverse event)', averse는 태도가 '~을 꺼리는(risk-averse)'입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>accumulate</b>(축적되다)의 반의어 두 단어를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["disperse", "dissipate"]],
+      ["②", ["disperse", "dissipate"]]
+    ],
+    "show": "disperse, dissipate",
+    "e": "분석지 5번 동의어 및 반의어: accumulate의 반의어로 disperse, dissipate가 제시되어 있습니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>resilience</b>(회복 탄력성)의 동의어 네 단어 중 두 개를 쓰시오. (순서 무관)",
+    "any": true,
+    "blanks": [
+      ["①", ["elasticity", "buoyancy", "flexibility", "endurance"]],
+      ["②", ["elasticity", "buoyancy", "flexibility", "endurance"]]
+    ],
+    "show": "elasticity, buoyancy, flexibility, endurance 중 두 개",
+    "e": "분석지 5번 동의어: elasticity, buoyancy, flexibility, endurance"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "2번 문장에서 고난이나 시련을 '겪다, 통과하다'라는 뜻을 지닌 두 단어의 숙어 표현을 본문에서 찾아 쓰시오. (동사원형 기준)",
+    "ans": [
+      "go through"
+    ],
+    "show": "go through",
+    "e": "분석지 2번 문장 2 어휘: go through((고난을) 겪다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "12번 문장에서 '그것에 의하여, 그 때문에'라는 뜻을 나타내는 한 단어의 접속부사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "Thereby",
+      "thereby"
+    ],
+    "show": "Thereby",
+    "e": "분석지 2번 문장 12 어휘: Thereby(그것에 의하여, 그 때문에)"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 avenue to 뒤에서 전치사 to의 목적어로 알맞은 동명사 형태를 고르시오.",
+    "c": "...might present a particularly effective avenue to (regulate / regulating) emotions...",
+    "o": [
+      "regulate",
+      "regulating"
+    ],
+    "a": "regulating",
+    "e": "분석지 2번 문장 1 구문 분석: avenue to에서 to는 전치사이므로 동명사 regulating이 와야 합니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장에서 주어 it이 다른 방식들로 '해석될 수 있다'는 수동태 형태를 고르시오.",
+    "c": "...and yet, it can (construe / be construed) in different ways.",
+    "o": [
+      "construe",
+      "be construed"
+    ],
+    "a": "be construed",
+    "e": "분석지 2번 문장 3 구문 분석: 사건(it)이 해석되는 수동 관계이므로 조동사 수동태 be construed가 올바릅니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 선행사 something을 수식하여 '고통스럽지만 긍정적 결과로 이어질 수도 있는' 두 개의 절을 대등하게 묶어주는 알맞은 관계사를 고르시오.",
+    "c": "...something (that / what) is painful but (that / what) might lead to positive outcomes...",
+    "o": [
+      "that",
+      "what"
+    ],
+    "a": "that",
+    "e": "분석지 2번 문장 5 구문 분석: 선행사 something을 수식하는 주격 관계대명사 that절 두 개가 병렬 연결되었습니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "10번 문장의 타동사 illustrates 뒤에서 간접의문문 명사절을 이끄는 알맞은 의문사를 고르시오.",
+    "c": "This example illustrates (how / what) reappraisal might powerfully transform short-term emotional responses.",
+    "o": [
+      "how",
+      "what"
+    ],
+    "a": "how",
+    "e": "분석지 2번 문장 10 구문 분석: 완전한 3형식 절을 이끌며 '어떻게 변형시키는지'를 나타내는 의문부사 how가 올바릅니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "11번 문장의 시간 접속사 When 뒤에서 주절의 주어인 결과들이 '반복될 때'를 나타내는 알맞은 수동 분사 형태를 고르시오.",
+    "c": "When (repeating / repeated) over time, these short-term emotional consequences...",
+    "o": [
+      "repeating",
+      "repeated"
+    ],
+    "a": "repeated",
+    "e": "분석지 2번 문장 11 구문 분석: 결과들이 반복되는 수동 관계이므로 과거분사 repeated가 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "ox",
+    "s": "1번 문장의 the way 뒤에는 관계부사 how를 함께 나란히 써서 the way how로 표현할 수 있다.",
+    "a": "X",
+    "e": "분석지 2번 문장 1 구문 분석: the way와 how는 함께 쓸 수 없으며, that이나 in which를 쓰거나 둘 중 하나만 써야 합니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "short",
+    "s": "11번 문장의 <b>to shape people's psychological health</b>는 앞선 동사 accumulate의 궁극적 귀결을 나타냅니다. 이 to부정사의 부사적 용법 중 구체적인 의미 범주를 두 글자로 쓰시오.",
+    "ans": [
+      "결과"
+    ],
+    "show": "결과",
+    "e": "분석지 2번 문장 11 구문 분석: '축적되어 결국 형성하다'라는 축적의 궁극적 귀결을 나타내는 to부정사 부사적 용법의 '결과'입니다."
+  },
+  {
+    "n": 23,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (감정적 상황에 대한 재평가)",
+      "키워드 B (감정의 질적 변형과 심리적 회복 탄력성)"
+    ],
+    "rows": [
+      ["changing the way one thinks about emotional situations", 1],
+      ["transform short-term emotional responses", 2],
+      ["construed in different ways", 1],
+      ["key to resilience", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: changing the way/construed in different ways(키워드 A), transform short-term responses/key to resilience(키워드 B)"
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "본문에 쓰인 연결어와 그 논리적 기능을 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "추상적 재평가 개념을 입증하기 위해 구체적 사건을 도입하는 예시 기능",
+      "첫 번째 부정적 시각과 상반되는 두 번째 재평가 시각을 도입하는 대안 기능",
+      "단기 감정의 누적과 정신 건강 형성을 바탕으로 최종 결론을 맺는 인과 기능"
+    ],
+    "rows": [
+      ["Take, for example (2번 문장)", 1],
+      ["Alternatively (5번 문장)", 2],
+      ["Thereby (12번 문장)", 3]
+    ],
+    "e": "분석지 2번 연결어의 기능: Take for example(구체적 사건 도입), Alternatively(대안적 시각 도입), Thereby(최종 결론 인과)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "Reappraisal—changing the way one thinks about emotional situations—might present a particularly effective avenue...",
+      "Take, for example, someone who is going through a divorce.",
+      "As a result of these different construals, one might feel different emotions.",
+      "When repeated over time, these short-term emotional consequences of reappraisal might accumulate to shape people's psychological health. Thereby, reappraisal might be a key to resilience."
+    ],
+    "a": 4,
+    "e": "분석지 1번: 중심 문장은 11·12번 문장인 \"When repeated over time, these short-term emotional consequences of reappraisal might accumulate to shape people's psychological health. Thereby, reappraisal might be a key to resilience.\"입니다."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "일반 원리 제시 - 구체적 이혼 사례(해석 대조) - 감정적 결과 분석 - 장기적 회복 탄력성 이론 도출",
+      "이혼율 증가 통계 분석 - 가족 해체의 경제적 원인 규명 - 복지 정책 제안",
+      "인간 감정의 진화론적 기원 추적 - 분노와 슬픔의 생물학적 메커니즘 비교",
+      "심리 치료 기법의 찬반 논쟁 소개 - 임상 시험 데이터 검증 - 절충안 도출"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '일반 원리 제시 - 구체적 이혼 사례(해석 대조) - 감정적 결과 분석 - 장기적 회복 탄력성 이론 도출'의 전개 방식입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입부(재평가의 학술적 정의) → 구체적 예시 도입(이혼 사례와 두 가지 해석 방식 대조) → 상세 분석 및 결론(해석에 따른 감정 반응 분기 및 장기적 회복 탄력성 형성)",
+      "가설 설정 → 통계 검증 → 이론 폐기",
+      "문제 제기 → 책임자 문책 → 제도 개선",
+      "배경 설명 → 전문가 인터뷰 → 향후 과제 제시"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입부) → 두 번째 부분(구체적 예시 도입) → 세 번째 부분(상세 분석 및 결론)"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "The Power of Cognitive Reappraisal Driving the Fundamental (A) ________ of Emotions and Psychological (B) ________",
+    "ans": [
+      "Transformation Resilience",
+      "transformation resilience",
+      "Transformation, Resilience",
+      "transformation, resilience"
+    ],
+    "show": "Transformation Resilience (전체: The Power of Cognitive Reappraisal Driving the Fundamental Transformation of Emotions and Psychological Resilience)",
+    "e": "분석지 1번 주제: Transformation, Resilience"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "ox",
+    "s": "재평가는 단기적인 감정 반응을 변화시킬 뿐만 아니라, 장기적으로 누적되어 개인의 심리적 회복 탄력성의 핵심이 될 수 있다.",
+    "a": "O",
+    "e": "분석지 1번 주제 및 10번, 11번, 12번 문장과 완벽히 일치합니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "원래 시험 문제(순서 배열)에서 글의 흐름으로 가장 적절한 순서이자 분석지 4번에서 제시된 정답 번호는?",
+    "o": [
+      "(A) - (C) - (B)",
+      "(B) - (A) - (C)",
+      "(B) - (C) - (A)",
+      "(C) - (B) - (A)",
+      "(C) - (A) - (B)"
+    ],
+    "a": 3,
+    "e": "분석지 4번 문제 풀이: 정답은 ③ (B) - (C) - (A)입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 문제 풀이에서 글덩어리 <b>(A)</b>가 주어진 글 바로 뒤에 올 수 <u>없는</u> 이유로 설명된 것은?",
+    "o": [
+      "(A)의 시작에 쓰인 This example에 해당하는 구체적인 예시가 주어진 글에 아직 등장하지 않았기 때문에",
+      "(A)의 주어가 복수 대명사 they로 시작하여 지칭 대상을 찾을 수 없기 때문에",
+      "(A)에는 부정적 감정만을 비판하는 내용만 담겨 있기 때문에",
+      "(A)의 시제가 과거완료로 쓰여 주어진 글과 시제가 충돌하기 때문에"
+    ],
+    "a": 1,
+    "e": "분석지 4번 (A) 분석: (A)의 지시대명사구 This example(이 예시)에 해당하는 구체적 예시가 주어진 글에 없으므로 바로 올 수 없습니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번에서 글덩어리 <b>(C)</b>의 첫머리에 나오는 <b>these different construals</b>가 직접 이어받는 내용으로 설명된 것은?",
+    "o": [
+      "(B)의 후반부에서 제시된 이혼에 대한 두 가지 상반된 해석 방식 (상실로 보기 vs 장기적 긍정 결과로 보기)",
+      "주어진 글에서 설명한 재평가의 학술적 정의",
+      "(A)에서 제시된 심리적 회복 탄력성의 정의",
+      "법원의 판결과 관련된 사법적 해석 절차"
+    ],
+    "a": 1,
+    "e": "분석지 4번 (C) 분석: (B)의 후반부에서 제시된 두 가지 구체적 해석 방식(상실 vs 긍정적 결과)을 these different construals로 받아 연결합니다."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "sent",
+    "s": "12번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "그것에 의해, 재평가는 회복 탄력성에 이르는 핵심일지도 모른다.<br><small>「조건」 Thereby, reappraisal, a key to resilience 활용 (총 8단어)</small>",
+    "ans": [
+      "Thereby, reappraisal might be a key to resilience.",
+      "thereby, reappraisal might be a key to resilience"
+    ],
+    "show": "Thereby, reappraisal might be a key to resilience.",
+    "e": "12번 문장 원문: Thereby, reappraisal might be a key to resilience."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "This is often an adverse event, and yet, it can construe in different ways... When repeating over time, these short-term emotional consequences of reappraisal might accumulate to shape people's psychological health.",
+    "keys": [
+      {
+        "k": "be construed",
+        "show": "construe → be construed"
+      },
+      {
+        "k": "repeated",
+        "show": "repeating → repeated"
+      }
+    ],
+    "e": "3번과 11번 문장: 사건(it)이 해석되는 수동 관계이므로 be construed가 와야 하며, 감정적 결과들이 반복되는 수동 관계이므로 과거분사 repeated가 와야 합니다."
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 4번과 5번 문장을 바탕으로, 이혼이라는 동일한 역경에 대해 가질 수 있는 <b>두 가지 상반된 인지적 해석(construals)</b>을 각각 서술하시오.",
+    "show": "첫째, 가족에게 평생 동안 지워지지 않는 낙인과 상처를 남길 압도적인 상실로 바라보는 해석이며, 둘째, 고통스럽기는 하지만 개선된 인간관계처럼 장기적으로는 긍정적인 결과로 이어질 수 있는 무언가로 바라보는 대안적 해석이다.",
+    "crit": "① 첫 번째 해석(평생 낙인을 남길 압도적 상실) 서술 (1.5점) ② 두 번째 해석(고통스럽지만 장기적으로 긍정적 결과로 이어질 수 있는 계기) 서술 (1.5점)"
+  },
+  {
+    "n": 36,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 10번부터 12번 문장을 참고하여, <b>재평가의 '단기적인 감정 반응 변형'이 장기적으로 어떻게 '회복 탄력성(resilience)'의 핵심으로 발전하는지</b> 그 누적 메커니즘을 서술하시오.",
+    "show": "재평가는 특정 사건에 대한 슬픔과 분노의 강도를 낮추고 희망이나 감사 같은 긍정적 감정을 불러일으킴으로써 단기적 감정 반응을 강력하게 변형시킨다. 이러한 단기적 감정 결과들이 시간이 지남에 따라 반복되고 축적됨으로써 사람들의 전반적인 심리적 건강을 형성하여, 궁극적으로 역경을 딛고 일어서는 회복 탄력성의 핵심이 된다.",
+    "crit": "① 단기적 감정 변형(부정적 감정 완화 및 긍정적 감정 유발) 언급 (1.5점) ② 시간의 경과에 따른 반복·축적을 통한 심리적 건강 및 회복 탄력성 형성 서술 (1.5점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

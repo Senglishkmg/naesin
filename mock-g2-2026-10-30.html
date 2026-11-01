@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "30번 어휘 추론 심층 분석지 확인 문제",
+  "section": "수능 영어 · 30번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 30번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "A study by Eva McMahan, professor of speech communication, confirmed the dominance of nonverbal signals."],
+    [2, "The phenomenon, however, was especially pronounced when adults found themselves in situations with conflicting messages (i.e., situations in which the contents of the verbal and nonverbal messages differ)."],
+    [3, "Attempts to manipulate another person verbally are therefore likely to fail if the accompanying nonverbal communication does not match the spoken message."],
+    [4, "This is because people trust nonverbal messages more than verbal ones."],
+    [5, "When somebody tells you that they enjoy spending time with you, but you notice how they are looking away and are forcing a smile, you are probably less inclined to believe their words."],
+    [6, "The same is probably true when you are back at the office after a sickness and your colleague tells you with a smiling expression that they were happy to take over your workload."],
+    [7, "You might not believe that they enjoyed replacing you while you were gone."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "Eva McMahan 교수의 연구는 비언어적 신호의 지배력을 확인해 주었다.",
+    "a": "O",
+    "e": "1번 문장(confirmed the dominance of nonverbal signals)과 일치합니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "비언어적 신호의 우위 현상은 언어적 메시지와 비언어적 메시지가 서로 일치할 때 가장 두드러지게 관찰된다.",
+    "a": "X",
+    "e": "2번 문장에 따르면 메시지의 내용이 서로 다른 '상충하는 상황(situations with conflicting messages)'에서 특히 두드러집니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "동반되는 비언어적 표현이 말과 일치하지 않더라도 언어적 조종 시도는 대부분 성공을 거둔다.",
+    "a": "X",
+    "e": "3번 문장에 따르면 비언어적 의사소통이 말과 일치하지 않으면 언어적으로 조종하려는 시도는 실패할 가능성이 높습니다(likely to fail)."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "사람들은 언어적인 메시지보다 비언어적인 메시지를 더 신뢰하는 경향이 있다.",
+    "a": "O",
+    "e": "4번 문장(people trust nonverbal messages more than verbal ones)과 일치합니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "상대방이 함께 있는 것이 즐겁다고 말하면서 시선을 딴 데로 돌리고 억지 미소를 지으면 그의 말을 더 깊이 신뢰하게 된다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 시선을 돌리고 억지 미소를 지을 때 상대의 말을 덜 믿는 쪽으로 기울어집니다(less inclined to believe their words)."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "직장에 복귀했을 때 동료가 미소를 띤 표정으로 업무를 대신해 주어 기뻤다고 말하는 상황에서도 같은 원리가 적용될 수 있다.",
+    "a": "O",
+    "e": "6번 문장(The same is probably true...)과 일치합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "자리를 비운 동안 동료가 자신을 대신해 일한 것을 진정으로 즐겼다고 화자는 완전히 믿게 된다.",
+    "a": "X",
+    "e": "7번 문장에 따르면 자리를 비운 동안 그들이 대신 일한 것을 즐겼다고는 믿지 않을지도 모릅니다(might not believe)."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "비언어적 신호에는 표정이나 시선 처리와 같은 요소들이 포함된다.",
+    "a": "O",
+    "e": "1번 및 5번 문장 구문 분석과 어휘 설명(looking away, forcing a smile)과 일치합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "우위, 지배력",
+      "두드러진, 확연한",
+      "상충하는, 모순되는",
+      "(업무 등을) 인계받다, 넘겨받다"
+    ],
+    "rows": [
+      ["dominance", 1],
+      ["pronounced", 2],
+      ["conflicting", 3],
+      ["take over", 4]
+    ],
+    "e": "분석지 2번 어휘: dominance(우위, 지배력), pronounced(두드러진), conflicting(상충하는), take over(인계받다)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>pronounced</b>의 쓰임에 관한 설명으로 옳은 것은?",
+    "o": [
+      "동사 pronounce에서 유래했으나 본문처럼 형용사로 쓰일 때는 '눈에 띄는, 현저한'의 뜻을 지닌다.",
+      "본문의 pronounced는 오직 음성학적으로 '정확하게 발음된'이라는 수동 의미로만 해석된다.",
+      "pronounced는 의사소통에서 문법적 오류가 전혀 없음을 나타내는 수식어이다.",
+      "pronounced는 조종하다를 뜻하는 manipulate와 상호 교체 가능한 완전한 동의어이다."
+    ],
+    "a": 1,
+    "e": "분석지 5번 혼동 어휘: pronounced는 형용사로 쓰일 때 '눈에 띄는, 현저한(noticeable, prominent)'의 뜻을 지닙니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>dominance</b>(우위, 지배)의 동의어로 묶인 것은?",
+    "o": [
+      "supremacy, preeminence, ascendancy",
+      "contradictory, inconsistent, clashing",
+      "consistent, harmonious, agreeable",
+      "frugal, thrifty, economical"
+    ],
+    "a": 1,
+    "e": "분석지 5번 동의어: dominance의 동의어로 supremacy, preeminence, ascendancy가 정리되어 있습니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>conflicting</b>(상충하는)의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "contradictory, inconsistent",
+      "consistent, harmonious",
+      "noticeable, prominent",
+      "supremacy, ascendancy"
+    ],
+    "a": 2,
+    "e": "분석지 5번 동의어 및 반의어: conflicting의 동의어는 contradictory, inconsistent이며 반의어는 consistent, harmonious입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "5번 문장에서 '마음 없는 억지 미소를 짓다'라는 뜻을 지닌 세 단어의 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "force a smile",
+      "forcing a smile"
+    ],
+    "show": "force a smile (또는 forcing a smile)",
+    "e": "분석지 2번 문장 5 어휘: force a smile(억지 미소를 짓다)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "6번 문장에서 '앞선 원리가 마찬가지로 적용된다'라는 뜻을 나타내는 네 단어의 관용구를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "The same is true",
+      "the same is true"
+    ],
+    "show": "The same is true",
+    "e": "분석지 2번 문장 6 어휘: The same is true(마찬가지이다, 같은 것이 적용된다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "2번 문장의 괄호 안에 쓰여 '즉, 다시 말하면(= that is)'을 의미하는 라틴어 약어 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "i.e.",
+      "i.e"
+    ],
+    "show": "i.e.",
+    "e": "분석지 2번 문장 2 구문 분석: i.e.는 라틴어 id est의 약어로 '즉, 다시 말하면'을 뜻합니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장에서 situations 뒤에 완전한 1형식 절을 이끄는 알맞은 관계사 형태를 고르시오.",
+    "c": "...situations (which / in which) the contents of the verbal and nonverbal messages differ...",
+    "o": [
+      "which",
+      "in which"
+    ],
+    "a": "in which",
+    "e": "분석지 2번 문장 2 구문 분석: 뒤에 완전한 절(the contents ~ differ)이 이어지므로 전치사+관계대명사 in which가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 관계사절 내부에서 주어인 복수명사 the contents에 호응하는 본동사를 고르시오.",
+    "c": "...the contents of the verbal and nonverbal messages (differs / differ).",
+    "o": [
+      "differs",
+      "differ"
+    ],
+    "a": "differ",
+    "e": "분석지 2번 문장 2 구문 분석: 관계사절의 주어가 복수명사 the contents이므로 복수 동사 differ가 쓰여야 합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 시간 부사절에서 주어 adults와 목적어가 동일함을 나타내는 알맞은 대명사를 고르시오.",
+    "c": "...when adults found (them / themselves) in situations with conflicting messages...",
+    "o": [
+      "them",
+      "themselves"
+    ],
+    "a": "themselves",
+    "e": "분석지 2번 문장 2 구문 분석: 주어 adults와 목적어가 같으므로 재귀대명사 themselves를 씁니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 주어부 핵심 명사인 복수명사 Attempts에 호응하는 be동사를 고르시오.",
+    "c": "Attempts to manipulate another person verbally (is / are) therefore likely to fail...",
+    "o": [
+      "is",
+      "are"
+    ],
+    "a": "are",
+    "e": "분석지 2번 문장 3 구문 분석: 주어부의 핵심 명사가 복수명사 Attempts이므로 복수 be동사 are가 올바릅니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 앞에 나온 복수명사 messages의 반복을 피하기 위해 쓰인 부정대명사를 고르시오.",
+    "c": "...people trust nonverbal messages more than verbal (one / ones).",
+    "o": [
+      "one",
+      "ones"
+    ],
+    "a": "ones",
+    "e": "분석지 2번 문장 4 구문 분석: 복수명사 messages를 대신하므로 복수 부정대명사 ones가 쓰였습니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 enjoy의 목적어로 알맞은 준동사 형태를 고르시오.",
+    "c": "...they enjoy (spending / to spend) time with you...",
+    "o": [
+      "spending",
+      "to spend"
+    ],
+    "a": "spending",
+    "e": "분석지 2번 문장 5 구문 분석: enjoy는 동명사 spending을 목적어로 취합니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "ox",
+    "s": "6번 문장의 to take over your workload는 감정 형용사 happy 뒤에서 감정의 원인을 나타내는 to부정사의 부사적 용법이다.",
+    "a": "O",
+    "e": "분석지 2번 문장 6 구문 분석: happy 뒤에서 감정의 원인을 설명하는 to부정사의 부사적 용법입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "3번 문장의 <b>to manipulate another person verbally</b>는 앞의 명사 Attempts를 뒤에서 수식합니다. 이 to부정사의 용법을 네 글자로 쓰시오.",
+    "ans": [
+      "형용사적",
+      "형용사적용법",
+      "형용사적 용법"
+    ],
+    "show": "형용사적 용법",
+    "e": "분석지 2번 문장 3 구문 분석: 명사 Attempts를 수식하는 to부정사의 형용사적 용법입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (비언어적 신호의 지배력)",
+      "키워드 B (상충하는 메시지 상황에서의 불신)"
+    ],
+    "rows": [
+      ["dominance of nonverbal signals", 1],
+      ["conflicting messages", 2],
+      ["trust nonverbal messages more", 1],
+      ["less inclined to believe their words", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: dominance/trust nonverbal more(키워드 A), conflicting messages/less inclined to believe(키워드 B)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "본문에 쓰인 연결어와 그 논리적 기능을 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "일반적 우위에서 '상충하는 상황'이라는 특수 맥락으로 초점을 좁히는 전환 기능",
+      "앞선 상충 상황의 특성으로부터 조종의 실패라는 결론을 유도하는 인과 기능",
+      "앞 문장의 결과(조종 실패)에 대한 근본적인 심리적 원인을 제시하는 인과 기능"
+    ],
+    "rows": [
+      ["however (2번 문장)", 1],
+      ["therefore (3번 문장)", 2],
+      ["This is because (4번 문장)", 3]
+    ],
+    "e": "분석지 2번 연결어의 기능: however(상충 상황으로 초점 전환), therefore(인과적 결론), This is because(근본 이유 제시)"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 <b>중심 문장</b>으로 옳은 것은?",
+    "o": [
+      "A study by Eva McMahan, professor of speech communication, confirmed the dominance of nonverbal signals.",
+      "Attempts to manipulate another person verbally are therefore likely to fail if the accompanying nonverbal communication does not match the spoken message.",
+      "This is because people trust nonverbal messages more than verbal ones.",
+      "The same is probably true when you are back at the office after a sickness..."
+    ],
+    "a": 2,
+    "e": "분석지 1번: 중심 문장은 3번 문장 \"Attempts to manipulate another person verbally are therefore likely to fail if the accompanying nonverbal communication does not match the spoken message.\"입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "연구 결과 제시 - 일반 원리 도출 - 일상적 사례를 통한 확증",
+      "가설 설정 - 실험군 대조군 비교 - 반론 제기",
+      "언어 발달의 역사적 변천사 서술 - 문화권별 차이 비교",
+      "직장 내 의사소통 갈등 통계 분석 - 제도적 해결책 촉구"
+    ],
+    "a": 1,
+    "e": "분석지 3번 서술 전략: '연구 결과 제시 - 일반 원리 도출 - 일상적 사례를 통한 확증'의 전개 방식입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "도입부(핵심 조건인 상충 상황 설정) → 논리적 심화(심리적 원인과 메커니즘 설명) → 상세 사례 및 결론(일상과 직장 정황을 통한 주제 확증)",
+      "문제 제기 → 실험 검증 → 이론 폐기",
+      "배경 설명 → 인물 인터뷰 소개 → 향후 과제 제시",
+      "원인 분석 → 결과 도출 → 법적 제재 제안"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(도입부) → 두 번째 부분(논리적 심화) → 세 번째 부분(상세 사례 및 결론)"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 영문 주제의 빈칸 (A), (B)에 들어갈 단어를 쓰시오.",
+    "c": "The Dominance of Nonverbal (A) ________ in Situations with (B) ________ Messages",
+    "ans": [
+      "Signals Conflicting",
+      "signals conflicting",
+      "Signals, Conflicting",
+      "signals, conflicting"
+    ],
+    "show": "Signals Conflicting (전체: The Dominance of Nonverbal Signals in Situations with Conflicting Messages)",
+    "e": "분석지 1번 주제: Signals, Conflicting"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번 문제 풀이의 1단계에서 5번 문장의 <b>less inclined to believe</b> 자리에 <b>more</b>가 쓰이면 안 되는 이유로 설명된 것은?",
+    "o": [
+      "시선을 피하고 억지 미소를 지을 때 상대의 말을 더 신뢰한다는 것은 비언어적 신호의 지배력이라는 글의 핵심 명제와 정면으로 충돌하기 때문에",
+      "상대방의 직업적 권위가 높을수록 비언어 신호가 무시되기 때문에",
+      "어린이와 성인의 의사소통 발달 단계 차이를 반영하지 못하기 때문에",
+      "직장 내 언어 조종이 항상 성공한다는 결론으로 이어지기 때문에"
+    ],
+    "a": 1,
+    "e": "분석지 4번 1단계: 시선을 피하고 억지 미소를 지을 때 상대의 말을 더 신뢰하게 된다는 것은 비언어적 신호의 지배력이라는 명제와 정면으로 충돌합니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번 문제 풀이의 2단계에서 논리적 흐름을 완성하기 위해 대입해야 할 적절한 어휘의 방향성으로 제시되지 <u>않은</u> 것은?",
+    "o": [
+      "fail (실패하다)",
+      "differ (다르다)",
+      "trust nonverbal more (비언어를 더 신뢰하다)",
+      "more inclined to believe (더 믿는 경향이 있다)"
+    ],
+    "a": 4,
+    "e": "분석지 4번 결론: 비언어 신호가 어긋날 때 불신이 발생해야 하므로 less inclined to believe가 되어야 하며, more inclined to believe는 부적절한 방향입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "4번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "이는 사람들이 언어적인 메시지보다 비언어적인 메시지를 더 신뢰하기 때문이다.<br><small>「조건」 This is because, trust nonverbal messages, verbal ones 활용 (총 10단어)</small>",
+    "ans": [
+      "This is because people trust nonverbal messages more than verbal ones.",
+      "this is because people trust nonverbal messages more than verbal ones"
+    ],
+    "show": "This is because people trust nonverbal messages more than verbal ones.",
+    "e": "4번 문장 원문: This is because people trust nonverbal messages more than verbal ones."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "The phenomenon, however, was especially pronounced when adults found them in situations with conflicting messages... when somebody tells you that they enjoy to spend time with you...",
+    "keys": [
+      {
+        "k": "themselves",
+        "show": "them → themselves"
+      },
+      {
+        "k": "spending",
+        "show": "to spend → spending"
+      }
+    ],
+    "e": "2번과 5번 문장: 주어 adults와 목적어가 같으므로 재귀대명사 themselves가 와야 하며, enjoy의 목적어 자리에는 동명사 spending이 와야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 3번과 4번 문장을 바탕으로, <b>상대방을 언어적으로 조종하려는 시도가 실패하게 되는 이유와 메커니즘</b>을 '동반되는 비언어적 의사소통'과 '사람들의 신뢰 성향'의 관점에서 서술하시오.",
+    "show": "말과 함께 동반되는 비언어적 의사소통이 말로 표현된 메시지와 일치하지 않을 때, 사람들은 말로 전달되는 언어적 메시지보다 표정이나 시선 같은 비언어적 메시지를 더 신뢰하기 때문에 언어적 조종 시도가 실패하게 된다.",
+    "crit": "① 비언어적 의사소통이 말과 일치하지 않는다는 조건 명시 (1점) ② 사람들이 언어보다 비언어적 메시지를 더 신뢰한다는 심리적 이유 서술 (2점)"
+  },
+  {
+    "n": 35,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 2번의 5번 문장을 참고하여, 일상 대화에서 <b>상대방의 말을 덜 믿게 되는 상황</b>을 구체적인 언어적 표현과 두 가지 비언어적 행동을 대조하여 서술하시오.",
+    "show": "상대방이 당신과 함께 시간을 보내는 것이 즐겁다고 말로 표현하면서도, 실제로는 시선을 딴 데로 돌리고 억지 미소를 짓는 비언어적 행동을 보일 때 상대방의 말을 덜 믿게 된다.",
+    "crit": "① 언어적 표현(함께 보내는 시간이 즐겁다는 말) 언급 (1점) ② 두 가지 비언어적 행동(시선 회피, 억지 미소) 명시 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
