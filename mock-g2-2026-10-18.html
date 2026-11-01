@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "18번 목적 파악 심층 분석지 확인 문제",
+  "section": "수능 영어 · 18번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 18번 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이"
+  },
+  "passage": [
+    [1, "Dear Principal,"],
+    [2, "I am writing as the head student because many students have expressed their concerns about the recent security incidents at nearby schools."],
+    [3, "We propose a few measures to increase students' privacy and safety."],
+    [4, "First, planting trees around the school would prevent outsiders from watching students, which helps protect students' privacy and reduces their exposure to external risks."],
+    [5, "Additionally, more CCTV cameras and security guards could be added near the entrances to detect unauthorized access and respond quickly to any incidents."],
+    [6, "On behalf of the students, I hope that you will kindly consider these suggestions."],
+    [7, "Thank you."],
+    [8, "Sincerely,"],
+    [9, "David Miller"]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "글쓴이는 인근 학교들이 아닌 자신의 학교에서 이미 발생한 보안 사고 피해를 직접 보고하고 있다.",
+    "a": "X",
+    "e": "2번 문장(recent security incidents at nearby schools)에 따르면 보안 사건은 '인근 학교들'에서 발생한 것입니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "글쓴이는 학생회장(head student)으로서 학생들의 사생활과 안전을 강화하기 위한 조치들을 제안하고 있다.",
+    "a": "O",
+    "e": "2번 문장(writing as the head student)과 3번 문장(propose a few measures to increase students' privacy and safety)에 명시되어 있습니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "학교 주변에 나무를 심는 첫 번째 제안은 학교의 외부 경관을 아름답게 개선하기 위한 목적이다.",
+    "a": "X",
+    "e": "4번 문장에 따르면 나무를 심는 목적은 외부인이 학생들을 보는 것을 막아 사생활을 보호하고 위험 노출을 줄이기 위함입니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "외부인이 학생들을 지켜보는 것을 차단하는 것은 학생들의 사생활 보호와 외부 위험 노출 감소에 도움이 된다.",
+    "a": "O",
+    "e": "4번 문장(prevent outsiders from watching students, which helps protect students' privacy and reduces their exposure to external risks)과 일치합니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "글쓴이는 교내 출입구 근처에 설치된 기존 감시 카메라의 수가 너무 많아 줄여줄 것을 요구하고 있다.",
+    "a": "X",
+    "e": "5번 문장에 따르면 CCTV 카메라와 보안요원을 '더 추가(more CCTV cameras and security guards could be added)'해 줄 것을 제안하고 있습니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "CCTV 카메라와 보안요원 확충은 무단 침입 감지 및 사건 발생 시의 신속한 대응을 위해 제안되었다.",
+    "a": "O",
+    "e": "5번 문장(to detect unauthorized access and respond quickly to any incidents)과 일치합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "글쓴이는 교장 선생님께 제안 사항들을 전달하면서 즉각적인 강제 시행을 통보하고 있다.",
+    "a": "X",
+    "e": "6번 문장(I hope that you will kindly consider these suggestions)에서 정중하게 검토해 주기를 바란다고 공손히 요청하고 있습니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "이 편지의 발신인은 David Miller이며, 학생들을 대표하여 교장 선생님께 글을 보냈다.",
+    "a": "O",
+    "e": "6번 문장(On behalf of the students)과 9번 문장(David Miller)에서 확인할 수 있습니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 의미를 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "우려, 걱정",
+      "법안, 조치, 대책",
+      "노출",
+      "인가받지 않은, 무단인"
+    ],
+    "rows": [
+      ["concern", 1],
+      ["measure", 2],
+      ["exposure", 3],
+      ["unauthorized", 4]
+    ],
+    "e": "분석지 2번 어휘: concern(우려), measure(조치, 대책), exposure(노출), unauthorized(인가받지 않은, 무단인)"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "문맥상 <b>principal</b>과 <b>principle</b>의 쓰임에 관한 설명으로 분석지와 일치하는 것은?",
+    "o": [
+      "본문의 principal은 학교의 최고 관리자인 '교장'을 의미하며, '원리, 원칙'을 뜻하는 principle과는 발음과 철자가 모두 다르다.",
+      "본문의 principal은 '교장'을 의미하며, '원리, 원칙'을 의미하는 principle과 발음은 같으나 철자와 의미가 완전히 다르다.",
+      "본문의 principal은 '원리, 원칙'을 의미하는 명사이므로 principle과 상호 교체하여 사용할 수 있다.",
+      "principal과 principle은 철자만 다를 뿐 문맥상 완전히 동일한 의미의 동의어로 취급된다."
+    ],
+    "a": 2,
+    "e": "분석지 5번 혼동 어휘: principal(교장, 주요한) vs principle(원리, 원칙)은 발음은 같으나 철자와 의미가 완전히 다릅니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 정리된 <b>unauthorized</b>의 유의어(동의어)에 해당하지 <u>않는</u> 것은?",
+    "o": [
+      "unapproved",
+      "illicit",
+      "unsanctioned",
+      "permitted"
+    ],
+    "a": 4,
+    "e": "분석지 5번 심화 어휘: permitted는 authorized와 함께 unauthorized의 '반의어'로 정리되어 있습니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 <b>external</b>의 반의어로 올바르게 짝지어진 것은?",
+    "o": [
+      "outer, exterior",
+      "internal, interior",
+      "shield, safeguard",
+      "expose, endanger"
+    ],
+    "a": 2,
+    "e": "분석지 5번 심화 어휘: external(외부의)의 동의어는 outer, exterior이며 반의어는 internal, interior입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 <b>propose</b>의 동의어 중 세 단어로 이루어진 표현을 빈칸에 쓰시오.",
+    "c":"propose = suggest, recommend, (A) ________ (B) ________ (C) ________",
+    "blanks": [
+      ["(A)", ["put"]],
+      ["(B)", ["forward"]],
+      ["(C)", ["forward", "put forward"]]
+    ],
+    "show": "(A) put (B) forward",
+    "e": "분석지 5번 심화 어휘: propose의 동의어로 put forward가 정리되어 있습니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "2번 문장의 <b>head</b>처럼 명사 앞에서 '수석의, 대표의'라는 형용사적 의미로 쓰여 '학생회장, 학생 대표'를 뜻하는 두 단어의 영문 표현을 쓰시오.",
+    "ans": [
+      "head student",
+      "the head student"
+    ],
+    "show": "head student",
+    "e": "분석지 2번 어휘: head student(학생회장, 학생 대표)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "short",
+    "s": "6번 문장에서 '~을 대표하여, ~을 대신하여'라는 뜻을 지녀 편지의 공적 성격과 대표성을 드러내는 세 단어의 전치사구를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "on behalf of",
+      "On behalf of"
+    ],
+    "show": "on behalf of",
+    "e": "분석지 2번 문장 6: On behalf of the students에서 on behalf of는 '~을 대표하여'의 의미입니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 because절에서 과거부터 현재까지 우려가 지속적으로 이어져 온 시제를 나타내도록 괄호 안에서 알맞은 것을 고르시오.",
+    "c": "because many students (expressed / have expressed) their concerns ...",
+    "o": [
+      "expressed",
+      "have expressed"
+    ],
+    "a": "have expressed",
+    "e": "분석지 2번 문장 2: 과거부터 현재 시점까지 우려가 지속되어 온 완료/계속을 나타내는 현재완료 have expressed가 쓰였습니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "mc",
+    "s": "3번 문장의 <b>to increase</b>의 문법적 역할 및 용법으로 옳은 것은?",
+    "o": [
+      "목적(~하기 위하여)을 나타내는 to부정사의 부사적 용법",
+      "앞의 명사구 a few measures를 뒤에서 수식하는 to부정사의 형용사적 용법",
+      "동사 propose의 직접목적어 역할을 하는 to부정사의 명사적 용법",
+      "감정의 원인(~해서)을 나타내는 to부정사의 부사적 용법"
+    ],
+    "a": 2,
+    "e": "분석지 2번 문장 3: to increase는 앞의 a few measures를 뒤에서 수식하여 '~할 조치들'로 해석되는 형용사적 용법입니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 주어 자리에 들어갈 알맞은 어형을 고르시오.",
+    "c": "First, (Plant / Planting) trees around the school would prevent outsiders from watching students...",
+    "o": [
+      "Plant",
+      "Planting"
+    ],
+    "a": "Planting",
+    "e": "분석지 2번 문장 4: 주절의 주어 자리에는 동명사구 planting trees around the school이 옵니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장에서 'A가 B하는 것을 막다'라는 구문에 맞도록 괄호 안에서 알맞은 전치사를 고르시오.",
+    "c": "would prevent outsiders (from / to) watching students",
+    "o": [
+      "from",
+      "to"
+    ],
+    "a": "from",
+    "e": "분석지 2번 문장 4: 'prevent + 목적어 + from -ing' 구문입니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 관계대명사 which 뒤에서 and로 병렬 연결되는 두 동사의 알맞은 짝을 고르시오.",
+    "c": "...which (helps / help) protect students' privacy and (reduces / reduce) their exposure to external risks.",
+    "o": [
+      "helps - reduces",
+      "help - reduce"
+    ],
+    "a": "helps - reduces",
+    "e": "분석지 2번 문장 4: 계속적 용법의 which가 앞 절 전체를 선행사로 받으므로 단수 취급하여 helps와 reduces가 병렬 연결됩니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "ox",
+    "s": "4번 문장의 help는 뒤에 원형부정사(protect)를 목적어로 취할 수 있는 특성을 가진다.",
+    "a": "O",
+    "e": "분석지 2번 문장 4 구문 분석: help는 뒤에 원형부정사(protect)를 목적어로 바로 취할 수 있습니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장에서 주어인 카메라와 보안요원이 학교 측에 의해 '배치되는' 수동 관계를 나타내도록 괄호 안에서 알맞은 형태를 고르시오.",
+    "c": "...more CCTV cameras and security guards could (add / be added) near the entrances...",
+    "o": [
+      "add",
+      "be added"
+    ],
+    "a": "be added",
+    "e": "분석지 2번 문장 5: 조동사가 포함된 수동태 '조동사 + be p.p.' 형태로 could be added가 올바릅니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "4번 문장에서 계속적 용법의 관계대명사 <b>which</b>의 선행사가 무엇인지 분석지 설명을 바탕으로 <u>앞 절의 내용</u> 전체를 가리킨다는 점을 참고하여 우리말로 쓰시오.",
+    "ans": [
+      "나무를 심어 외부인이 학생들을 보지 못하게 막는 것",
+      "학교 주변에 나무를 심어 외부인이 학생들을 보지 못하게 막는 것",
+      "앞 문장의 내용",
+      "앞 절의 내용"
+    ],
+    "show": "나무를 심어 외부인이 학생들을 보지 못하게 막는 것 (또는 앞 절의 내용 전체)",
+    "e": "분석지 2번 문장 4: which의 선행사는 앞 문장의 내용(나무를 심어 외부인이 학생들을 보지 못하게 막는 것) 전체입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "분석지 1번에 제시된 키워드 구분에 따라 각 어구를 알맞은 키워드에 연결하시오.",
+    "box": [
+      "키워드 A (students' privacy and safety)",
+      "키워드 B (measures / suggestions)"
+    ],
+    "rows": [
+      ["protect students' privacy", 1],
+      ["propose a few measures", 2],
+      ["exposure to external risks", 1],
+      ["more CCTV cameras and security guards", 2]
+    ],
+    "e": "분석지 1번 키워드 분석: 키워드 A 관련 어구(protect students' privacy, exposure to external risks), 키워드 B 관련 어구(propose a few measures, more CCTV cameras and security guards)"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "본문에 쓰인 연결어와 그 논리적 기능을 [보기]에서 골라 짝지으시오.",
+    "box": [
+      "편지를 쓰게 된 직접적인 동기 및 이유를 주절과 인과적으로 연결",
+      "첫 번째 구체적 방안을 소개하며 열거식 논리 구조를 부여",
+      "앞선 제안에 이어 두 번째 제안을 덧붙여 열거하는 첨가 기능"
+    ],
+    "rows": [
+      ["because", 1],
+      ["First", 2],
+      ["Additionally", 3]
+    ],
+    "e": "분석지 2번 연결어의 기능: because(인과/이유), First(첫 번째 방안 소개 및 열거), Additionally(추가 제안 첨가)"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 전개 방식(서술 전략)으로 가장 적절한 것은?",
+    "o": [
+      "과거와 현재의 제도적 차이점을 비교 대조한 후 새로운 규정을 강제하는 방식",
+      "문제 제기 - 구체적 제안 - 행동 촉구(검토 요청)의 3단계 전개 방식",
+      "가설을 설정하고 실험 결과를 검증한 뒤 학부모들의 동의를 구하는 방식",
+      "특정 사건의 원인을 다각도로 분석하고 관련자들의 책임을 규명하는 방식"
+    ],
+    "a": 2,
+    "e": "분석지 3번 서술 전략: '문제 제기 - 구체적 제안 - 행동 촉구(검토 요청)'의 전개 방식을 취하고 있습니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 도출한 이 글의 <b>중심 문장</b>으로 알맞은 것은?",
+    "o": [
+      "I am writing as the head student because many students have expressed their concerns about the recent security incidents at nearby schools.",
+      "We propose a few measures to increase students' privacy and safety.",
+      "First, planting trees around the school would prevent outsiders from watching students...",
+      "On behalf of the students, I hope that you will kindly consider these suggestions."
+    ],
+    "a": 2,
+    "e": "분석지 1번: 중심 문장은 \"We propose a few measures to increase students' privacy and safety.\"입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 2번 [첫 번째 부분], [두 번째 부분], [세 번째 부분]의 역할이 순서대로 올바르게 짝지어진 것은?",
+    "o": [
+      "문제 제기 및 글의 목적 제시 → 제안의 구체적 내용 상술 및 효과 설명 → 최종 행동 촉구 및 편지 종결",
+      "사건 경위 보고 → 예산 확보 방안 안내 → 감사 인사 표명",
+      "학교 시설 비판 → 책임자 처벌 요구 → 향후 일정 통보",
+      "배경 설명 → 외부 전문가 자문 결과 소개 → 최종 승인 요청"
+    ],
+    "a": 1,
+    "e": "분석지 2번 부분 마무리 역할: 첫 번째 부분(문제 제기 및 글의 목적 제시) → 두 번째 부분(제안의 구체적 내용 상술 및 효과 설명) → 세 번째 부분(최종 행동 촉구 및 편지 종결)"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "short",
+    "s": "분석지 1번에 명시된 이 글의 영문 주제(총 7단어)를 빈칸에 채우시오.",
+    "c": "(A) ________ (B) ________ for students' (C) ________ and (D) ________",
+    "ans": [
+      "proposing measures privacy safety",
+      "proposing measures privacy and safety"
+    ],
+    "show": "proposing measures privacy safety (전체: proposing measures for students' privacy and safety)",
+    "e": "분석지 1번 주제: proposing measures for students' privacy and safety"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번 문제 풀이 5단계에서 원래 시험 문제의 정답이 ④번인 이유로 설명된 것은?",
+    "o": [
+      "학생들의 사생활 침해 피해 실태를 교장에게 구체적으로 고발하기 위한 글이므로",
+      "나무 심기와 CCTV/경비 인력 추가라는 구체적 방안을 통해 학생들의 사생활 보호와 안전 강화를 제안하려는 글이므로",
+      "교내 노후화된 안전 시설의 전면적인 보수 및 수리를 요구하려는 글이므로",
+      "기존에 과도하게 설치된 감시 카메라의 철거 및 재검토를 촉구하려는 글이므로"
+    ],
+    "a": 2,
+    "e": "분석지 4번 5단계: 나무 심기와 CCTV/경비 인력 추가를 통해 학생들의 사생활을 지키고 외부 위험으로부터 안전을 도모하자는 제안이므로 ④번이 정답입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "분석지 4번의 오답 소거 이유 중 <b>⑤번 선택지</b>가 정답이 될 수 <u>없는</u> 이유로 기술된 것은?",
+    "o": [
+      "사생활 침해 사례를 보고하는 내용이 전혀 없기 때문에",
+      "나무 심기는 안전 수단일 뿐 경관 개선 효과를 논하는 것이 아니기 때문에",
+      "감시 카메라 설치를 재검토(축소/철회)하라는 것이 아니라 오히려 추가 설치를 건의하고 있어 정반대이기 때문에",
+      "교내 안전시설의 수리를 건의하는 글이 아니기 때문에"
+    ],
+    "a": 3,
+    "e": "분석지 4번 5단계 오답 분석: ⑤번은 감시 카메라 설치를 축소/철회하라는 것이 아니라 추가 설치를 건의하고 있어 정반대입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "sent",
+    "s": "3번 문장의 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "우리는 학생들의 사생활과 안전을 증가시킬 몇 가지 조치들을 제안한다.<br><small>「조건」 propose, measures, to increase, privacy 활용 (총 9단어)</small>",
+    "ans": [
+      "We propose a few measures to increase students' privacy and safety.",
+      "we propose a few measures to increase students' privacy and safety"
+    ],
+    "show": "We propose a few measures to increase students' privacy and safety.",
+    "e": "3번 문장 원문: 주어(We) + 동사(propose) + 목적어(a few measures) + to부정사 수식(to increase students' privacy and safety)"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 2개를 찾아 바르게 고친 것을 쓰시오.",
+    "c": "First, plant trees around the school would prevent outsiders from watching students, which help protect students' privacy and reduces their exposure to external risks.",
+    "keys": [
+      {
+        "k": "planting",
+        "show": "plant → planting"
+      },
+      {
+        "k": "helps",
+        "show": "help → helps"
+      }
+    ],
+    "e": "4번 문장: 주어 자리에는 동명사 planting이 와야 하며, 관계대명사 which가 앞 절 전체를 선행사로 받으므로 단수 동사 helps가 와서 reduces와 병렬을 이루어야 합니다."
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 4번의 문제 풀이 1단계와 2단계를 바탕으로, 글의 <b>필자의 신분</b>과 <b>독자(수신인)의 신분</b>을 각각 밝히고 두 사람의 관계 속에서 글을 쓰게 된 목적을 서술하시오.",
+    "show": "필자는 학생
