@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "Practice 01번 사회적 유대 집단 범주 규정의 유연성 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · Practice 01번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "Our complex brains might have evolved to establish strong social bonds, but defining what should be part of that social group appears to be rather <u>     </u>."],
+    [2, "For instance, some people treat their pets as if they are members of their family and believe they can relate to the pets' needs, desires, fears and dreams."],
+    [3, "Others see animals as distinct from humans and wouldn't think of talking to one as if it was a friend."],
+    [4, "Many people keep the ashes of a deceased loved one nearby, believing those ashes continue to serve as some link to their existence."],
+    [5, "Even if inanimate objects don't have a distinct personality, many of us still attribute certain human characteristics to non-human objects or beings, such as pets, dolls or even cars and memorabilia."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "인간의 복잡한 뇌는 강한 사회적 유대를 형성하도록 진화했을지도 모른다.",
+    "a": "O",
+    "e": "1번 문장: Our complex brains might have evolved to establish strong social bonds"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "무엇이 사회적 집단의 일부가 되어야 하는지를 정의하는 기준은 모든 인간에게 엄격하고 고정되어 있다.",
+    "a": "X",
+    "e": "1번 문장: defining what should be part of that social group appears to be rather flexible(다소 유연한 것으로 보인다)."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "어떤 사람들은 반려동물을 가족 구성원처럼 대하며 그들의 필요나 욕구, 두려움에 공감할 수 있다고 믿는다.",
+    "a": "O",
+    "e": "2번 문장: treat their pets as if they are members of their family and believe they can relate to the pets' needs..."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "모든 사람들은 예외 없이 동물에게 마치 친구인 것처럼 다정하게 말을 건넨다.",
+    "a": "X",
+    "e": "3번 문장: 동물을 인간과 구별되는 존재로 보아 친구인 양 말을 건넨다는 것은 생각조차 하지 않는 사람들도 있습니다(wouldn't think of talking to one as if it was a friend)."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "많은 사람들은 세상을 떠난 사랑하는 사람의 유골이 고인의 존재와의 일종의 연결고리 역할을 계속한다고 믿는다.",
+    "a": "O",
+    "e": "4번 문장: believing those ashes continue to serve as some link to their existence"
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "무생물 대상들은 저마다 고유하고 뚜렷한 인격을 본래부터 소유하고 있다.",
+    "a": "X",
+    "e": "5번 문장: Even if inanimate objects don't have a distinct personality(비록 무생물 대상들이 뚜렷한 인격을 가지고 있지 않을지라도)"
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "많은 사람들은 인형, 자동차, 기념품과 같은 비인간 대상에게도 특정한 인간적 특성을 부여한다.",
+    "a": "O",
+    "e": "5번 문장: attribute certain human characteristics to non-human objects or beings, such as pets, dolls or even cars and memorabilia"
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "인간은 오직 생명이 있는 생명체에게만 사회적 유대감을 느끼며 무생물에 대해서는 어떠한 감정도 투영하지 않는다.",
+    "a": "X",
+    "e": "4~5번 문장: 유골, 인형, 자동차, 기념품 등 무생물 대상에게도 인간적 속성을 부여하며 유대를 확장합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어 및 표현의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "~에 공감하다, ~와 마음이 통하다",
+      "~와 별개의, ~와 전혀 구별되는",
+      "사망한, 고인이 된",
+      "생명이 없는, 무생물의"
+    ],
+    "rows": [
+      ["relate to", 1],
+      ["distinct from", 2],
+      ["deceased", 3],
+      ["inanimate", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 flexible(유연한, 가변적인)의 반의어로 알맞게 짝지어진 것은?",
+    "o": [
+      "rigid, inflexible, fixed",
+      "elastic, adaptable, malleable",
+      "separate, discrete, clear-cut",
+      "vague, indistinguishable"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: flexible의 반의어는 rigid, inflexible, fixed입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 distinct(구별되는, 뚜렷한)의 동의어로 옳지 <b>않은</b> 것은?",
+    "o": [
+      "separate",
+      "discrete",
+      "clear-cut",
+      "indistinguishable"
+    ],
+    "a": 4,
+    "e": "5번 심화 어휘: indistinguishable은 distinct의 반의어이며, separate, discrete, clear-cut은 동의어입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "Many of us still (attribute / contribute) certain human characteristics to non-human objects.",
+    "o": [
+      "attribute",
+      "contribute"
+    ],
+    "a": "attribute",
+    "e": "5번 심화 어휘: attribute A to B는 'A라는 속성을 B에 부여하다'이며, contribute to는 '~에 기여하다'입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "Even if (inanimate / intimate) objects don't have feelings, people treat them like friends.",
+    "o": [
+      "inanimate",
+      "intimate"
+    ],
+    "a": "inanimate",
+    "e": "5번 심화 어휘: inanimate는 '생명이 없는, 무생물의'이며, intimate는 '친밀한'입니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "4번 문장에서 '~로서의 역할을 하다'의 뜻으로 쓰인 두 단어의 이어동사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "serve as"
+    ],
+    "show": "serve as",
+    "e": "4번 문장 어휘: serve as (~로서의 역할을 하다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 flexible(유연한, 가변적인)의 동의어 4개 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["elastic", "adaptable", "malleable", "pliant"]],
+      ["②", ["elastic", "adaptable", "malleable", "pliant"]]
+    ],
+    "show": "elastic, adaptable, malleable, pliant 중 2개",
+    "e": "5번 심화 어휘: flexible의 동의어 elastic, adaptable, malleable, pliant"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 but 뒤 절에서 주어와의 수 일치상 알맞은 동사 형태를 고르시오.",
+    "c": "Defining what should be part of that social group (appears / appear) to be rather flexible.",
+    "o": [
+      "appears",
+      "appear"
+    ],
+    "a": "appears",
+    "e": "1번 문장 구문 분석: 동명사구 주어(defining what should be ~)는 단수 취급하므로 단수 동사 appears가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "mc",
+    "s": "1번 문장의 defining what should be part of that social group에서 what에 대한 설명으로 옳은 것은?",
+    "o": [
+      "선행사 group을 수식하는 관계부사이다.",
+      "명사절 내에서 주어 역할을 수행하는 의문대명사(또는 선행사를 포함한 관계대명사)이다.",
+      "뒤에 완전한 3형식 절을 이끄는 동격의 접속사이다.",
+      "to부정사의 목적격 보어로 쓰인 관계형용사이다."
+    ],
+    "a": 2,
+    "e": "1번 문장 구문 분석: what은 동명사 defining의 목적어인 간접의문문 명사절을 이끌며 절 내에서 주어 역할을 합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "ox",
+    "s": "1번 문장의 might have evolved는 [조동사 과거형 + have p.p.] 구조로 과거 사실에 대한 불확실한 추측을 나타낸다.",
+    "a": "O",
+    "e": "1번 문장 구문 분석: might have evolved는 과거에 '진화했을지도 모른다'는 불확실한 추측을 나타냅니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 괄호 안에서 주어 some people에 병렬 연결되는 알맞은 동사 형태를 고르시오.",
+    "c": "Some people treat their pets as family and (believes / believe) they can relate to them.",
+    "o": [
+      "believes",
+      "believe"
+    ],
+    "a": "believe",
+    "e": "2번 문장 구문 분석: 주어 some people에 걸리는 본동사 treat와 believe가 and로 병렬 연결됩니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 괄호 안에서 전치사 of 뒤에 올바른 목적어 형태를 고르시오.",
+    "c": "Others wouldn't think of (talk / talking) to one as if it was a friend.",
+    "o": [
+      "talk",
+      "talking"
+    ],
+    "a": "talking",
+    "e": "3번 문장 구문 분석: 전치사 of의 목적어로 동명사 talking이 쓰였습니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "short",
+    "s": "3번 문장의 talking to one에서 부정대명사 one이 가리키는 대상을 본문 어휘를 활용하여 두 단어로 쓰시오.",
+    "ans": [
+      "an animal"
+    ],
+    "show": "an animal",
+    "e": "3번 문장 구문 분석: 부정대명사 one은 문맥상 임의의 '동물 한 마리(an animal)'를 가리킵니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 괄호 안에서 능동 분사구문의 알맞은 형태를 고르시오.",
+    "c": "Many people keep the ashes nearby, (believing / believed) those ashes continue to serve as a link.",
+    "o": [
+      "believing",
+      "believed"
+    ],
+    "a": "believing",
+    "e": "4번 문장 구문 분석: 주절의 주어 Many people을 의미상 주어로 하는 능동 분사구문이므로 believing이 올바릅니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "5번 문장에서 'A를 B에게 부여하다/A를 B의 속성으로 돌리다'라는 의미를 완성하기 위해 전치사 to와 호응하여 쓰인 본동사를 쓰시오.",
+    "ans": [
+      "attribute"
+    ],
+    "show": "attribute",
+    "e": "5번 문장 구문 분석: attribute A to B 구문입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "인간의 사회적 유대 집단 범주 규정의 유연성과 비인간 대상에 대한 확장",
+      "반려동물 양육이 현대인의 정신 건강과 사회성 발달에 미치는 긍정적 효과",
+      "인류 진화 과정에서 무생물 도구 제작 기술이 뇌 용량 확장에 미친 영향",
+      "고대 장례 의식에서 유골 보관 풍습이 종교적 공동체 형성에 기여한 경로"
+    ],
+    "a": 1,
+    "e": "1번 주제: 인간의 사회적 유대 집단 범주 규정의 유연성과 비인간 대상에 대한 확장"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (사회적 집단의 정의)",
+      "키워드 B (경계의 유연성과 확장)"
+    ],
+    "rows": [
+      ["social bonds", 1],
+      ["treat pets as family", 2],
+      ["defining what should be part of that social group", 1],
+      ["attribute human characteristics to non-human objects", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "Our complex brains might have evolved to establish strong social bonds, but defining what should be part of that social group appears to be rather flexible.",
+      "For instance, some people treat their pets as if they are members of their family.",
+      "Many people keep the ashes of a deceased loved one nearby, believing those ashes continue to serve as some link to their existence.",
+      "Even if inanimate objects don't have a distinct personality, many of us still attribute certain human characteristics to non-human objects."
+    ],
+    "a": 1,
+    "e": "1번 중심 문장: Our complex brains might have evolved to establish strong social bonds, but defining what should be part of that social group appears to be rather flexible."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "2번 문장의 연결어 For instance가 글 전체의 흐름에서 수행하는 논리적 역할은?",
+    "o": [
+      "사회적 집단 규정의 유연성을 보여주는 구체적 사례(반려동물 가족화)를 도입",
+      "앞서 제시된 사회적 유대의 진화적 한계를 반박하는 역접",
+      "인간 뇌의 복잡성을 증명하기 위한 해부학적 데이터 제시",
+      "동물 학대 문제를 비판하기 위한 윤리적 문제 제기"
+    ],
+    "a": 1,
+    "e": "2번 문장 2 어휘 및 연결어: For instance는 사회적 집단 규정의 유연성을 보여주는 구체적 사례를 도입하는 예시 연결어입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "주제문 제시 → 대조적 사례 제시 → 점층적 예시를 통한 일반화",
+      "역사적 사건 서술 → 실패 원인 분석 → 미래 정책 대안 제시",
+      "상반된 두 심리학 이론 소개 → 쟁점 비교 → 절충적 결론 도출",
+      "통념 소개 → 통념의 부당성 비판 → 새로운 관찰 실험 설계"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: '주제문 제시 - 대조적 사례 제시 - 점층적 예시를 통한 일반화'의 전개 방식"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [두 번째 부분: 4~5번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "살아있는 동물을 넘어 사물에 이르기까지 확장되는 사회적 유대 규정의 극단적 유연성을 실증함 (예시의 확장 및 결론 완성)",
+      "무생물에 대한 과도한 애착이 가져오는 심리적 부작용 분석",
+      "자동차와 기념품 수집이 경제 소비에 미치는 긍정적 효과 규명",
+      "사후 세계에 대한 종교적 신념의 문화인류학적 차이점 비교"
+    ],
+    "a": 1,
+    "e": "두 번째 부분 마무리: 살아있는 동물을 넘어 사물에 이르기까지 확장되는 사회적 유대 규정의 극단적 유연성을 실증함"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "1번 문장의 빈칸에 들어갈 정답 어휘로 옳은 것은?",
+    "o": [
+      "consistent",
+      "universal",
+      "entertaining",
+      "flexible",
+      "predictable"
+    ],
+    "a": 4,
+    "e": "4번 문제 풀이: 대상의 범주를 생명체에서 무생물까지 가변적으로 넓히고 개인마다 다르게 적용한다는 본문의 예시를 관통하는 flexible이 정답입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "빈칸 문제 풀이에서 선택지 consistent(일관된)와 universal(보편적인)이 오답으로 소거되는 이유로 분석지 4번에 제시된 근거는?",
+    "o": [
+      "사람마다 동물을 대하는 태도가 정반대이고 유대 대상의 범위가 사물로 가변적으로 확장되므로 일관되거나 보편적이지 않기 때문에",
+      "모든 인간의 뇌는 동일한 크기와 진화 경로를 거쳤기 때문에",
+      "유골을 간직하는 풍습은 특정 종교에서만 허용되기 때문에",
+      "consistent와 universal은 문법상 주격 보어로 쓰일 수 없기 때문에"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이 5단계: 사람마다 동물을 대하는 태도가 상반되고 사물에까지 확장되므로 일관되거나 보편적이라는 진술은 오답입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "short",
+    "s": "5번 문장에서 많은 사람들이 특정한 인간적 특성을 부여하는 구체적인 비인간 대상 4가지를 본문에서 찾아 그대로 쓰시오. (단, such as 뒤에 언급된 순서대로 pets, dolls, cars, memorabilia 형태로 쓰시오)",
+    "ans": [
+      "pets, dolls or even cars and memorabilia",
+      "pets, dolls, cars and memorabilia",
+      "pets, dolls, cars, memorabilia"
+    ],
+    "show": "pets, dolls, cars, memorabilia",
+    "e": "5번 문장 구문 및 내용: pets, dolls or even cars and memorabilia"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 빈칸의 정답이 flexible(유연한)이 되는 지문 내 구체적 단서 3가지(반려동물, 유골, 무생물)를 분석지 4단계 검증 내용에 기반하여 우리말로 서술하시오.",
+    "show": "1) 어떤 사람은 반려동물을 가족으로 여기지만 다른 사람은 인간과 구별되는 동물로 대화 상대조차 삼지 않아 사람마다 기준이 가변적이다. 2) 사망한 사람의 유골을 곁에 두고 존재의 연결고리로 삼는다. 3) 무생물인 인형, 자동차, 기념품에까지 인간적 특성을 부여하며 유대 집단의 경계를 넓힌다.",
+    "crit": "① 반려동물을 대하는 상반된 태도(가족 vs 타자) 언급 (1점) ② 유골을 존재의 연결고리로 간직함 언급 (1점) ③ 인형·자동차 등 무생물에 인간적 특성을 부여하여 유대 경계를 확장함 언급 (2점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 중심 문장의 내용을 바탕으로, 인간의 뇌 진화 목적과 사회적 집단을 정의하는 방식 사이에 나타나는 특징을 우리말로 서술하시오.",
+    "show": "우리의 복잡한 뇌는 강한 사회적 유대를 형성하도록 진화했을지도 모르지만, 무엇이 그 사회적 집단의 일부가 되어야 하는지를 정의하는 것은 다소 유연한 특성을 보인다.",
+    "crit": "① 복잡한 뇌가 강한 사회적 유대를 형성하도록 진화했음을 언급 (2점) ② 사회적 집단의 일부를 정의하는 기준이 유연하다는 대조를 명시 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

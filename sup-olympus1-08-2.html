@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "Practice 02번 자원의 희소성과 기회비용 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · Practice 02번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "We have vast forests in this country but not enough to provide all of the wood, all of the wilderness, and all of the accessible recreation that we want."],
+    [2, "As soon as we log trees, build roads, or improve trails and campsites, we lose some wilderness."],
+    [3, "Similarly, we have large amounts of fresh water, but if we use water to grow rice in California, the water consumed cannot be used for drinking water in California cities."],
+    [4, "If we use fire to help a forest renew itself, we will have air pollution downwind while the fire burns."],
+    [5, "We have many goals, so we have to make choices about how to allocate our limited resources."],
+    [6, "The cost of those choices is that we give up the cost of opportunities lost."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "이 나라의 광대한 숲은 우리가 원하는 모든 목재, 황야, 휴양을 전부 제공하기에 충분하다.",
+    "a": "X",
+    "e": "1번 문장: not enough to provide all of the wood, all of the wilderness, and all of the accessible recreation"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "우리가 나무를 벌목하거나 도로를 내면 얼마간의 황야를 잃게 된다.",
+    "a": "O",
+    "e": "2번 문장: As soon as we log trees, build roads, or improve trails and campsites, we lose some wilderness."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "캘리포니아에서 벼를 재배하는 데 사용된 물은 도시의 식수로도 문제없이 재사용될 수 있다.",
+    "a": "X",
+    "e": "3번 문장: the water consumed cannot be used for drinking water in California cities"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "숲의 자체적 갱신을 돕기 위해 불을 사용하더라도 주변 지역에 어떠한 대기 오염도 발생하지 않는다.",
+    "a": "X",
+    "e": "4번 문장: we will have air pollution downwind while the fire burns"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "우리는 수많은 목표를 가지고 있으므로 한정된 자원을 어떻게 배분할지에 대한 선택을 내려야 한다.",
+    "a": "O",
+    "e": "5번 문장: We have many goals, so we have to make choices about how to allocate our limited resources."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "자원 배분에 관한 선택을 내릴 때 상실된 기회의 가치를 포기해야 하는 대가가 뒤따른다.",
+    "a": "O",
+    "e": "6번 문장: The cost of those choices is that we give up the cost of opportunities lost."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "등산로와 야영장을 개선하는 활동은 황야의 훼손 없이 이루어질 수 있다.",
+    "a": "X",
+    "e": "2번 문장: improve trails and campsites를 하자마자 we lose some wilderness라고 명시되어 있습니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "산림 화재가 타는 동안 바람이 불어가는 아래쪽 지역에서 공기 오염이 발생한다.",
+    "a": "O",
+    "e": "4번 문장: we will have air pollution downwind while the fire burns"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "황야, 자연 그대로의 야생 지대",
+      "접근 가능한, 이용하기 쉬운",
+      "(나무를) 벌목하다",
+      "배분하다, 할당하다"
+    ],
+    "rows": [
+      ["wilderness", 1],
+      ["accessible", 2],
+      ["log", 3],
+      ["allocate", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 vast(광대한, 방대한)의 반의어로 옳지 <b>않은</b> 것은?",
+    "o": [
+      "minute",
+      "tiny",
+      "limited",
+      "immense"
+    ],
+    "a": 4,
+    "e": "5번 심화 어휘: immense는 vast의 동의어이며, minute, tiny, limited가 반의어입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "We have to make choices about how to (allocate / locate) our limited resources.",
+    "o": [
+      "allocate",
+      "locate"
+    ],
+    "a": "allocate",
+    "e": "5번 심화 어휘: allocate는 '할당하다, 배분하다'이며 locate는 '위치시키다, 찾아내다'입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "We decided to pitch our tent at the designated (campsite / campsight).",
+    "o": [
+      "campsite",
+      "campsight"
+    ],
+    "a": "campsite",
+    "e": "5번 심화 어휘: 장소나 부지를 뜻하는 명사는 site이므로 야영장은 campsite입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "short",
+    "s": "4번 문장에서 '바람이 불어가는 쪽으로, 바람을 등지고'의 뜻으로 쓰인 한 단어의 부사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "downwind"
+    ],
+    "show": "downwind",
+    "e": "4번 문장 어휘: downwind (바람이 불어가는 쪽으로)"
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 allocate(배분하다)의 동의어 4개 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["apportion", "distribute", "assign", "allot"]],
+      ["②", ["apportion", "distribute", "assign", "allot"]]
+    ],
+    "show": "apportion, distribute, assign, allot 중 2개",
+    "e": "5번 심화 어휘: allocate의 동의어 apportion, distribute, assign, allot"
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "mc",
+    "s": "1번 문장의 to provide all of the wood ~에 대한 구문 설명으로 옳은 것은?",
+    "o": [
+      "준동사 provide의 목적어로 all of the wood, all of the wilderness, all of the accessible recreation이 병렬 연결되어 있다.",
+      "명사구 vast forests를 수식하는 형용사적 용법의 to부정사이다.",
+      "목적(~하기 위하여)을 나타내는 부사적 용법으로 so as to로만 바꿔 쓸 수 있다.",
+      "동사 have의 목적어로 쓰인 명사적 용법이다."
+    ],
+    "a": 1,
+    "e": "1번 문장 구문 분석: 형용사 enough를 수식하는 부사적 용법이며 목적어로 3개의 명사구가 and로 병렬 연결됩니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "mc",
+    "s": "2번 문장의 구문 분석으로 분석지 내용과 일치하지 <b>않는</b> 것은?",
+    "o": [
+      "As soon as는 '~하자마자'의 뜻을 갖는 시간 부사절 접속사이다.",
+      "부사절 내에서 주어 we에 걸리는 세 개의 동사구(log trees, build roads, improve trails and campsites)가 병렬 연결되어 있다.",
+      "log는 명사가 아닌 동사로 사용되었다.",
+      "we lose some wilderness는 목적어를 갖지 않는 완전한 1형식 문장이다."
+    ],
+    "a": 4,
+    "e": "2번 문장 구문 분석: we lose some wilderness는 주어, 타동사(lose), 목적어(some wilderness)를 갖춘 3형식 문장입니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 괄호 안에서 어법상 알맞은 분사 형태를 고르시오.",
+    "c": "The water (consuming / consumed) cannot be used for drinking water.",
+    "o": [
+      "consuming",
+      "consumed"
+    ],
+    "a": "consumed",
+    "e": "3번 문장 구문 분석: 명사 the water를 뒤에서 수식하는 수동 분사(소비된 물)이므로 과거분사 consumed가 올바릅니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "If we use fire to help a forest renew (it / itself), we will have air pollution.",
+    "o": [
+      "it",
+      "itself"
+    ],
+    "a": "itself",
+    "e": "4번 문장 구문 분석: renew의 의미상 주어인 a forest와 목적어가 동일하므로 재귀대명사 itself를 씁니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 괄호 안에서 어법상 알맞은 목적격 보어 형태를 고르시오.",
+    "c": "If we use fire to help a forest (renew / renewed) itself, air pollution occurs.",
+    "o": [
+      "renew",
+      "renewed"
+    ],
+    "a": "renew",
+    "e": "4번 문장 구문 분석: 준사역동사 help의 목적격 보어로 동사원형 renew(또는 to renew)가 쓰입니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "short",
+    "s": "5번 문장의 [의문사 + to부정사] 구문 how to allocate our limited resources를 절로 전환할 때, 빈칸에 들어갈 두 단어를 순서대로 쓰시오.<br>how ________ ________ allocate our limited resources",
+    "ans": [
+      "we should"
+    ],
+    "show": "we should",
+    "e": "5번 문장 구문 분석: how to allocate는 how we should allocate로 전환할 수 있습니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "ox",
+    "s": "6번 문장에서 be동사 is 뒤의 that절은 주격 보어 역할을 하는 완전한 3형식 명사절이다.",
+    "a": "O",
+    "e": "6번 문장 구문 분석: is의 주격 보어로 완전한 3형식 절을 이끄는 명사절 접속사 that절이 쓰였습니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장의 괄호 안에서 명사 opportunities를 수식하기에 알맞은 분사를 고르시오.",
+    "c": "The cost of those choices is that we give up the cost of opportunities (losing / lost).",
+    "o": [
+      "losing",
+      "lost"
+    ],
+    "a": "lost",
+    "e": "6번 문장 구문 분석: 기회가 '상실된' 것이므로 수동 의미를 나타내는 과거분사 lost가 뒤에서 수식합니다."
+  },
+  {
+    "n": 23,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "자원의 희소성에 따른 상충 관계와 선택에 수반되는 기회비용",
+      "산림 파괴를 최소화하며 목재 생산을 극대화하는 지속 가능한 벌목법",
+      "담수 자원의 고갈을 방지하기 위한 농업용수와 도시 식수의 효율적 분배 정책",
+      "인공적인 산불 관리가 생태계 복원과 공기 질 개선에 미치는 긍정적 효과"
+    ],
+    "a": 1,
+    "e": "1번 주제: 자원의 희소성에 따른 상충 관계와 선택에 수반되는 기회비용"
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (한정된 자원과 상충하는 목표들)",
+      "키워드 B (선택과 상실된 기회비용)"
+    ],
+    "rows": [
+      ["vast forests but not enough", 1],
+      ["we lose some wilderness", 2],
+      ["allocate our limited resources", 1],
+      ["cost of opportunities lost", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "We have vast forests in this country but not enough to provide all of the wood, all of the wilderness, and all of the accessible recreation that we want.",
+      "As soon as we log trees, build roads, or improve trails and campsites, we lose some wilderness.",
+      "We have many goals, so we have to make choices about how to allocate our limited resources.",
+      "The cost of those choices is that we give up the cost of opportunities lost."
+    ],
+    "a": 3,
+    "e": "1번 중심 문장: We have many goals, so we have to make choices about how to allocate our limited resources."
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "match",
+    "s": "본문의 연결어와 그 기능 및 논리적 역할을 알맞게 짝지으세요.",
+    "box": [
+      "산림 자원의 상충 관계에 이어 담수 자원의 상충 관계라는 유사한 논리를 확장하는 유추",
+      "자원의 상충에서 선택의 필연성으로 나아가는 인과"
+    ],
+    "rows": [
+      ["Similarly (3번 문장)", 1],
+      ["so (5번 문장)", 2]
+    ],
+    "e": "2번 어휘 및 연결어 분석: Similarly는 유추, so는 인과 접속사입니다."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "구체적 자원 상충 예시 열거 → 일반화 및 선택의 불가피성 → 기회비용 개념 규명",
+      "자원 고갈의 위기 경고 → 역사적 원인 규명 → 정책적 해결책 제안",
+      "경제학 이론 소개 → 반대 사례 제시 → 절충적 결론 도출",
+      "통념 소개 → 통념의 논리적 오류 비판 → 새로운 가치관 제시"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: 구체적 자원 상충 예시 열거 - 일반화 및 선택의 불가피성 - 기회비용 개념 규명의 전개 방식"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [첫 번째 부분: 1~3번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "산림과 담수라는 구체적 천연자원 사례를 통한 자원의 유한성과 상충 관계 실증 (구체적 예시 및 문제 제기)",
+      "환경 오염에 따른 경제적 피해액의 구체적 산정 방식 제시",
+      "재생 가능 자원과 고갈 자원의 경제학적 차이점 분석",
+      "산업 발전이 농업용수와 산림에 미치는 파괴적 영향 고발"
+    ],
+    "a": 1,
+    "e": "첫 번째 부분 마무리: 산림과 담수라는 구체적 천연자원 사례를 통한 자원의 유한성과 상충 관계 실증"
+  },
+  {
+    "n": 29,
+    "p": "E",
+    "t": "mc",
+    "s": "6번 문장의 원래 표현 The cost of those choices is that we give up the cost of opportunities lost에서 'the cost of'가 opportunities 앞에 불필요하게 중복되어 비판받을 수 있는 이유로 분석지에 제시된 근거는?",
+    "o": [
+      "주어인 The cost of those choices가 이미 '대가(비용)'를 의미하므로 보어절 내부에서 의미상 중복(동어반복)이 발생하기 때문에",
+      "give up 뒤에는 반드시 동명사 형태만 올 수 있기 때문에",
+      "opportunities는 가산명사이므로 복수형으로 쓸 수 없기 때문에",
+      "that절 내부에는 목적어가 올 수 없기 때문에"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이: 주어 The cost of those choices가 이미 대가를 뜻하므로 보어절 내 '대가의 포기'는 동어반복이 됩니다."
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "choice",
+    "s": "6번 문장의 괄호 안에서 보어절을 이끌기에 어법상 알맞은 접속사를 고르시오.",
+    "c": "The cost of those choices is (what / that) we give up the cost of opportunities lost.",
+    "o": [
+      "what",
+      "that"
+    ],
+    "a": "that",
+    "e": "4번 문제 풀이 및 2번 문장 6 구문 분석: 이어지는 절이 완전한 3형식 문장이므로 명사절 접속사 that이 올바릅니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "short",
+    "s": "3번 문장에서 if절의 use water to grow rice와 상충하여 불가능해지는 용도를 본문에서 찾아 세 단어로 쓰시오.",
+    "ans": [
+      "drinking water in California cities",
+      "drinking water"
+    ],
+    "show": "drinking water",
+    "e": "3번 문장 내용: 농업용수 소비로 인해 상실되는 용도는 'drinking water (in California cities)'입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "blanks",
+    "s": "분석지 6번 마무리에 제시된, 이 지문이 환경 자원의 구체적 상충 사례를 통해 풀어낸 경제학의 기본 원리 2가지를 빈칸에 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["자원의 희소성", "희소성", "자원 희소성"]],
+      ["②", ["기회비용", "기회 비용"]]
+    ],
+    "show": "자원의 희소성, 기회비용",
+    "e": "6번 마무리: 경제학의 기본 원리인 '자원의 희소성'과 '기회비용'"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 우리가 한정된 자원을 어떻게 배분할지에 대한 선택을 내려야만 하는 근본적인 이유와 그 선택에 수반되는 대가를 중심 문장 및 6번 문장의 핵심 개념을 활용하여 우리말로 서술하시오.",
+    "show": "우리는 수많은 목표를 가지고 있으나 자원은 한정되어 있기 때문에 자원 배분의 선택을 내려야 하며, 그러한 선택에는 상실된 기회의 가치(기회비용)를 포기해야 하는 대가가 뒤따른다.",
+    "crit": "① 많은 목표에 비해 자원이 한정(희소)되어 있음을 언급 (2점) ② 선택에 따라 상실된 기회(기회비용)를 포기해야 한다는 대가 언급 (2점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 지문에 제시된 세 가지 구체적 자원 활용 사례(산림 벌목·개발, 벼 재배용 담수 사용, 숲 갱신을 위한 불 사용)에서 발생하는 상충 관계(트레이드오프)를 각각 무엇을 얻고 무엇을 잃는지의 관점에서 간략히 서술하시오.",
+    "show": "1) 벌목이나 야영지 개선으로 목재나 휴양을 얻는 대신 황야를 잃는다. 2) 벼 재배에 물을 사용하면 도시의 식수로 사용할 수 없다. 3) 숲의 재생을 돕기 위해 불을 사용하면 바람이 부는 아래쪽 지역에 대기 오염이 발생한다.",
+    "crit": "① 벌목/개발 시 황야 상실 언급 (1점) ② 벼 재배 시 도시 식수 사용 불가 언급 (1점) ③ 숲 갱신 불 사용 시 대기 오염 발생 언급 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

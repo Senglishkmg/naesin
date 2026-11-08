@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "Practice 03번 기술 혁신과 사회적 후생의 역설 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · Practice 03번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "Not all innovations that improve human living standards show up in revenue and profits."],
+    [2, "Some instead accrue directly to consumers."],
+    [3, "Many of the product improvements brought about by technology have the paradoxical effect of reducing industry revenue."],
+    [4, "To see why, suppose people used to pay $1 to download a song."],
+    [5, "Then some change comes along so that people can listen to the song while paying only a quarter of what they used to pay."],
+    [6, "If there is no change in the number of people purchasing the song, revenue will fall by 75 percent."],
+    [7, "Even if the number of people buying a song doubles with the lower price, revenue will still fall by 50 percent."],
+    [8, "But people, <u>which</u> we mean society as a whole, will be much better off."],
+    [9, "The point is that revenue reduction, and an accompanying failure to raise GDP, is not by itself evidence that society is worse off."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "인간의 생활 수준을 향상시키는 모든 혁신이 기업의 매출과 이익으로 곧바로 나타나는 것은 아니다.",
+    "a": "O",
+    "e": "1번 문장: Not all innovations that improve human living standards show up in revenue and profits."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "어떤 기술 혁신들은 기업의 수익이 아니라 소비자들에게 직접 귀속된다.",
+    "a": "O",
+    "e": "2번 문장: Some instead accrue directly to consumers."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "기술로 인한 제품 개선은 언제나 산업 전체의 매출을 비례하여 증가시킨다.",
+    "a": "X",
+    "e": "3번 문장: have the paradoxical effect of reducing industry revenue(산업 수익을 줄이는 역설적 효과)."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "음원 가격이 1달러에서 25센트로 떨어졌을 때 구매자 수에 변화가 없다면 매출은 25퍼센트 감소한다.",
+    "a": "X",
+    "e": "6번 문장: 4분의 1만 지불하므로 매출은 75퍼센트 감소합니다(fall by 75 percent)."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "낮아진 가격 덕분에 음원 구매자 수가 2배가 되더라도 산업 전체의 매출은 여전히 50퍼센트 감소한다.",
+    "a": "O",
+    "e": "7번 문장: Even if the number of people buying a song doubles with the lower price, revenue will still fall by 50 percent."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "음원 다운로드 가격이 떨어져 기업 매출이 줄어들면 사회 전체의 형편도 반드시 더 궁핍해진다.",
+    "a": "X",
+    "e": "8번 문장: people, which we mean society as a whole, will be much better off."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "산업 수익의 감소와 GDP 증가의 실패가 그 자체로 사회의 형편이 더 나빠졌다는 증거는 아니다.",
+    "a": "O",
+    "e": "9번 문장: revenue reduction, and an accompanying failure to raise GDP, is not by itself evidence that society is worse off."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 기업의 매출 감소가 발생할 때 GDP 성장을 이끌어낼 다른 수단이 전혀 없다고 단정한다.",
+    "a": "X",
+    "e": "지문 원문: 단지 매출 감소와 GDP 증가 실패가 사회 형편의 악화 증거가 아니라고 말할 뿐, 다른 수단의 부재를 단정하지 않습니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "~에게 귀속되다, ~의 이익으로 돌아가다",
+      "역설적인, 모순된 것 같은",
+      "초래하다, 야기하다",
+      "수반되는, 동반하는"
+    ],
+    "rows": [
+      ["accrue to", 1],
+      ["paradoxical", 2],
+      ["bring about", 3],
+      ["accompanying", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 better off의 반의어로 옳은 것은?",
+    "o": [
+      "worse off",
+      "more affluent",
+      "more prosperous",
+      "well-to-do"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: better off의 반의어는 worse off이며, more prosperous, more affluent는 동의어입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 revenue의 동의어로 짝지어진 것은?",
+    "o": [
+      "turnover, earnings, income",
+      "deficit, debt, loss",
+      "expenditure, cost, expense",
+      "outcome, output, yield"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: revenue의 동의어는 turnover, earnings, income입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "Some benefits instead (accrue / accurate) directly to consumers.",
+    "o": [
+      "accrue",
+      "accurate"
+    ],
+    "a": "accrue",
+    "e": "5번 심화 어휘: accrue는 '귀속되다, 축적되다'이며 accurate는 '정확한'입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "Technological progress often creates a (paradoxical / orthodox) situation where revenue falls.",
+    "o": [
+      "paradoxical",
+      "orthodox"
+    ],
+    "a": "paradoxical",
+    "e": "5번 심화 어휘: paradoxical은 '역설적인'이며 orthodox는 '정통의, 전통적인'입니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "9번 문장에서 '그 자체로, 본질적으로'라는 뜻을 나타내는 두 단어의 전치사구 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "by itself"
+    ],
+    "show": "by itself",
+    "e": "9번 문장 구문 분석: by itself (그 자체로, 본질적으로)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 better off(형편이 더 나은)의 동의어 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["more prosperous", "more affluent"]],
+      ["②", ["more prosperous", "more affluent"]]
+    ],
+    "show": "more prosperous, more affluent",
+    "e": "5번 심화 어휘: better off의 동의어 more prosperous, more affluent"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "mc",
+    "s": "1번 문장의 Not all innovations that improve human living standards에 대한 설명으로 옳지 <b>않은</b> 것은?",
+    "o": [
+      "Not all은 '모두가 ~인 것은 아니다'를 나타내는 부분 부정 구문이다.",
+      "that은 선행사 innovations를 수식하는 주격 관계대명사이다.",
+      "주어부의 핵심 명사가 복수명사이므로 본동사로 show up이 올바르게 일치되었다.",
+      "that절 내부의 동사 improve는 living standards를 선행사로 취하고 있다."
+    ],
+    "a": 4,
+    "e": "1번 문장 구문 분석: that절의 선행사는 복수명사인 innovations이며 절 내에서 복수동사 improve가 쓰였습니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 괄호 안에서 어법상 알맞은 분사 형태를 고르시오.",
+    "c": "Many of the product improvements (bringing / brought) about by technology have a paradoxical effect.",
+    "o": [
+      "bringing",
+      "brought"
+    ],
+    "a": "brought",
+    "e": "3번 문장 구문 분석: 기술에 의해 '초래된' 개선이므로 과거분사구 brought about by ~가 수식합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 괄호 안에서 주어와의 수 일치상 알맞은 동사를 고르시오.",
+    "c": "Many of the product improvements brought about by technology (has / have) the paradoxical effect.",
+    "o": [
+      "has",
+      "have"
+    ],
+    "a": "have",
+    "e": "3번 문장 구문 분석: 주어부의 핵심 명사가 복수명사 improvements이므로 복수 본동사 have가 올바릅니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "mc",
+    "s": "4번 문장의 to see why와 to download a song에 쓰인 to부정사의 공통된 용법은?",
+    "o": [
+      "목적(~하기 위하여)을 나타내는 부사적 용법",
+      "명사를 수식하는 형용사적 용법",
+      "타동사의 목적어로 쓰인 명사적 용법",
+      "결과를 나타내는 부사적 용법"
+    ],
+    "a": 1,
+    "e": "4번 문장 구문 분석: 둘 다 목적(~하기 위하여)을 나타내는 to부정사의 부사적 용법입니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 괄호 안에서 어법상 알맞은 관계사를 고르시오.",
+    "c": "People can listen to the song while paying only a quarter of (that / what) they used to pay.",
+    "o": [
+      "that",
+      "what"
+    ],
+    "a": "what",
+    "e": "5번 문장 구문 분석: 전치사 of의 목적어로 불완전한 절을 이끄는 관계대명사 what이 쓰였습니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "ox",
+    "s": "7번 문장의 Even if 절에서 주어가 단수명사구 the number of people이므로 단수 동사 doubles가 쓰였다.",
+    "a": "O",
+    "e": "7번 문장 구문 분석: the number of는 단수 취급하므로 단수 본동사 doubles가 올바릅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "8번 문장의 괄호 안에서 비교급 better off를 수식할 수 없는 것을 고르시오.",
+    "c": "Society as a whole will be (much / very) better off.",
+    "o": [
+      "much",
+      "very"
+    ],
+    "a": "very",
+    "e": "8번 문장 구문 분석: 비교급 강조에는 much, far, even, still, a lot 등을 쓰며 very는 원급만 수식합니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "9번 문장의 that society is worse off에서 that절이 명사 evidence와 맺고 있는 문법적 관계를 두 글자로 쓰시오.",
+    "ans": [
+      "동격"
+    ],
+    "show": "동격",
+    "e": "9번 문장 구문 분석: evidence 뒤의 that절은 완전한 절을 이끌어 증거의 내용을 설명하는 동격 접속사절입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "기술 혁신에 따른 산업 수익 감소와 사회 전체 실질 후생 증진의 역설",
+      "음원 스트리밍 기술의 발전이 예술가들의 저작권 수익에 미치는 부정적 영향",
+      "소비자 후생 증대를 위해 정부가 기술 혁신 기업에 보조금을 지급해야 할 필요성",
+      "GDP 통계의 정확성을 제고하기 위한 새로운 디지털 화폐 측정 방식의 도입"
+    ],
+    "a": 1,
+    "e": "1번 주제: 기술 혁신에 따른 산업 수익 감소와 사회 전체 실질 후생 증진의 역설"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (산업 수익으로 환산되지 않는 기술 혁신)",
+      "키워드 B (소비자 후생과 사회 전체의 효용 증대)"
+    ],
+    "rows": [
+      ["innovations that improve human living standards", 1],
+      ["accrue directly to consumers", 2],
+      ["reducing industry revenue", 1],
+      ["people will be much better off", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "Not all innovations that improve human living standards show up in revenue and profits.",
+      "Many of the product improvements brought about by technology have the paradoxical effect of reducing industry revenue.",
+      "Even if the number of people buying a song doubles with the lower price, revenue will still fall by 50 percent.",
+      "The point is that revenue reduction, and an accompanying failure to raise GDP, is not by itself evidence that society is worse off."
+    ],
+    "a": 4,
+    "e": "1번 중심 문장: The point is that revenue reduction, and an accompanying failure to raise GDP, is not by itself evidence that society is worse off."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "match",
+    "s": "본문의 연결어와 그 논리적 역할을 알맞게 짝지으세요.",
+    "box": [
+      "앞 문장의 기업 수익 귀속을 부정하고 소비자 혜택으로의 대안을 제시",
+      "매출 감소라는 부정적 지표에서 사회 전체의 실질적 후생 증진이라는 긍정적 현실로 전환"
+    ],
+    "rows": [
+      ["instead (2번 문장)", 1],
+      ["But (8번 문장)", 2]
+    ],
+    "e": "2번 어휘 및 연결어 분석: instead는 대안 제시, But은 역접 전환"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "일반 명제 → 구체적 수치 예시 논증 → 반직관적 결론 도출",
+      "역사적 사건 서술 → 문제 원인 규명 → 제도적 개선안 제안",
+      "대립되는 두 이론 소개 → 절충적 관점 제시 → 한계점 지적",
+      "통념 소개 → 통념의 부당성 비판 → 개인적 행동 강령 촉구"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: '일반 명제 - 구체적 수치 예시 논증 - 반직관적 결론 도출'의 전개 방식"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [두 번째 부분: 4~7번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "구체적인 수치 계산을 통한 기술 혁신의 산업 매출 감소 효과 실증 (상세 예시 및 데이터 검증)",
+      "음원 가격 폭락으로 인한 음반 산업의 연쇄 도산 과정 서술",
+      "기술 개발에 필요한 막대한 초기 투자 비용의 회수 방안 논의",
+      "디지털 음원 복제로 인한 저작권 침해 실태 고발"
+    ],
+    "a": 1,
+    "e": "두 번째 부분 마무리: 구체적인 수치 계산을 통한 기술 혁신의 산업 매출 감소 효과 실증"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "fix",
+    "s": "8번 문장에서 어법상 틀린 밑줄 친 부분을 바르게 고친 두 단어의 관계사 표현을 쓰시오.",
+    "c": "But people, <u>which</u> we mean society as a whole, will be much better off.",
+    "keys": [
+      {
+        "k": "by which",
+        "show": "which → by which"
+      }
+    ],
+    "e": "4번 문제 풀이: '우리는 사람들에 의해(by people) 사회 전체를 의미한다'의 구조이므로 전치사+관계대명사 by which가 되어야 합니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "8번 문장의 관계사절에서 which를 단독으로 쓸 수 없는 이유로 분석지에 제시된 근거는?",
+    "o": [
+      "절 내에서 동사 mean의 목적어가 society as a whole로 이미 채워져 있어 목적격 관계대명사를 단독으로 쓸 수 없기 때문에",
+      "선행사 people이 사물이 아닌 사람이므로 which 자체를 결코 쓸 수 없기 때문에",
+      "삽입절 내에서는 어떠한 관계대명사도 사용할 수 없기 때문에",
+      "뒤따르는 문장에 주어가 생략되어 있어 주격 관계대명사가 필요하기 때문에"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이: mean의 목적어가 이미 채워져 있으므로 목적격 관계대명사 which를 단독으로 쓸 수 없으며 by which가 되어야 합니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+    "c": "The point is that revenue reduction, and an accompanying failure to raise GDP, is not by itself evidence that society is (better / worse) off.",
+    "o": [
+      "better",
+      "worse"
+    ],
+    "a": "worse",
+    "e": "9번 문장 내용: 매출 감소와 GDP 정체가 사회가 '더 나빠졌다(worse off)'는 증거는 아니라는 맥락입니다."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 8번 문장에서 which를 by which로 고쳐야 하는 어법적 이유를 관계사절 내부의 '동사의 목적어'와 '선행사와의 의미 관계' 관점에서 서술하시오.",
+    "show": "관계사절 내부에서 타동사 mean의 목적어가 이미 'society as a whole'로 채워져 있어 불완전한 목적격 관계대명사를 단독으로 쓸 수 없으며, '우리는 그 사람들로써(by people) 사회 전체를 의미한다'라는 논리적 관계를 완성하기 위해 전치사 by가 결합된 by which가 되어야 하기 때문이다.",
+    "crit": "① mean의 목적어(society as a whole)가 이미 채워져 목적격 단독 불가 언급 (2점) ② 'by people(그들로써)'의 의미 관계를 완성하기 위해 전치사 by가 필요함 언급 (2점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 기술 혁신이 일어났을 때 산업 전체 매출과 사회 전체 후생 사이에서 발생하는 '역설'의 내용을 지문의 중심 문장과 음원 예시를 바탕으로 우리말로 서술하시오.",
+    "show": "기술 혁신으로 가격이 크게 하락하면 구매자 수가 늘어나더라도 산업 전체의 매출과 GDP는 감소할 수 있지만, 소비자들이 훨씬 적은 비용으로 동일한 혜택을 누리게 되므로 사회 전체의 실질적 후생은 훨씬 더 좋아진다는 역설이다.",
+    "crit": "① 가격 하락으로 인한 산업 전체 매출/GDP 감소 언급 (2점) ② 비용 절감 및 혜택 증가로 사회 전체 실질 후생(삶의 질) 개선 언급 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

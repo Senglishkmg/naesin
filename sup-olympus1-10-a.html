@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "ANALYSIS번 두려움과 영장류 사회적 발달 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · 빈칸추론",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "Many developmental theorists and researchers, including those studying human as well as nonhuman primate subjects, have recognized the role that <u>     </u> can play in a primate's social development."],
+    [2, "When an infant is frightened it always seeks out its mother for protection and safety, and all exploratory and play activity stops until the infant has been sufficiently comforted and reassured by its attachment object."],
+    [3, "Thus, frequently frightened infants will very likely have less time to explore and fewer opportunities to play than will infants who are not."],
+    [4, "Such voluntary restraints may serve to slow down the social development of shy or anxious infants if these tendencies are maintained throughout their childhood years."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "비인간 영장류뿐만 아니라 인간 피험자를 연구하는 이들도 영장류의 사회적 발달에서 두려움의 역할을 인정해 왔다.",
+    "a": "O",
+    "e": "1번 문장: including those studying human as well as nonhuman primate subjects"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "유아가 겁을 먹었을 때도 탐색과 놀이 활동은 중단 없이 계속 이어진다.",
+    "a": "X",
+    "e": "2번 문장: all exploratory and play activity stops (모든 탐색 및 놀이 활동은 멈춘다)"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "겁을 먹은 유아는 애착 대상에 의해 충분히 위로받고 안심할 때까지 어머니를 찾아 나선다.",
+    "a": "O",
+    "e": "2번 문장: seeks out its mother for protection and safety, and ... stops until the infant has been sufficiently comforted and reassured"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "빈번하게 겁을 먹는 유아들은 그렇지 않은 유아들보다 탐색할 시간과 놀 기회가 더 많아진다.",
+    "a": "X",
+    "e": "3번 문장: have less time to explore and fewer opportunities to play"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "유아 스스로 탐색과 놀이를 멈추는 행동은 외부의 강제적 구속이 아닌 자발적인 억제에 해당한다.",
+    "a": "O",
+    "e": "4번 문장: Such voluntary restraints (자발적인 억제들)"
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "수줍어하거나 불안해하는 경향이 유년기 내내 유지되더라도 유아의 사회적 발달 속도에는 아무런 영향이 없다.",
+    "a": "X",
+    "e": "4번 문장: may serve to slow down the social development (사회적 발달을 늦출지도 모른다)"
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "애착 대상으로부터 충분한 위안을 얻은 후에는 중단되었던 탐색이나 활동이 재개될 수 있다.",
+    "a": "O",
+    "e": "2번 문장: until the infant has been sufficiently comforted and reassured (충분히 위로받을 때까지 멈춘다는 서술로부터 확인)"
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "연구자들은 두려움이라는 감정이 오직 인간 유아의 발달에만 작용하고 비인간 영장류에게는 적용되지 않는다고 보았다.",
+    "a": "X",
+    "e": "1번 문장: nonhuman primate subjects(비인간 영장류 대상들)를 연구하는 이들도 포함하여 인정했습니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "피험자, 연구 대상",
+      "탐색의, 탐구적인",
+      "자발적인",
+      "억제, 자제, 구속"
+    ],
+    "rows": [
+      ["subject", 1],
+      ["exploratory", 2],
+      ["voluntary", 3],
+      ["restraint", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 voluntary(자발적인)의 반의어로 알맞게 짝지어진 것은?",
+    "o": [
+      "involuntary, compulsory, mandatory",
+      "spontaneous, intentional, willing",
+      "terrified, alarmed, scared",
+      "inhibition, suppression, restriction"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: voluntary의 반의어는 involuntary, compulsory, mandatory입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 restraint(억제)의 동의어로 옳지 <b>않은</b> 것은?",
+    "o": [
+      "inhibition",
+      "suppression",
+      "restriction",
+      "spontaneity"
+    ],
+    "a": 4,
+    "e": "5번 심화 어휘: restraint의 동의어는 inhibition, suppression, restriction입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "The child showed self-control through internal (restraint / constraint), pausing his actions on his own.",
+    "o": [
+      "restraint",
+      "constraint"
+    ],
+    "a": "restraint",
+    "e": "5번 심화 어휘: restraint는 유아 스스로 멈추는 내적·자발적 억제를 뜻하며, constraint는 외부의 강제적 제약입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "The mother tried to (reassure / insure) the frightened infant by holding it gently.",
+    "o": [
+      "reassure",
+      "insure"
+    ],
+    "a": "reassure",
+    "e": "5번 심화 어휘: reassure는 불안한 마음을 가라앉혀 안심시키는 것이며 insure는 보험에 들거나 보증하는 것입니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "4번 문장에서 '~하는 역할을 하다, ~하는 결과를 낳다'의 뜻으로 쓰인 두 단어의 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "serve to"
+    ],
+    "show": "serve to",
+    "e": "4번 문장 어휘: serve to (~하는 역할을 하다/결과를 낳다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 frightened(겁먹은)의 동의어 4개 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["terrified", "alarmed", "scared", "intimidated"]],
+      ["②", ["terrified", "alarmed", "scared", "intimidated"]]
+    ],
+    "show": "terrified, alarmed, scared, intimidated 중 2개",
+    "e": "5번 심화 어휘: frightened의 동의어 terrified, alarmed, scared, intimidated"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 괄호 안에서 주어부의 핵심 명사와의 수 일치상 알맞은 동사 형태를 고르시오.",
+    "c": "Many developmental theorists and researchers, including those studying primate subjects, (has / have) recognized the role.",
+    "o": [
+      "has",
+      "have"
+    ],
+    "a": "have",
+    "e": "1번 문장 구문 분석: 주어부의 핵이 복수명사구 Many developmental theorists and researchers이므로 복수 현재완료 have recognized가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "mc",
+    "s": "1번 문장의 that fear can play in a primate's social development에서 that에 대한 설명으로 옳은 것은?",
+    "o": [
+      "선행사 the role을 수식하는 목적격 관계대명사이다.",
+      "선행사가 없는 명사절 접속사이다.",
+      "뒤에 완전한 절을 이끄는 동격 접속사이다.",
+      "영장류의 사회적 발달을 가리키는 지시대명사이다."
+    ],
+    "a": 1,
+    "e": "1번 문장 구문 분석: that은 the role을 선행사로 취하고 play의 목적어 역할을 하는 목적격 관계대명사입니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 괄호 안에서 어법상 알맞은 동사 형태를 고르시오.",
+    "c": "When an infant is frightened, all exploratory and play activity (stops / stop).",
+    "o": [
+      "stops",
+      "stop"
+    ],
+    "a": "stops",
+    "e": "2번 문장 구문 분석: 단수 취급된 주어 activity에 맞추어 단수 동사 stops가 쓰였습니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 괄호 안에서 시간 부사절 내의 수동태 의미를 완성하는 알맞은 형태를 고르시오.",
+    "c": "until the infant has been sufficiently (comforting / comforted) and reassured by its attachment object",
+    "o": [
+      "comforting",
+      "comforted"
+    ],
+    "a": "comforted",
+    "e": "2번 문장 구문 분석: 애착 대상에 의해 위로를 받는 수동의 의미이므로 과거분사 comforted가 reassured와 병렬을 이룹니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "mc",
+    "s": "3번 문장의 than will infants who are not에 대한 구문 분석으로 옳은 것은?",
+    "o": [
+      "비교 접속사 than 뒤에서 조동사 will이 주어 infants who are not 앞으로 도치된 구조이다.",
+      "who are not은 앞의 조동사 will을 수식하는 관계부사절이다.",
+      "infants 뒤에는 play activity stops가 생략되어 있다.",
+      "than 뒤의 도치는 문법적 오류이므로 반드시 infants will로만 고쳐 써야 한다."
+    ],
+    "a": 1,
+    "e": "3번 문장 구문 분석: 비교급 비교 구문 뒤에서 조동사 will이 주어 앞으로 도치되었습니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "short",
+    "s": "3번 문장의 who are not 뒤에 생략된 두 단어의 형용사구를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "frequently frightened"
+    ],
+    "show": "frequently frightened",
+    "e": "3번 문장 구문 분석: not 뒤에는 앞서 언급된 형용사구 frequently frightened가 생략되어 있습니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "mc",
+    "s": "4번 문장의 to slow down the social development에서 to부정사의 용법에 대한 분석지의 설명으로 옳은 것은?",
+    "o": [
+      "타동사 serve의 목적어로 쓰인 명사적 용법",
+      "결과를 나타내는 부사적 용법(또는 serve to-v의 관용적 서술 표현)",
+      "원인이나 이유를 나타내는 부사적 용법",
+      "앞의 명사 restraints를 수식하는 형용사적 용법"
+    ],
+    "a": 2,
+    "e": "4번 문장 구문 분석: '결과적으로 ~하게 되다'를 나타내는 부사적 용법(결과) 또는 serve to-v의 관용적 서술 표현입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "ox",
+    "s": "4번 문장의 if these tendencies are maintained에서 tendencies가 외부 환경이나 시간에 의해 유지되는 수동 의미이므로 단순 수동태 are maintained가 쓰였다.",
+    "a": "O",
+    "e": "4번 문장 구문 분석: 주어 tendencies가 유지되다의 뜻을 갖는 단순 수동태입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "빈번한 두려움이 영장류 유아의 탐색·놀이 활동 축소와 사회적 발달 지연에 미치는 영향",
+      "영장류 어미의 양육 방식 차이가 유아의 지능 발달에 미치는 긍정적 효과",
+      "유아기 놀이 활동의 규칙성이 성인기 문제 해결 능력에 미치는 결정적 역할",
+      "영장류의 공격적 행동을 억제하기 위해 애착 대상이 제공해야 할 환경적 조건"
+    ],
+    "a": 1,
+    "e": "1번 주제: 빈번한 두려움이 영장류 유아의 탐색·놀이 활동 축소와 사회적 발달 지연에 미치는 영향"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (두려움과 공포 반응)",
+      "키워드 B (사회적 발달 지연)"
+    ],
+    "rows": [
+      ["frightened", 1],
+      ["exploratory and play activity stops", 2],
+      ["shy or anxious", 1],
+      ["voluntary restraints", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "Many developmental theorists and researchers have recognized the role that fear can play in a primate's social development.",
+      "When an infant is frightened it always seeks out its mother for protection and safety.",
+      "Thus, frequently frightened infants will very likely have less time to explore and fewer opportunities to play.",
+      "Such voluntary restraints may serve to slow down the social development of shy or anxious infants if these tendencies are maintained throughout their childhood years."
+    ],
+    "a": 4,
+    "e": "1번 중심 문장: Such voluntary restraints may serve to slow down the social development of shy or anxious infants if these tendencies are maintained throughout their childhood years."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "3번 문장의 연결어 Thus가 수행하는 논리적 역할로 분석지에 제시된 것은?",
+    "o": [
+      "앞 문장의 즉각적인 활동 중단 현상으로부터 논리적인 장기적 귀결을 이끌어내는 인과",
+      "앞서 제시된 공포 반응에 상반되는 새로운 예외 사례를 도입하는 역접",
+      "동일한 발달 실험의 추가적 데이터를 나열하는 단순 첨가",
+      "실험 대상의 연령별 차이를 대조하는 비교"
+    ],
+    "a": 1,
+    "e": "2번 문장 3 어휘 및 연결어: Thus는 활동 중단 현상에서 장기적 귀결로 나아가는 인과 연결어입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "현상 설명 → 인과적 추론 → 최종 결론",
+      "역사적 사례 나열 → 문제점 지적 → 해결책 제시",
+      "상반된 이론 대조 → 실험 결과 검증 → 절충안 도출",
+      "사회적 통념 소개 → 통념의 오류 비판 → 새로운 가설 수립"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: '현상 설명 - 인과적 추론 - 최종 결론'의 서술 전개 방식"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [첫 번째 부분: 1~2번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "유아가 공포에 반응하는 선천적 행동 패턴을 서술하여 주제 전개의 기초를 놓음 (문제 제기 및 현상 제시)",
+      "영장류의 공격성을 통제하기 위한 어머니의 훈육 기법 소개",
+      "유아의 놀이 활동이 두뇌 발달에 미치는 긍정적 측면 분석",
+      "인간과 비인간 영장류 간의 애착 형성 속도 차이 규명"
+    ],
+    "a": 1,
+    "e": "첫 번째 부분 마무리: 유아가 공포에 반응하는 선천적 행동 패턴을 서술하여 주제 전개의 기초를 놓음"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "1번 문장의 빈칸에 들어갈 정답 어휘로 옳은 것은?",
+    "o": [
+      "fear",
+      "anger",
+      "pride",
+      "sadness",
+      "happiness"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이: frightened, anxious와 직결되는 핵심 정서 명사 fear(두려움)가 정답입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "빈칸 문제 풀이에서 선택지 happiness(행복)가 오답으로 소거되는 이유로 분석지 4번에 제시된 근거는?",
+    "o": [
+      "행복감은 탐색과 놀이를 촉진하는 감정이므로 지문의 억제 및 지연 상황과 정반대이기 때문에",
+      "영장류는 생물학적으로 행복을 느낄 수 없는 뇌 구조를 지녔기 때문에",
+      "행복은 사회적 발달과 아무런 상관관계가 없기 때문에",
+      "행복감을 느끼는 유아는 어머니를 결코 찾아가지 않기 때문에"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이 5단계: 행복감은 탐색과 놀이를 촉진하는 감정이므로 지문의 억제 및 지연 상황과 정반대입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "short",
+    "s": "4번 문장의 Such voluntary restraints가 지칭하는 구체적 내용을 3번 문장에서 찾아 8단어의 영어로 쓰시오. (단, and를 포함하여 작성하시오)",
+    "ans": [
+      "less time to explore and fewer opportunities to play"
+    ],
+    "show": "less time to explore and fewer opportunities to play",
+    "e": "4번 문장 구문 분석: Such voluntary restraints는 앞 문장의 탐색 시간 감소와 놀이 기회 축소를 지칭합니다."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 빈칸의 정답이 fear가 되는 논리적 인과 흐름(4단계 검증)을 지문에 제시된 유아의 행동 변화 과정을 바탕으로 서술하시오.",
+    "show": "유아가 공포와 두려움을 느끼면 어미를 찾아 피신하고 모든 탐색과 놀이 활동을 중단하며, 이러한 자발적 억제로 인해 탐색 시간과 놀이 기회가 현저히 줄어들어 결국 사회적 발달이 지연되는 인과관계를 형성하기 때문이다.",
+    "crit": "① 두려움을 느껴 어미에게 피신 및 탐색·놀이 활동 중단 언급 (1점) ② 자발적 억제로 인한 탐색 시간 및 놀이 기회 축소 언급 (2점) ③ 사회적 발달 지연으로 귀결됨을 명시 (1점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 중심 문장의 내용을 반영하여, 수줍어하거나 불안해하는 유아들의 사회적 발달이 지연될 수 있는 핵심 전제 조건과 결과를 우리말로 서술하시오.",
+    "show": "자발적인 활동 억제 경향들이 유아들의 어린 시절 내내 유지된다면, 그러한 억제들이 수줍어하거나 불안해하는 유아들의 사회적 발달을 늦추도록 작용할 수 있다.",
+    "crit": "① 자발적 억제 경향이 어린 시절(유년기) 내내 유지된다는 전제 조건 서술 (2점) ② 사회적 발달을 늦추는 결과를 낳을 수 있음을 명시 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

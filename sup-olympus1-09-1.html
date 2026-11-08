@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "Practice 01번 시간의 희소성과 목적 간의 선택 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · Practice 01번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "Action takes place by choosing which ends shall be satisfied by the employment of means."],
+    [2, "Time is scarce for man only because whichever ends he chooses to satisfy, there are others that must remain unsatisfied."],
+    [3, "When we must use a means so that some ends remain unsatisfied, the necessity for a choice among ends arises."],
+    [4, "For example, Jones is engaged in watching a baseball game on television."],
+    [5, "He is faced with the choice of spending the next hour in: (a) continuing to watch the baseball game, (b) playing bridge, or (c) going for a drive."],
+    [6, "He would like to do all three of these things, but his means (time) is <u>sufficient</u>."],
+    [7, "As a result, he must choose; one end can be satisfied, but the others must go unfulfilled."],
+    [8, "Suppose that he decides on course A."],
+    [9, "This is a clear indication that he has ranked the satisfaction of end A higher than the satisfaction of ends B or C."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "인간의 행동은 수단의 활용을 통해 어떤 목적들을 충족시킬 것인가를 선택함으로써 일어난다.",
+    "a": "O",
+    "e": "1번 문장: Action takes place by choosing which ends shall be satisfied by the employment of means."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "어떤 목적을 충족시키더라도 다른 모든 목적까지 동시에 충족될 수 있기 때문에 시간은 인간에게 풍요롭다.",
+    "a": "X",
+    "e": "2번 문장: 어떤 목적을 선택하든 충족되지 않은 채로 남아야 하는 다른 목적들이 존재하므로 시간은 희소합니다(Time is scarce)."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "어떤 목적들이 충족되지 못한 채로 남겨지도록 수단을 사용해야 할 때, 목적들 사이에서 선택의 필요성이 발생한다.",
+    "a": "O",
+    "e": "3번 문장: the necessity for a choice among ends arises."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "Jones는 다음 한 시간을 야구 시청, 카드놀이, 드라이브 중 오직 한 가지만 하기를 원했고 세 가지 모두를 원하지는 않았다.",
+    "a": "X",
+    "e": "6번 문장: He would like to do all three of these things(그는 이 세 가지 일을 모두 하고 싶어 했습니다)."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "Jones가 직면한 여가 선택지 중에는 브리지 카드게임을 하는 것이 포함되어 있다.",
+    "a": "O",
+    "e": "5번 문장: (b) playing bridge"
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "시간이 부족한 결과 Jones는 하나의 목적만 충족시킬 수 있고 나머지 목적들은 실현되지 않은 채로 남겨져야 한다.",
+    "a": "O",
+    "e": "7번 문장: one end can be satisfied, but the others must go unfulfilled."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "Jones가 코스 A를 선택한 것은 목적 B와 C의 만족도를 목적 A보다 더 높게 평가했음을 의미한다.",
+    "a": "X",
+    "e": "9번 문장: 목적 A의 만족도를 목적 B나 C의 만족도보다 더 높게(higher than) 서열화한 것입니다."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "Jones의 사례에서 그의 수단인 시간은 세 가지 목적을 모두 수행하기에 충분한 것으로 결론지어졌다.",
+    "a": "X",
+    "e": "6~7번 문장: 시간이라는 수단은 불충분하며(insufficient), 그 결과 반드시 선택해야만 합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어 및 표현의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "희소한, 부족한",
+      "발생하다, 생겨나다",
+      "~에 몰두하다, 참여하다",
+      "순위를 매기다, 서열화하다"
+    ],
+    "rows": [
+      ["scarce", 1],
+      ["arise", 2],
+      ["be engaged in", 3],
+      ["rank", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 insufficient(불충분한)의 동의어로 옳지 <b>않은</b> 것은?",
+    "o": [
+      "inadequate",
+      "deficient",
+      "abundant",
+      "lacking"
+    ],
+    "a": 3,
+    "e": "5번 심화 어휘: abundant는 '풍부한'으로 insufficient의 반의어이며, inadequate, deficient, lacking은 동의어입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 unfulfilled(실현되지 않은)의 반의어로 알맞게 짝지어진 것은?",
+    "o": [
+      "fulfilled, accomplished",
+      "unsatisfied, unmet",
+      "unrealized, deficient",
+      "scarce, inadequate"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: unfulfilled의 반의어는 fulfilled, accomplished입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "He wanted to do all three things, but his time was (insufficient / efficient).",
+    "o": [
+      "insufficient",
+      "efficient"
+    ],
+    "a": "insufficient",
+    "e": "5번 심화 어휘: insufficient는 '불충분한, 부족한'이며, efficient는 '효율적인'입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "Time is (scarce / sacred) for man because we cannot satisfy all ends.",
+    "o": [
+      "scarce",
+      "sacred"
+    ],
+    "a": "scarce",
+    "e": "5번 심화 어휘: scarce는 '희소한, 부족한'이며, sacred는 '신성한'입니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "5번 문장에서 '~에 직면해 있다'의 뜻으로 쓰인 세 단어의 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "is faced with",
+      "be faced with"
+    ],
+    "show": "is faced with",
+    "e": "5번 문장 어휘 및 구문: is faced with (~에 직면해 있다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 insufficient의 반의어 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["sufficient", "adequate", "ample", "abundant"]],
+      ["②", ["sufficient", "adequate", "ample", "abundant"]]
+    ],
+    "show": "sufficient, adequate, ample, abundant 중 2개",
+    "e": "5번 심화 어휘: insufficient의 반의어 sufficient, adequate, ample, abundant"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 괄호 안에서 수동태의 의미를 완성하는 알맞은 형태를 고르시오.",
+    "c": "Action takes place by choosing which ends shall be (satisfying / satisfied) by the employment of means.",
+    "o": [
+      "satisfying",
+      "satisfied"
+    ],
+    "a": "satisfied",
+    "e": "1번 문장 구문 분석: 목적(ends)이 수단에 의해 '충족되는' 수동 관계이므로 shall be satisfied가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 괄호 안에서 2형식 동사 remain 뒤의 주격 보어로 알맞은 형태를 고르시오.",
+    "c": "Whichever ends he chooses to satisfy, there are others that must remain (unsatisfied / unsatisfyingly).",
+    "o": [
+      "unsatisfied",
+      "unsatisfyingly"
+    ],
+    "a": "unsatisfied",
+    "e": "2번 문장 구문 분석: remain은 2형식 불완전자동사이므로 주격 보어로 형용사(과거분사) unsatisfied가 와야 합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "mc",
+    "s": "3번 문장의 주절 the necessity for a choice among ends arises에 대한 설명으로 옳은 것은?",
+    "o": [
+      "핵심 주어가 ends이므로 복수동사 arise로 바꾸어야 한다.",
+      "핵심 주어가 단수명사 necessity이므로 단수 완전자동사 arises가 올바르게 일치되었다.",
+      "arises는 타동사이므로 뒤에 목적어가 생략되어 틀린 문장이다.",
+      "is arisen이라는 수동태 형태로 고쳐 써야 어법상 자연스럽다."
+    ],
+    "a": 2,
+    "e": "3번 문장 구문 분석: 핵심 주어는 단수명사 necessity이므로 단수 완전자동사 arises가 바르게 일치되었습니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "ox",
+    "s": "4번 문장의 be engaged in watching에서 전치사 in의 목적어로 동명사 watching이 쓰였다.",
+    "a": "O",
+    "e": "4번 문장 구문 분석: be engaged in -ing 구문에서 전치사 in의 목적어로 동명사가 쓰였습니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "mc",
+    "s": "5번 문장의 콜론(:) 뒤에 나열된 세 선택지 (a), (b), (c)의 어법적 공통점으로 옳은 것은?",
+    "o": [
+      "동사 is의 주격 보어로 쓰인 to부정사구들이다.",
+      "전치사 in에 공통으로 걸려 병렬 연결된 동명사구들이다.",
+      "앞의 명사 choice를 수식하는 현재분사구들이다.",
+      "시간 부사절의 생략된 주절 동사구들이다."
+    ],
+    "a": 2,
+    "e": "5번 문장 구문 분석: 전치사 in에 걸리는 세 개의 동명사구(continuing, playing, going)가 or로 병렬 연결됩니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "7번 문장의 괄호 안에서 2형식 동사 go의 보어로 알맞은 분사 형태를 고르시오.",
+    "c": "One end can be satisfied, but the others must go (unfulfilling / unfulfilled).",
+    "o": [
+      "unfulfilling",
+      "unfulfilled"
+    ],
+    "a": "unfulfilled",
+    "e": "7번 문장 구문 분석: go는 2형식 불완전자동사로 형용사 보어(과거분사) unfulfilled를 취해 '~한 상태로 남겨지다'를 나타냅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "short",
+    "s": "9번 문장의 that he has ranked the satisfaction ~에서 that절이 명사 indication과 맺고 있는 문법적 관계를 두 글자로 쓰시오.",
+    "ans": [
+      "동격"
+    ],
+    "show": "동격",
+    "e": "9번 문장 구문 분석: that은 완전한 3형식 절을 이끌어 명사 a clear indication의 내용을 상술하는 동격 접속사입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "ox",
+    "s": "1번 문장의 takes place는 '발생하다'라는 뜻의 완전자동사로 수동태(is taken place)로 쓰이지 않는다.",
+    "a": "O",
+    "e": "1번 문장 어휘 및 구문: take place는 수동태가 불가능한 완전자동사입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "수단인 시간의 희소성에 기인하는 목적 간 선택의 필연성과 우선순위 서열화",
+      "여가 활동의 다양화가 현대인의 스트레스 완화에 미치는 긍정적 효과",
+      "시간 관리 기술의 습득을 통해 모든 개인적 욕망을 동시에 달성하는 전략",
+      "스포츠 관람과 취미 생활의 우선순위를 정할 때 발생하는 도덕적 딜레마"
+    ],
+    "a": 1,
+    "e": "1번 주제: 수단인 시간의 희소성에 기인하는 목적 간 선택의 필연성과 우선순위 서열화"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (수단으로서 시간의 희소성)",
+      "키워드 B (목적 간의 불가피한 선택과 우선순위)"
+    ],
+    "rows": [
+      ["Time is scarce", 1],
+      ["necessity for a choice among ends arises", 2],
+      ["means (time) is insufficient", 1],
+      ["ranked the satisfaction higher", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "Action takes place by choosing which ends shall be satisfied by the employment of means.",
+      "Time is scarce for man only because whichever ends he chooses to satisfy, there are others that must remain unsatisfied.",
+      "When we must use a means so that some ends remain unsatisfied, the necessity for a choice among ends arises.",
+      "Suppose that he decides on course A."
+    ],
+    "a": 3,
+    "e": "1번 중심 문장: When we must use a means so that some ends remain unsatisfied, the necessity for a choice among ends arises."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "match",
+    "s": "본문의 연결어와 그 논리적 역할을 알맞게 짝지으세요.",
+    "box": [
+      "앞선 추상적 원리를 일상적 시간 배분 사례로 실증하기 위해 Jones의 사례를 도입",
+      "시간 부족이라는 원인에서 필연적인 선택 강제라는 결과로 이어지는 인과"
+    ],
+    "rows": [
+      ["For example (4번 문장)", 1],
+      ["As a result (7번 문장)", 2]
+    ],
+    "e": "2번 어휘 및 연결어 분석: For example은 예시 연결어, As a result는 인과 연결어입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "일반 명제 제시 → 구체적 여가 사례 적용 → 가치 서열화라는 원리 도출",
+      "역사적 사건 서술 → 실패 원인 분석 → 제도적 대안 마련",
+      "두 경제학 이론의 비교 → 상충점 지적 → 절충안 도출",
+      "통념 소개 → 통념의 부당성 반증 → 새로운 행동 지침 촉구"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: '일반 명제 제시 - 구체적 여가 사례 적용 - 가치 서열화라는 원리 도출'의 전개 방식"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [첫 번째 부분: 1~3번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "수단의 희소성과 선택의 필연성이라는 경제학적 대전제 정립 (도입 및 원리 규명)",
+      "현대 소비 사회에서 발생하는 여가 시간의 낭비 실태 고발",
+      "개인의 심리적 갈등을 해소하기 위한 합리적 의사결정 모델 제안",
+      "시간 절약 기술이 가져온 노동 시간 단축의 역사적 배경 서술"
+    ],
+    "a": 1,
+    "e": "첫 번째 부분 마무리: 수단의 희소성과 선택의 필연성이라는 경제학적 대전제 정립"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "fix",
+    "s": "6번 문장에서 문맥상 낱말의 쓰임이 적절하지 않은 밑줄 친 단어를 바르게 고쳐 쓰시오.",
+    "c": "He would like to do all three of these things, but his means (time) is <u>sufficient</u>.",
+    "keys": [
+      {
+        "k": "insufficient",
+        "show": "sufficient → insufficient"
+      }
+    ],
+    "e": "4번 문제 풀이: 세 가지를 다 원하지만 수단인 시간이 부족하다는 역접(but)과 선택 강제(must choose)로 이어지므로 insufficient가 올바릅니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "6번 문장의 sufficient가 문맥상 어색한 이유로 분석지 4번(1단계 검증법)에 제시된 근거는?",
+    "o": [
+      "시간이 충분하다면 세 가지 중 하나만 고르고 나머지를 충족되지 못한 채로 둘 이유가 없으므로 뒷문장과 정면으로 충돌하기 때문에",
+      "means 뒤에는 무조건 복수형 형용사만 올 수 있기 때문에",
+      "Jones는 결코 텔레비전을 시청하고 싶어 하지 않았기 때문에",
+      "sufficient는 사람의 성격을 나타낼 때만 사용되는 형용사이기 때문에"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이(1단계): 시간이 충분하다면 하나만 고르고 나머지를 포기할 이유가 없으므로 뒷문장(he must choose)과 정면으로 충돌합니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 비교급 부사를 고르시오.",
+    "c": "This is a clear indication that he has ranked the satisfaction of end A (higher / lower) than the satisfaction of ends B or C.",
+    "o": [
+      "higher",
+      "lower"
+    ],
+    "a": "higher",
+    "e": "9번 문장 내용: 코스 A를 선택했다는 것은 그가 목적 A의 만족도를 B나 C보다 더 '높게(higher)' 서열화했음을 뜻합니다."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 4번의 2단계 검증법을 토대로, 6번 문장의 sufficient를 insufficient로 고쳐야 하는 이유를 접속사 but과 뒷문장의 '선택의 필요성'을 포함하여 서술하시오.",
+    "show": "앞 절에서 세 가지 일을 모두 하고 싶어 하지만 접속사 but으로 역접을 이루고 있으므로 시간이 부족해야 논리적으로 연결되며, 시간이 불충분해야만 뒷문장에서처럼 결국 하나만 선택하고 나머지는 포기해야 한다는 인과 관계가 완벽히 성립하기 때문이다.",
+    "crit": "① 앞 절의 '세 가지 모두 원함'에 대한 but의 역접 논리 언급 (2점) ② 시간이 불충분해야만 뒷문장의 '하나를 선택하고 나머지를 포기해야 함'과 호응함을 언급 (2점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> Jones가 세 가지 여가 중 코스 A를 최종 결정한 행위가 지니는 경제학적 의미를 '목적 간의 서열화' 관점에서 분석지 내용을 바탕으로 우리말로 서술하시오.",
+    "show": "불충분한 시간 속에서 코스 A를 선택한 행위는, 그가 목적 A의 만족도를 다른 대안인 목적 B나 C의 만족도보다 더 높게 평가하여 우선순위로 서열화했음을 명백히 보여주는 것이다.",
+    "crit": "① 불충분한 시간 자원 속에서의 선택임을 전제 (1점) ② 목적 A의 만족도를 목적 B, C보다 더 높게 평가/서열화(우선순위 결정)했음을 명시 (3점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "ANALYSIS번 스타 실무자의 관리직 전환 곤란 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · 어휘 적절성",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "If you were a high performer in your work before becoming a manager, you may find the journey into management particularly difficult."],
+    [2, "Because of their previous success, stars are understandably reluctant to give up the attitudes and practices they think produced their success thus far, and they’re unwilling to change themselves."],
+    [3, "They don’t know how to develop or coach people because they never needed much coaching themselves, or so they believe."],
+    [4, "They don’t know how to deal with people who lack their motivation."],
+    [5, "Because they’ve never failed, they’ve had little practice reflecting on and learning from experience."],
+    [6, "No wonder many former stars turn into <u>great</u> bosses."],
+    [7, "If you were a star, be aware that the very success that produced your promotion can now work against you."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "관리자가 되기 전에 뛰어난 성과를 냈던 사람이라도 관리직으로 전환하는 과정이 특히 어렵게 느껴질 수 있다.",
+    "a": "O",
+    "e": "1번 문장: you may find the journey into management particularly difficult."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "스타 직원들은 이전의 성공 경험 덕분에 관리자가 된 직후 자신의 태도와 관행을 즉각 기꺼이 바꾼다.",
+    "a": "X",
+    "e": "2번 문장: reluctant to give up the attitudes and practices, unwilling to change themselves(포기하기를 꺼리고 변화하려 하지 않음)."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "스타 실무자들은 스스로 많은 코칭을 필요로 하지 않았다고 믿기 때문에 타인을 육성하거나 코칭하는 방법을 알지 못한다.",
+    "a": "O",
+    "e": "3번 문장: They don’t know how to develop or coach people because they never needed much coaching themselves."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "스타 출신 관리자들은 자신과 같은 열의와 동기부여가 부족한 직원들을 능숙하게 다룰 수 있다.",
+    "a": "X",
+    "e": "4번 문장: They don’t know how to deal with people who lack their motivation."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "스타들은 실패해 본 경험이 결코 없었기 때문에 경험으로부터 성찰하고 배우는 연습을 거의 해보지 못했다.",
+    "a": "O",
+    "e": "5번 문장: Because they’ve never failed, they’ve had little practice reflecting on and learning from experience."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "스타 직원들은 수많은 실패를 겪어본 덕분에 실패에서 배우는 성찰 훈련을 충분히 거쳤다.",
+    "a": "X",
+    "e": "5번 문장: 결코 실패해 본 적이 없어서 성찰하고 배우는 연습을 거의 해보지 못했다고 진술합니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "실무자 시절 승진을 가져다준 바로 그 성공이 관리직에서는 본인에게 불리하게 작용할 수 있다.",
+    "a": "O",
+    "e": "7번 문장: the very success that produced your promotion can now work against you."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 실무 시절의 탁월한 성과가 관리자로서 성공을 보장하는 가장 확실한 자산이라고 주장한다.",
+    "a": "X",
+    "e": "7번 문장: 승진을 낳았던 바로 그 성공이 이제는 당신에게 불리하게 작용할 수 있다고 경고합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "꺼리는, 주저하는",
+      "지금까지, 여태까지",
+      "결여되다, 부족하다",
+      "평범한, 보통밖에 안 되는, 변변찮은"
+    ],
+    "rows": [
+      ["reluctant", 1],
+      ["thus far", 2],
+      ["lack", 3],
+      ["mediocre", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 mediocre의 동의어로 옳지 <b>않은</b> 것은?",
+    "o": [
+      "ordinary",
+      "unremarkable",
+      "second-rate",
+      "exceptional"
+    ],
+    "a": 4,
+    "e": "5번 심화 어휘: exceptional은 mediocre의 반의어이며, ordinary, unremarkable, second-rate는 동의어입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 reluctant의 반의어로 알맞게 짝지어진 것은?",
+    "o": [
+      "willing, eager, enthusiastic",
+      "unwilling, hesitant, loath",
+      "redundant, exceptional",
+      "mediocre, ordinary"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: reluctant의 반의어는 willing, eager, enthusiastic입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "Many former stars end up becoming (mediocre / medium) bosses who cannot lead their teams.",
+    "o": [
+      "mediocre",
+      "medium"
+    ],
+    "a": "mediocre",
+    "e": "5번 심화 어휘: mediocre는 능력이나 성과가 그저 그렇다는 부정적 뉘앙스를 담은 '평범한, 변변찮은'이며, medium은 '중간의, 매개체'입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "They are (reluctant / redundant) to change themselves because of past success.",
+    "o": [
+      "reluctant",
+      "redundant"
+    ],
+    "a": "reluctant",
+    "e": "5번 심화 어휘: reluctant는 '꺼리는, 주저하는'이며, redundant는 '불필요한, 남아도는'입니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "4번 문장에서 '~을 다루다, 처리하다, 대하다'의 뜻으로 쓰인 두 단어의 이어동사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "deal with"
+    ],
+    "show": "deal with",
+    "e": "4번 문장 어휘: deal with (~을 다루다, 대하다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 mediocre(평범한, 변변찮은)의 반의어 4개 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["exceptional", "extraordinary", "outstanding", "great"]],
+      ["②", ["exceptional", "extraordinary", "outstanding", "great"]]
+    ],
+    "show": "exceptional, extraordinary, outstanding, great 중 2개",
+    "e": "5번 심화 어휘: mediocre의 반의어 exceptional, extraordinary, outstanding, great"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 주절에서 괄호 안의 어법상 알맞은 목적격 보어를 고르시오.",
+    "c": "You may find the journey into management particularly (difficult / difficultly).",
+    "o": [
+      "difficult",
+      "difficultly"
+    ],
+    "a": "difficult",
+    "e": "1번 문장 구문 분석: 5형식 문장(find + O + O.C.)에서 목적격 보어로 형용사 difficult가 쓰이며, 부사 particularly의 수식을 받습니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "mc",
+    "s": "2번 문장의 the attitudes and practices they think produced their success thus far에 대한 설명으로 옳은 것은?",
+    "o": [
+      "they think는 주격 관계대명사절 내에 삽입된 삽입절이다.",
+      "produced는 they think의 목적어 역할을 하는 동명사이다.",
+      "선행사 뒤에는 소유격 관계대명사 whose가 생략되어 있다.",
+      "they think produced는 문장 전체의 본동사이다."
+    ],
+    "a": 1,
+    "e": "2번 문장 구문 분석: 선행사 뒤에 주격 관계대명사 which/that이 생략되어 있고 they think는 삽입절입니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 괄호 안에서 어법상 알맞은 대명사를 고르시오.",
+    "c": "They are unwilling to change (them / themselves).",
+    "o": [
+      "them",
+      "themselves"
+    ],
+    "a": "themselves",
+    "e": "2번 문장 구문 분석: 타동사 change의 목적어가 주어 they와 동일 대상이므로 재귀대명사 themselves를 씁니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "mc",
+    "s": "3번 문장의 themselves에 대한 문법적 용법 설명으로 옳은 것은?",
+    "o": [
+      "동사의 목적어로 쓰인 재귀 용법이므로 절대 생략할 수 없다.",
+      "주어 they를 강조하기 위해 덧붙은 강조 용법으로 생략이 가능하다.",
+      "전치사의 목적어로 쓰인 필수적 전치사구 구성 요소이다.",
+      "뒤따르는 삽입절의 주어 역할을 수행하고 있다."
+    ],
+    "a": 2,
+    "e": "3번 문장 구문 분석: because절 내부의 themselves는 주어 they를 강조하기 위해 덧붙은 강조 용법(생략 가능)입니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 괄호 안에서 선행사와의 수 일치상 알맞은 동사를 고르시오.",
+    "c": "They don’t know how to deal with people who (lack / lacks) their motivation.",
+    "o": [
+      "lack",
+      "lacks"
+    ],
+    "a": "lack",
+    "e": "4번 문장 구문 분석: 관계대명사 who의 선행사가 복수명사 people이므로 복수동사 lack이 올바릅니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 괄호 안에서 분석지의 문맥적 의미('연습을 거의 해보지 못했다')에 알맞은 수량표현을 고르시오.",
+    "c": "They have had (little / a little) practice reflecting on experience.",
+    "o": [
+      "little",
+      "a little"
+    ],
+    "a": "little",
+    "e": "5번 문장 구문 분석: 부정의 수량형용사 little이 쓰여 '연습을 거의 하지 못했다'라는 강한 부정 의미를 나타냅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "ox",
+    "s": "6번 문장의 No wonder many former stars turn into ~는 앞에 It is가 생략된 관용 구문이다.",
+    "a": "O",
+    "e": "6번 문장 구문 분석: No wonder (that) ~는 앞에 It is가 생략된 형태로 'that 이하는 당연하다/놀랄 일이 아니다'를 뜻합니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "7번 문장에서 선행사 success를 수식하여 '바로 그'라는 강조 의미를 나타내는 두 단어의 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "the very"
+    ],
+    "show": "the very",
+    "e": "7번 문장 구문 분석: the very는 뒤따르는 명사를 수식하여 '바로 그'를 뜻하는 한정사적 강조 용법입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "과거의 높은 성과와 성공 방식이 관리직 수행에 미치는 부정적 영향과 극복의 필요성",
+      "성과 중심의 승진 평가 제도가 기업 내 부서 간 협업을 저해하는 메커니즘",
+      "직원들의 내적 동기를 유발하기 위해 상사가 갖추어야 할 공감과 소통의 기술",
+      "실무 역량이 부족한 관리자를 보완하기 위한 전문 코칭 프로그램의 도입 방안"
+    ],
+    "a": 1,
+    "e": "1번 주제: 과거의 높은 성과와 성공 방식이 관리직 수행에 미치는 부정적 영향과 극복의 필요성"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (스타 실무자의 과거 성공 방식)",
+      "키워드 B (관리직 전환의 어려움과 평범한 상사로의 전락)"
+    ],
+    "rows": [
+      ["previous success", 1],
+      ["don't know how to develop or coach", 2],
+      ["produced their success thus far", 1],
+      ["turn into mediocre bosses", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "If you were a high performer in your work before becoming a manager, you may find the journey into management particularly difficult.",
+      "Because of their previous success, stars are understandably reluctant to give up the attitudes and practices they think produced their success thus far.",
+      "Because they’ve never failed, they’ve had little practice reflecting on and learning from experience.",
+      "If you were a star, be aware that the very success that produced your promotion can now work against you."
+    ],
+    "a": 4,
+    "e": "1번 중심 문장: If you were a star, be aware that the very success that produced your promotion can now work against you."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "문제 제기 → 다각적 원인 규명 → 경각심 촉구 및 결론",
+      "역사적 사건 서술 → 성공 요인 비교 → 미래 예측",
+      "사회적 통념 소개 → 실험 결과 제시 → 절충안 제안",
+      "이상적 리더십 제시 → 현실적 한계 비판 → 제도 개선 촉구"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: '문제 제기 - 다각적 원인 규명 - 경각심 촉구 및 결론'의 전개 방식"
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [두 번째 부분: 3~5번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "뛰어난 실무자가 관리직에서 실패할 수밖에 없는 구체적인 역량 결핍 요인 상술 (상세 원인 분석)",
+      "실무자와 관리자의 연봉 및 보상 체계 차이 분석",
+      "코칭 전문 교육이 기업 생산성에 미치는 긍정적 기여도 증명",
+      "동기부여가 부족한 직원들을 해고해야 하는 인사 관리적 명분 제시"
+    ],
+    "a": 1,
+    "e": "두 번째 부분 마무리: 뛰어난 실무자가 관리직에서 실패할 수밖에 없는 구체적인 역량 결핍 요인 상술"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [세 번째 부분: 6~7번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "앞선 분석의 최종 귀결 제시 및 고성과자 출신 관리자를 향한 직언과 조언 (결론부)",
+      "성공한 관리자가 되기 위한 단계별 행동 수칙 제시",
+      "과거 성공을 보존하면서 새로운 리더십을 발휘하는 타협안 모색",
+      "승진 제도의 구조적 결함을 시정하기 위한 인사평가 대안 제안"
+    ],
+    "a": 1,
+    "e": "세 번째 부분 마무리: 앞선 분석의 최종 귀결 제시 및 고성과자 출신 관리자를 향한 직언과 조언"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "fix",
+    "s": "6번 문장에서 문맥상 낱말의 쓰임이 어색한 밑줄 친 단어를 바르게 고쳐 쓰시오.",
+    "c": "No wonder many former stars turn into <u>great</u> bosses.",
+    "keys": [
+      {
+        "k": "mediocre",
+        "show": "great → mediocre"
+      }
+    ],
+    "e": "4번 문제 풀이: 앞서 코칭 능력 부족, 동기 결여 직원 대처 미숙, 실패 성찰 부족 등이 열거되었으므로 great가 아닌 mediocre(평범한, 변변찮은)로 수정되어야 합니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "6번 문장의 great가 문맥상 어색한 이유로 분석지 4번(1단계 검증법)에 제시된 근거는?",
+    "o": [
+      "stars 출신 관리자들의 지속적인 역량 결핍과 한계가 앞서 열거되었는데 '훌륭한 상사'로 변한다고 진술하는 것은 논리적으로 모순되므로",
+      "great 뒤에는 단수명사만 와야 하는데 bosses라는 복수명사가 왔기 때문에",
+      "former stars는 언제나 최상위 리더로만 성장한다는 경영학 통계가 존재하기 때문에",
+      "turn into 뒤에는 직책을 나타내는 명사가 올 수 없기 때문에"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이(1단계): 앞부분 전체에서 역량 결핍과 부정적 원인이 누적되었으므로 great는 정면으로 충돌합니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "short",
+    "s": "7번 문장에서 '당신에게 불리하게 작용하다'의 뜻으로 쓰인 세 단어의 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "work against you"
+    ],
+    "show": "work against you",
+    "e": "7번 문장 어휘 및 구문: work against you (당신에게 불리하게 작용하다)"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 4번의 2단계 검증법(문맥 적합성 및 반의어 대입)을 토대로, 6번 문장의 great를 mediocre로 고쳐야 하는 이유를 우리말로 서술하시오.",
+    "show": "앞부분에서 스타 출신 관리자가 코칭 방법을 모르고 동기 결여 직원을 다루지 못하며 실패 성찰 연습도 없다는 부정적 역량 결핍이 누적되었으므로, '훌륭한(great)' 상사가 된다는 것은 모순이며, 보통밖에 안 되거나 변변찮은 리더로 전락한다는 흐름에 부합하도록 반의어인 mediocre(평범한, 변변찮은)로 수정해야 한다.",
+    "crit": "① 앞부분에 제시된 관리 역량 결핍/부정적 원인 누적 언급 (2점) ② great는 논리적으로 충돌하며 흐름상 '평범한/변변찮은(mediocre)' 상사로 전락해야 함을 명시 (2점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 스타 실무자가 관리자가 되었을 때 마주하게 되는 구체적인 문제점(3~5번 문장 내용) 세 가지와, 필자가 중심 문장에서 전하는 핵심 경고를 우리말로 서술하시오.",
+    "show": "문제점: 1) 타인을 육성하거나 코칭하는 방법을 모른다. 2) 동기가 부족한 직원을 다루는 법을 모른다. 3) 실패 경험이 없어 경험에서 성찰하고 배우는 연습이 부족하다.<br>핵심 경고: 실무자 시절 승진을 가져다준 바로 그 성공이 관리직에서는 본인에게 불리하게 작용할 수 있음을 인식해야 한다.",
+    "crit": "① 코칭/육성 방법 부재, 동기 부족 직원 대처 미숙, 실패 성찰 연습 부족의 세 가지 문제점 명시 (2점) ② 승진을 낳은 과거 성공이 불리하게 작용할 수 있다는 중심 문장 경고 언급 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

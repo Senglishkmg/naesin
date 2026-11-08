@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "Practice 01번 집약적 관개 농업과 고대 도시 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · Practice 01번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "Many of the ancient urban centers obtained their food supply from intensive irrigated agriculture in the region where they were located, and it is usually suggested that this is because labor productivity is particularly high with irrigated agriculture."],
+    [2, "It seems more relevant to point out that this type of primitive subsistence system has a particularly high output per unit of land."],
+    [3, "The high demand for labor per unit of land and the high output per unit of land <u>making</u> it necessary and possible for a large number of families to live within a small area."],
+    [4, "Therefore, even if the surplus per family is small, the total surplus available within a fairly small distance from the town will be <u>large</u>."],
+    [5, "In addition, the irrigation canals, or the river used for irrigation, can be used for boat transport of food to the town."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "많은 고대 도시 중심지들은 자신들이 위치한 지역의 집약적 관개 농업으로부터 식량을 공급받았다.",
+    "a": "O",
+    "e": "1번 문장: Many of the ancient urban centers obtained their food supply from intensive irrigated agriculture in the region where they were located."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "필자는 관개 농업의 본질적인 핵심 강점이 높은 노동 생산성에 있다고 본다.",
+    "a": "X",
+    "e": "1~2번 문장: 노동 생산성이 높다는 것은 일반적 통념이며, 필자는 토지 단위 면적당 산출량이 높다는 점이 더 유의미하다고 봅니다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "관개 농업과 같은 원시적 생계 체계는 토지 단위 면적당 산출량이 유난히 높다.",
+    "a": "O",
+    "e": "2번 문장: this type of primitive subsistence system has a particularly high output per unit of land."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "토지 단위 면적당 높은 노동력 수요와 높은 산출량은 많은 가족들이 넓은 면적에 흩어져 살도록 강제했다.",
+    "a": "X",
+    "e": "3번 문장: 많은 수의 가족들이 좁은 면적 안에서(within a small area) 살아가는 것을 필요하고도 가능하게 만들었습니다."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "개별 가족당 식량 잉여분이 적더라도, 마을에서 가까운 거리 안에서 얻을 수 있는 총잉여분은 많을 것이다.",
+    "a": "O",
+    "e": "4번 문장: even if the surplus per family is small, the total surplus available within a fairly small distance from the town will be large."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "마을로부터 먼 거리에서만 총잉여분을 얻을 수 있었기 때문에 식량 수송에 큰 어려움을 겪었다.",
+    "a": "X",
+    "e": "4번 문장: 꽤 가까운 거리 안에서(within a fairly small distance from the town) 총잉여분을 이용할 수 있었습니다."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "관개 수로나 관개에 쓰인 강은 마을로 식량을 배로 수송하는 데 활용될 수 있었다.",
+    "a": "O",
+    "e": "5번 문장: the irrigation canals, or the river used for irrigation, can be used for boat transport of food to the town."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "관개 수로는 오직 농경지에 물을 공급하는 용도로만 쓰였으며 물자 수송로로는 이용되지 못했다.",
+    "a": "X",
+    "e": "5번 문장: 배를 통한 마을로의 식량 수송(boat transport of food to the town)에 사용될 수 있었습니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "토지·자본·노동을 좁은 면적에 집중 투입하는 집약적인",
+      "유의미한, 적절한, 타당한",
+      "생계 체계, 자급자족 체계",
+      "잉여, 잉여 농산물"
+    ],
+    "rows": [
+      ["intensive", 1],
+      ["relevant", 2],
+      ["subsistence system", 3],
+      ["surplus", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 surplus(잉여)의 반의어로 알맞게 짝지어진 것은?",
+    "o": [
+      "deficit, shortage, scarcity",
+      "excess, extra, remainder",
+      "concentrated, rigorous",
+      "extensive, primitive"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: surplus의 반의어는 deficit, shortage, scarcity이며, excess, extra, remainder는 동의어입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 intensive(집약적인)의 반의어로 옳은 것은?",
+    "o": [
+      "extensive (조방적인, 광범위한)",
+      "concentrated (집중적인)",
+      "rigorous (엄격한)",
+      "relevant (타당한)"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: intensive의 동의어는 concentrated, rigorous이며 반의어는 extensive입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "It seems more relevant to point out that this type of primitive (subsistence / substance) system has a high output.",
+    "o": [
+      "subsistence",
+      "substance"
+    ],
+    "a": "subsistence",
+    "e": "5번 심화 어휘: subsistence는 '생계, 자급자족'이며, substance는 '물질, 실체'입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "The irrigation (canals / channels) were dug artificially to bring water to crops.",
+    "o": [
+      "canals",
+      "channels"
+    ],
+    "a": "canals",
+    "e": "5번 심화 어휘: 농업 용수를 대기 위해 인공적으로 판 도랑이나 수로는 canal을 씁니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "2번 문장에서 '지적하다, 짚고 넘어가다'의 뜻으로 쓰인 두 단어의 이어동사를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "point out"
+    ],
+    "show": "point out",
+    "e": "2번 문장 어휘: point out (지적하다, 짚고 넘어가다)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 surplus(잉여)의 동의어 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["excess", "extra", "remainder"]],
+      ["②", ["excess", "extra", "remainder"]]
+    ],
+    "show": "excess, extra, remainder 중 2개",
+    "e": "5번 심화 어휘: surplus의 동의어 excess, extra, remainder"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "mc",
+    "s": "1번 문장의 where they were located에 대한 설명으로 분석지 내용과 일치하지 <b>않는</b> 것은?",
+    "o": [
+      "선행사 the region을 수식하는 관계부사절이다.",
+      "where 뒤에는 완전한 수동태 문장이 이어진다.",
+      "they were located는 상태적 수동태 구문이다.",
+      "where는 불완전한 절을 이끄는 목적격 관계대명사이다."
+    ],
+    "a": 4,
+    "e": "1번 문장 구문 분석: where는 선행사 the region을 수식하는 관계부사이며 뒤에 완전한 수동태 절이 옵니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "mc",
+    "s": "1번 문장의 it is usually suggested that 절의 구조에 대한 설명으로 옳은 것은?",
+    "o": [
+      "it은 비인칭 주어이며 that절은 부사절이다.",
+      "it은 가주어이며 that이 이끄는 명사절이 진주어이다.",
+      "it은 앞 문장 전체를 가리키는 지시대명사이다.",
+      "it은 강조구문의 it이며 that절 내부에서 주어가 강조되었다."
+    ],
+    "a": 2,
+    "e": "1번 문장 구문 분석: it은 가주어이고 명사절 접속사 that이 이끄는 절이 진주어입니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 괄호 안에서 알맞은 표현을 고르시오.",
+    "c": "It is usually suggested that this is (because / why) labor productivity is particularly high.",
+    "o": [
+      "because",
+      "why"
+    ],
+    "a": "because",
+    "e": "1번 문장 구문 분석: 'this is because + 원인' 구문으로 노동 생산성이 높기 때문이라는 원인을 나타냅니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "mc",
+    "s": "2번 문장의 to point out that ~ 에 대한 설명으로 옳은 것은?",
+    "o": [
+      "형식상 주어(가주어) It에 대응하는 진짜 주어(진주어)인 명사적 용법의 to부정사이다.",
+      "형용사 more relevant를 수식하는 정도·원인의 부사적 용법이다.",
+      "목적을 나타내는 부사적 용법으로 in order to로 바꾸어 쓸 수 있다.",
+      "동사 seems의 목적어로 쓰인 명사적 용법이다."
+    ],
+    "a": 1,
+    "e": "2번 문장 구문 분석: It(가주어) ~ to point out(진주어) 구문으로 to부정사의 명사적 용법입니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "The conditions made it (necessary / necessarily) and possible for a large number of families to live within a small area.",
+    "o": [
+      "necessary",
+      "necessarily"
+    ],
+    "a": "necessary",
+    "e": "3번 문장 구문 분석: 5형식 문장에서 목적격 보어로 형용사 necessary가 와야 합니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "short",
+    "s": "3번 문장에서 가목적어 it에 대응하는 진짜 목적어 역할을 하는 to부정사구를 본문에서 찾아 쓰시오. (단, 의미상 주어는 제외하고 to부터 쓰시오)",
+    "ans": [
+      "to live within a small area"
+    ],
+    "show": "to live within a small area",
+    "e": "3번 문장 구문 분석: 진목적어는 to live within a small area이며, for a large number of families는 의미상 주어입니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "ox",
+    "s": "4번 문장의 available within a fairly small distance from the town은 명사구 the total surplus를 뒤에서 수식하는 형용사구이다.",
+    "a": "O",
+    "e": "4번 문장 구문 분석: the total surplus를 뒤에서 수식하는 형용사구(사이에 which is 생략)입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "5번 문장에서 the river를 뒤에서 수식하는 과거분사구 두 단어를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "used for irrigation"
+    ],
+    "show": "used for irrigation",
+    "e": "5번 문장 구문 분석: 과거분사구 used for irrigation이 the river를 수식하는 수동 분사구입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "고대 도시를 지탱한 집약적 관개 농업의 토지 생산성과 인접 식량 공급 기제",
+      "원시 생계 체계의 노동 생산성 향상이 고대 상업 도시에 미친 부정적 영향",
+      "강과 수로를 이용한 원거리 해상 무역이 고대 제국의 형성에 기여한 과정",
+      "과도한 인구 밀집으로 인한 고대 관개 농업의 쇠퇴와 식량 잉여분의 감소"
+    ],
+    "a": 1,
+    "e": "1번 주제: 고대 도시를 지탱한 집약적 관개 농업의 토지 생산성과 인접 식량 공급 기제"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (집약적 관개 농업과 단위 면적당 높은 산출량)",
+      "키워드 B (좁은 지역 내 대인구 부양과 도시 식량 잉여 집적)"
+    ],
+    "rows": [
+      ["primitive subsistence system", 1],
+      ["large number of families to live within a small area", 2],
+      ["high output per unit of land", 1],
+      ["total surplus available within a fairly small distance", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "Many of the ancient urban centers obtained their food supply from intensive irrigated agriculture in the region where they were located.",
+      "It seems more relevant to point out that this type of primitive subsistence system has a particularly high output per unit of land.",
+      "The high demand for labor per unit of land and the high output per unit of land make it necessary and possible for a large number of families to live within a small area.",
+      "In addition, the irrigation canals, or the river used for irrigation, can be used for boat transport of food to the town."
+    ],
+    "a": 3,
+    "e": "1번 중심 문장: The high demand for labor per unit of land and the high output per unit of land make it necessary and possible for a large number of families to live within a small area."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "match",
+    "s": "본문의 연결어와 그 기능 및 역할을 알맞게 짝지으세요.",
+    "box": [
+      "높은 인구 밀집 가능성으로부터 도시 인근 총잉여분 확보라는 필연적 결론을 유도하는 인과",
+      "근거리 대량 잉여 생산에 더하여 수송의 편의성이라는 추가 이점을 제시하는 첨가"
+    ],
+    "rows": [
+      ["Therefore (4번 문장)", 1],
+      ["In addition (5번 문장)", 2]
+    ],
+    "e": "2번 어휘 및 연결어 분석: Therefore는 인과, In addition은 첨가 접속부사입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "통념 반박 → 핵심 원인 제시 → 파생 효과 및 이점 열거",
+      "역사적 사례 대조 → 갈등 분석 → 절충안 도출",
+      "문제 상황 제기 → 기술적 원인 분석 → 대안 제시",
+      "이론적 가설 수립 → 실험적 검증 → 한계점 지적"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: '통념 반박 - 핵심 원인 제시 - 파생 효과 및 이점 열거'의 전개 방식"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [첫 번째 부분: 1~2번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "널리 알려진 통념(노동 생산성)을 수정하고 토지 생산성이라는 진짜 핵심 원인 규명 (도입 및 통념 수정)",
+      "고대 농업 기술의 한계를 지적하고 도시 붕괴의 경제적 원인 분석",
+      "관개 수로 건설에 투입된 대규모 노동력 동원 과정 서술",
+      "가족 단위 농경의 비효율성을 증명하고 집단 농장 도입의 배경 설명"
+    ],
+    "a": 1,
+    "e": "첫 번째 부분 마무리: 널리 알려진 통념(노동 생산성)을 수정하고 토지 생산성이라는 진짜 핵심 원인 규명"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "fix",
+    "s": "3번 문장에서 어법상 틀린 밑줄 친 부분을 바르게 고친 동사 형태를 쓰시오. (시제에 따라 가능한 정답 중 하나만 쓰시오)",
+    "c": "The high demand for labor per unit of land and the high output per unit of land <u>making</u> it necessary and possible for a large number of families to live within a small area.",
+    "keys": [
+      {
+        "k": "made",
+        "show": "making → made (또는 make)"
+      }
+    ],
+    "e": "4번 문제 풀이: 본동사가 누락되었으므로 준동사 making을 정동사 과거형 made(또는 복수 현재형 make)로 고쳐야 합니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "3번 문장에서 making이 어법상 틀린 이유로 분석지에 제시된 근거는?",
+    "o": [
+      "목적어를 가질 수 없는 자동사이기 때문에",
+      "주어가 복합 주어이지만 문장 전체를 성립시키는 본동사(술어 동사)가 누락되었기 때문에",
+      "수동태인 being made로 쓰여야 하기 때문에",
+      "가목적어 it 앞에는 to부정사만 올 수 있기 때문에"
+    ],
+    "a": 2,
+    "e": "4번 문제 풀이: 주어 뒤에 문장을 성립시키는 정동사가 필요한 자리에 준동사인 현재분사 making이 쓰여 본동사가 누락되었기 때문입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+    "c": "Therefore, even if the surplus per family is small, the total surplus available within a fairly small distance from the town will be (small / large).",
+    "o": [
+      "small",
+      "large"
+    ],
+    "a": "large",
+    "e": "4번 문장 내용: 좁은 면적 안에 대규모 인구가 밀집해 살기 때문에 근거리에서 확보 가능한 '총잉여분(total surplus)'은 많아집니다(large)."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 3번 문장에서 making을 정동사 made(또는 make)로 고쳐야 하는 문법적 이유를 '문장 성분'과 '구문 구조'를 포함하여 서술하시오.",
+    "show": "The high demand ~ and the high output ~이 문장의 주어인데, 준동사인 making이 쓰여 문장 전체의 본동사(술어 동사)가 누락되었으며, 가목적어 it과 진목적어(for ~ to live)를 취하는 완전한 5형식 문장을 완성하기 위해 정동사 made(또는 make)가 필요하기 때문이다.",
+    "crit": "① 문장의 본동사(술어 동사) 누락 언급 (2점) ② 가목적어-진목적어를 취하는 5형식 문장 구조 완성 언급 (2점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 관개 농업이 고대 도시 중심지의 식량 공급을 가능하게 만든 두 가지 핵심 특성과 그로 인한 결과(인구 및 잉여)를 분석지 중심 문장과 내용을 토대로 우리말로 서술하시오.",
+    "show": "토지 단위 면적당 높은 노동력 수요와 높은 산출량이라는 관개 농업의 두 특성 덕분에 많은 가족이 좁은 면적에 모여 살 수 있었고, 그 결과 가족당 잉여가 적더라도 도시 인근에서 막대한 총식량 잉여를 집적하고 수로를 통해 도시로 운송할 수 있었다.",
+    "crit": "① 높은 노동력 수요와 높은 토지 단위 산출량 언급 (2점) ② 좁은 면적 내 대인구 거주와 인접 거리 내 막대한 총잉여 집적/운송 언급 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
