@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "Practice 03번 단일 경작과 잡초·해충의 생물학적 번영 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · Practice 03번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "At one end of the spectrum of transformations was the forest gardening as practiced by the peoples of New Guinea and Amazonia that mimicked natural growth and left minimal traces on the land."],
+    [2, "At the other end was monoculture: cultivating only one species of plant or raising only one species of animal."],
+    [3, "The beginnings of monoculture can be seen in the wheat fields of the Middle East, the rice paddies of China, and the herds of sheep and goats on the Eurasian steppe."],
+    [4, "Biologically speaking, these species suddenly became very successful, measured by their rates of survival and reproduction."],
+    [5, "So did other, unwanted species."],
+    [6, "Crops that ripened or were stored after harvesting attracted rats, mice, sparrows, and roaches."],
+    [7, "Water pools provided habitats for mosquitoes."],
+    [8, "Garbage and human or animal waste attracted flies."],
+    [9, "Thanks to humans, weeds and pests were also biological <u>     </u>."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "뉴기니와 아마조니아 부족들이 행했던 산림 원예는 자연적인 성장을 모방하여 땅 위에 최소한의 흔적만을 남겼다.",
+    "a": "O",
+    "e": "1번 문장: that mimicked natural growth and left minimal traces on the land"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "단일 경작은 수십 종의 다양한 작물과 동물을 한 구역에서 동시에 복합적으로 기르는 방식을 의미한다.",
+    "a": "X",
+    "e": "2번 문장: cultivating only one species of plant or raising only one species of animal (오직 한 종의 식물이나 동물만 기름)"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "단일 경작의 시초는 중동의 밀밭, 중국의 논, 유라시아 스텝 지역의 양과 염소 무리에서 찾아볼 수 있다.",
+    "a": "O",
+    "e": "3번 문장: wheat fields of the Middle East, rice paddies of China, herds of sheep and goats on the Eurasian steppe"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "생물학적 관점에서 인간이 기른 작물과 가축들은 생존율과 번식률이 급격히 떨어져 멸종 위기에 처했다.",
+    "a": "X",
+    "e": "4번 문장: suddenly became very successful, measured by their rates of survival and reproduction"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "인간이 원치 않았던 다른 종들도 작물이나 가축과 마찬가지로 생물학적으로 매우 성공적인 존재가 되었다.",
+    "a": "O",
+    "e": "5번 문장: So did other, unwanted species."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "수확 후 저장된 작물들은 쥐나 참새, 바퀴벌레의 접근을 완전히 차단하였다.",
+    "a": "X",
+    "e": "6번 문장: Crops that ripened or were stored after harvesting attracted rats, mice, sparrows, and roaches."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "인간이 농업 활동으로 만들어 낸 물웅덩이는 모기들에게 서식지를 제공해 주었다.",
+    "a": "O",
+    "e": "7번 문장: Water pools provided habitats for mosquitoes."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "쓰레기와 배설물의 증가는 파리의 개체수를 감소시키는 직접적인 원인이 되었다.",
+    "a": "X",
+    "e": "8번 문장: Garbage and human or animal waste attracted flies (파리들을 끌어모음)."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어 및 표현의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "흉내 내다, 모방하다",
+      "단일 경작, 단일 재배",
+      "나무가 거의 없는 광활한 온대 초지",
+      "해충, 유해 동물"
+    ],
+    "rows": [
+      ["mimic", 1],
+      ["monoculture", 2],
+      ["steppe", 3],
+      ["pest", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 successful(성공적인, 번성한)의 동의어로 옳지 <b>않은</b> 것은?",
+    "o": [
+      "prosperous",
+      "flourishing",
+      "thriving",
+      "extinct"
+    ],
+    "a": 4,
+    "e": "5번 심화 어휘: extinct(멸종된)는 failing과 함께 successful의 반의어이며, prosperous, flourishing, thriving은 동의어입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 winner(승자)의 반의어로 알맞게 짝지어진 것은?",
+    "o": [
+      "loser, victim",
+      "victor, champion",
+      "cleaner, producer",
+      "pest, weed"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: winner의 반의어는 loser, victim입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "The forest gardening system (mimicked / menaced) natural growth.",
+    "o": [
+      "mimicked",
+      "menaced"
+    ],
+    "a": "mimicked",
+    "e": "5번 심화 어휘: mimic은 '자연 패턴을 모방하다'이며 menace는 '위협하다'입니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "The farmers shifted from diversified fields to large-scale (monoculture / agriculture).",
+    "o": [
+      "monoculture",
+      "agriculture"
+    ],
+    "a": "monoculture",
+    "e": "5번 심화 어휘: monoculture는 접두사 mono-가 결합된 '단일 경작'을 뜻합니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "9번 문장에서 '인간의 인위적 환경 조성이 원인이 되었음을 짚어주는 표현'으로 쓰인 두 단어의 전치사구를 본문에서 찾아 쓰시오.",
+    "ans": [
+      "Thanks to",
+      "thanks to"
+    ],
+    "show": "Thanks to",
+    "e": "9번 문장 어휘 및 연결어: Thanks to (~ 덕분에)"
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 successful(성공적인, 번성한)의 동의어 3개 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["prosperous", "flourishing", "thriving"]],
+      ["②", ["prosperous", "flourishing", "thriving"]]
+    ],
+    "show": "prosperous, flourishing, thriving 중 2개",
+    "e": "5번 심화 어휘: successful의 동의어 prosperous, flourishing, thriving"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 괄호 안에서 장소 부사구 도치 구문상 알맞은 be동사 과거형을 고르시오.",
+    "c": "At one end of the spectrum of transformations (was / were) the forest gardening.",
+    "o": [
+      "was",
+      "were"
+    ],
+    "a": "was",
+    "e": "1번 문장 구문 분석: 뒤에 위치한 진짜 주어가 단수명사구 the forest gardening이므로 단수 be동사 was가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "mc",
+    "s": "1번 문장의 that mimicked natural growth and left minimal traces on the land에서 that절에 대한 설명으로 옳은 것은?",
+    "o": [
+      "선행사 the forest gardening을 수식하는 주격 관계대명사절이다.",
+      "선행사 the land를 수식하는 목적격 관계대명사절이다.",
+      "뒤에 완전한 2형식 절을 이끄는 동격의 접속사절이다.",
+      "결과를 나타내는 so that 구문의 변형 부사절이다."
+    ],
+    "a": 1,
+    "e": "1번 문장 구문 분석: that은 the forest gardening을 선행사로 하는 주격 관계대명사입니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 괄호 안에서 등위접속사 or 뒤에 병렬 연결될 알맞은 준동사 형태를 고르시오.",
+    "c": "Monoculture means cultivating only one species of plant or (raising / raised) only one species of animal.",
+    "o": [
+      "raising",
+      "raised"
+    ],
+    "a": "raising",
+    "e": "2번 문장 구문 분석: 콜론 뒤의 부연 설명에서 cultivating과 raising 두 동명사구가 or로 병렬 연결됩니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "4번 문장의 괄호 안에서 수동 분사구문의 알맞은 분사 형태를 고르시오.",
+    "c": "These species became successful, (measuring / measured) by their rates of survival and reproduction.",
+    "o": [
+      "measuring",
+      "measured"
+    ],
+    "a": "measured",
+    "e": "4번 문장 구문 분석: 주절 주어의 성공이 생존율과 번식률에 의해 '측정되다'라는 의미의 수동 분사구문 measured가 쓰였습니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "mc",
+    "s": "5번 문장의 So did other, unwanted species에서 대동사 did가 대신하고 있는 앞 문장의 술어부로 옳은 것은?",
+    "o": [
+      "became very successful",
+      "measured their rates",
+      "can be seen",
+      "cultivated only one species"
+    ],
+    "a": 1,
+    "e": "5번 문장 구문 분석: did는 앞 문장의 일반동사 술어구인 became very successful을 대신하는 대동사입니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "6번 문장의 괄호 안에서 선행사 Crops에 걸리는 알맞은 수동태 동사 형태를 고르시오.",
+    "c": "Crops that ripened or were (storing / stored) after harvesting attracted rats and roaches.",
+    "o": [
+      "storing",
+      "stored"
+    ],
+    "a": "stored",
+    "e": "6번 문장 구문 분석: 작물이 인간에 의해 수확 후 '저장되다'라는 수동태이므로 were stored가 올바릅니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "short",
+    "s": "4번 문장 시작 부분에 쓰인, '생물학적으로 말해서'라는 뜻의 두 단어로 된 독립분사구문 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "Biologically speaking",
+      "biologically speaking"
+    ],
+    "show": "Biologically speaking",
+    "e": "4번 문장 어휘 및 구문: Biologically speaking (독립분사구문)"
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "ox",
+    "s": "1번 문장과 2번 문장은 모두 장소의 전치사구가 문두로 나가면서 주어와 be동사의 위치가 도치된 구문이다.",
+    "a": "O",
+    "e": "1, 2번 문장 구문 분석: At one end ~ was the forest gardening, At the other end was monoculture 모두 장소 부사구 도치 구문입니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "인간의 단일 경작과 환경 변형이 초래한 잡초와 해충의 역설적인 생물학적 번영",
+      "전통 산림 원예 농법이 생물 다양성 보존과 토양 회복에 미치는 긍정적 효과",
+      "곡물 저장 기술의 발달이 고대 제국의 형성과 인구 증가에 기여한 경로",
+      "가축 사육으로 인한 온실가스 배출이 지구 온난화에 미치는 치명적 영향"
+    ],
+    "a": 1,
+    "e": "1번 주제: 인간의 단일 경작과 환경 변형이 초래한 잡초와 해충의 역설적인 생물학적 번영"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (단일 경작과 인간의 생태계 변형)",
+      "키워드 B (원치 않는 종들의 생물학적 번성과 성공)"
+    ],
+    "rows": [
+      ["cultivating only one species", 1],
+      ["attracted rats, mice, sparrows, and roaches", 2],
+      ["rice paddies of China", 1],
+      ["biological winners", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "At one end of the spectrum of transformations was the forest gardening as practiced by the peoples of New Guinea and Amazonia.",
+      "The beginnings of monoculture can be seen in the wheat fields of the Middle East.",
+      "Biologically speaking, these species suddenly became very successful, measured by their rates of survival and reproduction.",
+      "Thanks to humans, weeds and pests were also biological winners."
+    ],
+    "a": 4,
+    "e": "1번 중심 문장: Thanks to humans, weeds and pests were also biological winners."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "mc",
+    "s": "2번 문장의 콜론(:)이 글의 흐름에서 수행하는 기능으로 분석지에 제시된 것은?",
+    "o": [
+      "앞선 핵심 학술 개념(monoculture)에 대한 구체적 정의를 덧붙이는 설명 기능",
+      "단일 경작에 반대하는 학계의 비판적 입장을 제시하는 인용 기능",
+      "전통 농법과 현대 농법의 수익성을 수치로 비교하는 대조 기능",
+      "인간의 환경 파괴에 대한 윤리적 경각심을 촉구하는 강조 기능"
+    ],
+    "a": 1,
+    "e": "2번 문장 2 어휘 및 연결어: 콜론(:)은 monoculture에 대한 구체적 정의를 덧붙이는 설명 기능을 수행합니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "대조 → 반전(도치) → 구체적 열거 → 역설적 결론",
+      "역사적 사건 서술 → 실패 원인 분석 → 미래 정책 대안 제시",
+      "통념 소개 → 통념의 부당성 반증 → 새로운 관찰 실험 설계",
+      "생태계 위기 경고 → 기술적 해결책 제안 → 한계점 지적"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: '대조 - 반전(도치) - 구체적 열거 - 역설적 결론'의 전개 방식"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [첫 번째 부분: 1~3번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "농업 방식의 대조를 통해 글의 핵심 배경인 '단일 경작'의 발생과 성격을 규명함 (도입 및 배경 설명)",
+      "열대 우림의 파괴 실태를 고발하고 원주민 보호 구역 지정의 필요성을 역설함",
+      "유라시아 대륙의 기후 변화가 유목 생활에 미친 결정적 영향 분석",
+      "밀과 쌀의 품종 개량 역사를 서술하여 현대 유전공학의 기원 제시"
+    ],
+    "a": 1,
+    "e": "첫 번째 부분 마무리: 농업 방식의 대조를 통해 글의 핵심 배경인 '단일 경작'의 발생과 성격을 규명함"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "9번 문장의 빈칸에 들어갈 정답 어휘로 옳은 것은?",
+    "o": [
+      "victims",
+      "winners",
+      "cleaners",
+      "resources",
+      "producers"
+    ],
+    "a": 2,
+    "e": "4번 문제 풀이: 앞 문장들의 생물학적 성공(very successful)을 비유적으로 표현한 winners가 정답입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "빈칸 문제 풀이에서 선택지 victims(희생자)가 오답으로 소거되는 이유로 분석지 4번에 제시된 근거는?",
+    "o": [
+      "인간의 방제로 몰살당한 피해자가 아니라 오히려 개체수를 폭발적으로 늘려 번성했으므로 정반대 진술이기 때문에",
+      "잡초와 해충은 생물학적으로 피해를 입을 수 없는 감각 기관을 지녔기 때문에",
+      "victims는 인간 사회의 범죄 피해자에게만 한정하여 쓰는 단어이기 때문에",
+      "모기와 바퀴벌레는 환경 정화에 기여한 청소 동물로 분류되기 때문에"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이 5단계: 피해자가 아니라 오히려 개체수를 폭발적으로 늘려 번성했으므로 정반대 진술입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "short",
+    "s": "4번 문장에서 작물과 가축이 생물학적으로 매우 성공적인 존재가 되었음을 측정하는 기준이 된 두 가지를 나타내는 명사를 본문에서 찾아 쓰시오. (단, and를 포함하여 세 단어로 쓰시오)",
+    "ans": [
+      "survival and reproduction",
+      "rates of survival and reproduction"
+    ],
+    "show": "survival and reproduction",
+    "e": "4번 문장 구문 및 어휘: measured by their rates of survival and reproduction"
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 빈칸의 정답이 winners(승자)가 되는 논리적 인과 흐름(4단계 검증)을 '인간의 농업 환경 조성'과 '원치 않는 종들의 변화' 관점에서 서술하시오.",
+    "show": "인간이 단일 경작을 하며 농작물을 저장하고 물웅덩이를 만들고 쓰레기를 배출하자, 해충과 잡초에게 이상적인 서식처와 먹이가 제공되었고, 그 결과 이 원치 않는 종들이 생존율과 번식률을 극대화하여 크게 성공했기 때문에 생물학적 관점에서 승자(winners)가 되었다.",
+    "crit": "① 인간이 곡물 저장, 웅덩이, 쓰레기 등 서식처와 먹이 환경 조성 언급 (2점) ② 해충과 잡초가 생존율과 번식률을 높여 성공/번성했음을 언급 (2점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 6~8번 문장에 제시된, 인간의 활동이 해충들을 끌어모으거나 번성하게 만든 세 가지 구체적인 환경 요인과 그로 인해 유인된 생물들을 각각 짝지어 서술하시오.",
+    "show": "1) 수확 후 익거나 저장된 작물은 시궁쥐, 생쥐, 참새, 바퀴벌레를 끌어모았다. 2) 물웅덩이는 모기들에게 서식지를 제공했다. 3) 쓰레기와 인간이나 동물의 배설물은 파리 떼를 끌어모았다.",
+    "crit": "① 저장 작물 - 쥐/참새/바퀴벌레 (1점) ② 물웅덩이 - 모기 서식지 (1점) ③ 쓰레기/배설물 - 파리 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

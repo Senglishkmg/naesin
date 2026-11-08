@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "Practice 02번 실존과 정체성 확인을 위한 동반 추구 분석지 확인 문제",
+  "section": "수능 영어 심층 분석지 · Practice 02번",
+  "parts": {
+    "A": "Part A. 내용 일치 O/X",
+    "B": "Part B. 어휘·표현",
+    "C": "Part C. 구문 분석",
+    "D": "Part D. 주제·논리 흐름·서술 전략",
+    "E": "Part E. 문제 풀이 원리와 서술형"
+  },
+  "hints": {
+    "A": "근거: 0. 지문 원문",
+    "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+    "C": "근거: 2. 구문 분석",
+    "D": "근거: 1. 키워드 분석, 3. 서술 전략",
+    "E": "근거: 4. 문제 풀이, 6. 마무리"
+  },
+  "passage": [
+    [1, "Although the wish to be alone is often strong, its intensity varies from person to person."],
+    [2, "An equally impelling impulse, though, is to seek the company of others and to spend extended periods of time sharing activities."],
+    [3, "In these periods we exchange information and feelings in both conversational and non-verbal forms."],
+    [4, "We need other people to provide us with love, support, approval, bodily contact, reassurance, physical help and a myriad of other practical, physical and emotional needs."],
+    [5, "In a very basic sense we need others to confirm that we are there, that we exist and that we have an identity that is unique and separate from anyone else."],
+    [6, "Thus, we generally cannot exist for too long without seeking <u>     </u>."]
+  ]
+};
+
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "ox",
+    "s": "혼자 있고 싶다는 욕구는 모든 사람에게 항상 동일한 강도로 나타난다.",
+    "a": "X",
+    "e": "1번 문장: its intensity varies from person to person(강도는 사람마다 다양함)."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "타인과 함께 있음을 추구하고 활동을 공유하며 시간을 보내려는 충동은 고독의 욕망만큼이나 강력하다.",
+    "a": "O",
+    "e": "2번 문장: An equally impelling impulse, though, is to seek the company of others..."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "인간은 타인과 함께하는 시간 동안 오직 구두 대화를 통해서만 정보와 감정을 교환할 수 있다.",
+    "a": "X",
+    "e": "3번 문장: in both conversational and non-verbal forms(대화와 비언어적 형태 둘 다로)."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "ox",
+    "s": "우리는 사랑, 지지, 신체적 접촉뿐만 아니라 물리적 도움과 무수한 실용적 요구를 충족하기 위해 타인을 필요로 한다.",
+    "a": "O",
+    "e": "4번 문장: We need other people to provide us with love, support, approval, bodily contact, reassurance, physical help..."
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "ox",
+    "s": "타인은 우리가 다른 사람과 동일하게 동화되어야만 존재할 수 있다는 사실을 확인해 주는 역할을 한다.",
+    "a": "X",
+    "e": "5번 문장: 다른 어느 누구와도 구별되는 독특한 정체성(an identity that is unique and separate from anyone else)을 확인해 주기를 필요로 합니다."
+  },
+  {
+    "n": 6,
+    "p": "A",
+    "t": "ox",
+    "s": "매우 근본적인 의미에서 우리는 우리가 존재한다는 사실을 타인이 확인해 주기를 원한다.",
+    "a": "O",
+    "e": "5번 문장: we need others to confirm that we are there, that we exist..."
+  },
+  {
+    "n": 7,
+    "p": "A",
+    "t": "ox",
+    "s": "인간은 타인과의 동료애를 전혀 추구하지 않고도 장기간 문제없이 존재할 수 있다.",
+    "a": "X",
+    "e": "6번 문장: we generally cannot exist for too long without seeking companionship."
+  },
+  {
+    "n": 8,
+    "p": "A",
+    "t": "ox",
+    "s": "타인과 함께 활동을 나누는 시간은 인간의 사회적 본능을 실현하는 중요한 통로이다.",
+    "a": "O",
+    "e": "2~3번 문장: spend extended periods of time sharing activities를 통해 정보와 감정을 교환합니다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어 및 표현의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "함께 있음, 동반, 동행",
+      "무수한, 헤아릴 수 없이 많은",
+      "확인하다, 확증하다",
+      "강력한, 재촉하는"
+    ],
+    "rows": [
+      ["company", 1],
+      ["a myriad of", 2],
+      ["confirm", 3],
+      ["impelling", 4]
+    ],
+    "e": "분석지 2번 어휘 및 연결어"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 companionship(동료애, 교제)의 반의어로 알맞게 짝지어진 것은?",
+    "o": [
+      "solitude, isolation, loneliness",
+      "fellowship, camaraderie, society",
+      "verification, validation, affirmation",
+      "approval, reassurance, support"
+    ],
+    "a": 1,
+    "e": "5번 심화 어휘: companionship의 동의어는 fellowship, camaraderie, society이며 반의어는 solitude, isolation, loneliness입니다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "mc",
+    "s": "분석지 5번에 제시된 confirm(확인하다, 확증하다)의 동의어로 옳지 <b>않은</b> 것은?",
+    "o": [
+      "verify",
+      "validate",
+      "corroborate",
+      "refute"
+    ],
+    "a": 4,
+    "e": "5번 심화 어휘: refute는 deny와 함께 confirm의 반의어이며, verify, validate, corroborate는 동의어입니다."
+  },
+  {
+    "n": 12,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "He preferred the (company / companion) of friends to spending the weekend alone.",
+    "o": [
+      "company",
+      "companion"
+    ],
+    "a": "company",
+    "e": "5번 심화 어휘: company는 '함께 있음, 동반'이라는 추상명사이며, companion은 구체적인 동반자(친구)를 뜻합니다."
+  },
+  {
+    "n": 13,
+    "p": "B",
+    "t": "choice",
+    "s": "문맥상 괄호 안에서 알맞은 혼동 어휘를 고르시오.",
+    "c": "An inner voice seemed to (impel / compel) him to step forward and speak.",
+    "o": [
+      "impel",
+      "compel"
+    ],
+    "a": "impel",
+    "e": "5번 심화 어휘: impel은 내면에서 어떤 행동을 하도록 부추기고 재촉하는 뉘앙스를 지닙니다."
+  },
+  {
+    "n": 14,
+    "p": "B",
+    "t": "short",
+    "s": "4번 문장에서 'A에게 B를 제공하다'의 구문을 완성하기 위해 쓰인 전치사를 쓰시오.<br>provide us ________ love, support...",
+    "ans": [
+      "with"
+    ],
+    "show": "with",
+    "e": "4번 문장 구문 분석: provide A with B 구문입니다."
+  },
+  {
+    "n": 15,
+    "p": "B",
+    "t": "blanks",
+    "s": "분석지 5번에 제시된 confirm(확인하다, 확증하다)의 동의어 4개 중 2개를 쓰시오.",
+    "any": true,
+    "blanks": [
+      ["①", ["verify", "validate", "affirm", "corroborate"]],
+      ["②", ["verify", "validate", "affirm", "corroborate"]]
+    ],
+    "show": "verify, validate, affirm, corroborate 중 2개",
+    "e": "5번 심화 어휘: confirm의 동의어 verify, validate, affirm, corroborate"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "1번 문장의 주절에서 주어와의 수 일치상 알맞은 본동사를 고르시오.",
+    "c": "Although the wish to be alone is strong, its intensity (varies / vary) from person to person.",
+    "o": [
+      "varies",
+      "vary"
+    ],
+    "a": "varies",
+    "e": "1번 문장 구문 분석: 주절의 주어가 단수명사 its intensity이므로 단수 동사 varies가 올바릅니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "mc",
+    "s": "2번 문장의 to seek the company of others and to spend extended periods of time에 대한 설명으로 옳은 것은?",
+    "o": [
+      "be동사 is의 주격 보어로 쓰인 두 to부정사구가 등위접속사 and로 병렬 연결되어 있다.",
+      "명사 impulse를 수식하는 형용사적 용법의 to부정사구들이다.",
+      "목적(~하기 위하여)을 나타내는 부사적 용법으로 in order to로 바꾸어 써야 한다.",
+      "등위접속사 though의 목적어로 쓰인 명사적 용법이다."
+    ],
+    "a": 1,
+    "e": "2번 문장 구문 분석: be동사 is의 주격 보어로 쓰인 to부정사의 명사적 용법 두 개가 and로 병렬 연결됩니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "2번 문장의 괄호 안에서 명사 periods를 수식하기에 알맞은 분사 형태를 고르시오.",
+    "c": "An impulse is to spend (extending / extended) periods of time sharing activities.",
+    "o": [
+      "extending",
+      "extended"
+    ],
+    "a": "extended",
+    "e": "2번 문장 구문 분석: '연장된 기간'이라는 수동/완료 의미이므로 과거분사 extended가 명사를 수식합니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "3번 문장의 괄호 안에서 상관접속사 both A and B 구문을 완성하는 알맞은 형태를 고르시오.",
+    "c": "We exchange information in both (conversational / conversationally) and non-verbal forms.",
+    "o": [
+      "conversational",
+      "conversationally"
+    ],
+    "a": "conversational",
+    "e": "3번 문장 구문 분석: 명사 forms를 수식하는 형용사 conversational이 non-verbal과 병렬 연결되어야 합니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "mc",
+    "s": "4번 문장의 to provide us with love ~ 에 대한 구문 분석으로 옳은 것은?",
+    "o": [
+      "5형식 구문(need + O + to-v)에서 목적격 보어로 쓰인 to부정사이다.",
+      "명사 other people을 수식하는 형용사적 용법이다.",
+      "결과를 나타내는 독립부정사 구문이다.",
+      "주어 We의 동작 목적을 나타내는 부사적 용법이다."
+    ],
+    "a": 1,
+    "e": "4번 문장 구문 분석: 5형식 구조(need + O + to-v)에서 목적격 보어로 쓰인 to부정사입니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "ox",
+    "s": "5번 문장에서 타동사 confirm의 목적어로 3개의 명사절 접속사 that절이 등위접속사 and로 병렬 연결되어 있다.",
+    "a": "O",
+    "e": "5번 문장 구문 분석: that we are there, that we exist, that we have an identity의 3개 that절이 병렬 연결되었습니다."
+  },
+  {
+    "n": 22,
+    "p": "C",
+    "t": "choice",
+    "s": "5번 문장의 괄호 안에서 선행사 an identity를 수식하는 알맞은 관계사를 고르시오.",
+    "c": "We have an identity (that / what) is unique and separate from anyone else.",
+    "o": [
+      "that",
+      "what"
+    ],
+    "a": "that",
+    "e": "5번 문장 구문 분석: 선행사 an identity를 수식하며 절 내에서 주어 역할을 하는 주격 관계대명사 that입니다."
+  },
+  {
+    "n": 23,
+    "p": "C",
+    "t": "short",
+    "s": "6번 문장의 cannot exist for too long without seeking companionship에서 쓰인 [cannot ~ without -ing] 구문이 나타내는 논리적 의미 관계를 분석지의 설명을 참고하여 6글자로 쓰시오. (단, 'OO조건'의 형태로 쓰시오)",
+    "ans": [
+      "필수적필요조건",
+      "필수적 필요조건",
+      "필요조건"
+    ],
+    "show": "필수적 필요조건",
+    "e": "6번 문장 구문 분석: '동료애를 추구하지 않고서는 존재할 수 없다'는 필수적 필요조건을 강하게 나타냅니다."
+  },
+  {
+    "n": 24,
+    "p": "D",
+    "t": "mc",
+    "s": "이 글의 주제로 가장 적절한 것은?",
+    "o": [
+      "인간 실존과 정체성 확인을 위해 타인과의 동반과 교제를 추구해야 하는 필연성",
+      "고독을 즐기는 현대인의 독립적 성향이 대인 관계에 미치는 긍정적 기여",
+      "비언어적 의사소통 수단이 구두 대화보다 감정 전달에 효과적인 이유",
+      "신체적 접촉과 지지가 유아기 뇌 발달에 미치는 생물학적 메커니즘"
+    ],
+    "a": 1,
+    "e": "1번 주제: 인간 실존과 정체성 확인을 위해 타인과의 동반과 교제를 추구해야 하는 필연성"
+  },
+  {
+    "n": 25,
+    "p": "D",
+    "t": "match",
+    "s": "각 어구가 속하는 키워드를 「보기」에서 고르세요.",
+    "box": [
+      "키워드 A (타인과의 동반 및 상호작용)",
+      "키워드 B (존재와 정체성의 확인)"
+    ],
+    "rows": [
+      ["seek the company of others", 1],
+      ["confirm that we are there", 2],
+      ["exchange information and feelings", 1],
+      ["have an identity that is unique", 2]
+    ],
+    "e": "1번 키워드 분석 어구 분류"
+  },
+  {
+    "n": 26,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 1번에서 선정한 이 글의 중심 문장으로 옳은 것은?",
+    "o": [
+      "Although the wish to be alone is often strong, its intensity varies from person to person.",
+      "An equally impelling impulse, though, is to seek the company of others and to spend extended periods of time sharing activities.",
+      "In a very basic sense we need others to confirm that we are there, that we exist and that we have an identity that is unique and separate from anyone else.",
+      "Thus, we generally cannot exist for too long without seeking companionship."
+    ],
+    "a": 3,
+    "e": "1번 중심 문장: In a very basic sense we need others to confirm that we are there, that we exist and that we have an identity that is unique and separate from anyone else."
+  },
+  {
+    "n": 27,
+    "p": "D",
+    "t": "match",
+    "s": "본문의 연결어와 그 논리적 역할을 알맞게 짝지으세요.",
+    "box": [
+      "앞 문장의 고독 욕구와 상반되는 강력한 사회적 충동을 대조하는 역접",
+      "앞선 존재 확인의 욕구로부터 장기간 동료애 추구의 필연성이라는 결론을 도출하는 인과"
+    ],
+    "rows": [
+      ["though (2번 문장)", 1],
+      ["Thus (6번 문장)", 2]
+    ],
+    "e": "2번 어휘 및 연결어 분석: though는 역접 대조, Thus는 인과 연결어입니다."
+  },
+  {
+    "n": 28,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 3번에 제시된 이 글의 서술 전략(전개 방식)으로 옳은 것은?",
+    "o": [
+      "통념 대비 → 점층적 이유 제시(물리적 → 실존적) → 최종 귀결 도출",
+      "역사적 사건 서술 → 원인 규명 → 제도적 개선안 제안",
+      "두 심리학 이론의 상충점 대조 → 실험적 검증 → 절충안 마련",
+      "사회적 문제 제기 → 통계 자료 제시 → 해결을 위한 실천 수칙 촉구"
+    ],
+    "a": 1,
+    "e": "3번 서술 전략: '통념 대비 - 점층적 이유 제시(물리적 → 실존적) - 최종 귀결 도출'의 전개 방식"
+  },
+  {
+    "n": 29,
+    "p": "D",
+    "t": "mc",
+    "s": "분석지 [첫 번째 부분: 1~3번 문장]의 글 전체에서의 역할로 기술된 것은?",
+    "o": [
+      "고독과 사회적 교제의 대비를 통해 인간의 타인 추구 본능을 글의 중심 화제로 제기함 (도입 및 본능 제시)",
+      "비언어적 의사소통의 진화론적 발생 과정을 설명함",
+      "혼자 있는 시간의 생산성을 높이기 위한 명상 기법을 소개함",
+      "타인에 대한 과도한 의존이 초래하는 정서적 불안을 경고함"
+    ],
+    "a": 1,
+    "e": "첫 번째 부분 마무리: 고독과 사회적 교제의 대비를 통해 인간의 타인 추구 본능을 글의 중심 화제로 제기함"
+  },
+  {
+    "n": 30,
+    "p": "E",
+    "t": "mc",
+    "s": "6번 문장의 빈칸에 들어갈 정답 어휘로 옳은 것은?",
+    "o": [
+      "ownership",
+      "assistance",
+      "permission",
+      "independence",
+      "companionship"
+    ],
+    "a": 5,
+    "e": "4번 문제 풀이: 앞부분의 seek the company of others를 재진술한 단어로 companionship(동료애, 함께 있음)이 정답입니다."
+  },
+  {
+    "n": 31,
+    "p": "E",
+    "t": "mc",
+    "s": "빈칸 문제 풀이에서 선택지 independence(독립)가 오답으로 소거되는 이유로 분석지 4번에 제시된 근거는?",
+    "o": [
+      "첫 문장의 고독 욕구와 연결될 수 있으나, 본문 전체는 고독을 넘어 타인을 찾아야 한다는 내용이므로 필자의 결론과 정반대이기 때문에",
+      "인간은 법적으로 타인으로부터 독립할 수 없는 존재이기 때문에",
+      "independence는 문법상 seeking의 목적어로 쓰일 수 없기 때문에",
+      "지문에 등장하는 타인들은 독립을 원하는 개인만을 지원하기 때문에"
+    ],
+    "a": 1,
+    "e": "4번 문제 풀이 5단계: 본문 전체는 고독을 넘어 타인을 찾아야 한다는 논지이므로 독립은 필자의 결론과 정반대입니다."
+  },
+  {
+    "n": 32,
+    "p": "E",
+    "t": "short",
+    "s": "빈칸의 정답인 companionship과 직접적으로 연결되는, 2번 문장에 등장한 네 단어의 핵심 표현을 본문에서 찾아 쓰시오.",
+    "ans": [
+      "the company of others"
+    ],
+    "show": "the company of others",
+    "e": "4번 문제 풀이 3단계 및 6번 마무리: the company of others가 companionship으로 패러프레이징되었습니다."
+  },
+  {
+    "n": 33,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 중심 문장(5번 문장)에 근거하여, 인간이 매우 근본적인 의미에서 타인을 필요로 하는 궁극적인 이유 세 가지(confirm의 세 목적어절)를 우리말로 서술하시오.",
+    "show": "1) 우리가 그곳에 있다는 것을 확인받기 위해, 2) 우리가 존재한다는 것을 확인받기 위해, 3) 우리가 다른 어느 누구와도 구별되는 독특한 정체성을 가지고 있다는 것을 확인받기 위해 타인을 필요로 한다.",
+    "crit": "① 우리가 그곳에 있음을 확인 (1점) ② 우리가 존재함을 확인 (1점) ③ 다른 누구와도 구별되는 독특한 정체성을 가졌음을 확인 (2점)"
+  },
+  {
+    "n": 34,
+    "p": "E",
+    "t": "essay",
+    "s": "<b>[서술형]</b> 분석지 4번(4단계 논리 검증)을 토대로, 인간이 타인과의 companionship(동료애/동반)을 추구하지 않고서는 오래 존재할 수 없는 이유를 '혼자 있을 때의 한계'와 '타인과의 관계' 관점에서 서술하시오.",
+    "show": "인간은 혼자 있으면 자신의 실존과 정체성을 확증받을 수 없으며, 오직 타인과의 관계와 교제 속에서만 자신의 존재를 인정받고 살아갈 수 있기 때문에 동료애를 추구하지 않고서는 오래 생존할 수 없다.",
+    "crit": "① 혼자 있으면 실존과 정체성을 확증받을 수 없음 언급 (2점) ② 오직 타인과의 관계와 교제 속에서만 존재를 인정받을 수 있음을 명시 (2점)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
