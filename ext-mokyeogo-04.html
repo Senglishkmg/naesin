@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "When School Discipline Becomes a Criminal Matter 분석지 정독 확인",
+  "section": "섹션 정보 필요 (교과서·출판사·과·섹션 정보를 알려주세요)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "D": "Part D. 연결어",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [1, "When School Discipline Becomes a Criminal Matter"],
+    [2, "Over the past decade, Texas schools have increased the number of police officers on campuses to create safer learning environments."],
+    [3, "However, this approach has led to an unexpected consequence: more young students are being referred to the juvenile justice system for minor misbehavior."],
+    [4, "Since 2014, children aged 10 to 13 have been referred for prosecution more than 47,000 times for incidents involving threats, arguments, or physical conflicts, even when no serious injuries occurred."],
+    [5, "Critics argue that ordinary disciplinary problems should be handled by teachers rather than police officers."],
+    [6, "Involvement in the criminal justice system can cause anxiety, academic difficulties, and lasting psychological harm."],
+    [7, "It may also increase future encounters with law enforcement, creating what is known as the school-to-prison pipeline."],
+    [8, "Thus, excessive police intervention may undermine the educational purpose of schools."],
+    [9, "Some districts, however, have shown that school safety can be maintained through counseling and appropriate discipline instead of frequent arrests."],
+    [10, "Ultimately, schools should focus not simply on punishing misconduct but on guiding students toward responsible behavior."],
+    [11, "Protecting student safety and respecting their rights should be pursued together."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "텍사스 학교들이 교내 경찰관의 수를 늘린 주된 이유는?",
+    "o": [
+      "학생들의 권리를 존중하기 위해",
+      "학교-교도소 경로를 형성하기 위해",
+      "사소한 비행을 기소하기 위해",
+      "더 안전한 학습 환경을 만들기 위해",
+      "교사들의 업무 부담을 줄이기 위해"
+    ],
+    "a": 4,
+    "e": "#2 to create safer learning environments"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "2014년 이래로 어린 학생들이 기소된 사건들은 모두 심각한 신체적 부상을 동반했다.",
+    "a": "X",
+    "e": "#4 even when no serious injuries occurred"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "tf",
+    "s": "본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["비평가들은 일상적인 훈육 문제를 경찰관이 아닌 교사가 다루어야 한다고 주장한다.", "T"],
+      ["형사 사법 제도에 연루되는 것은 단기적인 심리적 피해만을 유발한다.", "F"],
+      ["과도한 경찰 개입은 학교의 교육적 목적을 훼손할 수 있다.", "T"]
+    ],
+    "e": "#5, #6(lasting), #8 참조"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "mc",
+    "s": "필자가 제시하는 바람직한 대안 및 결론이 아닌 것은?",
+    "o": [
+      "빈번한 체포를 통한 엄격한 비행 통제",
+      "상담을 통한 학교 안전 유지",
+      "적절한 훈육의 사용",
+      "학생들을 책임감 있는 행동으로 이끌기",
+      "학생 안전 보호와 권리 존중의 동시 추구"
+    ],
+    "a": 1,
+    "e": "#9 instead of frequent arrests"
+  },
+  {
+    "n": 5,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 단어와 동의어의 연결이 바르지 않은 것은?",
+    "o": [
+      "discipline - control",
+      "unexpected - predictable",
+      "minor - trivial",
+      "involve - entail",
+      "lasting - enduring"
+    ],
+    "a": 2,
+    "e": "predictable은 unexpected의 반의어입니다. (동의어: unforeseen, sudden)"
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "short",
+    "s": "본문에서 '환경, 상황'을 의미하는 단어를 찾아 쓰시오.",
+    "ans": [
+      "environment",
+      "environments"
+    ],
+    "show": "environment",
+    "e": "#2 참조"
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "match",
+    "s": "다음 영어 단어의 알맞은 뜻을 [보기]에서 고르시오.",
+    "box": [
+      "회부하다",
+      "기소",
+      "지속적인",
+      "훼손하다",
+      "궁극적으로"
+    ],
+    "rows": [
+      ["refer", 1],
+      ["prosecution", 2],
+      ["lasting", 3],
+      ["undermine", 4],
+      ["ultimately", 5]
+    ],
+    "e": "분석지 단어장 참조"
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "match",
+    "s": "다음 영어 단어의 알맞은 뜻을 [보기]에서 고르시오.",
+    "box": [
+      "비행",
+      "개입",
+      "적절한",
+      "빈번한",
+      "책임감 있는"
+    ],
+    "rows": [
+      ["misbehavior", 1],
+      ["intervention", 2],
+      ["appropriate", 3],
+      ["frequent", 4],
+      ["responsible", 5]
+    ],
+    "e": "분석지 단어장 참조"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "short",
+    "s": "본문에서 '권리'를 의미하는 영어 단어를 찾아 쓰시오.",
+    "ans": [
+      "right",
+      "rights"
+    ],
+    "show": "right(s)",
+    "e": "#11 참조"
+  },
+  {
+    "n": 10,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "Texas schools have increased (the number / a number) of police officers on campuses",
+    "o": [
+      "the number",
+      "a number"
+    ],
+    "a": "the number",
+    "e": "'~의 수'라는 뜻의 the number of가 쓰였습니다. (a number of는 '많은')"
+  },
+  {
+    "n": 11,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "more young students are being (referred / referring) to the juvenile justice system",
+    "o": [
+      "referred",
+      "referring"
+    ],
+    "a": "referred",
+    "e": "어린 학생들이 회부되는 대상이므로 현재진행형 수동태인 are being referred가 쓰였습니다."
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "even when no serious injuries (occurred / were occurred).",
+    "o": [
+      "occurred",
+      "were occurred"
+    ],
+    "a": "occurred",
+    "e": "occur는 목적어를 취하지 않는 자동사이므로 수동태로 쓸 수 없습니다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "ordinary disciplinary problems should (handle / be handled) by teachers",
+    "o": [
+      "handle",
+      "be handled"
+    ],
+    "a": "be handled",
+    "e": "주어인 훈육 문제가 다루어지는 대상이므로 수동태를 씁니다."
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "It may also increase future encounters with law enforcement, (creating / created) what is known as the school-to-prison pipeline.",
+    "o": [
+      "creating",
+      "created"
+    ],
+    "a": "creating",
+    "e": "연속동작이나 부대상황을 나타내는 능동 분사구문입니다."
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "creating (what / that) is known as the school-to-prison pipeline.",
+    "o": [
+      "what",
+      "that"
+    ],
+    "a": "what",
+    "e": "선행사를 포함하여 '~하는 것'으로 해석되며 creating의 목적어 역할을 하는 관계대명사 what입니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "focus not simply on punishing misconduct but on (guiding / guide) students toward responsible behavior.",
+    "o": [
+      "guiding",
+      "guide"
+    ],
+    "a": "guiding",
+    "e": "not simply A but (also) B 구문에서 전치사 on 뒤의 동명사 punishing과 guiding이 병렬 연결되었습니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "short",
+    "s": "#9 문장에서 주어인 '학교 안전'이 유지되는 대상임을 나타내기 위해 쓰인 조동사 수동태 부분 3단어를 쓰시오.",
+    "ans": [
+      "can be maintained"
+    ],
+    "show": "can be maintained",
+    "e": "#9 can be maintained"
+  },
+  {
+    "n": 18,
+    "p": "D",
+    "t": "match",
+    "s": "다음 연결어들이 본문에서 수행하는 역할과 가장 알맞은 것을 [보기]에서 고르시오.",
+    "box": [
+      "부정적 결과가 나타난 현상 제시 (역접)",
+      "또 다른 부정적 결과 덧붙임 (부연)",
+      "포괄적이고 추상적인 결론 제시",
+      "긍정적인 대안의 실제 사례 제시 (대조)"
+    ],
+    "rows": [
+      ["#3 However", 1],
+      ["#7 also", 2],
+      ["#8 Thus", 3],
+      ["#9 however", 4]
+    ],
+    "e": "분석지의 [연결어 분석] 항목 참조"
+  },
+  {
+    "n": 19,
+    "p": "E",
+    "t": "blanks",
+    "s": "본문의 요약을 참고하여 빈칸에 알맞은 단어를 본문에서 찾아 쓰시오.",
+    "c": "Instead of frequent arrests, schools should utilize (A) c________ and (B) a________ discipline to protect student safety.",
+    "blanks": [
+      ["(A)", ["counseling"]],
+      ["(B)", ["appropriate"]]
+    ],
+    "show": "(A) counseling (B) appropriate",
+    "e": "#9 문장 참조"
+  },
+  {
+    "n": 20,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "Over the past decade, Texas schools have increased a number of police officers on campuses. However, this approach has led to an unexpected consequence: more young students are being referring to the juvenile justice system. This may increase future encounters with law enforcement, creating that is known as the school-to-prison pipeline.",
+    "keys": [
+      {
+        "k": "the number",
+        "show": "a number → the number"
+      },
+      {
+        "k": "referred",
+        "show": "referring → referred"
+      },
+      {
+        "k": "what",
+        "show": "that → what"
+      }
+    ]
+  },
+  {
+    "n": 21,
+    "p": "E",
+    "t": "kw",
+    "s": "#4 문장의 occur를 were occurred와 같이 수동태로 쓰면 안 되는 이유를 서술하시오.",
+    "groups": [
+      ["자동사"],
+      ["목적어"]
+    ],
+    "show": "occur는 목적어를 취하지 않는 자동사이므로 수동태로 쓸 수 없다.",
+    "e": "#4 구문 분석 참조"
+  },
+  {
+    "n": 22,
+    "p": "E",
+    "t": "sent",
+    "s": "다음 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "학생 안전을 보호하는 것과 그들의 권리를 존중하는 것은 함께 추구되어야 한다.<br><small>「조건」 protect, respect, pursue 활용 / 동명사 주어 병렬 구조 및 조동사 수동태 사용 / 10단어</small>",
+    "ans": [
+      "protecting student safety and respecting their rights should be pursued together",
+      "protecting student safety and respecting their rights should be pursued together."
+    ],
+    "show": "Protecting student safety and respecting their rights should be pursued together.",
+    "e": "#11 문장 참조"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

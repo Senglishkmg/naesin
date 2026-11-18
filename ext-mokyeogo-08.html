@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "5. 폴더블 스마트폰 관련 지문 분석지 정독 확인",
+  "section": "교재 정보 필요 (예: 보조교재명 5강)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "D": "Part D. 연결어",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [48, "Technological innovation is often associated with progress, yet a more sophisticated product does not necessarily guarantee greater reliability."],
+    [49, "Recent reports of display defects in Apple’s iPhone Duo, a foldable smartphone designed to combine portability with a larger screen, have raised questions about the challenges of introducing technologically complex products before their long-term durability has been fully established."],
+    [50, "Unlike conventional smartphones, foldable devices must withstand repeated bending without compromising the structural integrity of their displays."],
+    [51, "Even when individual components meet technical standards, their interaction may create weaknesses that remain undetected during laboratory testing."],
+    [52, "Consequently, a product that performs well under controlled conditions may still exhibit unexpected vulnerabilities in everyday use."],
+    [53, "Although mechanical stress has been suggested as a possible cause of the reported defects, further evidence is needed to determine their precise origin."],
+    [54, "This controversy illustrates a fundamental tension in innovation-driven markets."],
+    [55, "Companies are under pressure to introduce groundbreaking products, while consumers expect these advances to provide reliable performance."],
+    [56, "Prioritizing novelty over sufficient testing may therefore undermine the consumer confidence that innovation is intended to strengthen."],
+    [57, "Ultimately, genuine technological progress depends not only on developing unprecedented features but also on anticipating risks and responding responsibly when actual performance falls short of expectations."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "본문의 요지로 가장 적절한 것은?",
+    "o": [
+      "실험실 테스트의 한계를 극복하기 위해 새로운 규제 기관을 설립해야 한다.",
+      "기계적 스트레스를 줄이는 것이 접이식 스마트폰 설계의 가장 중요한 목표다.",
+      "소비자는 획기적인 기능보다 제품의 가격 경쟁력을 우선시하는 경향이 있다.",
+      "기술 발전이 신뢰성을 자동 보장하지 않으므로, 철저한 테스트와 책임 있는 대응이 필수적이다.",
+      "기업은 단기적 결함에 얽매이지 말고 더 빠르고 혁신적인 신제품 출시에 집중해야 한다."
+    ],
+    "a": 4,
+    "e": "#48 및 #57 참조 (기술 혁신이 곧 신뢰성을 보장하지 않으며, 진정한 진보는 위험 예측과 책임 있는 대응에 달려 있다)"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "보도된 아이폰 듀오의 디스플레이 결함 원인은 기계적 스트레스(mechanical stress)로 최종 확정되었다.",
+    "a": "X",
+    "e": "#53 (가능한 원인으로 제시되었으나 정확한 기원 규명을 위해 추가 증거가 필요하다고 했습니다.)"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "tf",
+    "s": "본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["접이식 기기는 디스플레이의 구조적 온전함을 손상시키지 않고 반복적인 구부림을 견뎌야 한다.", "T"],
+      ["개별 부품이 기술적 기준을 충족할 경우 부품 간 상호작용으로 인한 취약점은 발생하지 않는다.", "F"],
+      ["혁신 주도 시장에서 기업은 획기적인 제품을 출시해야 한다는 압박을 받는다.", "T"]
+    ],
+    "e": "#50, #51(상호작용이 약점을 만들 수 있음), #55 참조"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "mc",
+    "s": "필자의 관점에서 '소비자 신뢰를 훼손할 수 있는' 주요 원인은 무엇인가?",
+    "o": [
+      "경쟁사와의 지나친 가격 인하 경쟁",
+      "혁신 기능에 대한 소비자의 지나친 기대",
+      "충분한 테스트보다 새로움을 우선시하는 것",
+      "복잡한 제품의 조립 라인 자동화 지연",
+      "신제품의 전례 없는 기능 부재"
+    ],
+    "a": 3,
+    "e": "#56 (Prioritizing novelty over sufficient testing may therefore undermine the consumer confidence)"
+  },
+  {
+    "n": 5,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 단어와 반의어(antonym)의 짝이 바르지 않은 것은?",
+    "o": [
+      "durability - fragility",
+      "sophisticated - complex",
+      "undetected - spotted",
+      "fundamental - superficial",
+      "genuine - fake"
+    ],
+    "a": 2,
+    "e": "sophisticated와 complex는 동의어(syn.) 관계입니다. 반의어는 simple입니다."
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "match",
+    "s": "다음 영어 단어의 알맞은 뜻을 [보기]에서 고르시오.",
+    "box": [
+      "혁신",
+      "신뢰성",
+      "온전함",
+      "휴대성",
+      "취약점"
+    ],
+    "rows": [
+      ["innovation", 1],
+      ["reliability", 2],
+      ["integrity", 3],
+      ["portability", 4],
+      ["vulnerability", 5]
+    ],
+    "e": "분석지 단어장 참조"
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "match",
+    "s": "다음 영어 단어의 알맞은 뜻을 [보기]에서 고르시오.",
+    "box": [
+      "손상시키다",
+      "예상하다",
+      "보장하다",
+      "우선시하다",
+      "견뎌내다"
+    ],
+    "rows": [
+      ["compromise", 1],
+      ["anticipate", 2],
+      ["guarantee", 3],
+      ["prioritize", 4],
+      ["withstand", 5]
+    ],
+    "e": "분석지 단어장 참조"
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "short",
+    "s": "본문에서 '전례 없는, 유례없는'을 의미하는 영어 단어를 찾아 쓰시오.",
+    "ans": [
+      "unprecedented"
+    ],
+    "show": "unprecedented",
+    "e": "#57 참조"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "short",
+    "s": "본문에서 '결함, 결점'을 의미하는 영어 단어를 찾아 쓰시오. (단수 또는 복수형)",
+    "ans": [
+      "defect",
+      "defects"
+    ],
+    "show": "defect(s)",
+    "e": "#49, #53 참조"
+  },
+  {
+    "n": 10,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "a more sophisticated product does (not necessarily / not necessary) guarantee greater reliability.",
+    "o": [
+      "not necessarily",
+      "not necessary"
+    ],
+    "a": "not necessarily",
+    "e": "동사 guarantee를 수식하고 '반드시 ~인 것은 아니다'라는 부분부정을 나타내는 부사 necessarily가 쓰여야 합니다."
+  },
+  {
+    "n": 11,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "Recent reports of display defects in Apple’s iPhone Duo ... (has / have) raised questions",
+    "o": [
+      "has",
+      "have"
+    ],
+    "a": "have",
+    "e": "주어의 핵심 명사가 복수인 reports이므로 본동사로 복수 취급하는 have가 와야 합니다."
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "before their long-term durability has been fully (established / establishing).",
+    "o": [
+      "established",
+      "establishing"
+    ],
+    "a": "established",
+    "e": "내구성이 입증되는 대상이므로 현재완료 수동태(has been p.p.) 형태가 쓰여야 합니다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "without (compromising / compromised) the structural integrity of their displays.",
+    "o": [
+      "compromising",
+      "compromised"
+    ],
+    "a": "compromising",
+    "e": "전치사 without 뒤에는 동명사 형태가 와야 합니다."
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "create weaknesses that (remains / remain) undetected during laboratory testing.",
+    "o": [
+      "remains",
+      "remain"
+    ],
+    "a": "remain",
+    "e": "주격 관계대명사 that의 선행사가 복수인 weaknesses이므로 뒤의 동사도 복수형인 remain이 와야 합니다."
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "that remain (undetected / undetectedly) during laboratory testing.",
+    "o": [
+      "undetected",
+      "undetectedly"
+    ],
+    "a": "undetected",
+    "e": "remain은 2형식 동사이므로 뒤에 주격보어로 형용사(과거분사형 형용사)가 와야 합니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "a product that (perform / performs) well under controlled conditions",
+    "o": [
+      "perform",
+      "performs"
+    ],
+    "a": "performs",
+    "e": "주격 관계대명사 that의 선행사가 단수(a product)이므로 단수 동사 performs가 와야 합니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "Although mechanical stress (has / has been) suggested as a possible cause",
+    "o": [
+      "has",
+      "has been"
+    ],
+    "a": "has been",
+    "e": "기계적 스트레스가 원인으로 '제시되어 왔다'는 수동의 의미이므로 현재완료 수동태가 알맞습니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "while consumers expect these advances (provide / to provide) reliable performance.",
+    "o": [
+      "provide",
+      "to provide"
+    ],
+    "a": "to provide",
+    "e": "5형식 동사 expect는 목적격보어로 to부정사를 취합니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "the consumer confidence that innovation is intended (to strengthen / strengthening).",
+    "o": [
+      "to strengthen",
+      "strengthening"
+    ],
+    "a": "to strengthen",
+    "e": "be intended to-v (~하도록 의도되다) 구문이 목적격 관계대명사절 안에 쓰였습니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "genuine technological progress depends not only on developing unprecedented features but also (on anticipating / anticipate) risks",
+    "o": [
+      "on anticipating",
+      "anticipate"
+    ],
+    "a": "on anticipating",
+    "e": "not only A but also B 구문에서 전치사 on을 동반한 형태가 병렬 구조를 이루어야 합니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "but also on anticipating risks and (responding / respond) responsibly",
+    "o": [
+      "responding",
+      "respond"
+    ],
+    "a": "responding",
+    "e": "전치사 on의 목적어 자리에서 동명사 anticipating과 responding이 and로 병렬 연결되었습니다."
+  },
+  {
+    "n": 22,
+    "p": "D",
+    "t": "match",
+    "s": "다음 연결어들이 본문에서 수행하는 역할과 가장 알맞은 것을 [보기]에서 고르시오.",
+    "box": [
+      "실험실에서 탐지되지 않은 약점들이 일상 사용 환경에서 나타나는 필연적 결과를 제시",
+      "혁신 출시 압박과 신뢰성에 대한 기대라는 긴장 관계로부터 도출된 논리적 귀결을 제시"
+    ],
+    "rows": [
+      ["#52 Consequently", 1],
+      ["#56 therefore", 2]
+    ],
+    "e": "각 문장의 [연결어 분석] 항목 참조"
+  },
+  {
+    "n": 23,
+    "p": "E",
+    "t": "blanks",
+    "s": "본문의 English Summary를 참고하여 요약문의 빈칸에 알맞은 단어를 본문에서 찾아 쓰시오.",
+    "c": "Technological (A) i________ does not automatically guarantee (B) r________, so prioritizing novelty over thorough testing is risky.",
+    "blanks": [
+      ["(A)", ["innovation"]],
+      ["(B)", ["reliability"]]
+    ],
+    "show": "(A) innovation (B) reliability",
+    "e": "English Summary 및 #48 참조"
+  },
+  {
+    "n": 24,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "Recent reports of display defects in Apple’s iPhone Duo has raised questions about introducing technologically complex products. Even when individual components meet technical standards, their interaction may create weaknesses that remains undetected. Companies are under pressure, while consumers expect these advances provide reliable performance.",
+    "keys": [
+      {
+        "k": "have",
+        "show": "has → have"
+      },
+      {
+        "k": "remain",
+        "show": "remains → remain"
+      },
+      {
+        "k": "to provide",
+        "show": "provide → to provide"
+      }
+    ],
+    "e": "#49 주어(reports) 수 일치, #51 주격 관계대명사(weaknesses 선행사) 수 일치, #55 expect 목적격보어(to부정사)"
+  },
+  {
+    "n": 25,
+    "p": "E",
+    "t": "kw",
+    "s": "#51 문장의 'weaknesses that remain undetected' 부분에서 remain 뒤에 부사(undetectedly)가 오면 안 되는 이유를 서술하시오.",
+    "groups": [
+      ["2형식"],
+      ["보어", "형용사"]
+    ],
+    "show": "동사 remain은 2형식 동사이므로 뒤에 주격보어로 형용사가 와야 하기 때문이다.",
+    "e": "#51 구문 분석 참조"
+  },
+  {
+    "n": 26,
+    "p": "E",
+    "t": "sent",
+    "s": "다음 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "기존의 스마트폰들과 달리, 접이식 기기들은 그들의 디스플레이의 구조적 온전함을 손상시키지 않으면서 반복되는 구부림을 견뎌야 한다.<br><small>「조건」 unlike, withstand, compromise, integrity 활용 / 16단어</small>",
+    "ans": [
+      "unlike conventional smartphones, foldable devices must withstand repeated bending without compromising the structural integrity of their displays",
+      "unlike conventional smartphones, foldable devices must withstand repeated bending without compromising the structural integrity of their displays."
+    ],
+    "show": "Unlike conventional smartphones, foldable devices must withstand repeated bending without compromising the structural integrity of their displays.",
+    "e": "#50 문장 참조"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

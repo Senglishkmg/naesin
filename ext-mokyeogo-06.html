@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "The Art of Capturing a Moment & France Faces Growing Social Unrest 분석지 정독 확인",
+  "section": "섹션 정보 필요 (교과서·출판사·과·섹션 정보를 알려주세요)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "D": "Part D. 연결어",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [12, "2. The Art of Capturing a Moment"],
+    [13, "In the late nineteenth century, Claude Monet challenged traditional ideas about painting."],
+    [14, "At that time, artists were expected to create carefully detailed works with clear outlines and realistic forms."],
+    [15, "However, Monet believed that a painting should capture not simply what the human eye sees, but also how a particular moment feels."],
+    [16, "Rather than focusing on precise details, he used short, visible brushstrokes and bright colors to represent the changing effects of light and atmosphere."],
+    [17, "Impression, Sunrise (1872) Claude Monet"],
+    [18, "His painting Impression, Sunrise, which depicts the sun rising over the harbor of Le Havre, became a turning point in art history."],
+    [19, "When Monet exhibited the work in 1874, a critic mocked it as merely an unfinished impression rather than a complete painting."],
+    [20, "Ironically, this criticism helped give the Impressionist movement its name."],
+    [21, "What was initially intended as an insult eventually became the identity of a revolutionary artistic movement."],
+    [22, "Monet’s approach transformed the way people understood art."],
+    [23, "By showing that light, color, and personal perception could be as important as realistic representation, he encouraged artists to explore new ways of expressing the world."],
+    [24, "His paintings remind us that reality is not always a fixed image, but something that changes depending on the time, light, and the observer’s perspective."],
+    [25, "3. France Faces Growing Social Unrest"],
+    [26, "France has recently witnessed a new wave of demonstrations as public frustration over rising living costs and deteriorating public services continues to grow."],
+    [27, "What initially began as protests by high school students demanding better educational conditions has gradually expanded into a broader movement involving workers, trade unions, and other social groups."],
+    [28, "Protesters have called for higher wages, improved school facilities, and greater government investment in essential services."],
+    [29, "On October 24, approximately 410,000 people participated in demonstrations nationwide, according to the French Interior Ministry, while labor unions estimated the number at nearly 800,000."],
+    [30, "Although most marches remained peaceful, clashes occurred in several cities, prompting police to deploy tear gas and arrest numerous participants."],
+    [31, "The government also introduced tighter security measures in an effort to prevent a recurrence of the widespread looting and vandalism that had accompanied earlier demonstrations."],
+    [32, "The unrest highlights a difficult dilemma facing democratic governments: how to maintain public order without unnecessarily restricting citizens’ right to express their dissatisfaction."],
+    [33, "While authorities argue that security measures are necessary to prevent violence, protesters and civil liberties groups have criticized restrictions on public gatherings."],
+    [34, "As unions call for further demonstrations, the government faces increasing pressure to address the underlying economic and social grievances."],
+    [35, "Ultimately, restoring stability may require more than controlling protests; it may also depend on whether meaningful dialogue and practical policy changes can rebuild public trust."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "19세기 후반에 예술가들이 창작하도록 기대받았던 그림의 특징이 아닌 것은?",
+    "o": [
+      "분명한 윤곽선",
+      "사실적인 형태",
+      "세심하게 묘사된 세부 사항",
+      "짧고 눈에 보이는 붓놀림",
+      "전통적인 회화 아이디어 반영"
+    ],
+    "a": 4,
+    "e": "#14, #16 짧고 눈에 보이는 붓놀림은 모네가 새롭게 시도한 방식입니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "인상주의(Impressionist movement)라는 이름은 한 비평가가 모네의 작품을 완성된 그림이 아닌 단지 미완성의 인상이라고 조롱한 것에서 유래했다.",
+    "a": "O",
+    "e": "#19, #20, #21 참조"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "mc",
+    "s": "프랑스의 시위에 대한 본문의 내용과 일치하지 않는 것은?",
+    "o": [
+      "대중의 좌절감은 생활비 상승과 공공 서비스 악화에 기인한다.",
+      "초기 시위는 더 나은 교육 환경을 요구하는 고등학생들에 의해 시작되었다.",
+      "프랑스 내무부와 노동조합은 10월 24일 시위 참가자 수를 동일하게 추정했다.",
+      "시위자들은 더 높은 임금과 학교 시설 개선 등을 요구하고 있다.",
+      "시위 진압을 위해 경찰이 최루탄을 사용하고 참가자들을 체포한 도시가 있다."
+    ],
+    "a": 3,
+    "e": "#29 내무부는 약 410,000명, 노조는 약 800,000명으로 다르게 추정했습니다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "tf",
+    "s": "본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["모네는 현실이 항상 고정된 이미지이며 관찰자의 관점에 따라 변하지 않는다고 믿었다.", "F"],
+      ["프랑스 정부는 시위 통제와 시민들의 불만 표현 권리 존중 사이에서 딜레마를 겪고 있다.", "T"],
+      ["프랑스의 안정을 회복하는 것은 시위를 통제하는 것뿐만 아니라 대중의 신뢰를 재건하는 실질적 정책 변화에 달려 있을 수 있다.", "T"]
+    ],
+    "e": "#24(reality is not always a fixed image), #32, #35 참조"
+  },
+  {
+    "n": 5,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 단어와 반의어(antonym)의 연결이 바르지 않은 것은?",
+    "o": [
+      "traditional - modern",
+      "detailed - intricate",
+      "visible - hidden",
+      "complete - incomplete",
+      "stability - unrest"
+    ],
+    "a": 2,
+    "e": "detailed와 intricate는 동의어(syn.) 관계입니다. 반의어는 rough, vague 등입니다."
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "match",
+    "s": "다음 영어 단어의 알맞은 뜻을 [보기]에서 고르시오.",
+    "box": [
+      "도전하다",
+      "표현하다",
+      "조롱하다",
+      "결국",
+      "인식"
+    ],
+    "rows": [
+      ["challenge", 1],
+      ["represent", 2],
+      ["mock", 3],
+      ["eventually", 4],
+      ["perception", 5]
+    ],
+    "e": "Section 2 분석지 단어장 참조"
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "match",
+    "s": "다음 영어 단어의 알맞은 뜻을 [보기]에서 고르시오.",
+    "box": [
+      "목격하다",
+      "악화되는",
+      "배치하다",
+      "광범위한",
+      "실질적인"
+    ],
+    "rows": [
+      ["witness", 1],
+      ["deteriorating", 2],
+      ["deploy", 3],
+      ["widespread", 4],
+      ["practical", 5]
+    ],
+    "e": "Section 3 분석지 단어장 참조"
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "short",
+    "s": "본문에서 '처음에, 초기에'를 의미하는 영어 단어를 찾아 쓰시오.",
+    "ans": [
+      "initially"
+    ],
+    "show": "initially",
+    "e": "#21, #27 참조"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "short",
+    "s": "본문에서 '진퇴양난, 딜레마'를 의미하는 영어 단어를 찾아 쓰시오.",
+    "ans": [
+      "dilemma"
+    ],
+    "show": "dilemma",
+    "e": "#32 참조"
+  },
+  {
+    "n": 10,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "artists (were expected / expected) to create carefully detailed works",
+    "o": [
+      "were expected",
+      "expected"
+    ],
+    "a": "were expected",
+    "e": "예술가들이 창작하도록 '기대받았다'는 의미이므로 5형식 수동태(be expected to-v)가 쓰였습니다."
+  },
+  {
+    "n": 11,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "capture not simply (what / that) the human eye sees, but also how a particular moment feels.",
+    "o": [
+      "what",
+      "that"
+    ],
+    "a": "what",
+    "e": "the human eye sees 뒤에 목적어가 없으므로 선행사를 포함하는 관계대명사 what이 필요합니다."
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "Impression, Sunrise, (which / that) depicts the sun rising over the harbor",
+    "o": [
+      "which",
+      "that"
+    ],
+    "a": "which",
+    "e": "콤마(,) 뒤의 계속적 용법이므로 관계대명사 that은 쓸 수 없습니다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "this criticism helped (give / given) the Impressionist movement its name.",
+    "o": [
+      "give",
+      "given"
+    ],
+    "a": "give",
+    "e": "준사역동사 help의 목적어 자리이므로 동사원형 give(또는 to give)가 옵니다."
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "he encouraged artists (explore / to explore) new ways of expressing the world.",
+    "o": [
+      "explore",
+      "to explore"
+    ],
+    "a": "to explore",
+    "e": "5형식 동사 encourage는 목적격보어로 to부정사를 취합니다."
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "reality is something that (changes / change) depending on the time",
+    "o": [
+      "changes",
+      "change"
+    ],
+    "a": "changes",
+    "e": "선행사가 단수 대명사인 something이므로 주격 관계대명사 뒤의 동사도 단수형 changes가 되어야 합니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "as public frustration over rising living costs and deteriorating public services (continues / continue) to grow.",
+    "o": [
+      "continues",
+      "continue"
+    ],
+    "a": "continues",
+    "e": "as절의 주어가 단수 명사 public frustration이므로 단수 동사 continues가 쓰여야 합니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "(What / That) initially began as protests by high school students ... has gradually expanded",
+    "o": [
+      "What",
+      "That"
+    ],
+    "a": "What",
+    "e": "문장의 주어 역할을 하면서 내부에 주어가 빠진 불완전한 절을 이끄는 관계대명사 What이 필요합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "Although most marches remained (peaceful / peacefully)",
+    "o": [
+      "peaceful",
+      "peacefully"
+    ],
+    "a": "peaceful",
+    "e": "remain은 주격보어로 형용사를 취하는 2형식 동사입니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "prompting police (deploy / to deploy) tear gas",
+    "o": [
+      "deploy",
+      "to deploy"
+    ],
+    "a": "to deploy",
+    "e": "5형식 동사 prompt는 목적격보어로 to부정사를 취합니다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "the widespread looting and vandalism that (accompanied / had accompanied) earlier demonstrations.",
+    "o": [
+      "accompanied",
+      "had accompanied"
+    ],
+    "a": "had accompanied",
+    "e": "정부가 보안 조치를 도입한 시점(과거)보다 약탈이 동반되었던 것이 먼저 일어난 일이므로 과거완료(had p.p.)를 씁니다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "it may also depend on (whether / if) meaningful dialogue and practical policy changes can rebuild public trust.",
+    "o": [
+      "whether",
+      "if"
+    ],
+    "a": "whether",
+    "e": "전치사 on의 목적어 역할을 하는 명사절을 이끌 때는 if를 쓸 수 없고 whether를 써야 합니다."
+  },
+  {
+    "n": 22,
+    "p": "D",
+    "t": "match",
+    "s": "다음 연결어들이 본문에서 수행하는 역할과 가장 알맞은 것을 [보기]에서 고르시오.",
+    "box": [
+      "앞 문장과 대조되는 새로운 예술관 제시",
+      "정부의 구체적인 통제 조치에 추가적인 조치를 덧붙임",
+      "안정 회복의 조건에 대한 일반적 제언을 보충·심화함"
+    ],
+    "rows": [
+      ["#15 However", 1],
+      ["#31 also", 2],
+      ["#35 also", 3]
+    ],
+    "e": "각 문장의 [연결어 분석] 항목 참조"
+  },
+  {
+    "n": 23,
+    "p": "E",
+    "t": "blanks",
+    "s": "본문의 요약을 참고하여 빈칸에 알맞은 단어를 찾아 쓰시오.",
+    "c": "True stability requires (A) m________ dialogue and (B) p________ policy changes.",
+    "blanks": [
+      ["(A)", ["meaningful"]],
+      ["(B)", ["practical"]]
+    ],
+    "show": "(A) meaningful (B) practical",
+    "e": "#35 및 요약(English Summary) 참조"
+  },
+  {
+    "n": 24,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "France has recently witnessed a new wave of demonstrations as public frustration over rising living costs continue to grow. What initially began as protests have gradually expanded into a broader movement. Although most marches remained peacefully, clashes occurred in several cities.",
+    "keys": [
+      {
+        "k": "continues",
+        "show": "continue → continues"
+      },
+      {
+        "k": "has",
+        "show": "have → has"
+      },
+      {
+        "k": "peaceful",
+        "show": "peacefully → peaceful"
+      }
+    ],
+    "e": "#26 주어 단수, #27 what절 주어 단수, #30 remain 뒤 형용사 보어"
+  },
+  {
+    "n": 25,
+    "p": "E",
+    "t": "kw",
+    "s": "#35에서 전치사 on 뒤에 whether 대신 if를 쓰면 안 되는 이유를 서술하시오.",
+    "groups": [
+      ["전치사"],
+      ["목적어"],
+      ["if"]
+    ],
+    "show": "전치사의 목적어 역할을 하는 명사절을 이끌 때는 if를 쓸 수 없기 때문이다.",
+    "e": "#35 구문 분석 참조"
+  },
+  {
+    "n": 26,
+    "p": "E",
+    "t": "sent",
+    "s": "다음 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "아이러니하게도, 이 비판은 인상주의 운동에 그 이름을 주는 것을 도왔다.<br><small>「조건」 help, give, movement, criticism 활용 / 10단어</small>",
+    "ans": [
+      "ironically, this criticism helped give the impressionist movement its name",
+      "ironically, this criticism helped give the impressionist movement its name."
+    ],
+    "show": "Ironically, this criticism helped give the Impressionist movement its name.",
+    "e": "#20 문장 (4형식 구조)"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

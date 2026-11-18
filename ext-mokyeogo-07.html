@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "France Faces Growing Social Unrest 분석지 정독 확인",
+  "section": "교재 정보 필요 (예: 영어2 능률 오선영 4과 섹션 3)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "D": "Part D. 연결어",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [25, "3. France Faces Growing Social Unrest"],
+    [26, "France has recently witnessed a new wave of demonstrations as public frustration over rising living costs and deteriorating public services continues to grow."],
+    [27, "What initially began as protests by high school students demanding better educational conditions has gradually expanded into a broader movement involving workers, trade unions, and other social groups."],
+    [28, "Protesters have called for higher wages, improved school facilities, and greater government investment in essential services."],
+    [29, "On October 24, approximately 410,000 people participated in demonstrations nationwide, according to the French Interior Ministry, while labor unions estimated the number at nearly 800,000."],
+    [30, "Although most marches remained peaceful, clashes occurred in several cities, prompting police to deploy tear gas and arrest numerous participants."],
+    [31, "The government also introduced tighter security measures in an effort to prevent a recurrence of the widespread looting and vandalism that had accompanied earlier demonstrations."],
+    [32, "The unrest highlights a difficult dilemma facing democratic governments: how to maintain public order without unnecessarily restricting citizens’ right to express their dissatisfaction."],
+    [33, "While authorities argue that security measures are necessary to prevent violence, protesters and civil liberties groups have criticized restrictions on public gatherings."],
+    [34, "As unions call for further demonstrations, the government faces increasing pressure to address the underlying economic and social grievances."],
+    [35, "Ultimately, restoring stability may require more than controlling protests; it may also depend on whether meaningful dialogue and practical policy changes can rebuild public trust."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "본문의 내용에 비추어 볼 때, 프랑스 시위대의 요구 사항에 해당하지 않는 것은?",
+    "o": [
+      "더 나은 교육 환경 조성",
+      "임금 인상",
+      "학교 시설의 개선",
+      "필수 서비스에 대한 정부 투자 축소",
+      "대중 집회에 대한 제한 비판"
+    ],
+    "a": 4,
+    "e": "#28 시위대는 필수 서비스에 대한 더 큰 정부 투자를(greater government investment) 요구하고 있습니다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "tf",
+    "s": "본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["10월 24일 시위 참가자 수에 대해 프랑스 내무부와 노동조합의 추정치가 달랐다.", "T"],
+      ["대다수의 시위 행진이 평화롭게 진행되었음에도 일부 도시에서는 충돌이 발생했다.", "T"],
+      ["프랑스 정부는 이전 시위에서 동반되었던 약탈과 기물 파손의 재발을 막기 위해 보안 조치를 완화했다.", "F"]
+    ],
+    "e": "#29, #30, #31(더 엄격한 보안 조치를 도입함) 참조"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "민주 정부가 직면한 딜레마는 시민들의 불만 표현 권리를 제한하지 않으면서 공공질서를 유지하는 방법을 찾는 것이다.",
+    "a": "O",
+    "e": "#32 참조"
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "mc",
+    "s": "진정한 안정 회복을 위해 필자가 궁극적으로 필요하다고 보는 것은?",
+    "o": [
+      "시위에 대한 엄격한 통제 방안 신설",
+      "보안 조치의 전면 철회",
+      "의미 있는 대화와 실질적인 정책 변화",
+      "대중 집회의 일시적 제한",
+      "경찰의 추가 배치"
+    ],
+    "a": 3,
+    "e": "#35 참조"
+  },
+  {
+    "n": 5,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 단어와 반의어(antonym)의 짝이 바르지 않은 것은?",
+    "o": [
+      "unrest - stability",
+      "deteriorating - improving",
+      "widespread - extensive",
+      "tight - loose",
+      "violence - nonviolence"
+    ],
+    "a": 3,
+    "e": "widespread와 extensive는 동의어(syn.) 관계입니다."
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "match",
+    "s": "다음 영어 단어의 알맞은 뜻을 [보기]에서 고르시오.",
+    "box": [
+      "목격하다",
+      "배치하다",
+      "부각하다",
+      "제한하다",
+      "회복하다"
+    ],
+    "rows": [
+      ["witness", 1],
+      ["deploy", 2],
+      ["highlight", 3],
+      ["restrict", 4],
+      ["restore", 5]
+    ]
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "match",
+    "s": "다음 영어 단어의 알맞은 뜻을 [보기]에서 고르시오.",
+    "box": [
+      "악화되는",
+      "광범위한",
+      "불필요하게",
+      "근본적인",
+      "실질적인"
+    ],
+    "rows": [
+      ["deteriorating", 1],
+      ["widespread", 2],
+      ["unnecessarily", 3],
+      ["underlying", 4],
+      ["practical", 5]
+    ]
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "short",
+    "s": "본문에서 '약탈, 노략질'을 의미하는 영어 단어를 찾아 쓰시오.",
+    "ans": [
+      "looting"
+    ],
+    "show": "looting",
+    "e": "#31 참조"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "mc",
+    "s": "#34 문장에서 쓰인 'address'의 뜻으로 가장 알맞은 것은?",
+    "o": [
+      "주소",
+      "연설하다",
+      "(문제 등을) 해결하다",
+      "우편물을 보내다",
+      "호칭을 부르다"
+    ],
+    "a": 3,
+    "e": "단어장의 뜻에 따라 근본적인 불만을 '해결하다, 다루다'의 의미로 쓰였습니다."
+  },
+  {
+    "n": 10,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "as public frustration over rising living costs and deteriorating public services (continues / continue) to grow.",
+    "o": [
+      "continues",
+      "continue"
+    ],
+    "a": "continues",
+    "e": "as절의 주어가 단수 명사 public frustration이므로 단수 동사 continues가 쓰여야 합니다."
+  },
+  {
+    "n": 11,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "(What / That) initially began as protests by high school students ... has gradually expanded",
+    "o": [
+      "What",
+      "That"
+    ],
+    "a": "What",
+    "e": "문장 전체의 주어 역할을 하는 명사절을 이끄는 관계대명사 What이 필요합니다."
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "a broader movement (involving / involved) workers, trade unions...",
+    "o": [
+      "involving",
+      "involved"
+    ],
+    "a": "involving",
+    "e": "노동자 등을 '포함하는' 광범위한 운동이라는 능동의 의미이므로 현재분사 involving이 맞습니다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "Although most marches remained (peaceful / peacefully), clashes occurred",
+    "o": [
+      "peaceful",
+      "peacefully"
+    ],
+    "a": "peaceful",
+    "e": "동사 remain은 주격보어로 형용사를 취하는 2형식 동사이므로 peaceful이 와야 합니다."
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "prompting police (deploy / to deploy) tear gas",
+    "o": [
+      "deploy",
+      "to deploy"
+    ],
+    "a": "to deploy",
+    "e": "5형식 동사 prompt는 목적격보어로 to부정사를 취합니다."
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "prevent a recurrence of the widespread looting and vandalism that (accompanied / had accompanied) earlier demonstrations.",
+    "o": [
+      "accompanied",
+      "had accompanied"
+    ],
+    "a": "had accompanied",
+    "e": "보안 조치를 도입한 시점(과거)보다 이전 시위에서 약탈이 발생한 것이 더 먼저이므로 과거완료(had p.p.)를 씁니다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "a difficult dilemma (facing / faced) democratic governments",
+    "o": [
+      "facing",
+      "faced"
+    ],
+    "a": "facing",
+    "e": "face는 타동사로 '~에 직면하다'는 뜻이므로 딜레마가 정부들에 직면해 있다는 능동의 현재분사 facing을 씁니다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "the government faces increasing pressure (address / to address) the underlying economic and social grievances.",
+    "o": [
+      "address",
+      "to address"
+    ],
+    "a": "to address",
+    "e": "앞의 명사구 increasing pressure를 수식하는 형용사적 용법의 to부정사 to address가 필요합니다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오.",
+    "c": "it may also depend on (whether / if) meaningful dialogue and practical policy changes can rebuild public trust.",
+    "o": [
+      "whether",
+      "if"
+    ],
+    "a": "whether",
+    "e": "전치사 on의 목적어 역할을 하는 명사절을 이끌 때는 whether를 써야 합니다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "short",
+    "s": "#27 문장에서 '고등학생들'이 더 나은 교육 환경을 '요구하는' 능동적 주체임을 나타내기 위해명사 high school students 뒤에서 수식하는 현재분사 한 단어를 찾아 쓰시오.",
+    "ans": [
+      "demanding"
+    ],
+    "show": "demanding",
+    "e": "#27 demanding"
+  },
+  {
+    "n": 20,
+    "p": "D",
+    "t": "match",
+    "s": "다음 연결어들이 본문에서 수행하는 역할과 가장 알맞은 것을 [보기]에서 고르시오.",
+    "box": [
+      "앞선 정부의 구체적 조치(체포 등)에 추가적인 통제 조치를 덧붙임",
+      "안정 회복의 조건에 대한 일반적 제언을 보충 및 심화함"
+    ],
+    "rows": [
+      ["#31 also", 1],
+      ["#35 also", 2]
+    ],
+    "e": "분석지의 [연결어 분석] 참조"
+  },
+  {
+    "n": 21,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "France has recently witnessed a new wave of demonstrations as public frustration over living costs continue to grow. That initially began as protests by students has gradually expanded into a broader movement. Although most marches remained peacefully, clashes occurred in several cities.",
+    "keys": [
+      {
+        "k": "continues",
+        "show": "continue → continues"
+      },
+      {
+        "k": "What",
+        "show": "That → What"
+      },
+      {
+        "k": "peaceful",
+        "show": "peacefully → peaceful"
+      }
+    ]
+  },
+  {
+    "n": 22,
+    "p": "E",
+    "t": "kw",
+    "s": "#35 문장에서 'depend on whether'의 whether 대신 if를 쓰면 안 되는 이유를 서술하시오.",
+    "groups": [
+      ["전치사"],
+      ["목적어"],
+      ["if"]
+    ],
+    "show": "전치사의 목적어 역할을 하는 명사절을 이끌 때는 if를 쓸 수 없기 때문이다.",
+    "e": "#35 구문 분석 참조"
+  },
+  {
+    "n": 23,
+    "p": "E",
+    "t": "blanks",
+    "s": "본문의 요약을 참고하여 빈칸에 알맞은 단어를 본문에서 찾아 쓰시오.",
+    "c": "Ultimately, restoring (A) s________ requires meaningful (B) d________ and practical policy changes rather than mere control.",
+    "blanks": [
+      ["(A)", ["stability"]],
+      ["(B)", ["dialogue"]]
+    ],
+    "show": "(A) stability (B) dialogue",
+    "e": "#35 문장 참조"
+  },
+  {
+    "n": 24,
+    "p": "E",
+    "t": "sent",
+    "s": "다음 우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오.",
+    "c": "시민들의 불만을 표현할 권리를 불필요하게 제한하지 않으면서 공공질서를 어떻게 유지할 것인가<br><small>「조건」 how, maintain, without, restrict 활용 / 14단어</small>",
+    "ans": [
+      "how to maintain public order without unnecessarily restricting citizens' right to express their dissatisfaction",
+      "how to maintain public order without unnecessarily restricting citizens' rights to express their dissatisfaction"
+    ],
+    "show": "how to maintain public order without unnecessarily restricting citizens' right to express their dissatisfaction",
+    "e": "#32 문장 참조"
+  }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
