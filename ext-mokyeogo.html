@@ -24,10 +24,11 @@
     .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
     .btn { display:flex; align-items:center; gap:10px; background:#fff; border:2px solid var(--c-line); border-radius:12px; padding:14px 16px; text-decoration:none; color:inherit; font-weight:800; font-size:16px; transition:background .15s, border-color .15s; }
     .btn:hover { background:var(--c-soft); border-color:var(--c); }
-    .btn .arrow { margin-left:auto; color:#cbd5e1; font-size:20px; } .btn:hover .arrow { color:var(--c); }
+    .btn span.text { flex: 1; word-break: keep-all; } /* 텍스트 줄바꿈 방지 및 화살표 밀어내기 */
+    .btn .arrow { margin-left:auto; color:#cbd5e1; font-size:20px; flex-shrink: 0; } .btn:hover .arrow { color:var(--c); }
     .chip { display:inline-flex; align-items:center; border:2px solid var(--c-line); border-radius:999px; padding:5px 14px; font-weight:800; font-size:14px; text-decoration:none; color:var(--c-ink); background:#fff; }
     .chip:hover { background:var(--c-soft); border-color:var(--c); }
-    .soon { display:none; margin-left:6px; font-size:11px; font-weight:400; color:#94a3b8; }
+    .soon { display:none; margin-left:6px; font-size:11px; font-weight:400; color:#94a3b8; flex-shrink: 0; }
     .is-missing { opacity:.45; pointer-events:none; } .is-missing .soon { display:inline; }
     .note { font-size:13px; color:var(--muted); margin:8px 2px 0; }
     @media (max-width:600px) { .grid { grid-template-columns:1fr; } .row .lab { width:100%; } }
@@ -39,10 +40,23 @@
   <div class="wrap">
     <div class="top"><a href="index.html">← 메인으로</a></div>
     <header><p class="academy">S영어전문학원 내신 학습</p><h1>📄 외부지문 · 목여고</h1><p>공부할 지문을 고르세요.</p></header>
-    <section><div class="grid"><a class="btn" data-check href="ext-mokyeogo-01.html">치이카와<span class="soon">준비 중</span><span class="arrow">›</span></a><a class="btn" data-check href="ext-mokyeogo-02.html">부캉이<span class="soon">준비 중</span><span class="arrow">›</span></a><a class="btn" data-check href="ext-mokyeogo-03.html">테슬라<span class="soon">준비 중</span><span class="arrow">›</span></a></div></section>
+    <section>
+      <div class="grid">
+        <a class="btn" data-check href="ext-mokyeogo-01.html"><span class="text">치이카와</span><span class="soon">준비 중</span><span class="arrow">›</span></a>
+        <a class="btn" data-check href="ext-mokyeogo-02.html"><span class="text">부캉이</span><span class="soon">준비 중</span><span class="arrow">›</span></a>
+        <a class="btn" data-check href="ext-mokyeogo-03.html"><span class="text">테슬라</span><span class="soon">준비 중</span><span class="arrow">›</span></a>
+        
+        <!-- 새로 추가된 5개 지문 -->
+        <a class="btn" data-check href="ext-mokyeogo-04.html"><span class="text">When School Discipline Becomes a Criminal Matter</span><span class="soon">준비 중</span><span class="arrow">›</span></a>
+        <a class="btn" data-check href="ext-mokyeogo-05.html"><span class="text">The Art of Capturing a Moment</span><span class="soon">준비 중</span><span class="arrow">›</span></a>
+        <a class="btn" data-check href="ext-mokyeogo-06.html"><span class="text">France Faces Growing Social Unrest</span><span class="soon">준비 중</span><span class="arrow">›</span></a>
+        <a class="btn" data-check href="ext-mokyeogo-07.html"><span class="text">The Challenge of Preserving Fairness in the Age of AI</span><span class="soon">준비 중</span><span class="arrow">›</span></a>
+        <a class="btn" data-check href="ext-mokyeogo-08.html"><span class="text">폴더블 스마트폰</span><span class="soon">준비 중</span><span class="arrow">›</span></a>
+      </div>
+    </section>
     <p class="note"><a href="external.html" style="color:inherit">← 다른 학교 고르기</a></p>
   </div>
-<!-- 목여고 지문 파일 이름 규칙: ext-mokyeogo-01.html(치이카와), -02(부캉이), -03(테슬라) -->
+<!-- 목여고 지문 파일 이름 규칙: ext-mokyeogo-01.html ~ ext-mokyeogo-08.html -->
 <script>
 /* 아직 올리지 않은 페이지는 '준비 중'으로 흐리게 (깃허브 페이지에서만 확인) */
 if (location.protocol !== 'file:') {
