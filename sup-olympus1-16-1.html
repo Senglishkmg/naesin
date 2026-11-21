@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Practice 01번 요약문 완성 분석지 확인 문제",
+ "section": "수능 대비 · Practice 01번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. Practice 01번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Emotional differences exist across ages, and there are ideal emotional paradigms for a given age (i.e., some emotions are reasonable at a given age), and these paradigms are realized and solidified with the help of normative group behaviors."],
+  [2, "For example, loudness, rudeness, and outbursts are associated with loss of self-control, and these emotions are often expressed among children."],
+  [3, "In childhood, crying is criticized but forgiven because it is consistent with the child's emotional profile, whereas in youth, crying is considered childish behavior."],
+  [4, "As individuals mature intellectually and increase self-control and social sensitivity, they gradually form emotions such as melancholy, sadness, etc."],
+  [5, "This shows the fact that some emotions can only be experienced at a certain age, and virtues such as integrity and wisdom are associated with certain stages of life (e.g., adulthood)."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "연령대에 따라 정서적 차이가 존재하며, 특정 연령대에 타당하다고 여겨지는 이상적인 정서적 패러다임이 있다.",
+  "a": "O",
+  "e": "1번 문장: Emotional differences exist across ages, and there are ideal emotional paradigms for a given age (i.e., some emotions are reasonable at a given age)"
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "연령별 이상적인 정서적 패러다임은 규범적인 집단 행동의 방해를 받아 약화된다.",
+  "a": "X",
+  "e": "1번 문장: 규범적인 집단 행동들의 도움으로 실현되고 굳어진다(are realized and solidified with the help of normative group behaviors)고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "시끄러움, 무례함, 감정의 폭발은 자기 통제의 상실과 연관되며 아동들 사이에서 자주 표현된다.",
+  "a": "O",
+  "e": "2번 문장: loudness, rudeness, and outbursts are associated with loss of self-control, and these emotions are often expressed among children."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "유년기에는 우는 행위가 아이의 정서적 특성과 일치하기 때문에 비판조차 전혀 받지 않는다.",
+  "a": "X",
+  "e": "3번 문장: 유년기에는 우는 것이 비판을 받지만 용서받는다(crying is criticized but forgiven)고 했습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "청소년기에 우는 행위는 유년기와 달리 유치한 행동으로 간주된다.",
+  "a": "O",
+  "e": "3번 문장: whereas in youth, crying is considered childish behavior."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "개인이 지적으로 성숙해지고 자기 통제력과 사회적 민감성을 높여감에 따라 멜랑콜리나 슬픔 같은 감정은 점차 사라진다.",
+  "a": "X",
+  "e": "4번 문장: 그러한 감정들을 점차 형성해 나간다(gradually form emotions such as melancholy, sadness, etc.)고 했습니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "어떤 감정들은 오직 특정한 연령에서만 경험될 수 있다.",
+  "a": "O",
+  "e": "5번 문장: some emotions can only be experienced at a certain age"
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "진실성과 지혜 같은 미덕은 특정 삶의 단계와 무관하게 모든 연령대에서 동일하게 나타난다.",
+  "a": "X",
+  "e": "5번 문장: 진실성과 지혜 같은 미덕은 성인기 등 삶의 특정한 단계와 연관된다(virtues such as integrity and wisdom are associated with certain stages of life)고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "굳히다, 확고하게 하다",
+   "~와 일치하는, 부합하는",
+   "진실성, 고결함",
+   "미덕, 덕목"
+  ],
+  "rows": [
+   ["solidify", 1],
+   ["consistent with", 2],
+   ["integrity", 3],
+   ["virtue", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (1번·3번·5번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "In youth, crying is considered (childish / childlike) behavior.",
+  "o": [
+   "childish",
+   "childlike"
+  ],
+  "a": "childish",
+  "e": "분석지 5번 혼동 어휘: childish는 부정적 뉘앙스로 '유치한, 미숙한', childlike는 순수함을 칭찬할 때 '어린아이 같은'이라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Virtues such as (integrity / integration) and wisdom are associated with certain stages of life.",
+  "o": [
+   "integrity",
+   "integration"
+  ],
+  "a": "integrity",
+  "e": "분석지 5번 혼동 어휘: integrity는 '진실성, 고결함', integration은 '통합, 융합'이라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>solidify</b>(굳히다, 강화하다)의 동의어가 <u>아닌</u> 것은?",
+  "o": [
+   "strengthen",
+   "reinforce",
+   "consolidate",
+   "dissolve"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: solidify의 동의어는 strengthen, reinforce, consolidate이며, dissolve(용해시키다, 약화하다)는 반의어입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>normative</b>(규범적인)의 동의어로 바르게 짝지어진 것은?",
+  "o": [
+   "standard, prescriptive, conventional",
+   "weaken, dissolve, standard",
+   "prescriptive, childish, reasonable",
+   "conventional, melancholy, standard"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: normative의 동의어는 standard, prescriptive, conventional입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "1번 문장의 괄호 안에 쓰인 약어로, 라틴어 <i>id est</i>에서 유래하여 '즉, 다시 말해'라는 뜻을 나타내는 표현을 본문에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "i.e.",
+   "ie"
+  ],
+  "show": "i.e.",
+  "e": "분석지 2번(1번 문장 구문 분석): i.e.는 라틴어 id est(즉, 다시 말해)의 약어입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "1번 문장의 수동태 술어부에서 어법상 알맞은 형태를 고르시오.",
+  "c": "These paradigms are realized and (solidify / solidified) with the help of normative group behaviors.",
+  "o": [
+   "solidify",
+   "solidified"
+  ],
+  "a": "solidified",
+  "e": "분석지 2번(1번 문장 구문 분석): 복수 주어 these paradigms에 걸리는 수동태(are + p.p.) 구문에서 두 과거분사 realized와 solidified가 and로 병렬 연결됩니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "2번 문장의 앞 절 주어에 맞게 어법상 알맞은 be동사를 고르시오.",
+  "c": "For example, loudness, rudeness, and outbursts (is / are) associated with loss of self-control.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "are",
+  "e": "분석지 2번(2번 문장 구문 분석): 세 단수명사 loudness, rudeness, and outbursts가 and로 나열되어 복수 취급되므로 복수 be동사 are를 씁니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "ox",
+  "s": "3번 문장의 <b>crying is criticized but forgiven</b>에서 동명사 주어 crying에 걸리는 두 과거분사 criticized와 forgiven이 접속사 but으로 병렬 연결되어 있다.",
+  "a": "O",
+  "e": "분석지 2번(3번 문장 구문 분석): 단수 동명사 주어 crying에 걸리는 수동태 술어로 criticized와 forgiven이 but을 중심으로 병렬을 이룹니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "3번 문장의 <b>crying is considered childish behavior</b>에 대한 구문 설명으로 옳은 것은?",
+  "o": [
+   "5형식 문장의 수동태 구문으로 목적격 보어였던 명사구 childish behavior가 보어로 남아 있다.",
+   "3형식 능동태 문장으로 childish behavior가 동사의 직접목적어 역할을 한다.",
+   "4형식 문장의 수동태 구문으로 간접목적어가 주어로 이동한 형태이다.",
+   "2형식 문장으로 childish behavior가 주어를 수식하는 관계대명사절이다.",
+   "1형식 완전자동사 구문으로 childish behavior는 시간을 나타내는 부사구이다."
+  ],
+  "a": 1,
+  "e": "분석지 2번(3번 문장 구문 분석): 5형식(consider + O + O.C.)의 수동태 구문으로, 목적격 보어였던 childish behavior가 보어로 남아 있습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "4번 문장의 부사절 내에서 어법상 알맞은 동사 형태를 고르시오.",
+  "c": "As individuals mature intellectually and (increase / increasing) self-control and social sensitivity, they gradually form emotions.",
+  "o": [
+   "increase",
+   "increasing"
+  ],
+  "a": "increase",
+  "e": "분석지 2번(4번 문장 구문 분석): 부사절(As ~) 내에서 복수 주어 individuals에 걸리는 두 본동사 mature와 increase가 and로 병렬 연결됩니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장의 <b>the fact <u>that</u> some emotions can only be experienced at a certain age</b>에서 밑줄 친 <u>that</u>의 문법적 정체는?",
+  "o": [
+   "앞의 명사 the fact의 내용을 설명하는 동격의 접속사",
+   "선행사 the fact를 수식하는 주격 관계대명사",
+   "선행사 the fact를 수식하는 목적격 관계대명사",
+   "가주어 it에 대응하는 진주어절을 이끄는 명사절 접속사",
+   "결과를 나타내는 부사절 접속사"
+  ],
+  "a": 1,
+  "e": "분석지 2번(5번 문장 구문 분석): 명사 the fact의 내용을 설명하는 동격의 접속사 that입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "분석지 2번의 요약문(6번 문장)에서 어법상 알맞은 관계대명사를 고르시오.",
+  "c": "Emotions are associated with levels of maturity, (which / that) are influenced by social norms.",
+  "o": [
+   "which",
+   "that"
+  ],
+  "a": "which",
+  "e": "분석지 2번(6번 문장 구문 분석): 콤마 뒤에서 선행사 levels of maturity를 부연 설명하는 계속적 용법의 주격 관계대명사 which가 쓰입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "분석지 2번의 요약문(6번 문장)에 쓰인 분사구문 <b>leading individuals to experience ~</b>를 접속사 <b>and</b>와 대명사 <b>it</b>을 포함한 절로 전환할 때 빈칸에 들어갈 동사 형태를 한 단어로 쓰시오.<br><small>「조건」 and it __________ individuals to experience different emotions at various ages.</small>",
+  "ans": [
+   "leads"
+  ],
+  "show": "leads",
+  "e": "분석지 2번(6번 문장 구문 분석): leading individuals ~는 'and it leads individuals to experience ~'로 전환할 수 있습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "연령별 성숙 수준과 사회적 규범에 의해 형성되는 감정 경험의 발달",
+   "유년기 감정 억제 훈련이 성인기 대인 관계에 미치는 장기적 부작용",
+   "집단 규범에서 벗어나 개인 고유의 정서적 독립성을 확보하는 방안",
+   "청소년기 우울감을 극복하기 위한 지적 학습과 자기 통제 전략",
+   "문화권에 따라 다르게 해석되는 미덕의 역사적 기원과 변화 과정"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 연령별 성숙 수준과 사회적 규범에 의해 형성되는 감정 경험의 발달"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 문장의 번호를 숫자만 쓰시오.",
+  "ans": [
+   "1",
+   "1번",
+   "1번 문장"
+  ],
+  "show": "1",
+  "e": "분석지 1번 중심 문장: 1번 문장(\"Emotional differences exist across ages, and there are ideal emotional paradigms for a given age (i.e., some emotions are reasonable at a given age), and these paradigms are realized and solidified with the help of normative group behaviors.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (연령별 정서적 패러다임과 성숙 수준)",
+   "키워드 B (규범적 집단 행동과 사회적 규범)",
+   "키워드 C (생애 단계에 따른 감정과 미덕의 형성)"
+  ],
+  "rows": [
+   ["ideal emotional paradigms for a given age", 1],
+   ["consistent with the child's emotional profile", 2],
+   ["form emotions such as melancholy", 3],
+   ["normative group behaviors", 2]
+  ],
+  "e": "분석지 1번 키워드 A/B/C 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "중심 이론 제시 및 아동기의 미성숙한 감정 표현을 통한 1차 예시 도입 (도입 및 원리 제시)",
+   "구체적 비교 대조를 통한 논리 심화 및 요약문 결론 도출 (사례 논증 및 결론)"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~2번 문장)", 1],
+   ["두 번째 부분 (3~5번 문장 및 요약문)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "원리 제시 — 연령별 대조 예시 — 발달적 심화 및 결론",
+   "통념 소개 — 실험 과정 묘사 — 기존 이론의 한계 지적",
+   "상반된 두 심리학 이론의 장단점 비교 및 절충안 제시",
+   "현대 사회의 정서적 문제 제기 — 제도적 개선책 촉구",
+   "전문가 인터뷰 인용 — 통계 수치 분석 — 미래 전망"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 원리 제시 - 연령별 대조 예시 - 발달적 심화 및 결론 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "지문에 쓰인 각 연결어·접속사의 역할을 「보기」에서 고르세요.",
+  "box": [
+   "연령별 감정 패러다임의 구체적 사례(아동기)를 도입하는 예시 연결부사",
+   "유년기와 청소년기의 울음에 대한 상반된 시선을 대칭적으로 연결하는 대조 접속사",
+   "성숙해짐에 따라 감정이 형성되는 비례 관계를 나타내는 부사절 접속사"
+  ],
+  "rows": [
+   ["For example (2번 문장)", 1],
+   ["whereas (3번 문장)", 2],
+   ["As (4번 문장)", 3]
+  ],
+  "e": "분석지 2번(2번·3번·4번 문장 구문 분석 및 어휘)"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "Practice 01번 요약문 문제에서 <b>② sensitivity — norms</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "감정은 단순 민감성만이 아니라 지적·통제적 성숙 전반과 연관되므로 첫 번째 빈칸이 지엽적이기 때문이다.",
+   "사회적 규범(norms)은 감정 형성에 아무런 영향을 미치지 않는다고 본문에 서술되어 있기 때문이다.",
+   "민감성(sensitivity)이라는 개념은 지문 전체에서 전혀 언급된 적이 없기 때문이다.",
+   "첫 번째 빈칸에는 복수 명사만 올 수 있어 단수 명사 sensitivity는 어법상 틀리기 때문이다.",
+   "감정은 오직 선천적 기질에 의해서만 결정된다는 것이 글의 핵심 주장이기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(3단계 오답 소거): 감정은 단순 민감성이 아니라 지적·통제적 성숙 전반과 연관되므로 (A) sensitivity는 부적절합니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "요약문 빈칸 (A)의 정답 <b>maturity</b>를 도출하기 위해 지문에서 직접 연결되는 핵심 단서로 가장 적절한 것은?",
+  "o": [
+   "individuals mature intellectually and increase self-control",
+   "normative group behaviors",
+   "crying is criticized but forgiven",
+   "loudness, rudeness, and outbursts"
+  ],
+  "a": 1,
+  "e": "분석지 4번(2·3단계) 및 6번 마무리: 지문 4번 문장의 individuals mature intellectually and increase self-control이 요약문의 levels of maturity와 직결됩니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "blanks",
+  "s": "Practice 01번 요약문 문제의 빈칸 (A)와 (B)에 들어갈 영어 단어를 분석지 4번에서 찾아 순서대로 쓰시오.",
+  "c": "Emotions are associated with levels of (A) __________, which are influenced by social (B) __________, leading individuals to experience different emotions at various ages.",
+  "blanks": [
+   ["(A)", ["maturity"]],
+   ["(B)", ["norms"]]
+  ],
+  "show": "(A) maturity  (B) norms",
+  "e": "분석지 4번(3단계) 및 6번 마무리: 정답은 ⑤ maturity — norms입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 동일한 '우는 행위(crying)'가 유년기와 청소년기에 각각 어떻게 다르게 평가되는지 그 이유와 함께 지문 3번 문장을 근거로 우리말로 서술하세요.",
+  "show": "유년기에는 우는 행위가 비판을 받긴 하지만 아이의 정서적 특성과 일치하기 때문에 용서받는 반면, 청소년기에는 우는 행위가 유치한 행동으로 간주된다.",
+  "crit": "① 유년기: 비판받지만 아이의 정서적 특성과 일치해 용서받음 ② 청소년기: 유치한 행동으로 간주됨 — 두 시기의 대조 서술"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 요약문 빈칸 (A)와 (B)에 각각 <b>maturity</b>와 <b>norms</b>가 들어가야 하는 이유를 지문 속 핵심 단서와 연결하여 서술하세요.",
+  "show": "지문에서 개인이 지적으로 성숙해지고 자기 통제를 늘려감에 따라(mature intellectually and increase self-control) 특정 연령의 감정과 성인기 미덕이 형성되므로 (A)에는 maturity가 들어가며, 이러한 연령별 정서적 패러다임은 규범적인 집단 행동(normative group behaviors)의 도움으로 실현되고 굳어지므로 (B)에는 norms가 들어가야 한다.",
+  "crit": "① 지문의 mature intellectually(지적 성숙·자기 통제)와 (A) maturity 연결 ② 지문의 normative group behaviors(규범적 집단 행동)와 (B) norms 연결"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

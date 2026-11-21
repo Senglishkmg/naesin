@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Practice 03번 요약문 완성 분석지 확인 문제",
+ "section": "수능 대비 · Practice 03번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. Practice 03번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "One common misunderstanding of evolution is that it leads inexorably to organisms that are ever better designed."],
+  [2, "But Darwinian evolution is not a process of perfection."],
+  [3, "In contrast to the Lamarckian and Great Chain of Being theories of evolution, natural selection does not inexorably drive species up some kind of ladder of perfection."],
+  [4, "Rather, natural selection is, to borrow a term from economics, a process that leads to satisficing (just being \"good enough for now\")."],
+  [5, "In other words, so long as you survive and do better than your rivals, that is good enough."],
+  [6, "An antelope does not have to become the fastest animal on earth; it simply has to be faster than the lions that try to catch it."],
+  [7, "By the same token, lions and other predators do not have to be able to run marathons at top speed; nor do they have to be able to catch every prey animal."],
+  [8, "They just have to be fast enough to catch sufficient prey animals to survive."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "진화가 유기체들을 언제나 더 잘 설계된 방향으로 거침없이 이끌어간다는 것은 진화에 대한 흔한 오해 중 하나이다.",
+  "a": "O",
+  "e": "1번 문장: One common misunderstanding of evolution is that it leads inexorably to organisms that are ever better designed."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "다윈의 진화론과 자연선택은 종들을 완벽이라는 사다리 위로 거침없이 올려보내는 과정이다.",
+  "a": "X",
+  "e": "2~3번 문장: 다윈의 진화는 완벽함의 과정이 아니며(is not a process of perfection), 자연선택 역시 종들을 완벽의 사다리 위로 거침없이 몰아붙이지 않습니다(does not inexorably drive ~)."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "자연선택은 경제학의 용어를 빌리자면 단지 '지금으로서는 충분히 좋은 상태'인 만족화로 이끄는 과정이다.",
+  "a": "O",
+  "e": "4번 문장: Rather, natural selection is, to borrow a term from economics, a process that leads to satisficing (just being \"good enough for now\")."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "생존을 위해서는 경쟁자들보다 더 잘하는 것만으로는 부족하며 절대적인 최상위 능력을 갖추어야 한다.",
+  "a": "X",
+  "e": "5번 문장: 살아남고 경쟁자들보다 더 잘하기만 하는 한, 그것으로 충분히 좋다(so long as you survive and do better than your rivals, that is good enough)고 했습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "영양은 지구상에서 가장 빠른 동물이 될 필요 없이 자신을 잡으려는 사자들보다 더 빠르기만 하면 된다.",
+  "a": "O",
+  "e": "6번 문장: An antelope does not have to become the fastest animal on earth; it simply has to be faster than the lions that try to catch it."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "사자와 다른 포식자들은 생존을 위해 마주치는 모든 먹잇감 동물을 다 잡을 수 있어야 한다.",
+  "a": "X",
+  "e": "7~8번 문장: 모든 먹잇감 동물을 잡을 수 있어야 하는 것이 아니라(nor do they have to be able to catch every prey animal), 살아남기에 충분한 먹잇감만 잡을 수 있으면 됩니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "사자와 다른 포식자들도 최고 속도로 마라톤을 달릴 수 있을 필요는 없다.",
+  "a": "O",
+  "e": "7번 문장: lions and other predators do not have to be able to run marathons at top speed"
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "라마르크 학파의 진화론이나 '존재의 대사슬' 진화 이론들은 다윈의 자연선택과 마찬가지로 완벽의 사다리를 부정했다.",
+  "a": "X",
+  "e": "3번 문장: 그 이론들과 대조적으로(In contrast to the Lamarckian and Great Chain of Being theories of evolution) 자연선택은 완벽의 사다리로 종을 몰아붙이지 않는다고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "거침없이, 멈출 수 없게, 가차 없이",
+   "만족화 (최적이 아닌 만족할 만한 수준을 택함)",
+   "같은 맥락에서, 마찬가지로",
+   "~보다 능력이 뛰어나다, 능가하다"
+  ],
+  "rows": [
+   ["inexorably", 1],
+   ["satisficing", 2],
+   ["By the same token", 3],
+   ["outperform", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (1번·4번·7번·요약문)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Natural selection is often thought of as a process toward seeking (flawlessness / cluelessness).",
+  "o": [
+   "flawlessness",
+   "cluelessness"
+  ],
+  "a": "flawlessness",
+  "e": "분석지 5번 혼동 어휘: flawlessness는 '결점 없음, 완벽함(perfection의 동의어)'을 뜻하며, clueless는 '단서가 없는, 멍청한'이라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "One common misunderstanding of evolution is that it leads (inexorably / explicably) to organisms that are ever better designed.",
+  "o": [
+   "inexorably",
+   "explicably"
+  ],
+  "a": "inexorably",
+  "e": "분석지 5번 혼동 어휘: inexorably는 '거침없이, 가차 없이', explicably는 '설명될 수 있게'라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>outperform</b>(능가하다, 더 잘하다)의 동의어로만 묶인 것은?",
+  "o": [
+   "surpass, outdo, excel, exceed",
+   "deficient, inadequate, excel, exceed",
+   "surpass, adequate, ample, outdo",
+   "borrow, drive, excel, surpass"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: outperform의 동의어는 surpass, outdo, excel, exceed입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>sufficient</b>(충분한)의 반의어가 <u>아닌</u> 것은?",
+  "o": [
+   "insufficient",
+   "deficient",
+   "inadequate",
+   "adequate"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: sufficient의 동의어는 adequate, ample, enough이며, 반의어는 insufficient, deficient, inadequate입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "5번 문장에서 '~하는 한(= as long as)'을 뜻하는 조건의 부사절 접속사 세 단어를 본문에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "so long as"
+  ],
+  "show": "so long as",
+  "e": "분석지 2번(5번 문장 구문 분석 및 어휘): so long as는 '~하는 한(= as long as)'을 뜻합니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "1번 문장의 주어부에 맞게 어법상 알맞은 be동사를 고르시오.",
+  "c": "One common misunderstanding of evolution (is / are) that it leads inexorably to organisms that are ever better designed.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "분석지 2번(1번 문장 구문 분석): 주어구의 핵심 명사가 단수명사 One common misunderstanding이므로 단수 be동사 is를 씁니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "4번 문장의 <b>to borrow a term from economics</b>의 문법적 쓰임으로 가장 알맞은 것은?",
+  "o": [
+   "문맥 중간에 삽입되어 조건을 나타내는 독립부정사 구문(부사적 용법)",
+   "앞의 명사 natural selection을 수식하는 형용사적 용법",
+   "be동사 is의 주격 보어로 쓰인 명사적 용법",
+   "목적(~하기 위하여)을 나타내는 부사적 용법",
+   "결과를 나타내는 부사적 용법"
+  ],
+  "a": 1,
+  "e": "분석지 2번(4번 문장 구문 분석): 문맥 중간에 독립적으로 삽입되어 조건을 나타내는 독립부정사 구문('경제학에서 용어를 빌려 말하자면')입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "5번 문장의 조건 부사절에서 어법상 알맞은 동사 형태를 고르시오.",
+  "c": "In other words, so long as you survive and (do / doing) better than your rivals, that is good enough.",
+  "o": [
+   "do",
+   "doing"
+  ],
+  "a": "do",
+  "e": "분석지 2번(5번 문장 구문 분석): 조건 부사절 내에서 두 본동사 survive와 do가 등위접속사 and로 병렬 연결됩니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "7번 문장의 부정어 도치 구문에서 어법상 알맞은 형태를 고르시오.",
+  "c": "Lions and other predators do not have to be able to run marathons at top speed; nor (do they / they do) have to be able to catch every prey animal.",
+  "o": [
+   "do they",
+   "they do"
+  ],
+  "a": "do they",
+  "e": "분석지 2번(7번 문장 구문 분석): 부정의 등위접속사 nor가 절의 맨 앞에 오면서 [조동사 do + 주어 they + 본동사원형 have] 어순으로 도치됩니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "8번 문장의 <u>to catch sufficient prey animals</u>와 <u>to survive</u>의 to부정사 용법이 바르게 짝지어진 것은?",
+  "c": "They just have to be fast enough <u>to catch sufficient prey animals</u> <u>to survive</u>.",
+  "o": [
+   "부사적 용법(정도: enough 수식) — 부사적 용법(목적: ~하기 위하여)",
+   "부사적 용법(목적) — 형용사적 용법(명사 수식)",
+   "형용사적 용법(명사 수식) — 부사적 용법(정도)",
+   "명사적 용법(목적어) — 부사적 용법(결과)",
+   "부사적 용법(원인) — 명사적 용법(보어)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(8번 문장 구문 분석): to catch ~는 부사 enough를 수식하는 정도(부사적 용법)이고, to survive는 목적(~하기 위하여)을 나타내는 부사적 용법입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "ox",
+  "s": "분석지 2번의 요약문(9번 문장)에 쓰인 <b>is often thought of as</b>는 5형식 구동사 <i>think of A as B</i>의 수동태 구문이다.",
+  "a": "O",
+  "e": "분석지 2번(9번 문장 구문 분석): think of A as B(A를 B로 생각하다)의 수동태로, 목적어 A가 주어로 나가고 of as B가 수동태 동사 뒤에 연속으로 붙은 형태입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "분석지 2번의 요약문(9번 문장)에서 전치사 결합이 어법상 알맞은 것을 고르시오.",
+  "c": "Its goal is to equip organisms (with / for) just enough ability to outperform their rivals for survival.",
+  "o": [
+   "with",
+   "for"
+  ],
+  "a": "with",
+  "e": "분석지 2번(9번 문장 구문 분석): 'equip A with B'는 A에게 B를 갖추어 주다는 관용 구문입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "6번 문장의 <b>does not have to become</b>에서 조동사 <b>does not have to</b>와 바꿔 쓸 수 있는 두 단어 조동사 표현을 분석지 2번에서 찾아 쓰시오.",
+  "ans": [
+   "need not"
+  ],
+  "show": "need not",
+  "e": "분석지 2번(6번 문장 어휘 및 연결어): do not have to-v는 '~할 필요가 없다(= need not)'라는 뜻입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "자연선택의 본질: 절대적 완벽함이 아닌 경쟁자를 능가하는 만족화",
+   "포식자와 피식자 간의 속도 경쟁이 생태계 멸종을 가속하는 과정",
+   "라마르크 진화론과 다윈 진화론이 공유하는 완벽주의적 진화 모델",
+   "경제학적 의사결정 이론이 현대 생물학 실험 설계에 미친 부정적 영향",
+   "생존 경쟁에서 살아남기 위해 유기체가 극단적 효율성을 추구하는 이유"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 자연선택의 본질: 절대적 완벽함이 아닌 경쟁자를 능가하는 만족화"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 두 문장의 번호를 쉼표로 구분하여 숫자만 쓰시오. (예: 1, 2)",
+  "ans": [
+   "4, 5",
+   "4,5",
+   "4번, 5번"
+  ],
+  "show": "4, 5",
+  "e": "분석지 1번 중심 문장: 4번 문장과 5번 문장(\"Rather, natural selection is ~ that is good enough.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (진화와 자연선택의 오해: 완벽함의 추구)",
+   "키워드 B (만족화와 경쟁자 능가)",
+   "키워드 C (생존에 족한 충분한 능력)"
+  ],
+  "rows": [
+   ["ladder of perfection", 1],
+   ["do better than your rivals", 2],
+   ["fast enough to catch sufficient prey animals", 3],
+   ["ever better designed", 1]
+  ],
+  "e": "분석지 1번 키워드 A/B/C 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "진화에 대한 지배적 통념 비판 및 완벽주의적 시각 탈피 (도입 및 통념 반박)",
+   "영양과 사자의 구체적 생태 사례를 통한 논증 및 요약 결론 제시"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~3번 문장)", 1],
+   ["두 번째 부분 (4~8번 문장 및 요약문)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "통념 제시 — 반박 — 경제학 개념 도입 — 생태학적 예시 논증 — 요약 결론",
+   "역사적 사건 나열 — 실험 결과 비교 — 새로운 가설의 한계 지적",
+   "두 생태학자의 상반된 견해 대비 — 절충안 도출 — 미래 전망",
+   "사회적 문제 제기 — 생물학적 원인 분석 — 윤리적 해결책 촉구",
+   "구체적 관찰 사례 열거 — 공통점 추출 — 기존 학설의 타당성 입증"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 통념 제시 - 반박 - 경제학 개념 도입 - 생태학적 예시 논증 - 요약 결론 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "지문에 쓰인 각 연결어구의 역할을 「보기」에서 고르세요.",
+  "box": [
+   "앞의 부정 진술(완벽의 사다리가 아님)을 받아 진정한 본질(만족화)을 제시하는 연결부사",
+   "앞선 학술적 용어(satisficing)를 알기 쉬운 일상적 생존 논리로 재진술하는 연결부사",
+   "동일한 논리를 피식자에서 포식자 쪽으로 유추 적용하는 연결어구"
+  ],
+  "rows": [
+   ["Rather (4번 문장)", 1],
+   ["In other words (5번 문장)", 2],
+   ["By the same token (7번 문장)", 3]
+  ],
+  "e": "분석지 2번(4번·5번·7번 문장 어휘 및 연결어)"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "Practice 03번 요약문 문제에서 <b>② adaptation — outnumber</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "진화는 적응의 과정이 맞으므로 오해의 대상이 될 수 없고, 경쟁자보다 개체 수가 많아야 한다는 내용도 아니기 때문이다.",
+   "적응(adaptation)은 자연선택과 아무런 관련이 없다고 본문에 명시되어 있기 때문이다.",
+   "경쟁자보다 개체 수를 늘리는 것이 자연선택의 유일한 목표라고 본문에 서술되어 있기 때문이다.",
+   "첫 번째 빈칸 자리에는 형용사만 올 수 있어 명사 adaptation은 어법상 틀리기 때문이다.",
+   "자연선택이 완벽함을 추구한다는 통념은 사실로 입증되었기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(3단계 오답 소거): 진화는 적응의 과정이 맞으므로 오해의 대상(A)이 될 수 없으며, 경쟁자보다 개체 수가 많아야(outnumber) 한다는 내용도 아니므로 오답입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "요약문 빈칸 (B)의 정답 <b>outperform</b>을 도출하기 위해 지문에서 직접 연결되는 핵심 어구는?",
+  "o": [
+   "do better than your rivals",
+   "process of perfection",
+   "borrow a term from economics",
+   "run marathons at top speed"
+  ],
+  "a": 1,
+  "e": "분석지 4번(2·3단계) 및 6번 마무리: 지문 5번 문장의 do better than your rivals가 요약문의 outperform their rivals로 패러프레이징되었습니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "blanks",
+  "s": "Practice 03번 요약문 문제의 빈칸 (A)와 (B)에 들어갈 영어 단어를 분석지 4번에서 찾아 순서대로 쓰시오.",
+  "c": "While natural selection is often thought of as a process toward seeking (A) __________, its goal is to equip organisms with just enough ability to (B) __________ their rivals for survival.",
+  "blanks": [
+   ["(A)", ["flawlessness"]],
+   ["(B)", ["outperform"]]
+  ],
+  "show": "(A) flawlessness  (B) outperform",
+  "e": "분석지 4번(3단계) 및 6번 마무리: 정답은 ① flawlessness — outperform입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 글쓴이가 경제학 용어 <b>satisficing(만족화)</b>을 빌려 설명한 자연선택의 작동 원리를 영양과 사자의 사례를 포함하여 우리말로 서술하세요.",
+  "show": "자연선택은 절대적 완벽함을 추구하는 과정이 아니라 단지 '지금으로서는 충분히 좋은 상태'로서 살아남아 경쟁자보다 더 잘하기만 하면 되는 과정이다. 따라서 영양은 세상에서 가장 빠른 동물이 될 필요 없이 자신을 잡으려는 사자보다만 빠르면 되고, 사자 역시 최고 속도로 마라톤을 뛰거나 모든 먹잇감을 잡을 필요 없이 살아남기에 충분한 먹잇감만 잡을 정도로 빠르면 된다.",
+  "crit": "① 만족화 원리: 완벽함이 아니라 살아남아 경쟁자보다 더 잘하기만 하면 충분함 ② 영양 사례: 세상에서 가장 빠를 필요 없이 사자보다만 빠르면 됨 ③ 사자 사례: 모든 먹잇감을 잡을 필요 없이 생존에 충분한 먹잇감만 잡으면 됨"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 요약문 빈칸 (A)와 (B)에 각각 <b>flawlessness</b>와 <b>outperform</b>이 들어가야 하는 이유를 지문 속 핵심 표현과 연결하여 서술하세요.",
+  "show": "지문에서 자연선택이 완벽함의 과정(process of perfection)이나 완벽의 사다리(ladder of perfection)라는 것은 오해라고 했으므로 (A)에는 perfection의 동의어인 flawlessness가 들어가며, 자연선택의 실제 원리는 경쟁자들보다 더 잘하는 것(do better than your rivals)이므로 (B)에는 이를 바꿔 쓴 outperform이 들어가야 한다.",
+  "crit": "① 지문의 process/ladder of perfection(완벽함에 대한 오해)과 (A) flawlessness 연결 ② 지문의 do better than your rivals(경쟁자보다 더 잘함)와 (B) outperform 연결"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "빈칸추론 분석지 확인 문제",
+ "section": "수능 대비 · 모의고사 분석지",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 문제 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Observation studies of teenagers using social media have discovered one peculiar behaviour in particular that sets them apart teenagers will post or share something on social media, but then they'll monitor the post to gauge the volume of reactions."],
+  [2, "After a set amount of time, if the number of resulting 'Likes' and 'Shares' is too low, they'll delete the content."],
+  [3, "Sometimes within the first ten minutes!"],
+  [4, "Their aim of posting is to earn recognition for what they're sharing as a way to self-enhance."],
+  [5, "If the recognition is insufficient, they'd rather delete the content than suffer perceived judgement from others against their failed efforts to self-enhance."],
+  [6, "Not getting a reaction has a negative effect on their self-esteem."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "소셜 미디어를 사용하는 십대들을 대상으로 한 관찰 연구는 그들만의 특이한 행동을 발견했다.",
+  "a": "O",
+  "e": "1번 문장: Observation studies of teenagers using social media have discovered one peculiar behaviour in particular that sets them apart"
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "십대들은 소셜 미디어에 글을 올린 뒤 반응의 양을 측정하려고 게시물을 추적 관찰한다.",
+  "a": "O",
+  "e": "1번 문장: they'll monitor the post to gauge the volume of reactions"
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "십대들은 게시 후 정해진 시간이 지나도 '좋아요'와 '공유' 수가 낮으면 해당 게시물을 수정하여 다시 올린다.",
+  "a": "X",
+  "e": "2번 문장: 수정하여 다시 올리는 것이 아니라 콘텐츠를 삭제(delete the content)합니다."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "십대들이 반응을 살핀 후 게시물을 지우는 일은 때때로 게시 후 첫 10분 이내에 일어나기도 한다.",
+  "a": "O",
+  "e": "3번 문장: Sometimes within the first ten minutes!"
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "십대들이 게시물을 올리는 목적은 타인에게 조언을 구하기 위해서이다.",
+  "a": "X",
+  "e": "4번 문장: 게시의 목적은 자기 향상을 위한 수단으로서 자신이 공유하는 것에 대한 인정(recognition)을 얻는 것입니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "인정이 불충분할 경우, 십대들은 콘텐츠를 지우기보다는 타인의 비판적 시선을 견디는 쪽을 택한다.",
+  "a": "X",
+  "e": "5번 문장: 타인의 인지된 판단을 겪기보다는 차라리 콘텐츠를 삭제(would rather delete ~ than suffer ~)합니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "십대들은 자기 향상을 위한 노력이 실패했다는 점에 대해 타인으로부터 인지된 판단을 받는 것을 꺼린다.",
+  "a": "O",
+  "e": "5번 문장: than suffer perceived judgement from others against their failed efforts to self-enhance"
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "소셜 미디어에서 반응을 얻지 못하더라도 십대들의 자존감에는 별다른 영향이 없다.",
+  "a": "X",
+  "e": "6번 문장: 반응을 얻지 못하는 것은 자존감에 부정적인 영향(a negative effect on their self-esteem)을 미칩니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "구별 짓다, 분리하다",
+   "측정하다, 평가하다",
+   "인정, 알아줌",
+   "불충분한, 부족한"
+  ],
+  "rows": [
+   ["set apart", 1],
+   ["gauge", 2],
+   ["recognition", 3],
+   ["insufficient", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (1번·4번·5번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 본문의 <b>peculiar</b>와 의미가 가장 <u>거리가 먼</u> 것은?",
+  "o": [
+   "bizarre",
+   "strange",
+   "eccentric",
+   "distinctive",
+   "ordinary"
+  ],
+  "a": 5,
+  "e": "분석지 5번 심화 어휘: peculiar(특이한, 독특한)의 반의어는 normal, ordinary, common입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "If the recognition is (insufficient / efficient), they'd rather delete the content.",
+  "o": [
+   "insufficient",
+   "efficient"
+  ],
+  "a": "insufficient",
+  "e": "분석지 5번 혼동 어휘: insufficient는 '불충분한', efficient는 '효율적인'이라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "They'd rather delete the content than suffer (perceived / deceived) judgement from others.",
+  "o": [
+   "perceived",
+   "deceived"
+  ],
+  "a": "perceived",
+  "e": "분석지 5번 혼동 어휘: perceive는 '인지하다, 감지하다', deceive는 '속이다, 기만하다'라는 뜻입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지에서 제시한 <b>recognition</b>의 동의어가 <u>아닌</u> 것은?",
+  "o": [
+   "acknowledgment",
+   "validation",
+   "approval",
+   "observation"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: recognition의 동의어로 acknowledgment, validation, approval이 제시되었으며, observation은 '관찰'입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "분석지 5번 심화 어휘에 제시된 <b>self-esteem</b>(자존감)의 영어 동의어 3개 중 하나만 쓰시오.",
+  "ans": [
+   "self-worth",
+   "self-respect",
+   "self-regard",
+   "self worth",
+   "self respect",
+   "self regard"
+  ],
+  "show": "self-worth (또는 self-respect, self-regard)",
+  "e": "분석지 5번 심화 어휘: self-esteem의 동의어는 self-worth, self-respect, self-regard입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "1번 문장의 주어부에 맞게 괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Observation studies of teenagers using social media (has / have) discovered one peculiar behaviour.",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "have",
+  "e": "분석지 2번(1번 문장 구문 분석): 주어부의 핵심 명사가 복수명사 Observation studies이므로 복수동사 have discovered를 씁니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 <u>to gauge the volume of reactions</u>와 to부정사의 용법이 같은 것은?",
+  "o": [
+   "부사적 용법 (목적: ~하기 위하여)",
+   "명사적 용법 (주격 보어: ~하는 것)",
+   "형용사적 용법 (앞의 명사 수식: ~하는)",
+   "명사적 용법 (목적어: ~하기를)",
+   "부사적 용법 (감정의 원인: ~해서)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(1번 문장 구문 분석): to gauge ~는 '반응의 양을 측정하기 위해'라는 목적을 나타내는 부사적 용법입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "ox",
+  "s": "1번 문장의 <b>that sets them apart</b>에서 선행사가 teenagers이므로 sets를 set으로 고쳐야 어법상 옳다.",
+  "a": "X",
+  "e": "분석지 2번(1번 문장 구문 분석): 주격 관계대명사 that의 선행사는 단수명사 one peculiar behaviour이므로 단수동사 sets가 맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "2번 문장의 조건 부사절에서 어법상 알맞은 것을 고르시오.",
+  "c": "After a set amount of time, if the number of resulting 'Likes' and 'Shares' (is / are) too low, they'll delete the content.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "분석지 2번(2번 문장 구문 분석): 'the number of + 복수명사'는 단수 취급하므로 단수동사 is가 알맞습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "4번 문장의 <u>to earn recognition</u>과 <u>to self-enhance</u>의 용법이 바르게 짝지어진 것은?",
+  "c": "Their aim of posting is <u>to earn recognition</u> for what they're sharing as a way <u>to self-enhance</u>.",
+  "o": [
+   "명사적 용법(주격 보어) — 형용사적 용법(명사 수식)",
+   "형용사적 용법(명사 수식) — 명사적 용법(주격 보어)",
+   "명사적 용법(주격 보어) — 부사적 용법(목적)",
+   "부사적 용법(목적) — 형용사적 용법(명사 수식)",
+   "부사적 용법(결과) — 명사적 용법(목적어)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(4번 문장 구문 분석): to earn은 be동사 is의 주격 보어(명사적 용법), to self-enhance는 a way를 수식하는 형용사적 용법입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "short",
+  "s": "4번 문장에서 전치사 <b>for</b>의 목적어로 쓰인 명사절을 본문에서 찾아 그대로 쓰시오. (세 단어)",
+  "ans": [
+   "what they're sharing",
+   "what they are sharing"
+  ],
+  "show": "what they're sharing",
+  "e": "분석지 2번(4번 문장 구문 분석): 선행사를 포함하는 관계대명사 what 명사절(what they're sharing)이 전치사 for의 목적어입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "5번 문장의 상관어구 병렬 구조에 맞게 괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "If the recognition is insufficient, they'd rather delete the content than (suffer / suffering) perceived judgement from others.",
+  "o": [
+   "suffer",
+   "suffering"
+  ],
+  "a": "suffer",
+  "e": "분석지 2번(5번 문장 구문 분석): would rather A than B 구조에서 동사원형 delete와 동사원형 suffer가 병렬 대조를 이룹니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "choice",
+  "s": "6번 문장의 주어에 맞게 괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "Not getting a reaction (has / have) a negative effect on their self-esteem.",
+  "o": [
+   "has",
+   "have"
+  ],
+  "a": "has",
+  "e": "분석지 2번(6번 문장 구문 분석): 주어가 동명사 부정형(Not getting a reaction)이므로 3인칭 단수 취급하여 has를 씁니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "소셜 미디어에서 반응을 얻지 못하는 것이 십대의 자존감에 미치는 부정적 영향",
+   "십대들의 온라인 콘텐츠 제작 역량을 키우기 위한 피드백 제공 방법",
+   "소셜 미디어 플랫폼 알고리즘이 게시물 노출 빈도에 미치는 영향",
+   "십대들이 개인정보 보호를 위해 오래된 게시물을 정기적으로 삭제하는 이유",
+   "또래 집단 내 인정을 통해 십대들이 학업 성취도를 높이는 과정"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 소셜 미디어에서 반응을 얻지 못하는 것이 십대의 자존감에 미치는 부정적 영향"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 문장의 번호를 숫자만 쓰시오.",
+  "ans": [
+   "5",
+   "5번",
+   "5번 문장"
+  ],
+  "show": "5",
+  "e": "분석지 1번 중심 문장: 5번 문장(\"If the recognition is insufficient, they'd rather delete the content than suffer perceived judgement from others against their failed efforts to self-enhance.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (반응의 결여 및 모니터링)",
+   "키워드 B (자기 향상 실패와 자존감 타격)"
+  ],
+  "rows": [
+   ["monitor the post to gauge the volume of reactions", 1],
+   ["suffer perceived judgement", 2],
+   ["number of resulting 'Likes' and 'Shares' is too low", 1],
+   ["failed efforts to self-enhance", 2]
+  ],
+  "e": "분석지 1번 키워드 A/B 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "십대 특유의 SNS 사용 패턴과 게시물 삭제 행동 제시 (문제 제기 및 관찰 현상 묘사)",
+   "삭제 행동 이면의 심리적 동기와 반응 부재의 최종적 폐해 규명 (원인 분석 및 결론)"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~3번 문장)", 1],
+   ["두 번째 부분 (4~6번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "관찰 현상 제시 — 심리적 원인 규명 — 결론 도출",
+   "통념 제시 — 실험을 통한 반박 — 새로운 대안 촉구",
+   "역사적 변천 과정 나열 — 현재의 한계 지적 — 미래 전망",
+   "두 집단의 상반된 태도 비교 — 절충안 모색 — 요약",
+   "전문가 의견 인용 — 통계 자료 분석 — 정책 제언"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 관찰 현상 제시 - 심리적 원인 규명 - 결론 도출의 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "1번 문장의 <b>in particular</b>는 particularly와 바꿔 쓸 수 있으며, <b>but</b>은 앞 절(teenagers will post or share ~)과 뒤 절(they'll monitor ~)을 대조·병렬 연결한다.",
+  "a": "O",
+  "e": "분석지 2번(1번 문장 구문 분석 및 어휘): in particular = particularly이며, 등위접속사 but이 앞뒤 두 절을 병렬 연결합니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "원래 빈칸 문제에서 <b>Deleting their online posts</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "반응이 없을 때 수치심을 피하려고 취하는 방어적 결과이지 자존감을 해치는 근본 원인이 아니므로 인과관계가 뒤바뀌었기 때문이다.",
+   "십대들이 온라인 게시물을 삭제한다는 내용은 지문 전체에서 전혀 언급되지 않았기 때문이다.",
+   "게시물을 삭제하는 행동이 오히려 십대들의 자존감을 높여 준다고 본문에 서술되어 있기 때문이다.",
+   "빈칸 자리는 복수 취급하는 동명사 주어 자리이므로 단수형과 호응하지 않기 때문이다.",
+   "게시물 삭제는 부모나 교사의 강요에 의해 이루어지는 타율적 행동이기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(5단계 오답 소거): 게시물 삭제는 반응이 없을 때 취하는 '방어적 결과'이지 자존감을 갉아먹는 근본 원인이 아니므로 인과관계가 뒤바뀐 오답입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "빈칸에 들어갈 정답 <b>Not getting a reaction</b>을 도출하기 위한 지문 속 핵심 단서(Clue) 3가지 묶음에 해당하지 <u>않는</u> 것은?",
+  "o": [
+   "volume of reactions",
+   "'Likes' and 'Shares' is too low",
+   "recognition is insufficient",
+   "within the first ten minutes"
+  ],
+  "a": 4,
+  "e": "분석지 4번(3·5단계) 및 6번 마무리: 핵심 단서는 volume of reactions, 'Likes' (and 'Shares') is too low, (the) recognition is insufficient입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "short",
+  "s": "원래 빈칸(6번 문장 맨 앞)에 들어갈 네 단어 영어 표현을 분석지 4번에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "not getting a reaction"
+  ],
+  "show": "Not getting a reaction",
+  "e": "분석지 4번(5단계) 및 6번 마무리: 정답은 Not getting a reaction입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 6번 문장의 주어 자리에 'Deleting their online posts'가 아니라 'Not getting a reaction'이 들어가야 하는 이유를 지문의 인과관계를 바탕으로 서술하세요.",
+  "show": "십대들은 자기 향상을 위해 인정을 얻고자 게시물을 올리는데, 반응('좋아요'와 '공유')을 충분히 얻지 못하면 타인의 비판적 시선이 두려워 게시물을 삭제한다. 따라서 게시물 삭제는 방어적 결과일 뿐, 자존감에 부정적 영향을 미치는 근본 원인은 반응을 얻지 못하는 것(Not getting a reaction)이기 때문이다.",
+  "crit": "① 게시 목적(자기 향상·인정 획득) 및 반응 결여 제시 ② 게시물 삭제는 방어적 결과임을 명시 ③ 자존감 타격의 근본 원인이 '반응을 얻지 못하는 것'이라는 인과관계 서술"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 십대들이 올린 게시물의 인정(recognition)이 불충분할 때 콘텐츠를 삭제하는 심리적 이유를 5번 문장의 핵심 내용을 바탕으로 우리말로 서술하세요.",
+  "show": "자기 향상을 위한 자신들의 실패한 노력에 대해 타인들로부터 인지된 판단(비판적 시선)을 겪기보다는 차라리 게시물을 삭제하는 편을 택하기 때문이다.",
+  "crit": "① 자기 향상을 위한 실패한 노력 언급 ② 타인으로부터의 인지된 판단(비판적 시선)을 피하려는 심리 서술"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Practice 02번 요약문 완성 분석지 확인 문제",
+ "section": "수능 대비 · Practice 02번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. Practice 02번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "The discovery that identities change the way we seek information raises interesting questions."],
+  [2, "For example, there is ample evidence that people try to make themselves look good in many situations."],
+  [3, "In contrast, researchers also found that people seek out negative information about themselves if it supports a negative identity."],
+  [4, "How is it that a person wants to make herself look good, while at the same time she wants to make herself look bad?"],
+  [5, "Some researchers proposed that people try to obtain information that is consistent with their identities, whether they think of themselves positively or negatively."],
+  [6, "That is, people seek information that seems to them to be true, even if that information is negative about themselves."],
+  [7, "In contrast, positive information makes people feel good, whether it is consistent with their identity or not."],
+  [8, "Emotionally, people want to look as good as possible."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "정체성이 우리가 정보를 찾는 방식을 바꾼다는 발견은 흥미로운 질문들을 불러일으킨다.",
+  "a": "O",
+  "e": "1번 문장: The discovery that identities change the way we seek information raises interesting questions."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "사람들이 많은 상황에서 자신을 좋아 보이게 만들려고 노력한다는 증거는 거의 발견되지 않았다.",
+  "a": "X",
+  "e": "2번 문장: 충분한 증거가 있다(there is ample evidence that people try to make themselves look good in many situations)고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "부정적인 정체성을 뒷받침해 준다면, 사람들은 자신에 대한 부정적인 정보를 찾아내기도 한다.",
+  "a": "O",
+  "e": "3번 문장: people seek out negative information about themselves if it supports a negative identity."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "사람들은 자신을 긍정적으로 생각할 때만 자신의 정체성과 일치하는 정보를 얻으려고 노력한다.",
+  "a": "X",
+  "e": "5번 문장: 자신을 긍정적으로 생각하든 부정적으로 생각하든 간에(whether they think of themselves positively or negatively) 자신의 정체성과 일치하는 정보를 얻으려고 노력합니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "사람들은 자신에 대해 부정적인 정보일지라도 스스로에게 사실인 것처럼 보이는 정보를 찾는다.",
+  "a": "O",
+  "e": "6번 문장: people seek information that seems to them to be true, even if that information is negative about themselves."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "긍정적인 정보는 자신의 정체성과 일치하는 경우에만 사람들을 기분 좋게 만든다.",
+  "a": "X",
+  "e": "7번 문장: 자신의 정체성과 일치하든 그렇지 않든 간에(whether it is consistent with their identity or not) 사람들을 기분 좋게 만듭니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "정서적인 측면에서 사람들은 가능한 한 좋게 보이기를 원한다.",
+  "a": "O",
+  "e": "8번 문장: Emotionally, people want to look as good as possible."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "한 사람이 자신을 좋아 보이게 만들기를 원하면서 동시에 나빠 보이게 만들기를 원하는 현상은 결코 일어나지 않는다.",
+  "a": "X",
+  "e": "4번 문장은 실제로 두 욕구가 동시에 나타나는 모순적 현상에 대해 '어떻게 그러한가(How is it that ~?)'라고 의문을 제기하는 문장입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "충분한, 풍부한",
+   "~와 일치하는, 부합하는",
+   "즉, 다시 말해서",
+   "전반적으로"
+  ],
+  "rows": [
+   ["ample", 1],
+   ["consistent with", 2],
+   ["That is", 3],
+   ["overall", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (2번·5번·6번·요약문)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "People try to obtain information that is (consistent / persistent) with their identities.",
+  "o": [
+   "consistent",
+   "persistent"
+  ],
+  "a": "consistent",
+  "e": "분석지 5번 혼동 어휘: consistent는 '일관된, 부합하는', persistent는 '끈질긴, 집요한'이라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "For example, there is (ample / sample) evidence that people try to make themselves look good.",
+  "o": [
+   "ample",
+   "sample"
+  ],
+  "a": "ample",
+  "e": "분석지 5번 혼동 어휘: ample은 '충분한, 풍부한'이라는 형용사이고, sample은 '견본, 표본'이라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>obtain</b>(얻다, 획득하다)의 동의어로만 묶인 것은?",
+  "o": [
+   "acquire, gain, procure, secure",
+   "conflict, clash, contradict, gain",
+   "acquire, accord, conform, fit",
+   "propose, seek, secure, support"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: obtain의 동의어는 acquire, gain, procure, secure입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>match</b>(일치하다)의 반의어가 <u>아닌</u> 것은?",
+  "o": [
+   "conflict",
+   "clash",
+   "contradict",
+   "correspond to"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: match의 동의어는 correspond to, accord with, conform to, fit이고, 반의어는 conflict, clash, contradict입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "1번 문장에서 '의문을 제기하다, 질문을 불러일으키다'라는 뜻으로 쓰인 동사구(동사+목적어)를 본문에서 찾아 그대로 쓰시오. (세 단어)",
+  "ans": [
+   "raises interesting questions",
+   "raise interesting questions"
+  ],
+  "show": "raises interesting questions",
+  "e": "분석지 2번(1번 문장 어휘 및 연결어): raise questions는 '의문을 제기하다, 질문을 불러일으키다'라는 뜻입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "1번 문장의 주어부에 맞게 어법상 알맞은 본동사를 고르시오.",
+  "c": "The discovery that identities change the way we seek information (raise / raises) interesting questions.",
+  "o": [
+   "raise",
+   "raises"
+  ],
+  "a": "raises",
+  "e": "분석지 2번(1번 문장 구문 분석): 주어구의 핵심 명사가 단수명사 The discovery이므로 단수 현재형 raises가 쓰였습니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 <b>The discovery <u>that</u> identities change the way we seek information</b>에서 밑줄 친 <u>that</u>과 문법적 쓰임이 같은 것은?",
+  "o": [
+   "2번 문장의 ample evidence that people try to make themselves look good",
+   "5번 문장의 information that is consistent with their identities",
+   "6번 문장의 information that seems to them to be true",
+   "요약문의 information that matches our identity"
+  ],
+  "a": 1,
+  "e": "분석지 2번(1번·2번 문장 구문 분석): The discovery 뒤의 that과 ample evidence 뒤의 that은 모두 완전한 절을 이끄는 동격의 접속사입니다. 나머지는 주격 관계대명사입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "2번 문장의 사역동사 5형식 구문에서 어법상 알맞은 형태를 고르시오.",
+  "c": "People try to make themselves (look / looking) good in many situations.",
+  "o": [
+   "look",
+   "looking"
+  ],
+  "a": "look",
+  "e": "분석지 2번(2번 문장 구문 분석): 사역동사 make + 목적어(themselves) + 목적격 보어로 동사원형 look이 쓰였습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "ox",
+  "s": "4번 문장의 <b>How is it that a person wants to make herself look good ~?</b>는 의문사 How를 강조하기 위한 it ~ that 의문문 강조 구문이다.",
+  "a": "O",
+  "e": "분석지 2번(4번 문장 구문 분석): 의문사 How를 강조하기 위해 'How is it that S + V ~?' 형식을 취한 강조 구문입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "6번 문장의 관계사절에서 어법상 알맞은 동사 형태를 고르시오.",
+  "c": "That is, people seek information that (seem / seems) to them to be true.",
+  "o": [
+   "seem",
+   "seems"
+  ],
+  "a": "seems",
+  "e": "분석지 2번(6번 문장 구문 분석): 주격 관계대명사 that의 선행사가 단수명사 information이므로 3인칭 단수 현재형 seems가 쓰였습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "7번 문장의 사역동사 구문에서 어법상 알맞은 형태를 고르시오.",
+  "c": "In contrast, positive information makes people (feel / to feel) good.",
+  "o": [
+   "feel",
+   "to feel"
+  ],
+  "a": "feel",
+  "e": "분석지 2번(7번 문장 구문 분석): 사역동사 makes + 목적어(people) + 목적격 보어로 동사원형 feel이 쓰였습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "short",
+  "s": "8번 문장의 원급 비교 표현 <b>as good as possible</b>을 절 형태로 전환할 때 빈칸에 들어갈 세 단어를 쓰시오.<br><small>「조건」 Emotionally, people want to look as good ______________________.</small>",
+  "ans": [
+   "as they can"
+  ],
+  "show": "as they can",
+  "e": "분석지 2번(8번 문장 구문 분석): as good as possible은 'as good as they can'으로 전환할 수 있습니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "1번 문장의 <b>the way we seek information</b>에서 선행사 <b>the way</b> 뒤에 나란히 쓸 수 없어 생략된 관계부사 한 단어를 쓰시오.",
+  "ans": [
+   "how"
+  ],
+  "show": "how",
+  "e": "분석지 2번(1번 문장 구문 분석): 선행사 the way 뒤에 관계부사 how는 나란히 쓸 수 없어 생략되었습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "정체성과 일치하는 정보 탐색 경향과 긍정적 정보를 선호하는 정서적 욕구의 공존",
+   "타인의 부정적 평가를 극복하기 위해 자존감을 회복하는 심리 치료 과정",
+   "사회적 지위에 따라 변화하는 개인의 정보 수용 능력과 의사결정 기준",
+   "인지적 편향을 제거하고 객관적인 사실만을 선별하는 비판적 사고 훈련",
+   "부정적 정체성을 긍정적 정체성으로 전환하기 위한 감정 조절 전략"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 정체성과 일치하는 정보 탐색 경향과 긍정적 정보를 선호하는 정서적 욕구의 공존"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 두 문장의 번호를 쉼표로 구분하여 숫자만 쓰시오. (예: 1, 2)",
+  "ans": [
+   "5, 7",
+   "5,7",
+   "5번, 7번"
+  ],
+  "show": "5, 7",
+  "e": "분석지 1번 중심 문장: 5번 문장과 7번 문장(\"Some researchers proposed ~ whether it is consistent with their identity or not.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (정체성 일치 정보 탐색)",
+   "키워드 B (정서적 긍정 추구)",
+   "키워드 C (인지적 일치와 정서적 호감의 긴장 관계)"
+  ],
+  "rows": [
+   ["seems to them to be true", 1],
+   ["positive information makes people feel good", 2],
+   ["while at the same time", 3],
+   ["consistent with their identities", 1]
+  ],
+  "e": "분석지 1번 키워드 A/B/C 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "인간 정보 탐색의 기이한 모순 제기 및 독자의 호기심 유발 (도입 및 문제 제기)",
+   "인지적 정체성 일치 추구와 감정적 긍정 추구라는 이중 구조 규명 및 요약 결론 완성"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~4번 문장)", 1],
+   ["두 번째 부분 (5~8번 문장 및 요약문)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "문제 제기 — 모순적 현상 분석 — 인지와 감정의 층위 분리를 통한 해명",
+   "통념 소개 — 실험 설계 과정 설명 — 통념의 타당성 입증",
+   "시간 흐름에 따른 정체성 발달 단계 나열 — 교육적 시사점 제시",
+   "두 연구 집단의 상반된 학설 비교 — 절충적 통합 모델 제안",
+   "사회적 현상의 원인 분석 — 제도적 개선 방안 촉구"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 문제 제기 - 모순적 현상 분석 - 인지와 감정의 층위 분리를 통한 해명 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "지문에 쓰인 각 연결어·연결 표현의 역할을 「보기」에서 고르세요.",
+  "box": [
+   "양립하기 힘든 두 모순을 대조하는 연결 표현",
+   "앞 문장의 학술적 설명을 직관적으로 환언하는 재진술 연결부사",
+   "인지적 사실 일치 추구와 정서적 기분 고양을 대조하는 핵심 연결부사"
+  ],
+  "rows": [
+   ["while at the same time (4번 문장)", 1],
+   ["That is (6번 문장)", 2],
+   ["In contrast (7번 문장)", 3]
+  ],
+  "e": "분석지 2번(4번·6번·7번 문장 어휘 및 연결어)"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "Practice 02번 요약문 문제에서 <b>② challenges — emotions</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "사람들은 자신의 정체성에 도전하거나 반박하는 정보가 아니라 정체성을 뒷받침하는 정보를 찾으므로 첫 번째 빈칸이 정반대이기 때문이다.",
+   "감정(emotions)이 긍정적 정보와 무관하게 작용한다고 본문에 서술되어 있기 때문이다.",
+   "정체성이라는 개념은 지문 첫 문장에만 나오고 이후에는 다루어지지 않기 때문이다.",
+   "첫 번째 빈칸 자리에는 복수 동사가 와야 하므로 단수형 challenges는 어법상 틀리기 때문이다.",
+   "부정적인 정보를 찾는 사람은 전혀 존재하지 않는다는 것이 연구자들의 결론이기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(3단계 오답 소거): (B) emotions는 적절하지만, (A)에서 정체성에 도전하거나 반박하는 정보가 아니라 정체성을 뒷받침하는 정보를 찾으므로 정반대 진술입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "요약문 빈칸 (B)의 정답 <b>emotions</b>를 도출하기 위해 지문에서 직접 연결되는 핵심 어구로 가장 적절한 것은?",
+  "o": [
+   "makes people feel good / Emotionally",
+   "consistent with their identities",
+   "seems to them to be true",
+   "supports a negative identity"
+  ],
+  "a": 1,
+  "e": "분석지 4번(2·3단계) 및 6번 마무리: 지문 7~8번 문장의 makes people feel good과 Emotionally가 요약문의 emotions와 직결됩니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "blanks",
+  "s": "Practice 02번 요약문 문제의 빈칸 (A)와 (B)에 들어갈 영어 단어를 분석지 4번에서 찾아 순서대로 쓰시오.",
+  "c": "We seek information that (A) __________ our identity, yet overall our (B) __________ pushes us toward positive information.",
+  "blanks": [
+   ["(A)", ["matches"]],
+   ["(B)", ["emotions"]]
+  ],
+  "show": "(A) matches  (B) emotions",
+  "e": "분석지 4번(3단계) 및 6번 마무리: 정답은 ③ matches — emotions입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 사람이 자신을 좋아 보이게 만들기를 원하면서도 동시에 부정적인 정보를 찾는 겉보기의 모순을 필자가 어떻게 해명하는지, '인지적(정체성) 차원'과 '정서적(감정) 차원'으로 나누어 우리말로 서술하세요.",
+  "show": "인지적 차원에서는 긍정적이든 부정적이든 자신의 정체성과 일치하고 사실처럼 보이는 정보를 얻으려 하는 반면, 정서적 차원에서는 정체성과의 일치 여부와 관계없이 자신을 기분 좋게 만들고 가능한 한 좋게 보이게 하는 긍정적인 정보를 원하기 때문이다.",
+  "crit": "① 인지적 차원: 자신의 정체성과 일치하는(사실처럼 보이는) 정보를 추구함 ② 정서적 차원: 정체성 일치 여부와 무관하게 기분을 좋게 만드는 긍정적 정보를 추구함"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 요약문 빈칸 (A)와 (B)에 각각 <b>matches</b>와 <b>emotions</b>가 들어가야 하는 이유를 지문 속 핵심 표현과 연결하여 서술하세요.",
+  "show": "지문에서 사람들은 자신의 정체성과 일치하는(consistent with) 정보를 얻으려 노력하므로 (A)에는 consistent with를 바꿔 쓴 matches가 들어가며, 정서적으로(Emotionally) 긍정적 정보가 사람들을 기분 좋게 만들어(feel good) 긍정적 정보로 이끌므로 (B)에는 emotions가 들어가야 한다.",
+  "crit": "① 지문의 consistent with(정체성과 일치함)와 (A) matches 연결 ② 지문의 Emotionally / feel good(정서적 욕구)과 (B) emotions 연결"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

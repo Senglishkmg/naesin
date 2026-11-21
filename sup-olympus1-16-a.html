@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "요약문 완성 분석지 확인 문제",
+ "section": "수능 대비 · 모의고사 분석지",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 문제 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Many of us tend to have too much invested in our opinions of ourselves to see the world's feedback ─ the feedback we need to update our beliefs about reality."],
+  [2, "This creates a profound ignorance that keeps us banging our head against the wall over and over again."],
+  [3, "Our inability to learn from the world because of our ego happens for many reasons, but two are worth mentioning here."],
+  [4, "First, we're so afraid about what others will say about us that we fail to put our ideas out there and subject them to criticism."],
+  [5, "This way we can always be right."],
+  [6, "Second, if we do put our ideas out there and they are criticized, our ego steps in to protect us."],
+  [7, "We become invested in defending instead of upgrading our ideas."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "우리 중 많은 사람들은 자신에 대한 스스로의 의견에 너무 많이 투자한 나머지 세상의 피드백을 보지 못하는 경향이 있다.",
+  "a": "O",
+  "e": "1번 문장: Many of us tend to have too much invested in our opinions of ourselves to see the world's feedback"
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "세상의 피드백은 우리가 현실에 대한 신념을 갱신하는 데 불필요한 요소이다.",
+  "a": "X",
+  "e": "1번 문장: 세상의 피드백은 현실에 대한 신념을 업데이트하기 위해 우리가 필요로 하는 피드백(the feedback we need to update our beliefs about reality)입니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "세상의 피드백을 보지 못하는 것은 우리가 벽에 머리를 반복해서 부딪치게 만드는 극심한 무지를 만들어 낸다.",
+  "a": "O",
+  "e": "2번 문장: This creates a profound ignorance that keeps us banging our head against the wall over and over again."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "우리의 자아 때문에 세상으로부터 배우지 못하는 무능은 오직 단 두 가지 이유로만 발생한다.",
+  "a": "X",
+  "e": "3번 문장: 많은 이유들로 발생하지만(happens for many reasons), 그중 두 가지가 언급할 가치가 있다고 했습니다."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "첫 번째 이유로, 우리는 남들이 우리에 대해 말할 바가 두려워 생각을 밖으로 내놓고 비판받게 하는 일을 하지 못한다.",
+  "a": "O",
+  "e": "4번 문장: First, we're so afraid about what others will say about us that we fail to put our ideas out there and subject them to criticism."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "생각을 외부 비판에 노출하지 않으면 우리가 항상 틀릴 수 있게 된다.",
+  "a": "X",
+  "e": "5번 문장: 이런 방식으로 우리는 항상 옳을 수 있다(This way we can always be right)고 했습니다."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "두 번째 이유로, 우리가 생각을 밖으로 내놓아 비판을 받으면 우리의 자아가 개입하여 우리를 보호하려 든다.",
+  "a": "O",
+  "e": "6번 문장: Second, if we do put our ideas out there and they are criticized, our ego steps in to protect us."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "생각이 비판을 받을 때 우리는 생각을 방어하는 대신 개선하는 데 몰두하게 된다.",
+  "a": "X",
+  "e": "7번 문장: 개선하는 것 대신에 방어하는 데 투자된 상태가 된다(invested in defending instead of upgrading our ideas)고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "깊은, 심오한, 극심한",
+   "~할 가치가 있다",
+   "개입하다, 끼어들다",
+   "개선하다, 질을 높이다"
+  ],
+  "rows": [
+   ["profound", 1],
+   ["be worth -ing", 2],
+   ["step in", 3],
+   ["upgrade", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (2번·3번·6번·7번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "This creates a (profound / profane) ignorance that keeps us banging our head against the wall.",
+  "o": [
+   "profound",
+   "profane"
+  ],
+  "a": "profound",
+  "e": "분석지 5번 혼동 어휘: profound는 '심오한, 극심한', profane은 '불경스러운, 세속적인'이라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "We fail to put our ideas out there and (subject / object) them to criticism.",
+  "o": [
+   "subject",
+   "object"
+  ],
+  "a": "subject",
+  "e": "분석지 2번 및 5번: 'subject A to B'는 A로 하여금 B(비판·시련 등)를 겪게/받게 하다는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>criticism</b>(비판)의 동의어가 <u>아닌</u> 것은?",
+  "o": [
+   "censure",
+   "reproach",
+   "condemnation",
+   "compliment"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: criticism의 동의어는 censure, reproach, condemnation이며, compliment(칭찬)는 반의어입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>hinder</b>(방해하다)의 반의어로 묶인 것은?",
+  "o": [
+   "facilitate, promote, assist",
+   "impede, obstruct, hamper",
+   "block, impede, assist",
+   "censure, promote, block"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: hinder의 동의어는 impede, obstruct, hamper, block이고, 반의어는 facilitate, promote, assist입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "2번 문장에서 '몇 번이고 반복해서'라는 뜻으로 쓰인 네 단어 영어 표현을 본문에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "over and over again"
+  ],
+  "show": "over and over again",
+  "e": "분석지 2번(2번 문장 어휘 및 연결어): over and over again은 '몇 번이고 반복해서'라는 뜻입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 <u>to update our beliefs about reality</u>와 to부정사의 용법이 같은 것은?",
+  "c": "Many of us tend to have too much invested in our opinions of ourselves to see the world's feedback ─ the feedback we need <u>to update our beliefs about reality</u>.",
+  "o": [
+   "부사적 용법 (목적: ~하기 위하여)",
+   "명사적 용법 (동사 tend의 목적어)",
+   "부사적 용법 (결과/정도: too ~ to-v 구문)",
+   "형용사적 용법 (앞의 추상명사 수식)",
+   "명사적 용법 (주격 보어)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(1번 문장 구문 분석): to update ~는 '우리의 신념들을 업데이트하기 위하여'라는 목적을 나타내는 부사적 용법입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "2번 문장의 관계사절에서 어법상 알맞은 형태를 고르시오.",
+  "c": "This creates a profound ignorance that (keep / keeps) us banging our head against the wall.",
+  "o": [
+   "keep",
+   "keeps"
+  ],
+  "a": "keeps",
+  "e": "분석지 2번(2번 문장 구문 분석): 주격 관계대명사 that의 선행사가 단수명사 a profound ignorance이므로 단수동사 keeps를 씁니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "3번 문장의 주절에서 어법상 알맞은 형태를 고르시오.",
+  "c": "Our inability to learn from the world because of our ego (happen / happens) for many reasons, but two are worth mentioning here.",
+  "o": [
+   "happen",
+   "happens"
+  ],
+  "a": "happens",
+  "e": "분석지 2번(3번 문장 구문 분석): 주절의 핵심 주어는 단수명사 Our inability이므로 단수 현재형 happens가 알맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "ox",
+  "s": "4번 문장의 <b>fail to put our ideas out there and subject them to criticism</b>에서 subject는 앞의 to put과 병렬을 이루는 원형부정사이다.",
+  "a": "O",
+  "e": "분석지 2번(4번 문장 구문 분석): fail의 목적어로 to put과 (to) subject가 and로 병렬 연결되어 to가 생략된 동사원형 형태가 쓰였습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장의 <b>if we <u>do</u> put our ideas out there</b>에 쓰인 밑줄 친 <u>do</u>의 문법적 쓰임으로 알맞은 것은?",
+  "o": [
+   "동사 put의 의미를 강조하는 강조의 do",
+   "앞 절의 일반동사를 대신하는 대동사 do",
+   "의문문을 만들기 위한 조동사 do",
+   "부정문을 만들기 위한 조동사 do",
+   "'~을 행하다'라는 뜻의 본동사 do"
+  ],
+  "a": 1,
+  "e": "분석지 2번(6번 문장 구문 분석): 동사 put 앞에 조동사 do가 결합하여 '정말로 내놓는다면'이라는 동사의 의미를 강조합니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "7번 문장의 전치사 뒤에 이어지는 어법상 알맞은 형태를 고르시오.",
+  "c": "We become invested in defending instead of (upgrade / upgrading) our ideas.",
+  "o": [
+   "upgrade",
+   "upgrading"
+  ],
+  "a": "upgrading",
+  "e": "분석지 2번(7번 문장 구문 분석): 전치사구 instead of 뒤에 동명사 upgrading이 연결되어 defending과 대조를 이룹니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "분석지 2번의 요약문(8번 문장) 주어부에서 어법상 알맞은 본동사를 고르시오.",
+  "c": "Our ego's fear of being criticized and desire to defend ourselves often (blind / blinds) us from valuable feedback.",
+  "o": [
+   "blind",
+   "blinds"
+  ],
+  "a": "blind",
+  "e": "분석지 2번(8번 문장 구문 분석): 주어 자리에서 fear와 desire가 and로 병렬 연결되어 복수 취급되므로 복수 본동사 blind를 씁니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "1번 문장의 <b>the feedback we need</b>에서 선행사 the feedback 뒤에 생략된 목적격 관계대명사 두 개 중 하나만 쓰시오.",
+  "ans": [
+   "which",
+   "that"
+  ],
+  "show": "which (또는 that)",
+  "e": "분석지 2번(1번 문장 구문 분석): 선행사 the feedback 뒤에 목적격 관계대명사 which 또는 that이 생략되어 있습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "자아 보호 본능과 비판에 대한 두려움이 초래하는 피드백 차단과 학습 불능",
+   "타인의 건설적인 비판을 효과적으로 수용하기 위한 대화 기법",
+   "자기 확신을 바탕으로 외부의 부정적 평가를 극복하는 방법",
+   "현실에 대한 신념을 변화시키기 위해 독서가 수행하는 역할",
+   "집단 토론 과정에서 타인의 아이디어를 객관적으로 평가하는 기준"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 자아 보호 본능과 비판에 대한 두려움이 초래하는 피드백 차단과 학습 불능"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 문장의 번호를 숫자만 쓰시오.",
+  "ans": [
+   "1",
+   "1번",
+   "1번 문장"
+  ],
+  "show": "1",
+  "e": "분석지 1번 중심 문장: 1번 문장(\"Many of us tend to have too much invested in our opinions of ourselves to see the world's feedback ─ the feedback we need to update our beliefs about reality.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (자아와 자기 의견에 대한 과도한 집착)",
+   "키워드 B (비판에 대한 두려움과 자기 방어 기제)",
+   "키워드 C (세상의 피드백 수용 실패와 학습 불능)"
+  ],
+  "rows": [
+   ["too much invested in our opinions of ourselves", 1],
+   ["defending instead of upgrading", 2],
+   ["update our beliefs about reality", 3],
+   ["subject them to criticism", 2]
+  ],
+  "e": "분석지 1번 키워드 A/B/C 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "문제 제기 및 자아에 눈먼 인식이 초래하는 파괴적 결과 제시 (도입부)",
+   "자아가 피드백을 가로막는 두 가지 구체적 이유 상술 및 요약문 결론 도출"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~2번 문장)", 1],
+   ["두 번째 부분 (3~7번 문장 및 요약문)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "원리 제시 — 두 가지 구체적 원인 열거 — 종합적 귀결 도출",
+   "통념 소개 — 실험 사례 제시 — 기존 이론 반박",
+   "시간적 순서에 따른 자아 개념의 역사적 변천 과정 설명",
+   "두 가지 상반된 학습 태도의 장단점 비교 및 절충안 제시",
+   "사회적 문제의 심각성 경고 — 정책적 해결책 촉구"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 원리 제시 - 두 가지 구체적 원인 열거 - 종합적 귀결 도출 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "4번 문장의 <b>First</b>와 6번 문장의 <b>Second</b>는 세상으로부터 배우지 못하는 무능이 발생하는 두 가지 원인을 순차적으로 열거하는 표지어이다.",
+  "a": "O",
+  "e": "분석지 2번(4번·6번 문장 어휘 및 연결어): First는 첫 번째 원인, Second는 두 번째 원인을 제시하는 순서 표지어입니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "원래 요약문 문제에서 <b>② criticized — change</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "자아는 자신을 변화(업그레이드)시키려는 것이 아니라 변화를 거부하고 방어하려 하므로 두 번째 빈칸이 글과 반대되기 때문이다.",
+   "비판받는 것에 대한 두려움은 본문에 전혀 언급되지 않아 첫 번째 빈칸부터 틀렸기 때문이다.",
+   "자아가 개입하여 우리를 변화시키는 것이 학습 능력을 높여 준다고 본문에 서술되어 있기 때문이다.",
+   "두 번째 빈칸 자리는 명사가 와야 하므로 동사원형 change는 어법상 맞지 않기 때문이다.",
+   "남들에게 비판받는 것을 즐기는 태도가 첫 번째 원인으로 제시되어 있기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(3단계 오답 소거): (A) criticized는 적절하지만, 자아는 자신을 변화시키려는 것이 아니라 변화(업그레이드)를 거부하고 방어하려 하므로 (B) change는 오답입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "요약문 빈칸 (A)의 정답 <b>judged</b>가 도출되는 근거로 지문에서 직접 연결되는 핵심 어구는?",
+  "o": [
+   "afraid about what others will say / criticism",
+   "update our beliefs about reality",
+   "banging our head against the wall",
+   "worth mentioning here"
+  ],
+  "a": 1,
+  "e": "분석지 4번(2·3단계): 지문 4번 문장의 afraid about what others will say와 criticism이 요약문의 fear of being judged와 연결됩니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "blanks",
+  "s": "원래 요약문 문제의 빈칸 (A)와 (B)에 들어갈 영어 단어를 분석지 4번에서 찾아 순서대로 쓰시오.",
+  "c": "Our ego's fear of being (A) __________ and desire to (B) __________ ourselves often blind us from valuable feedback, hindering our ability to learn and grow.",
+  "blanks": [
+   ["(A)", ["judged"]],
+   ["(B)", ["defend"]]
+  ],
+  "show": "(A) judged  (B) defend",
+  "e": "분석지 4번(3단계): 정답은 ④ judged — defend입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 우리의 자아(ego) 때문에 세상으로부터 배우지 못하는 두 가지 구체적 원인을 지문의 내용을 바탕으로 우리말로 서술하세요.",
+  "show": "첫째, 다른 사람들이 우리에 대해 뭐라고 말할지 두려워한 나머지 우리의 생각을 밖으로 드러내어 비판에 노출시키지 못하기 때문이다. 둘째, 생각을 밖으로 내놓아 비판을 받게 되면 자아가 개입해 우리를 보호하려 들면서, 생각을 개선하는 대신 방어하는 데 몰두하기 때문이다.",
+  "crit": "① 첫째 원인: 타인의 말(비판)에 대한 두려움 때문에 생각을 드러내어 비판에 노출시키지 못함 ② 둘째 원인: 비판받을 때 자아가 개입하여 생각을 개선하는 대신 방어하는 데 몰두함"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 요약문 빈칸 (B)에 <b>update</b>나 <b>change</b>가 아니라 <b>defend</b>가 들어가야 하는 이유를 지문 6~7번 문장의 내용을 근거로 서술하세요.",
+  "show": "우리의 생각이 비판을 받으면 자아가 개입하여 우리를 보호하려 들고, 우리는 아이디어를 개선(upgrading)하거나 갱신(update)하는 대신 방어(defending)하는 데 몰두하게 되기 때문이다.",
+  "crit": "① 비판 시 자아가 개입하여 보호하려 든다는 점 ② 아이디어를 개선(upgrading)·갱신하는 대신 방어(defending)하는 데 몰두한다는 대조 관계 서술"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
