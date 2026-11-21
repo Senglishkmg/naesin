@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "빈칸추론 분석지 확인 문제 (2개 지문 통합)",
+ "section": "수능 대비 · Practice 03번 & ANALYSIS번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. 문제 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문 (Practice 03번 / ANALYSIS번)",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "[Practice 03번] Of all the colours of the rainbow the one that makes the greatest impact on the eye is red."],
+  [2, "There is something instantly arresting about the colour of fire and danger."],
+  [3, "It is charged with alarm and urgency."],
+  [4, "We have red fire engines, red warning lights and the Red Cross."],
+  [5, "If we want something to be seen from a distance, such as a post box or (formerly) a telephone kiosk, we paint it red."],
+  [6, "Perhaps it is because red is so obvious that few wild animals are truly red: even the so-called Red Squirrel and the Red Deer are really shades of reddish-brown that conceal rather than advertise."],
+  [7, "Relatively few butterflies are red either, In Britain, and indeed, in all mainland Europe, only one species has a pattern of full-on bright red, like a splash of blood: the Red Admiral."],
+  [8, "[ANALYSIS번] Vision is our dominant sense, and you want to look both ways before crossing the street ─ it's the first thing parents drill into their children."],
+  [9, "But that doesn't mean our sense of hearing isn't a big deal."],
+  [10, "I don't have to mention the worn-out example of cavemen and hidden saber-toothed tigers."],
+  [11, "There's something that can sneak up and kill you today: a silent electric car."],
+  [12, "These pose an unanticipated but serious threat to pedestrians and bicyclists, who depend on engine noise to detect and orient to cars ─ so much so that the National Highway Traffic Safety Administration now requires slow-moving electric vehicles to generate a warning noise."],
+  [13, "It's a reminder that even for us in a modern city, having both cues can mean the difference between life and death."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "무지개의 모든 색깔 중에서 눈에 가장 큰 영향을 미치는 색은 빨간색이다.",
+  "a": "O",
+  "e": "1번 문장: Of all the colours of the rainbow the one that makes the greatest impact on the eye is red."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "소위 붉은 다람쥐와 붉은 사슴은 실제로는 순수하게 밝은 빨간색 털을 지니고 있다.",
+  "a": "X",
+  "e": "6번 문장: 진정으로 빨간 야생 동물은 거의 없으며, 소위 붉은 다람쥐와 붉은 사슴조차 실제로는 적갈색 색조(shades of reddish-brown)입니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "영국과 유럽 본토 전역을 통틀어 완전한 밝은 빨간색 무늬를 가진 나비는 오직 붉은제독나비 한 종뿐이다.",
+  "a": "O",
+  "e": "7번 문장: In Britain, and indeed, in all mainland Europe, only one species has a pattern of full-on bright red, like a splash of blood: the Red Admiral."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "우체통이나 과거의 공중전화 부스를 빨간색으로 칠한 이유는 멀리서도 잘 보이게 하기 위해서였다.",
+  "a": "O",
+  "e": "5번 문장: If we want something to be seen from a distance, such as a post box or (formerly) a telephone kiosk, we paint it red."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "시각이 우리의 지배적인 감각이므로 우리의 청각은 생존에 별다른 중요성을 갖지 못한다.",
+  "a": "X",
+  "e": "8~9번 문장: 시각이 지배적인 감각이지만, 그것이 우리의 청각이 중요하지 않다는 것을 의미하지는 않습니다(But that doesn't mean our sense of hearing isn't a big deal)."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "보행자들과 자전거 이용자들은 차량을 감지하고 방향을 맞추기 위해 엔진 소음에 의존한다.",
+  "a": "O",
+  "e": "12번 문장: pedestrians and bicyclists, who depend on engine noise to detect and orient to cars"
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "미국 도로교통안전국은 모든 전기차에 대해 고속 주행 시에만 경고 소음을 끄도록 요구한다.",
+  "a": "X",
+  "e": "12번 문장: 미국 도로교통안전국은 느리게 움직이는 전기차들이 경고 소음을 발생시키도록(requires slow-moving electric vehicles to generate a warning noise) 요구합니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "현대 도시에서는 시각과 청각 단서를 모두 가지는 것이 생사를 가르는 차이를 의미할 수 있다.",
+  "a": "O",
+  "e": "13번 문장: even for us in a modern city, having both cues can mean the difference between life and death."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "눈길을 사로잡는, 시선을 끄는",
+   "숨기다, 은폐하다",
+   "몰래 다가가다, 기습하다",
+   "~ 쪽으로 방향을 맞추다/주의를 기울이다"
+  ],
+  "rows": [
+   ["arresting", 1],
+   ["conceal", 2],
+   ["sneak up", 3],
+   ["orient to", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (2번·6번·11번·12번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Even the so-called Red Squirrel and the Red Deer are really shades of reddish-brown that (conceal / reveal) rather than advertise.",
+  "o": [
+   "conceal",
+   "reveal"
+  ],
+  "a": "conceal",
+  "e": "Practice 03번 분석지 5번 혼동 어휘: conceal은 '숨기다, 은폐하다', reveal은 '드러내다, 밝히다'라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "These pose an (unanticipated / anticipated) but serious threat to pedestrians and bicyclists.",
+  "o": [
+   "unanticipated",
+   "anticipated"
+  ],
+  "a": "unanticipated",
+  "e": "ANALYSIS번 분석지 5번 혼동 어휘: unanticipated는 '예기치 못한', anticipated는 '예상된'이라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>arresting</b>(눈길을 끄는)의 동의어가 <u>아닌</u> 것은?",
+  "o": [
+   "striking",
+   "noticeable",
+   "conspicuous",
+   "inconspicuous"
+  ],
+  "a": 4,
+  "e": "Practice 03번 분석지 5번 심화 어휘: arresting의 동의어는 striking, noticeable, eye-catching, conspicuous이며, inconspicuous(눈에 띄지 않는)는 반의어입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>dominant</b>(지배적인, 우세한)의 동의어로만 묶인 것은?",
+  "o": [
+   "predominant, prevailing, primary",
+   "subordinate, secondary, primary",
+   "hazard, danger, menace",
+   "quiet, noiseless, soundless"
+  ],
+  "a": 1,
+  "e": "ANALYSIS번 분석지 5번 심화 어휘: dominant의 동의어는 predominant, prevailing, primary이고 반의어는 subordinate, secondary입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "8번 문장에서 '~에게 (지식·규칙을) 반복하여 주입하다'라는 뜻으로 쓰인 구동사를 본문에서 찾아 동사원형 기준 두 단어로 쓰시오.",
+  "ans": [
+   "drill into"
+  ],
+  "show": "drill into",
+  "e": "ANALYSIS번 분석지 2번(1번 문장 어휘 및 연결어): drill into는 '~에게 반복하여 주입하다'라는 뜻입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "1번 문장의 주어부에 맞게 어법상 알맞은 be동사를 고르시오.",
+  "c": "Of all the colours of the rainbow the one that makes the greatest impact on the eye (is / are) red.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "Practice 03번 분석지 2번(1번 문장 구문 분석): 주어부의 핵이 단수 대명사 the one이므로 단수 be동사 is를 씁니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "2번 문장의 <b>There is something instantly arresting about the colour of fire and danger.</b>에 대한 구문 설명으로 옳은 것은?",
+  "o": [
+   "-thing으로 끝나는 부정대명사 something을 현재분사 형용사 arresting이 뒤에서 후치 수식한다.",
+   "something이 복수 취급되므로 동사 is를 are로 고쳐야 어법상 옳다.",
+   "arresting은 주어 something의 동작을 나타내는 현재진행형 본동사이다.",
+   "instantly는 명사 something을 직접 수식하는 형용사이다.",
+   "about 이하의 전치사구가 관계대명사절을 대신하는 주격 보어이다."
+  ],
+  "a": 1,
+  "e": "Practice 03번 분석지 2번(2번 문장 구문 분석): -thing으로 끝나는 부정대명사(something)는 형용사(instantly arresting)가 뒤에서 수식합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "5번 문장의 5형식 동사 <b>want</b>의 목적격 보어로 어법상 알맞은 형태를 고르시오.",
+  "c": "If we want something (to be seen / to see) from a distance, we paint it red.",
+  "o": [
+   "to be seen",
+   "to see"
+  ],
+  "a": "to be seen",
+  "e": "Practice 03번 분석지 2번(5번 문장 구문 분석): 목적어 something이 사람에 의해 '보여지다'라는 수동 관계이므로 수동형 to부정사(to be seen)를 씁니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장의 <b>Perhaps it is because red is so obvious that few wild animals are truly red</b>에 쓰인 <b>it ~ that</b> 구문의 문법적 정체는?",
+  "o": [
+   "이유의 부사절(because red is so obvious)을 강조하는 It is ~ that 강조 구문",
+   "원인과 결과를 나타내는 so ~ that 부사절 접속사 구문",
+   "가주어 it과 진주어 명사절 that을 연결하는 구문",
+   "선행사 obvious를 수식하는 주격 관계대명사 구문",
+   "비인칭 주어 it과 동격의 접속사 that이 결합된 구문"
+  ],
+  "a": 1,
+  "e": "Practice 03번 분석지 2번(6번 문장 구문 분석): 이유의 부사절 because red is so obvious를 강조하는 [It is ... that] 강조 구문입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "7번 문장의 부정문 뒤에 이어지는 동의 부사로 어법상 알맞은 것을 고르시오.",
+  "c": "Relatively few butterflies are red (either / too).",
+  "o": [
+   "either",
+   "too"
+  ],
+  "a": "either",
+  "e": "Practice 03번 분석지 2번(7번 문장 구문 분석): 부정 수량형용사 few로 인해 부정문이 성립하므로 문장 끝에 부정 동의 부사 either를 씁니다 (too 불가)."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "choice",
+  "s": "12번 문장의 계속적 용법 관계대명사절에서 어법상 알맞은 것을 고르시오.",
+  "c": "These pose an unanticipated but serious threat to pedestrians and bicyclists, (who / that) depend on engine noise to detect and orient to cars.",
+  "o": [
+   "who",
+   "that"
+  ],
+  "a": "who",
+  "e": "ANALYSIS번 분석지 2번(5번 문장 구문 분석): 선행사 pedestrians and bicyclists를 부연 설명하는 계속적 용법(콤마 뒤)의 주격 관계대명사는 who를 씁니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "ox",
+  "s": "12번 문장의 <b>so much so that ~</b>은 '너무나 그러하여 ~할 정도이다'라는 결과를 나타내는 관용 접속 구문이다.",
+  "a": "O",
+  "e": "ANALYSIS번 분석지 2번(5번 문장 구문 분석): so much so that ~은 '너무나 그러하여 ~할 정도이다'를 나타내는 결과의 관용 접속 구문입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "13번 문장(<b>It's a reminder that even for us in a modern city, having both cues can mean ~</b>)에서 <b>a reminder</b> 뒤의 <b>that</b>이 이끄는 절의 문법적 명칭을 네 글자로 쓰시오. (예: 명사절 등 → ○○의 절)",
+  "ans": [
+   "동격의 절",
+   "동격절",
+   "동격"
+  ],
+  "show": "동격의 절 (동격절)",
+  "e": "ANALYSIS번 분석지 2번(6번 문장 구문 분석): a reminder 뒤의 that은 뒤에 완전한 3형식 절을 이끄는 동격의 접속사입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "Practice 03번 지문의 주제로 가장 적절한 것은?",
+  "o": [
+   "빨간색의 강렬한 시인성과 그로 인해 야생 동물들이 빨간색 대신 위장용 적갈색을 띠게 된 진화적 이유",
+   "인간 사회에서 빨간색이 위험과 긴박함의 상징으로 자리 잡게 된 역사적 유래",
+   "유럽 본토에 서식하는 붉은제독나비의 개체 수 감소 원인과 생태 보전 대책",
+   "야생 포식자들이 사냥감을 추격할 때 색채 대비를 활용하는 시각적 사냥 전략",
+   "다람쥐와 사슴의 털 색깔이 계절 변화에 따라 적갈색으로 바뀌는 생리적 원리"
+  ],
+  "a": 1,
+  "e": "Practice 03번 분석지 1번 주제: 빨간색의 강렬한 시인성과 그로 인해 야생 동물들이 빨간색 대신 위장용 적갈색을 띠게 된 진화적 이유"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "mc",
+  "s": "ANALYSIS번 지문의 주제로 가장 적절한 것은?",
+  "o": [
+   "현대 도시 환경에서 시각과 청각 단서를 모두 갖추는 것이 지니는 생존적 중요성",
+   "전기차 보급 확대가 도시 대기질 개선과 소음 공해 감소에 미치는 긍정적 효과",
+   "원시 시대 동굴인과 현대 도시 보행자의 위험 대처 능력의 진화적 차이점",
+   "어린 시절 부모의 교통안전 교육이 성인기 운전 습관에 미치는 장기적 영향",
+   "미국 도로교통안전국의 자동차 배기가스 및 소음 규제 기준의 역사적 변천"
+  ],
+  "a": 1,
+  "e": "ANALYSIS번 분석지 1번 주제: 현대 도시 환경에서 시각과 청각 단서를 모두 갖추는 것이 지니는 생존적 중요성"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "Practice 03번 지문의 각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (빨간색의 극단적 눈에 띔과 경고성)",
+   "키워드 B (야생 동물의 빨간색 회피와 위장)"
+  ],
+  "rows": [
+   ["charged with alarm and urgency", 1],
+   ["shades of reddish-brown", 2],
+   ["seen from a distance", 1],
+   ["conceal rather than advertise", 2]
+  ],
+  "e": "Practice 03번 분석지 1번 키워드 A/B 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "ANALYSIS번 지문의 각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (시각과 청각의 상호보완적 단서)",
+   "키워드 B (생사의 갈림길과 현대 도시의 안전)"
+  ],
+  "rows": [
+   ["depend on engine noise", 1],
+   ["sneak up and kill you", 2],
+   ["having both cues", 1],
+   ["difference between life and death", 2]
+  ],
+  "e": "ANALYSIS번 분석지 1번 키워드 A/B 관련 어구 분류"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "Practice 03번 지문의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "인간의 사용(두드러짐) — 자연계의 대조(숨김/위장) — 구체적 생물 종 예시",
+   "통념 소개 — 실험 과정 묘사 — 기존 이론의 오류 반박",
+   "시간 흐름에 따른 색채 인식의 발달 단계 나열 — 교육적 시사점 제시",
+   "두 생물학자의 상반된 학설 비교 — 절충적 통합 모델 제안",
+   "사회적 문제 제기 — 생물학적 원인 분석 — 정책적 해결책 촉구"
+  ],
+  "a": 1,
+  "e": "Practice 03번 분석지 3번 서술 전략: 인간의 사용(두드러짐) - 자연계의 대조(숨김/위장) - 구체적 생물 종 예시의 전개 방식입니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "mc",
+  "s": "ANALYSIS번 지문의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "통념 인정 — 반전 — 현대적 사례를 통한 실증 — 최종 결론 도출",
+   "역사적 기원 추적 — 시대별 교통사고 통계 비교 — 미래 도시 전망",
+   "시각과 청각의 해부학적 구조 설명 — 감각 기관 보호 방법 안내",
+   "전기차 제조사 간의 기술 경쟁 분석 — 소비자 구매 가이드 제시",
+   "가설 설정 — 통제 실험 결과 제시 — 가설의 한계점 보완"
+  ],
+  "a": 1,
+  "e": "ANALYSIS번 분석지 3번 서술 전략: 통념 인정 - 반전 - 현대적 사례를 통한 실증 - 최종 결론 도출의 전개 방식입니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "Practice 03번 빈칸 문제에서 <b>③ keep them from masking their locations</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "keep A from -ing는 'A가 ~하지 못하게 막다'이므로, 위치를 숨기지 못하게 한다는 뜻이 되어 동물의 위장 생리와 정반대이기 때문이다.",
+   "야생 동물들이 자신의 위치를 숨기는 능력은 전혀 없다고 본문에 서술되어 있기 때문이다.",
+   "적갈색 색조가 포식자의 시력을 저하시킨다는 내용이 지문 첫머리에 나오기 때문이다.",
+   "빈칸 자리에는 형용사절이 올 수 없어 동사구 keep ~은 문법적으로 틀리기 때문이다.",
+   "붉은 다람쥐와 붉은 사슴은 포식자가 없는 지역에만 서식하기 때문이다."
+  ],
+  "a": 1,
+  "e": "Practice 03번 분석지 4번(5단계 오답 소거): keep A from -ing는 'A가 ~하지 못하게 막다'이므로 위치를 숨기지 못하게 한다는 뜻이 되어 동물의 위장 생리와 정반대입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "ANALYSIS번 빈칸 문제에서 <b>① the significance of vision exceeds that of hearing as a sense</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "첫 문장에서 시각이 지배적이라고 했으나, 글의 전체 취지는 청각의 중요성을 역설하는 것이므로 주제와 어긋나기 때문이다.",
+   "시각이 인간의 감각 중 가장 중요하다는 사실은 본문에서 부정되었기 때문이다.",
+   "현대 도시에서는 청각만으로 모든 교통사고를 예방할 수 있다고 본문에 서술되어 있기 때문이다.",
+   "빈칸 자리에는 명사구만 올 수 있어 완전한 절 형태는 어법상 맞지 않기 때문이다.",
+   "전기차는 시각적으로 전혀 보이지 않는 투명한 차량으로 묘사되었기 때문이다."
+  ],
+  "a": 1,
+  "e": "ANALYSIS번 분석지 4번(5단계 오답 소거): 첫 문장에서 시각이 지배적이라고 했으나 글의 전체 취지는 청각의 중요성을 역설하는 것이므로 주제와 어긋난 오답입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "short",
+  "s": "Practice 03번 빈칸(6번 문장 끝)에 들어갈 네 단어 영어 표현을 분석지 4번에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "conceal rather than advertise"
+  ],
+  "show": "conceal rather than advertise",
+  "e": "Practice 03번 분석지 4번(5단계) 및 6번 마무리: 정답은 ① conceal rather than advertise입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "short",
+  "s": "ANALYSIS번 빈칸(13번 문장 끝)에 들어갈 열한 단어 영어 표현을 분석지 4번에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "having both cues can mean the difference between life and death"
+  ],
+  "show": "having both cues can mean the difference between life and death",
+  "e": "ANALYSIS번 분석지 4번(5단계) 및 6번 마무리: 정답은 ② having both cues can mean the difference between life and death입니다."
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 · Practice 03번]</b> 야생 동물 중에 진정으로 빨간 동물이 거의 없고, 소위 붉은 다람쥐와 붉은 사슴조차 적갈색 색조를 띠는 진화적 이유를 지문 내용을 바탕으로 우리말로 서술하세요.",
+  "show": "빨간색은 너무 눈에 띄어 포식자에게 쉽게 발각될 위험이 있으므로, 야생 동물들은 자신을 널리 알리기(advertise)보다는 주변 환경 속에 숨겨 주는(conceal) 적갈색 색조를 띠게 되었기 때문이다.",
+  "crit": "① 빨간색이 너무 눈에 띄는 속성(위험성) 언급 ② 자신을 알리기보다 숨겨 주는(위장·은폐) 적갈색의 기능 서술"
+ },
+ {
+  "n": 34,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형 · ANALYSIS번]</b> 현대 도시에서 시각과 청각이라는 두 감각 단서를 모두 갖추는 것이 '생사의 차이(the difference between life and death)'를 의미할 수 있는 이유를 '조용한 전기차' 사례와 연결하여 우리말로 서술하세요.",
+  "show": "보행자와 자전거 이용자들은 차량을 감지하고 방향을 맞추기 위해 엔진 소음에 의존하는데, 소리 없는 전기차는 청각 단서 없이 몰래 다가와 치명적 위협이 되므로 시각과 청각 두 단서를 모두 확보해야 사고를 피하고 생존할 수 있기 때문이다.",
+  "crit": "① 보행자·자전거 이용자가 차량 감지를 위해 엔진 소음에 의존함 ② 소리 없는 전기차의 기습적 위협(청각 단서 부재의 위험) ③ 시각과 청각 두 단서 모두 확보해야 생존 가능함을 서술"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Practice 01번 빈칸추론 분석지 확인 문제",
+ "section": "수능 대비 · Practice 01번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. Practice 01번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "The reason pessimists often sound smart is that they can avoid being 'wrong' by moving the goalposts."],
+  [2, "When a doomer predicts that the world will end in five years, and it doesn't, they just shift the date."],
+  [3, "The American biologist Paul R. Ehrlich author of the 1968 book The Population Bomb has been doing this for decades."],
+  [4, "In 1970 he said that 'sometime in the next 15 years, the end will come."],
+  [5, "And by \"the end\" I mean an utter breakdown of the capacity of the planet to support humanity.'"],
+  [6, "Of course, that was terribly wrong."],
+  [7, "He had another go: he said that 'England will not exist in the year 2000.'"],
+  [8, "Wrong again."],
+  [9, "Ehrlich will keep pushing this deadline back."],
+  [10, "A pessimistic stance is a safe one."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "비관론자들이 종종 똑똑하게 들리는 이유는 골대를 옮김으로써 '틀리게' 되는 것을 피할 수 있기 때문이다.",
+  "a": "O",
+  "e": "1번 문장: The reason pessimists often sound smart is that they can avoid being 'wrong' by moving the goalposts."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "파멸론자는 5년 안에 세상이 끝날 것이라는 예측이 빗나가면 자신의 오류를 순순히 인정하고 사과한다.",
+  "a": "X",
+  "e": "2번 문장: 실제로 종말이 오지 않으면 그들은 단지 그 날짜를 옮겨 버립니다(they just shift the date)."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "1968년 저서 「인구 폭탄」의 저자인 미국 생물학자 Paul R. Ehrlich는 수십 년 동안 예측 날짜를 옮기는 행동을 해오고 있다.",
+  "a": "O",
+  "e": "3번 문장: The American biologist Paul R. Ehrlich author of the 1968 book The Population Bomb has been doing this for decades."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "1970년에 Ehrlich는 향후 15년 이내에 인류를 부양할 지구의 수용 능력이 완전히 붕괴하는 종말이 올 것이라고 말했다.",
+  "a": "O",
+  "e": "4~5번 문장: In 1970 he said that 'sometime in the next 15 years, the end will come. And by \"the end\" I mean an utter breakdown of the capacity of the planet to support humanity.'"
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "1970년에 Ehrlich가 내놓은 종말 예측은 이후 정확하게 적중했다.",
+  "a": "X",
+  "e": "6번 문장: 물론 그 예측은 터무니없이 틀렸습니다(Of course, that was terribly wrong)."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "Ehrlich는 첫 번째 예측이 빗나간 뒤 다시는 미래에 대한 예언을 하지 않기로 결심했다.",
+  "a": "X",
+  "e": "7번 문장: 그는 또 한 번 시도하여 2000년에는 영국이 존재하지 않을 것이라고 말했습니다(He had another go: he said that 'England will not exist in the year 2000.')."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "Ehrlich는 앞으로도 이 마감 시한을 계속해서 뒤로 미룰 것이다.",
+  "a": "O",
+  "e": "9번 문장: Ehrlich will keep pushing this deadline back."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "지문 마지막 문장에 따르면 비관적인 입장은 예측이 틀릴 위험이 커서 매우 불안정한 입장이다.",
+  "a": "X",
+  "e": "10번 문장: 비관적인 입장은 안전한 입장이다(A pessimistic stance is a safe one)라고 했습니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "골대를 옮기다 (기준이나 시한을 일방적으로 바꾸다)",
+   "완전한, 순전한",
+   "시도하다, 한 번 해보다",
+   "입장, 태도"
+  ],
+  "rows": [
+   ["move the goalposts", 1],
+   ["utter", 2],
+   ["have a go", 3],
+   ["stance", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (1번·5번·7번·10번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "When a doomer predicts that the world will end in five years, and it doesn't, they just (shift / drift) the date.",
+  "o": [
+   "shift",
+   "drift"
+  ],
+  "a": "shift",
+  "e": "분석지 5번 혼동 어휘: shift는 날짜나 기준을 의도적으로 '이동시키다, 바꾸다', drift는 '표류하다, 떠돌다'라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "The reason (pessimists / optimists) often sound smart is that they can avoid being 'wrong' by moving the goalposts.",
+  "o": [
+   "pessimists",
+   "optimists"
+  ],
+  "a": "pessimists",
+  "e": "분석지 5번 혼동 어휘: pessimist는 '비관론자', optimist는 '낙관론자'라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>move the goalposts</b>의 동의어가 <u>아닌</u> 것은?",
+  "o": [
+   "change the rules",
+   "alter the standards",
+   "shift the boundaries",
+   "refuse to make predictions"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: move the goalposts의 동의어는 change the rules, alter the standards, shift the boundaries입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>breakdown</b>(붕괴)의 동의어로만 묶인 것은?",
+  "o": [
+   "collapse, disruption, failure",
+   "complete, total, absolute",
+   "collapse, capacity, stance",
+   "disruption, optimist, failure"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: breakdown의 동의어는 collapse, disruption, failure입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "9번 문장에서 '뒤로 미루다, 연기하다'라는 뜻으로 쓰인 구동사를 본문에서 찾아 동사원형 기준 두 단어로 쓰시오.",
+  "ans": [
+   "push back",
+   "pushing back"
+  ],
+  "show": "push back",
+  "e": "분석지 2번(9번 문장 어휘 및 연결어): push back은 '뒤로 미루다, 연기하다'라는 뜻입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "1번 문장의 주어부에 맞게 어법상 알맞은 be동사를 고르시오.",
+  "c": "The reason pessimists often sound smart (is / are) that they can avoid being 'wrong' by moving the goalposts.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "분석지 2번(1번 문장 구문 분석): 주어부의 핵이 단수명사 The reason이므로 단수 be동사 is를 씁니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "1번 문장의 타동사 <b>avoid</b> 뒤에 이어지는 어법상 알맞은 형태를 고르시오.",
+  "c": "They can avoid (being / to be) 'wrong' by moving the goalposts.",
+  "o": [
+   "being",
+   "to be"
+  ],
+  "a": "being",
+  "e": "분석지 2번(1번 문장 구문 분석): 타동사 avoid는 목적어로 동명사만을 취하므로 being 'wrong'이 알맞습니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "mc",
+  "s": "2번 문장의 <b>When a doomer predicts that the world will end in five years, and it doesn't</b>에서 <b>it doesn't</b> 뒤에 생략된 어구로 가장 알맞은 것은?",
+  "o": [
+   "end in five years",
+   "shift the date",
+   "avoid being wrong",
+   "sound smart",
+   "support humanity"
+  ],
+  "a": 1,
+  "e": "분석지 2번(2번 문장 구문 분석): and it doesn't 뒤에는 앞 절의 술어인 end in five years가 생략되어 있습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "ox",
+  "s": "2번 문장의 주절 주어 <b>they</b>는 앞선 단수 명사 <i>a doomer</i>를 성별에 구애받지 않고 포괄적으로 지칭하는 단수 취급 대명사이다.",
+  "a": "O",
+  "e": "분석지 2번(2번 문장 구문 분석): 주절의 주어 they는 앞선 단수 명사 a doomer를 포괄적으로 지칭하는 단수 취급 대명사(singular they)입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "mc",
+  "s": "3번 문장의 동사 <b>has been doing</b>의 시제와 그 의미로 가장 알맞은 것은?",
+  "o": [
+   "현재완료진행 시제 — 과거부터 현재까지 계속해서 동작이 이어져 오고 있음을 나타낸다.",
+   "과거완료 시제 — 1968년 이전에 이미 동작이 완전히 끝났음을 나타낸다.",
+   "미래진행 시제 — 앞으로 일정 시점에 진행 중일 동작을 나타낸다.",
+   "단순과거 수동태 — 주어가 타인에 의해 조종당했음을 나타낸다.",
+   "현재진행 시제 — 발화 순간에만 일시적으로 일어나는 동작을 나타낸다."
+  ],
+  "a": 1,
+  "e": "분석지 2번(3번 문장 구문 분석): has been doing은 과거부터 현재까지 계속해서 동작이 이어져 오고 있음을 나타내는 현재완료진행 시제입니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장의 <u>to support humanity</u>와 to부정사의 용법이 같은 것은?",
+  "c": "And by \"the end\" I mean an utter breakdown of the capacity of the planet <u>to support humanity</u>.",
+  "o": [
+   "형용사적 용법 (앞의 명사구 the capacity of the planet 수식)",
+   "명사적 용법 (타동사 mean의 목적어)",
+   "부사적 용법 (목적: ~하기 위하여)",
+   "부사적 용법 (감정의 원인: ~해서)",
+   "명사적 용법 (be동사의 주격 보어)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(5번 문장 구문 분석): to support humanity는 앞의 명사구 the capacity of the planet을 수식하는 to부정사의 형용사적 용법입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "9번 문장의 동사 <b>keep</b> 뒤에 이어지는 어법상 알맞은 형태를 고르시오.",
+  "c": "Ehrlich will keep (pushing / to push) this deadline back.",
+  "o": [
+   "pushing",
+   "to push"
+  ],
+  "a": "pushing",
+  "e": "분석지 2번(9번 문장 구문 분석): 'keep -ing'는 타동사 keep의 목적어로 동명사를 취해 '계속해서 ~하다'라는 뜻을 나타냅니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "10번 문장(<b>A pessimistic stance is a safe one.</b>)에서 부정대명사 <b>one</b>이 대신하는 단수 명사를 본문에서 찾아 한 단어로 쓰시오.",
+  "ans": [
+   "stance"
+  ],
+  "show": "stance",
+  "e": "분석지 2번(10번 문장 구문 분석): 부정대명사 one은 앞서 언급된 단수명사 stance의 중복을 피하기 위한 대명사입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "예측 시한을 계속 미룸으로써(골대를 옮김으로써) 틀리는 것을 회피하는 비관론자들의 책략",
+   "인구 증가로 인한 지구 수용 능력의 한계와 생태계 붕괴를 막기 위한 환경 정책",
+   "과학적 예측의 정확도를 높이기 위해 생물학자들이 활용하는 통계 검증 기법",
+   "낙관론자와 비관론자의 토론 과정에서 나타나는 합리적 의사결정 절차",
+   "과거의 잘못된 예언을 반성하고 수정함으로써 학문적 권위를 회복한 사례"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 예측 시한을 계속 미룸으로써(골대를 옮김으로써) 틀리는 것을 회피하는 비관론자들의 책략"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 문장의 번호를 숫자만 쓰시오.",
+  "ans": [
+   "1",
+   "1번",
+   "1번 문장"
+  ],
+  "show": "1",
+  "e": "분석지 1번 중심 문장: 1번 문장(\"The reason pessimists often sound smart is that they can avoid being 'wrong' by moving the goalposts.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (비관론자의 오류 회피 책략)",
+   "키워드 B (비관적 입장의 안전성)"
+  ],
+  "rows": [
+   ["moving the goalposts", 1],
+   ["pessimists often sound smart", 2],
+   ["keep pushing this deadline back", 1],
+   ["safe one", 2]
+  ],
+  "e": "분석지 1번 키워드 A/B 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "중심 주장 제시 및 '골대 옮기기'의 구체적 의미 정의 (주제문 제시 및 개념 규명)",
+   "권위 있는 비관론자의 실제 실패 사례를 제시하여 '골대 옮기기'의 기제를 실증함"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~2번 문장)", 1],
+   ["두 번째 부분 (3~10번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "주제 제시 — 일반화 — 구체적 역사적 인물 사례 제시 — 풍자적 결론",
+   "통념 소개 — 실험 설계 과정 설명 — 통념의 과학적 입증",
+   "두 생물학자의 상반된 이론 비교 — 절충안 도출 — 미래 전망",
+   "사회적 문제 제기 — 생물학적 원인 분석 — 윤리적 해결책 촉구",
+   "구체적 통계 수치 열거 — 공통점 추출 — 기존 학설의 타당성 옹호"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 주제 제시 - 일반화 - 구체적 역사적 인물 사례 제시 - 풍자적 결론의 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "10번 문장(<b>A pessimistic stance is a safe one.</b>)의 <i>safe</i>는 비관론자들이 비판이나 오류 입증으로부터 안전하다는 반어적·풍자적 뉘앙스를 담고 있다.",
+  "a": "O",
+  "e": "분석지 2번(10번 문장 어휘) 및 3번 서술 전략: 비판이나 오류 입증으로부터 안전하다는 반어적·풍자적 결론입니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "Practice 01번 빈칸 문제에서 <b>⑤ refusing to make predictions</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "Ehrlich는 계속해서 15년 내, 2000년 등 적극적으로 예측을 남발하고 있으므로 사실과 정반대이기 때문이다.",
+   "비관론자들은 미래에 대해 어떤 말도 하지 않는다는 내용이 본문 첫 문장에 나오기 때문이다.",
+   "예측을 거부하면 똑똑하게 들리지 않는다고 본문에 명시되어 있기 때문이다.",
+   "빈칸 자리에는 명사만 올 수 있어 동명사구 refusing ~은 문법적으로 틀리기 때문이다.",
+   "과거의 예측이 모두 적중하여 더 이상 예측할 필요가 없어졌기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(5단계 오답 소거): 에를리히는 계속해서 15년 내, 2000년 등 적극적으로 예측을 남발하고 있으므로 '예측을 거부한다'는 것은 사실과 정반대입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "원래 빈칸(1번 문장 끝)의 정답 <b>moving the goalposts</b>를 도출하기 위해 지문 후반부에서 추출한 핵심 단서 두 가지가 바르게 짝지어진 것은?",
+  "o": [
+   "shift the date / pushing this deadline back",
+   "sound smart / support humanity",
+   "author of the 1968 book / terribly wrong",
+   "had another go / safe one"
+  ],
+  "a": 1,
+  "e": "분석지 4번(3단계) 및 6번 마무리: 글 후반부에 제시된 shift the date와 pushing this deadline back이 moving the goalposts와 연결되는 핵심 단서입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "short",
+  "s": "Practice 01번 빈칸(1번 문장 끝)에 들어갈 세 단어 관용 표현을 분석지 4번에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "moving the goalposts"
+  ],
+  "show": "moving the goalposts",
+  "e": "분석지 4번(5단계) 및 6번 마무리: 정답은 ② moving the goalposts입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 글쓴이가 마지막 문장에서 <b>\"A pessimistic stance is a safe one.(비관적인 입장은 안전한 입장이다)\"</b>라고 말한 이유를 비관론자의 예측 회피 책략과 연결하여 우리말로 서술하세요.",
+  "show": "비관론자들은 종말이나 위기에 대한 예측이 빗나갈 때마다 자신의 오류를 인정하는 대신, 날짜를 바꾸고 마감 시한을 계속 뒤로 미루는 이른바 '골대 옮기기'를 통해 틀리게 되는 상황을 교묘히 피할 수 있기 때문이다.",
+  "crit": "① 예측이 틀려도 날짜·마감 시한을 계속 뒤로 미룸(골대 옮기기) ② 그 결과 틀렸다는 비판·오류 입증을 회피할 수 있어 안전함"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 원래 빈칸 자리에 <b>moving the goalposts</b>가 들어가야 하는 이유를 지문 속 핵심 단서(2번·9번 문장)와 연결하여 서술하세요.",
+  "show": "지문에서 파멸론자가 5년 뒤 종말을 예측했다가 빗나가면 단지 날짜를 옮기고(shift the date), 생물학자 Ehrlich 역시 1970년과 2000년 예측이 연달아 틀렸음에도 마감 시한을 계속 뒤로 미룬다(keep pushing this deadline back)고 했으므로, 이미 정해진 기준과 기한을 일방적으로 변경한다는 뜻의 moving the goalposts가 들어가야 한다.",
+  "crit": "① 2번 문장 단서: 날짜를 옮김(shift the date) ② 9번 문장 단서: 마감 시한을 계속 뒤로 미룸(keep pushing this deadline back) ③ 기준·시한을 자의적으로 바꾼다는 moving the goalposts의 의미 연결"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Practice 02번 빈칸추론 분석지 확인 문제",
+ "section": "수능 대비 · Practice 02번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. Practice 02번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "We all understand differently this much is obvious."],
+  [2, "The reason we understand differently is that our memories are different."],
+  [3, "Our experiences simply are not yours."],
+  [4, "In order to understand anything, we must find the closest item in memory to which it relates."],
+  [5, "Schank and Abelson claimed that understanding required one to find the correct knowledge structure, and to use that structure to create expectations for what events were likely to take place, so that new events could be understood in terms of what was normal."],
+  [6, "Thus, when a story about a cocktail party was being told, an understander brought out his cocktail party script which told him about what ordinarily happens at cocktail parties, and he used that script to guide his understanding of the story he was about to hear."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "우리 모두가 서로 다르게 이해한다는 사실은 분명하다.",
+  "a": "O",
+  "e": "1번 문장: We all understand differently this much is obvious."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "우리가 서로 다르게 이해하는 이유는 모든 사람이 똑같은 기억을 공유하고 있기 때문이다.",
+  "a": "X",
+  "e": "2번 문장: 우리의 기억들이 다르기 때문(our memories are different)이라고 했습니다."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "무언가를 이해하기 위해서 우리는 기억 속에서 그것과 관련된 가장 가까운 항목을 찾아야 한다.",
+  "a": "O",
+  "e": "4번 문장: In order to understand anything, we must find the closest item in memory to which it relates."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "Schank와 Abelson은 이해하려면 올바른 지식 구조를 찾아 어떤 사건이 일어날지에 대한 기대를 형성해야 한다고 주장했다.",
+  "a": "O",
+  "e": "5번 문장: understanding required one to find the correct knowledge structure, and to use that structure to create expectations for what events were likely to take place"
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "새로운 사건들은 이전에 전혀 본 적 없는 비정상적인 것의 관점에서 이해되어야 한다.",
+  "a": "X",
+  "e": "5번 문장: 정상적이었던 것의 관점에서(in terms of what was normal) 이해될 수 있도록 한다고 했습니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "칵테일파티에 대한 이야기를 들을 때 이해하는 사람은 보통 칵테일파티에서 무슨 일이 일어나는지 알려주는 스크립트를 꺼낸다.",
+  "a": "O",
+  "e": "6번 문장: an understander brought out his cocktail party script which told him about what ordinarily happens at cocktail parties"
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "이해하는 사람은 칵테일파티 스크립트를 이미 다 들은 이야기를 잊어버리기 위해 사용한다.",
+  "a": "X",
+  "e": "6번 문장: 자신이 막 들으려고 하는 이야기에 대한 이해를 안내하기 위해(to guide his understanding of the story he was about to hear) 사용했습니다."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "우리의 경험은 상대방의 경험과 똑같지 않고 서로 다르다.",
+  "a": "O",
+  "e": "3번 문장: Our experiences simply are not yours."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "발생하다, 일어나다",
+   "~의 관점에서, ~의 면에서",
+   "보통, 일반적으로",
+   "막 ~하려고 하다"
+  ],
+  "rows": [
+   ["take place", 1],
+   ["in terms of", 2],
+   ["ordinarily", 3],
+   ["be about to-v", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (5번·6번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Understanding required one to find the correct knowledge (structure / stricture).",
+  "o": [
+   "structure",
+   "stricture"
+  ],
+  "a": "structure",
+  "e": "분석지 5번 혼동 어휘: structure는 '구조, 틀(스키마)', stricture는 '제한, 비난'이라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "His cocktail party script told him about what (ordinarily / extraordinarily) happens at cocktail parties.",
+  "o": [
+   "ordinarily",
+   "extraordinarily"
+  ],
+  "a": "ordinarily",
+  "e": "분석지 5번 혼동 어휘: ordinarily는 '보통, 대개', extraordinarily는 '비범하게, 대단히'라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>obvious</b>(분명한)의 반의어가 <u>아닌</u> 것은?",
+  "o": [
+   "obscure",
+   "ambiguous",
+   "vague",
+   "manifest"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: obvious의 동의어는 evident, clear, manifest, apparent이며, 반의어는 obscure, ambiguous, vague입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>claim</b>(주장하다)의 동의어로만 묶인 것은?",
+  "o": [
+   "assert, maintain, argue, contend",
+   "direct, steer, navigate, lead",
+   "obscure, assert, argue, evident",
+   "maintain, clear, navigate, contend"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: claim의 동의어는 assert, maintain, argue, contend입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "4번 문장에서 '~하기 위하여'라는 목적을 나타내는 세 단어 연결 표현을 본문에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "in order to"
+  ],
+  "show": "In order to",
+  "e": "분석지 2번(4번 문장 어휘 및 연결어): in order to는 '~하기 위하여'라는 뜻입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "2번 문장의 주어부에 맞게 어법상 알맞은 be동사를 고르시오.",
+  "c": "The reason we understand differently (is / are) that our memories are different.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "분석지 2번(2번 문장 구문 분석): 주어부의 핵심 명사가 단수명사 The reason이므로 단수 be동사 is를 씁니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "4번 문장의 전치사 + 관계대명사 구문에서 어법상 알맞은 형태를 고르시오.",
+  "c": "In order to understand anything, we must find the closest item in memory (to which / which) it relates.",
+  "o": [
+   "to which",
+   "which"
+  ],
+  "a": "to which",
+  "e": "분석지 2번(4번 문장 구문 분석): 원래 구문 'it relates to the item'에서 전치사 to가 관계대명사 which 앞으로 이동한 형태(to which)이며 뒤에 완전한 1형식 절이 이어집니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장의 <u>to find the correct knowledge structure</u>와 <u>to create expectations</u>의 to부정사 용법이 바르게 짝지어진 것은?",
+  "c": "Understanding required one <u>to find the correct knowledge structure</u>, and to use that structure <u>to create expectations</u> for what events were likely to take place.",
+  "o": [
+   "명사적/보어적 용법(목적격 보어) — 부사적 용법(목적: ~하기 위하여)",
+   "부사적 용법(목적) — 형용사적 용법(앞의 명사 수식)",
+   "형용사적 용법(명사 수식) — 명사적 용법(주격 보어)",
+   "부사적 용법(결과) — 부사적 용법(감정의 원인)",
+   "명사적 용법(진주어) — 형용사적 용법(목적격 보어)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(5번 문장 구문 분석): to find ~는 5형식 동사 required의 목적격 보어이고, to create ~는 목적(~하기 위하여)을 나타내는 부사적 용법입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "5번 문장의 병렬 구조에 맞게 괄호 안에서 어법상 알맞은 형태를 고르시오.",
+  "c": "Understanding required one to find the correct knowledge structure, and (to use / using) that structure to create expectations.",
+  "o": [
+   "to use",
+   "using"
+  ],
+  "a": "to use",
+  "e": "분석지 2번(5번 문장 구문 분석): required의 목적격 보어 자리에서 [to find ~]와 [to use ~]가 등위접속사 and로 병렬 연결됩니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "ox",
+  "s": "6번 문장의 <b>was being told</b>는 '이야기가 전해지고 있던 중이었다'는 진행 수동의 의미를 나타내는 과거진행 수동태이다.",
+  "a": "O",
+  "e": "분석지 2번(6번 문장 구문 분석): 시간 부사절에서 과거진행 수동태(was/were being p.p.)가 쓰여 진행 수동을 나타냅니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장의 <b>the story <u>he was about to hear</u></b>에서 선행사 <b>the story</b> 뒤에 생략된 문법 요소로 알맞은 것은?",
+  "o": [
+   "목적격 관계대명사 that 또는 which",
+   "주격 관계대명사 who",
+   "관계부사 where",
+   "동격의 접속사 that",
+   "전치사 to"
+  ],
+  "a": 1,
+  "e": "분석지 2번(6번 문장 구문 분석): 선행사 the story 뒤에 목적격 관계대명사 that 또는 which가 생략되어 있습니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "short",
+  "s": "3번 문장(<b>Our experiences simply are not yours.</b>)에서 소유대명사 <b>yours</b>가 대신하는 두 단어 영어 표현을 본문 어휘를 활용해 쓰시오.",
+  "ans": [
+   "your experiences"
+  ],
+  "show": "your experiences",
+  "e": "분석지 2번(3번 문장 구문 분석): 소유대명사 yours는 your experiences를 대신합니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "5번 문장에서 '~할 수 있도록'이라는 목적을 나타내는 부사절 접속사 두 단어를 본문에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "so that"
+  ],
+  "show": "so that",
+  "e": "분석지 2번(5번 문장 구문 분석): so that은 목적(~할 수 있도록)을 나타내는 부사절 접속사입니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "사람마다 서로 다르게 이해하는 원인으로서의 상이한 기억과 스크립트 기반 이해 메커니즘",
+   "대화를 원활하게 이끌기 위해 상대방의 과거 경험을 정확히 기억하는 훈련법",
+   "칵테일파티와 같은 사교 모임에서 지켜야 할 전통적인 예절과 대화 규칙",
+   "새로운 정보를 받아들일 때 기존 고정관념을 버려야 창의적 사고가 가능한 이유",
+   "유년기 기억의 왜곡이 성인기의 언어 이해 능력 저하로 이어지는 심리적 과정"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 사람마다 서로 다르게 이해하는 원인으로서의 상이한 기억과 스크립트 기반 이해 메커니즘"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 문장의 번호를 숫자만 쓰시오.",
+  "ans": [
+   "4",
+   "4번",
+   "4번 문장"
+  ],
+  "show": "4",
+  "e": "분석지 1번 중심 문장: 4번 문장(\"In order to understand anything, we must find the closest item in memory to which it relates.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (사람마다 다른 기억과 경험)",
+   "키워드 B (기억 속 지식 구조/스크립트를 통한 이해)"
+  ],
+  "rows": [
+   ["our memories are different", 1],
+   ["correct knowledge structure", 2],
+   ["item in memory", 1],
+   ["guide his understanding", 2]
+  ],
+  "e": "분석지 1번 키워드 A/B 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "개인별 이해 차이의 근본 원인을 '기억의 차이'로 규정하고 인지 과정의 대전제 확립",
+   "인지심리학 이론과 칵테일파티 스크립트 사례를 통해 지식 구조 기반 이해 메커니즘 상술"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~4번 문장)", 1],
+   ["두 번째 부분 (5~6번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "화두 제시 — 원인 규명(주제문) — 학술 이론 인용 — 구체적 적용 사례",
+   "통념 소개 — 실험 설계 과정 설명 — 통념의 오류 반박",
+   "시간 순서에 따른 기억력 감퇴 과정 나열 — 예방책 촉구",
+   "두 인지심리학 학파의 상반된 가설 비교 — 절충안 도출",
+   "사회적 의사소통 실패 사례 열거 — 제도적 개선 방안 제시"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 화두 제시 - 원인 규명(주제문) - 학술 이론 인용 - 구체적 적용 사례의 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "6번 문장의 연결어 <b>Thus</b>는 앞 문장의 Schank와 Abelson의 인지 모델을 구체적인 '칵테일파티 스크립트' 사례로 적용하여 이끌어내는 인과 연결어이다.",
+  "a": "O",
+  "e": "분석지 2번(6번 문장 어휘 및 연결어): Thus는 앞의 인지 모델을 구체적인 '칵테일파티 스크립트' 사례로 연결하는 인과 연결어입니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "Practice 02번 빈칸 문제에서 <b>③ we can make cognitive errors</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "인간의 인지적 편향이나 오류를 다루는 글이 아니라 정상적인 인지 스크립트 활용 과정을 다루기 때문이다.",
+   "인간은 어떠한 경우에도 인지적 오류를 범하지 않는다고 본문에 명시되어 있기 때문이다.",
+   "인지적 오류가 발생하면 기억 속 항목을 전혀 찾을 수 없다고 서술되어 있기 때문이다.",
+   "빈칸 자리에는 명사구만 올 수 있어 완전한 절 형태는 문법적으로 틀리기 때문이다.",
+   "Schank와 Abelson이 기억의 존재 자체를 부정했기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(5단계 오답 소거): 인간의 인지적 편향이나 오류를 다루는 글이 아니라, 정상적인 인지 스크립트 활용 과정을 다루므로 오답입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "원래 빈칸(2번 문장 끝)의 정답 <b>our memories are different</b>를 도출하기 위해 빈칸 바로 뒤에서 추출한 핵심 단서로 가장 적절한 것은?",
+  "o": [
+   "Our experiences simply are not yours / find the closest item in memory",
+   "this much is obvious",
+   "cocktail parties / about to hear",
+   "what was normal / take place"
+  ],
+  "a": 1,
+  "e": "분석지 4번(3단계) 및 6번 마무리: 빈칸 바로 뒤의 'Our experiences simply are not yours'와 'find the closest item in memory'가 핵심 단서입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "short",
+  "s": "Practice 02번 빈칸(2번 문장 끝)에 들어갈 네 단어 영어 표현을 분석지 4번에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "our memories are different"
+  ],
+  "show": "our memories are different",
+  "e": "분석지 4번(5단계) 및 6번 마무리: 정답은 ① our memories are different입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> Schank와 Abelson의 이론과 칵테일파티 사례를 바탕으로, 사람이 새로운 이야기나 사건을 이해하는 구체적인 인지 과정을 우리말로 서술하세요.",
+  "show": "무언가를 이해하기 위해 기억 속에서 관련된 가장 가까운 지식 구조(스크립트)를 꺼낸 뒤, 그 구조를 활용해 어떤 사건이 일어날지에 대한 기대를 형성하고, 정상적인 것의 관점에서 새로운 사건을 해석하여 이해를 안내한다.",
+  "crit": "① 기억 속 가장 가까운 지식 구조(스크립트) 인출 ② 그 구조를 활용해 앞으로 일어날 사건에 대한 기대 형성 ③ 정상적인 것의 관점에서 새 사건 해석 및 이해 안내"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 우리가 서로 다르게 이해하는 이유가 <b>our memories are different</b>인 논리적 근거를 지문 3~6번 문장의 핵심 내용을 연결하여 서술하세요.",
+  "show": "무언가를 이해하려면 자신의 기억 속에 저장된 가장 가까운 항목과 지식 구조(스크립트)를 꺼내야 하는데, 사람마다 겪어 온 경험이 서로 다르기 때문에 각자가 보유한 기억과 스크립트가 다르고, 그 결과 같은 대상도 서로 다르게 이해하게 되기 때문이다.",
+  "crit": "① 이해하려면 기억 속 관련 항목·지식 구조(스크립트)를 꺼내야 함 ② 사람마다 경험이 달라 보유한 기억 자체가 다름 ③ 따라서 꺼내 쓰는 스크립트가 달라 이해하는 방식도 달라짐"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
