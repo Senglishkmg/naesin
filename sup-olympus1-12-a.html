@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "빈칸추론 분석지 확인 문제",
+ "section": "수능 대비 · ANALYSIS번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. ANALYSIS번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Vision is our dominant sense, and you want to look both ways before crossing the street ─ it's the first thing parents drill into their children."],
+  [2, "But that doesn't mean our sense of hearing isn't a big deal."],
+  [3, "I don't have to mention the worn-out example of cavemen and hidden saber-toothed tigers."],
+  [4, "There's something that can sneak up and kill you today: a silent electric car."],
+  [5, "These pose an unanticipated but serious threat to pedestrians and bicyclists, who depend on engine noise to detect and orient to cars ─ so much so that the National Highway Traffic Safety Administration now requires slow-moving electric vehicles to generate a warning noise."],
+  [6, "It's a reminder that even for us in a modern city, having both cues can mean the difference between life and death."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "시각은 우리의 가장 지배적인 감각이며, 길을 건너기 전에 양쪽을 살피는 것은 부모들이 자녀에게 주입하는 첫 번째 수칙이다.",
+  "a": "O",
+  "e": "1번 문장: Vision is our dominant sense, and you want to look both ways before crossing the street ─ it's the first thing parents drill into their children."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "시각이 지배적인 감각이라는 사실은 우리의 청각이 중요하지 않다는 것을 의미한다.",
+  "a": "X",
+  "e": "2번 문장: 그것이 우리의 청각이 별것 아니라는 것을 의미하지는 않습니다(But that doesn't mean our sense of hearing isn't a big deal)."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "필자는 청각의 중요성을 설명하기 위해 원시 동굴인들과 숨어 있는 검치호의 사례를 길게 분석한다.",
+  "a": "X",
+  "e": "3번 문장: 굳이 원시 동굴인들과 숨어 있는 검치호라는 진부한 사례까지 언급할 필요도 없습니다(I don't have to mention ~)."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "오늘날 우리에게 몰래 다가와 목숨을 빼앗을 수 있는 존재로 조용한 전기차가 제시된다.",
+  "a": "O",
+  "e": "4번 문장: There's something that can sneak up and kill you today: a silent electric car."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "보행자들과 자전거 이용자들은 차량을 감지하고 차량 쪽으로 방향을 맞추기 위해 엔진 소음에 의존한다.",
+  "a": "O",
+  "e": "5번 문장: pedestrians and bicyclists, who depend on engine noise to detect and orient to cars"
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "조용한 전기차는 보행자들에게는 위협이 되지만 자전거 이용자들에게는 아무런 위협을 제기하지 않는다.",
+  "a": "X",
+  "e": "5번 문장: 보행자들과 자전거 이용자들 모두에게 예상치 못했지만 심각한 위협을 제기합니다(pose an unanticipated but serious threat to pedestrians and bicyclists)."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "미국 도로교통안전국은 이제 느리게 움직이는 전기차들이 경고 소음을 발생시키도록 요구하고 있다.",
+  "a": "O",
+  "e": "5번 문장: the National Highway Traffic Safety Administration now requires slow-moving electric vehicles to generate a warning noise."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "현대 도시에서는 시각만 확보하면 청각 단서가 없더라도 생사의 차이가 발생하지 않는다.",
+  "a": "X",
+  "e": "6번 문장: 현대 도시의 우리에게조차도 두 단서(시각과 청각)를 모두 가지는 것이 삶과 죽음 사이의 차이를 의미할 수 있습니다(having both cues can mean the difference between life and death)."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "~에게 (지식·규칙을) 반복하여 주입하다",
+   "대단한 일, 중요한 것",
+   "몰래 다가가다, 기습하다",
+   "~ 쪽으로 방향을 맞추다/주의를 기울이다"
+  ],
+  "rows": [
+   ["drill into", 1],
+   ["a big deal", 2],
+   ["sneak up", 3],
+   ["orient to", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (1번·2번·4번·5번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "These pose an (unanticipated / anticipated) but serious threat to pedestrians and bicyclists.",
+  "o": [
+   "unanticipated",
+   "anticipated"
+  ],
+  "a": "unanticipated",
+  "e": "분석지 5번 혼동 어휘: unanticipated는 '예기치 못한', anticipated는 '예상된'이라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Pedestrians and bicyclists depend on engine noise to detect and (orient / origin) to cars.",
+  "o": [
+   "orient",
+   "origin"
+  ],
+  "a": "orient",
+  "e": "분석지 5번 혼동 어휘: orient는 동사로 '방향을 맞추다, 지향하다', origin은 명사로 '기원, 태생'이라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>dominant</b>(지배적인, 우세한)의 동의어가 <u>아닌</u> 것은?",
+  "o": [
+   "predominant",
+   "prevailing",
+   "primary",
+   "subordinate"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: dominant의 동의어는 predominant, prevailing, primary이며, subordinate(종속적인, 부차적인)는 반의어입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>threat</b>(위협)의 동의어로만 묶인 것은?",
+  "o": [
+   "hazard, danger, menace, peril",
+   "quiet, noiseless, soundless, danger",
+   "predominant, hazard, menace, peril",
+   "subordinate, secondary, hazard, peril"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: threat의 동의어는 hazard, danger, menace, peril입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "3번 문장에서 '진부한, 해진'이라는 뜻으로 쓰인 하이픈(-)이 포함된 형용사를 본문에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "worn-out",
+   "worn out"
+  ],
+  "show": "worn-out",
+  "e": "분석지 2번(3번 문장 어휘 및 연결어): worn-out은 '진부한, 해진'이라는 뜻입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 <u>to look both ways</u>와 to부정사의 용법이 같은 것은?",
+  "c": "Vision is our dominant sense, and you want <u>to look both ways</u> before crossing the street.",
+  "o": [
+   "명사적 용법 (타동사 want의 목적어)",
+   "부사적 용법 (목적: ~하기 위하여)",
+   "형용사적 용법 (앞의 명사 sense 수식)",
+   "부사적 용법 (감정의 원인: ~해서)",
+   "명사적 용법 (be동사의 주격 보어)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(1번 문장 구문 분석): to look both ways는 타동사 want의 목적어로 쓰인 to부정사의 명사적 용법입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 <b>the first thing <u>parents drill into their children</u></b>에서 선행사 <b>the first thing</b> 뒤에 생략된 문법 요소는?",
+  "o": [
+   "목적격 관계대명사 that",
+   "주격 관계대명사 who",
+   "관계부사 where",
+   "동격의 접속사 that",
+   "전치사 into"
+  ],
+  "a": 1,
+  "e": "분석지 2번(1번 문장 구문 분석): 선행사 the first thing 뒤에 목적격 관계대명사 that이 생략되어 절 내에서 타동사 drill의 목적어 역할을 합니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "4번 문장의 도치 구문에서 주어부에 맞게 어법상 알맞은 be동사 형태를 고르시오.",
+  "c": "There (is / are) something that can sneak up and kill you today: a silent electric car.",
+  "o": [
+   "is",
+   "are"
+  ],
+  "a": "is",
+  "e": "분석지 2번(4번 문장 구문 분석): 'There + be동사 + 주어' 도치 구문으로 부정대명사 something이 단수이므로 단수 be동사 is('s)가 쓰였습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "5번 문장의 계속적 용법 관계대명사절에서 어법상 알맞은 것을 고르시오.",
+  "c": "These pose an unanticipated but serious threat to pedestrians and bicyclists, (who / that) depend on engine noise to detect and orient to cars.",
+  "o": [
+   "who",
+   "that"
+  ],
+  "a": "who",
+  "e": "분석지 2번(5번 문장 구문 분석): 선행사 pedestrians and bicyclists를 부연 설명하는 계속적 용법(콤마 + who)의 주격 관계대명사로, that은 계속적 용법으로 쓸 수 없습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "5번 문장의 5형식 동사 <b>requires</b>의 목적격 보어로 어법상 알맞은 형태를 고르시오.",
+  "c": "The National Highway Traffic Safety Administration now requires slow-moving electric vehicles (to generate / generating) a warning noise.",
+  "o": [
+   "to generate",
+   "generating"
+  ],
+  "a": "to generate",
+  "e": "분석지 2번(5번 문장 구문 분석): 5형식 동사 requires의 목적격 보어로 to부정사(to generate)가 쓰입니다 (require + O + to-v)."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "ox",
+  "s": "5번 문장의 <b>so much so that ~</b>은 '너무나 그러하여 ~할 정도이다'라는 결과를 나타내는 관용 접속 구문이다.",
+  "a": "O",
+  "e": "분석지 2번(5번 문장 구문 분석): so much so that ~은 '너무나 그러하여 ~할 정도이다'를 나타내는 결과의 관용 접속 구문입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "6번 문장의 <b>It's a reminder <u>that</u> even for us in a modern city, having both cues can mean ~</b>에서 밑줄 친 <u>that</u>의 문법적 정체는?",
+  "o": [
+   "a reminder의 구체적 내용을 이끄는 동격의 접속사",
+   "선행사 a reminder를 수식하는 주격 관계대명사",
+   "선행사 a reminder를 수식하는 목적격 관계대명사",
+   "가주어 It에 대응하는 진주어절을 이끄는 명사절 접속사",
+   "결과를 나타내는 부사절 접속사"
+  ],
+  "a": 1,
+  "e": "분석지 2번(6번 문장 구문 분석): a reminder 뒤의 that은 뒤에 완전한 3형식 절(having both cues can mean the difference between life and death)을 이끄는 동격의 접속사입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "5번 문장의 계속적 용법 관계사절 <b>, who depend on engine noise ~</b>를 등위접속사 <b>and</b>와 대명사 <b>they</b>를 포함한 절로 전환할 때 빈칸에 들어갈 동사 형태를 한 단어로 쓰시오.<br><small>「조건」 ... pedestrians and bicyclists, and they __________ on engine noise to detect and orient to cars.</small>",
+  "ans": [
+   "depend"
+  ],
+  "show": "depend",
+  "e": "분석지 2번(5번 문장 구문 분석): , who depend on ~은 'and they depend on ~'으로 전환할 수 있습니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "현대 도시 환경에서 시각과 청각 단서를 모두 갖추는 것이 지니는 생존적 중요성",
+   "전기차 보급 확대가 도시 대기질 개선과 소음 공해 감소에 미치는 긍정적 효과",
+   "원시 시대 동굴인과 현대 도시 보행자의 위험 대처 능력의 진화적 차이점",
+   "어린 시절 부모의 교통안전 교육이 성인기 운전 습관에 미치는 장기적 영향",
+   "미국 도로교통안전국의 자동차 배기가스 및 소음 규제 기준의 역사적 변천"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 현대 도시 환경에서 시각과 청각 단서를 모두 갖추는 것이 지니는 생존적 중요성"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 문장의 번호를 숫자만 쓰시오.",
+  "ans": [
+   "6",
+   "6번",
+   "6번 문장"
+  ],
+  "show": "6",
+  "e": "분석지 1번 중심 문장: 6번 문장(\"It's a reminder that even for us in a modern city, having both cues can mean the difference between life and death.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (시각과 청각의 상호보완적 단서)",
+   "키워드 B (생사의 갈림길과 현대 도시의 안전)"
+  ],
+  "rows": [
+   ["depend on engine noise", 1],
+   ["sneak up and kill you", 2],
+   ["having both cues", 1],
+   ["difference between life and death", 2]
+  ],
+  "e": "분석지 1번 키워드 A/B 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "시각 우선 통념을 반박하고 청각의 중요성 환기 (도입부 및 화제 전환)",
+   "구체적 현대 도시 사례(전기차)를 통한 위험성 입증 및 최종 주제문 도출"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~3번 문장)", 1],
+   ["두 번째 부분 (4~6번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "통념 인정 — 반전 — 현대적 사례를 통한 실증 — 최종 결론 도출",
+   "역사적 기원 추적 — 시대별 교통사고 통계 비교 — 미래 도시 전망",
+   "시각과 청각의 해부학적 구조 설명 — 감각 기관 보호 방법 안내",
+   "전기차 제조사 간의 기술 경쟁 분석 — 소비자 구매 가이드 제시",
+   "가설 설정 — 통제 실험 결과 제시 — 가설의 한계점 보완"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 통념 인정 - 반전 - 현대적 사례를 통한 실증 - 최종 결론 도출의 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "ox",
+  "s": "2번 문장 문두의 역접 접속사 <b>But</b>은 앞선 시각의 우위론에서 청각의 중요성으로 시선을 전환시키는 역할을 한다.",
+  "a": "O",
+  "e": "분석지 2번(2번 문장 구문 분석 및 어휘): 문두의 역접 접속사 But은 시각의 중요성에서 청각의 중대성으로 논점을 전환시킵니다."
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "ANALYSIS번 빈칸 문제에서 <b>① the significance of vision exceeds that of hearing as a sense</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "첫 문장에서 시각이 지배적이라고 했으나, 글의 전체 취지는 청각의 중요성을 역설하는 것이므로 주제와 어긋나기 때문이다.",
+   "시각이 인간의 감각 중 가장 중요하다는 사실은 본문에서 부정되었기 때문이다.",
+   "현대 도시에서는 청각만으로 모든 교통사고를 예방할 수 있다고 본문에 서술되어 있기 때문이다.",
+   "빈칸 자리에는 명사구만 올 수 있어 완전한 절 형태는 어법상 맞지 않기 때문이다.",
+   "전기차는 시각적으로 전혀 보이지 않는 투명한 차량으로 묘사되었기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(5단계 오답 소거): 첫 문장에서 시각이 지배적이라고 했으나, 글의 전체 취지는 청각의 중요성을 역설하는 것이므로 주제와 어긋난 오답입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "원래 빈칸(6번 문장 끝)의 정답 도출을 위해 지문 속에서 <b>both cues(두 단서)</b>의 필요성을 뒷받침하는 핵심 단서로 가장 적절한 것은?",
+  "o": [
+   "silent electric car / depend on engine noise to detect and orient to cars",
+   "worn-out example of cavemen",
+   "parents drill into their children",
+   "hidden saber-toothed tigers"
+  ],
+  "a": 1,
+  "e": "분석지 4번(3단계) 및 6번 마무리: 소리 없는 전기차(silent electric car)가 엔진 소음(engine noise)에 의존하는 보행자에게 심각한 위협이 된다는 단서가 핵심입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "short",
+  "s": "ANALYSIS번 빈칸(6번 문장 끝)에 들어갈 열한 단어 영어 표현을 분석지 4번에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "having both cues can mean the difference between life and death"
+  ],
+  "show": "having both cues can mean the difference between life and death",
+  "e": "분석지 4번(5단계) 및 6번 마무리: 정답은 ② having both cues can mean the difference between life and death입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 조용한 전기차(a silent electric car)가 보행자와 자전거 이용자에게 심각한 위협이 되는 이유와, 이에 대해 미국 도로교통안전국이 취한 조치를 지문 5번 문장을 근거로 우리말로 서술하세요.",
+  "show": "보행자들과 자전거 이용자들은 차량을 감지하고 차량 쪽으로 방향을 맞추기 위해 엔진 소음에 의존하는데 조용한 전기차는 소음이 없어 예상치 못한 심각한 위협이 되며, 이에 미국 도로교통안전국은 느리게 움직이는 전기차들이 경고 소음을 발생시키도록 요구하고 있다.",
+  "crit": "① 위협 이유: 보행자·자전거 이용자가 차량 감지 및 방향 파악을 위해 엔진 소음에 의존함 ② 조치: 미국 도로교통안전국이 저속 주행 전기차에 경고 소음 발생을 의무화함"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 현대 도시에서 시각과 청각이라는 두 감각 단서를 모두 갖추는 것이 <b>'생사의 차이(the difference between life and death)'</b>를 의미할 수 있는 이유를 분석지 4번의 논리적 흐름을 바탕으로 서술하세요.",
+  "show": "보행자는 시각만으로는 사각지대나 후방에서 조용히 다가오는 전기차를 인지하기 어렵고, 엔진 소음이라는 청각적 단서가 함께 결합되어 시각과 청각 두 단서(both cues)를 모두 활용할 수 있어야만 치명적인 교통사고를 피하고 생존할 수 있기 때문이다.",
+  "crit": "① 시각만으로는 소리 없이 다가오는 전기차를 인지하기 어려움 ② 청각 단서(엔진·경고 소음)가 결합되어 두 단서를 모두 확보해야 사고를 피하고 생존할 수 있음"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Practice 03번 빈칸추론 분석지 확인 문제",
+ "section": "수능 대비 · Practice 03번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. Practice 03번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Project leaders should not be surprised when disagreements emerge within the team."],
+  [2, "In fact, they should expect them."],
+  [3, "If they remain hidden, the leader may even want to seek them out for at least two reasons."],
+  [4, "First, different views can bring with them good ideas about the project and how it might be run."],
+  [5, "Although snap decisions about project changes should be avoided, leaders should be open to new and better ways to run the project."],
+  [6, "Second, when conflicting viewpoints are found, they are more easily resolved earlier rather than later in the project."],
+  [7, "Although team members may disagree about one or another aspect of the project, most simply want their ideas considered and resolved."],
+  [8, "The team tends to look to the project leader to play the lead role in resolving differences, and members will generally defer to the leader if they believe their views have been given due consideration."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "프로젝트 리더들은 팀 내에서 의견 불일치가 나타날 때 놀라지 말고 오히려 그것을 예상해야 한다.",
+  "a": "O",
+  "e": "1~2번 문장: Project leaders should not be surprised when disagreements emerge within the team. In fact, they should expect them."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "의견 불일치가 숨겨진 채로 남아 있다면 리더는 갈등을 피하기 위해 그것들을 굳이 찾아내려 하지 말아야 한다.",
+  "a": "X",
+  "e": "3번 문장: 의견 불일치가 숨겨진 채 남아 있다면 리더는 적어도 두 가지 이유 때문에 심지어 그것들을 찾아내기를 원할 수도 있습니다(may even want to seek them out)."
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "서로 다른 관점은 프로젝트와 그 운영 방식에 대한 좋은 아이디어를 가져올 수 있다.",
+  "a": "O",
+  "e": "4번 문장: First, different views can bring with them good ideas about the project and how it might be run."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "프로젝트 변경에 대한 성급한 결정은 적극적으로 권장되어야 하며, 새로운 운영 방식에는 신중히 닫혀 있어야 한다.",
+  "a": "X",
+  "e": "5번 문장: 성급한 결정은 피해야 하고(should be avoided), 새롭고 더 나은 방식에 마음을 열어두어야 합니다(should be open to ~)."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "상충하는 관점이 발견될 때, 그것들은 프로젝트의 나중보다는 더 이른 시점에 더 쉽게 해결된다.",
+  "a": "O",
+  "e": "6번 문장: Second, when conflicting viewpoints are found, they are more easily resolved earlier rather than later in the project."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "대부분의 팀 구성원들은 프로젝트의 특정 측면에 의견이 다를 때 자신의 주장이 무조건 채택되기를 강요한다.",
+  "a": "X",
+  "e": "7번 문장: 대부분은 그저 자신의 아이디어가 고려되고 해결되기를 원할 뿐입니다(most simply want their ideas considered and resolved)."
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "팀은 이견을 해결하는 데 있어 프로젝트 리더가 주도적인 역할을 해 줄 것을 기대하는 경향이 있다.",
+  "a": "O",
+  "e": "8번 문장: The team tends to look to the project leader to play the lead role in resolving differences"
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "팀원들은 자신의 견해가 적절하게 고려되었다고 믿더라도 리더의 결정에는 좀처럼 따르지 않는다.",
+  "a": "X",
+  "e": "8번 문장: 자신의 견해가 적절한 고려를 받았다고 믿는다면 일반적으로 리더를 따를 것입니다(will generally defer to the leader)."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "나타나다, 드러나다",
+   "성급한 결정, 즉흥적 판단",
+   "~의 의견이나 결정을 따르다",
+   "마땅한, 적절한"
+  ],
+  "rows": [
+   ["emerge", 1],
+   ["snap decision", 2],
+   ["defer to", 3],
+   ["due", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (1번·5번·8번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Members will generally (defer / differ) to the leader if they believe their views have been given due consideration.",
+  "o": [
+   "defer",
+   "differ"
+  ],
+  "a": "defer",
+  "e": "분석지 5번 혼동 어휘: defer to는 상대방의 판단을 인정하고 '따르다', differ는 '다르다, 동의하지 않다'라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Project leaders should not be surprised when disagreements (emerge / merge) within the team.",
+  "o": [
+   "emerge",
+   "merge"
+  ],
+  "a": "emerge",
+  "e": "분석지 5번 혼동 어휘: emerge는 '나타나다, 부상하다', merge는 '통합하다, 합병하다'라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>conflicting</b>(상충하는)의 동의어로만 묶인 것은?",
+  "o": [
+   "clashing, contradictory, incompatible, opposing",
+   "hasty, rash, abrupt, impetuous",
+   "settle, solve, sort out, reconcile",
+   "clashing, hasty, settle, opposing"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: conflicting의 동의어는 clashing, contradictory, incompatible, opposing입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>snap</b>(성급한, 즉석의)의 동의어가 <u>아닌</u> 것은?",
+  "o": [
+   "hasty",
+   "rash",
+   "abrupt",
+   "reconcile"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: snap의 동의어는 hasty, rash, abrupt, impetuous이며, reconcile은 resolve(해결하다)의 동의어입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "5번 문장에서 '~에 마음을 열어두다/수용적이다'라는 뜻으로 쓰인 세 단어 관용 표현을 본문에서 찾아 그대로 쓰시오. (be동사 원형 기준)",
+  "ans": [
+   "be open to",
+   "open to"
+  ],
+  "show": "be open to",
+  "e": "분석지 2번(5번 문장 어휘 및 연결어): be open to는 '~에 마음을 열어두다/수용적이다'라는 뜻입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "choice",
+  "s": "3번 문장의 이어동사 어순에 맞게 괄호 안에서 어법상 알맞은 것을 고르시오.",
+  "c": "If they remain hidden, the leader may even want to (seek them out / seek out them) for at least two reasons.",
+  "o": [
+   "seek them out",
+   "seek out them"
+  ],
+  "a": "seek them out",
+  "e": "분석지 2번(3번 문장 구문 분석): 이어동사 seek ~ out에서 대명사 목적어 them은 반드시 동사와 부사 사이에 위치해야 합니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "mc",
+  "s": "4번 문장의 <b>different views can bring with them good ideas about the project and how it might be run</b>에 대한 구문 설명으로 옳은 것은?",
+  "o": [
+   "타동사 bring 뒤에 전치사구 with them이 삽입되고 긴 목적어가 뒤로 이동한 목적어 후치 구조이다.",
+   "with them이 문장의 주어이고 different views가 목적격 보어인 도치 구문이다.",
+   "how it might be run은 주절의 본동사 역할을 하는 의문문이다.",
+   "might be run은 능동태 과거진행형 동사구이다.",
+   "bring과 run이 등위접속사 and로 병렬 연결된 술어 구조이다."
+  ],
+  "a": 1,
+  "e": "분석지 2번(4번 문장 구문 분석): 타동사 bring 바로 뒤에 전치사구 with them이 삽입되고, 긴 명사구 목적어가 뒤로 이동한 목적어 후치 구조입니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "5번 문장의 양보 부사절에서 어법상 알맞은 태를 고르시오.",
+  "c": "Although snap decisions about project changes (should avoid / should be avoided), leaders should be open to new and better ways.",
+  "o": [
+   "should avoid",
+   "should be avoided"
+  ],
+  "a": "should be avoided",
+  "e": "분석지 2번(5번 문장 구문 분석): 주어 snap decisions가 '회피되어야 한다'는 수동 관계이므로 수동태 should be avoided가 알맞습니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "choice",
+  "s": "7번 문장의 5형식 동사 <b>want</b>의 목적격 보어로 어법상 알맞은 형태를 고르시오.",
+  "c": "Most simply want their ideas (considered and resolved / considering and resolving).",
+  "o": [
+   "considered and resolved",
+   "considering and resolving"
+  ],
+  "a": "considered and resolved",
+  "e": "분석지 2번(7번 문장 구문 분석): 목적어 their ideas가 리더에 의해 '고려되고 해결되다'의 수동 관계이므로 과거분사 두 개가 병렬로 목적격 보어에 쓰입니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "ox",
+  "s": "8번 문장의 <b>their views have been given due consideration</b>은 4형식 문장(give + IO + DO)의 현재완료 수동태 형태로, 직접목적어였던 <i>due consideration</i>이 수동태 동사 뒤에 보어로 남아 있다.",
+  "a": "O",
+  "e": "분석지 2번(8번 문장 구문 분석): 4형식 문장(give + IO + DO)의 현재완료 수동태 형태로 직접목적어 due consideration이 보어로 남아 있습니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장의 <u>to run the project</u>와 to부정사의 용법이 같은 것은?",
+  "c": "Leaders should be open to new and better ways <u>to run the project</u>.",
+  "o": [
+   "형용사적 용법 (앞의 명사구 new and better ways 수식)",
+   "명사적 용법 (타동사 want의 목적어)",
+   "부사적 용법 (목적: ~하기 위하여)",
+   "부사적 용법 (감정의 원인: ~해서)",
+   "명사적 용법 (be동사의 주격 보어)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(5번 문장 구문 분석): to run the project는 앞의 명사구 new and better ways를 뒤에서 수식하는 to부정사의 형용사적 용법입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "choice",
+  "s": "3번 문장의 2형식 상태 유지 동사 <b>remain</b>의 주격 보어로 어법상 알맞은 형태를 고르시오.",
+  "c": "If they remain (hidden / hiding), the leader may even want to seek them out.",
+  "o": [
+   "hidden",
+   "hiding"
+  ],
+  "a": "hidden",
+  "e": "분석지 2번(3번 문장 구문 분석): remain 뒤에 주격 보어로 과거분사 형용사 hidden(숨겨진)이 사용되었습니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "2번 문장(<b>In fact, they should expect them.</b>)에서 목적어 <b>them</b>이 지칭하는 복수 명사를 1번 문장에서 찾아 한 단어로 쓰시오.",
+  "ans": [
+   "disagreements"
+  ],
+  "show": "disagreements",
+  "e": "분석지 2번(2번 문장 구문 분석): 주어 they는 Project leaders를 가리키며, 목적어 them은 앞 문장의 복수명사 disagreements를 지칭합니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "팀 내 의견 불일치에 대한 리더의 사전 예상과 적극적 발굴 및 해결의 필요성",
+   "프로젝트 초기 단계에서 리더의 독단적 결정을 통해 갈등을 원천 봉쇄하는 기법",
+   "팀원 간의 의견 충돌을 방지하기 위해 유사한 성향의 인력만 선발하는 인사 전략",
+   "프로젝트 진행 중 발생하는 일정 지연을 만회하기 위한 성급한 의사결정의 효용",
+   "수평적 조직 문화에서 리더의 권한을 축소하고 팀원에게 전권을 위임하는 절차"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 팀 내 의견 불일치에 대한 리더의 사전 예상과 적극적 발굴 및 해결의 필요성"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 두 문장의 번호를 쉼표로 구분하여 숫자만 쓰시오. (예: 1, 2)",
+  "ans": [
+   "1, 2",
+   "1,2",
+   "1번, 2번"
+  ],
+  "show": "1, 2",
+  "e": "분석지 1번 중심 문장: 1번 문장과 2번 문장(\"Project leaders should not be surprised when disagreements emerge within the team. In fact, they should expect them.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (팀 내 이견과 상충하는 관점)",
+   "키워드 B (이견에 대한 예상 및 포용과 리더의 해결)"
+  ],
+  "rows": [
+   ["conflicting viewpoints", 1],
+   ["given due consideration", 2],
+   ["disagreements emerge", 1],
+   ["defer to the leader", 2]
+  ],
+  "e": "분석지 1번 키워드 A/B 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "중심 명제 제시 및 이견 수용의 첫 번째 이점(프로젝트 혁신) 논증",
+   "조기 해결이라는 두 번째 이유 제시 및 팀원들의 신뢰를 얻는 갈등 해결 방식 규명"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~5번 문장)", 1],
+   ["두 번째 부분 (6~8번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "주제문 제시 — 두 가지 근거 열거 — 실무적 심리 분석 및 결론",
+   "통념 소개 — 실험 과정 묘사 — 기존 이론의 오류 반박",
+   "시간 순서에 따른 프로젝트 실패 사례 나열 — 법적 규제 촉구",
+   "두 리더십 유형의 장단점 비교 — 절충적 리더십 모델 제안",
+   "역사적 기원 추적 — 통계 수치 분석 — 미래 조직 문화 전망"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 주제문 제시 - 두 가지 근거 열거 - 실무적 심리 분석 및 결론의 체계적 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "지문에 쓰인 각 연결어·표지어의 역할을 「보기」에서 고르세요.",
+  "box": [
+   "앞 문장의 부정 서술(놀라지 말 것)을 긍정의 강한 당위(예상해야 함)로 심화하는 강조 연결부사",
+   "이견을 찾아내야 하는 첫 번째 이유를 도입하는 순서 표지어",
+   "두 번째 이유를 도입하는 순서 표지어"
+  ],
+  "rows": [
+   ["In fact (2번 문장)", 1],
+   ["First (4번 문장)", 2],
+   ["Second (6번 문장)", 3]
+  ],
+  "e": "분석지 2번(2번·4번·6번 문장 어휘 및 연결어)"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "Practice 03번 빈칸 문제에서 <b>⑤ pressure team members to achieve performance goals at any cost</b>가 오답인 가장 정확한 이유는?",
+  "o": [
+   "성과 목표 달성을 위한 강압적 리더십에 관한 글이 아니라 팀 내 이견의 예상과 포용을 다루기 때문이다.",
+   "성과 목표를 달성하는 것은 프로젝트 리더의 역할이 아니라고 본문에 명시되어 있기 때문이다.",
+   "팀원들을 강압적으로 압박할수록 좋은 아이디어가 더 많이 나온다고 서술되어 있기 때문이다.",
+   "빈칸 자리에는 명사구만 올 수 있어 동사원형 구는 문법적으로 틀리기 때문이다.",
+   "프로젝트 리더가 팀원들의 의견을 무시할수록 팀원들이 더 잘 따른다고 본문에 나왔기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(5단계 오답 소거): 성과 목표 달성을 위한 강압적 리더십에 관한 글이 아니므로 오답입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "원래 빈칸(1번 문장)의 정답 <b>be surprised when disagreements emerge within the team</b>을 도출하기 위해 바로 뒷문장(2번 문장)과 이루는 핵심 대조 단서는?",
+  "o": [
+   "In fact, they should expect them",
+   "snap decisions about project changes should be avoided",
+   "earlier rather than later in the project",
+   "play the lead role in resolving differences"
+  ],
+  "a": 1,
+  "e": "분석지 4번(3·5단계) 및 6번 마무리: 첫 문장의 'should not [빈칸]'과 둘째 문장의 'In fact, they should expect them'이 정확한 대조 쌍을 이룹니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "short",
+  "s": "Practice 03번 빈칸(1번 문장 <b>should not</b> 뒤)에 들어갈 아홉 단어 영어 표현을 분석지 4번에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "be surprised when disagreements emerge within the team"
+  ],
+  "show": "be surprised when disagreements emerge within the team",
+  "e": "분석지 4번(5단계) 및 6번 마무리: 정답은 ④ be surprised when disagreements emerge within the team입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 프로젝트 리더가 팀 내의 숨겨진 의견 불일치(disagreements)를 적극적으로 찾아내야 하는 두 가지 이유를 지문 4번과 6번 문장을 근거로 우리말로 서술하세요.",
+  "show": "첫째, 서로 다른 관점은 프로젝트와 그 운영 방식에 대한 좋은 아이디어를 가져올 수 있기 때문이다. 둘째, 상충하는 관점이 발견될 때 프로젝트의 나중 시점보다 더 이른 시점에 훨씬 더 쉽게 해결될 수 있기 때문이다.",
+  "crit": "① 첫째 이유: 서로 다른 관점이 프로젝트 및 운영 방식에 대한 좋은 아이디어를 가져옴 ② 둘째 이유: 상충하는 관점을 프로젝트 나중보다 더 이른 시점에 쉽게 해결할 수 있음"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 팀원들이 프로젝트의 특정 측면에 대해 이견을 가질 때 진정으로 바라는 바와, 그들이 리더의 결정을 일반적으로 따르게(defer to) 되는 조건을 지문 7~8번 문장을 근거로 우리말로 서술하세요.",
+  "show": "팀원들은 그저 자신의 아이디어가 진지하게 고려되고 해결되기를 원하며, 이견 해결에서 리더가 주도적인 역할을 하면서 자신의 견해가 마땅하고 충분한 고려를 받았다고 믿을 때 일반적으로 리더의 결정을 따르게 된다.",
+  "crit": "① 팀원들이 바라는 바: 자신의 아이디어가 고려되고 해결되는 것 ② 리더를 따르는 조건: 자신의 견해가 적절한 고려를 받았다(given due consideration)고 믿을 때"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+ "title": "Practice 01번 빈칸추론 분석지 확인 문제",
+ "section": "수능 대비 · Practice 01번",
+ "parts": {
+  "A": "Part A. 내용 일치 O/X",
+  "B": "Part B. 어휘·표현",
+  "C": "Part C. 구문 분석",
+  "D": "Part D. 주제·논리 흐름·서술 전략",
+  "E": "Part E. Practice 01번 풀이 원리와 서술형"
+ },
+ "hints": {
+  "A": "근거: 0. 지문 원문",
+  "B": "근거: 2. 어휘 및 연결어, 5. 심화 어휘",
+  "C": "근거: 2. 구문 분석",
+  "D": "근거: 1. 키워드 분석, 2. 부분 마무리, 3. 서술 전략",
+  "E": "근거: 4. 문제 풀이, 6. 마무리"
+ },
+ "passage": [
+  [1, "Sometimes traditions may change or appear to end because of convenience or changes in taste."],
+  [2, "For example, to make a pumpkin pie, a cook used to have to first find a pumpkin of suitable size, cut it, peel it, cook it, and mash it, all before combining it with other ingredients and pouring the mixture into a crust."],
+  [3, "Now, cooks may choose to use canned pumpkin from the supermarket and cut out a great deal of labor and time."],
+  [4, "Another changing food tradition is that many families no longer make refried beans by cooking them in lard and choose instead to use vegetable shortening."],
+  [5, "Perhaps this change came about because the family has come to prefer the taste of beans without lard, because concepts of healthy cooking have changed, or because someone in the family has heart disease or high cholesterol."]
+ ]
+};
+
+const Q = [
+ {
+  "n": 1,
+  "p": "A",
+  "t": "ox",
+  "s": "전통은 편의성이나 입맛의 변화 때문에 바뀌거나 끝나는 것처럼 보일 수 있다.",
+  "a": "O",
+  "e": "1번 문장: Sometimes traditions may change or appear to end because of convenience or changes in taste."
+ },
+ {
+  "n": 2,
+  "p": "A",
+  "t": "ox",
+  "s": "과거에 호박 파이를 만들 때 요리사는 다른 재료와 섞기 전에 호박을 자르고, 껍질을 벗기고, 익히고, 으깨야만 했다.",
+  "a": "O",
+  "e": "2번 문장: a cook used to have to first find a pumpkin of suitable size, cut it, peel it, cook it, and mash it, all before combining it with other ingredients"
+ },
+ {
+  "n": 3,
+  "p": "A",
+  "t": "ox",
+  "s": "오늘날 요리사들은 슈퍼마켓의 통조림 호박을 사용하면 노동은 줄지만 조리 시간은 오히려 더 오래 걸린다.",
+  "a": "X",
+  "e": "3번 문장: 통조림 호박을 사용하여 많은 양의 노동과 시간을 모두 줄일 수 있습니다(cut out a great deal of labor and time)."
+ },
+ {
+  "n": 4,
+  "p": "A",
+  "t": "ox",
+  "s": "많은 가정들은 이제 돼지기름 대신 식물성 쇼트닝을 사용하여 리프라이드 빈을 만든다.",
+  "a": "O",
+  "e": "4번 문장: many families no longer make refried beans by cooking them in lard and choose instead to use vegetable shortening."
+ },
+ {
+  "n": 5,
+  "p": "A",
+  "t": "ox",
+  "s": "리프라이드 빈 조리법이 바뀐 이유는 가족들이 돼지기름이 들어간 진한 콩 맛을 더 선호하게 되었기 때문이다.",
+  "a": "X",
+  "e": "5번 문장: 돼지기름 없는 콩의 맛을 선호하게 되었기 때문(prefer the taste of beans without lard)입니다."
+ },
+ {
+  "n": 6,
+  "p": "A",
+  "t": "ox",
+  "s": "건강한 요리에 대한 개념이 바뀐 것도 리프라이드 빈 조리법 변화의 원인 중 하나로 제시된다.",
+  "a": "O",
+  "e": "5번 문장: because concepts of healthy cooking have changed"
+ },
+ {
+  "n": 7,
+  "p": "A",
+  "t": "ox",
+  "s": "가족 중 누군가가 심장 질환이나 높은 콜레스테롤을 앓고 있는 것도 식물성 쇼트닝을 선택하게 된 원인일 수 있다.",
+  "a": "O",
+  "e": "5번 문장: or because someone in the family has heart disease or high cholesterol."
+ },
+ {
+  "n": 8,
+  "p": "A",
+  "t": "ox",
+  "s": "지문에서 제시된 음식 전통 변화의 두 가지 사례는 모두 정통 전통 조리법을 엄격히 보존하려는 노력에서 비롯되었다.",
+  "a": "X",
+  "e": "1·3·4번 문장: 편의성(노동·시간 절감)과 입맛·건강 개념의 변화 때문에 기존 전통 방식을 바꾼 사례들입니다."
+ },
+ {
+  "n": 9,
+  "p": "B",
+  "t": "match",
+  "s": "각 단어·표현의 알맞은 뜻을 「보기」에서 고르세요.",
+  "box": [
+   "적절한, 알맞은",
+   "재료, 성분",
+   "없애다, 대폭 줄이다",
+   "일어나다, 발생하다"
+  ],
+  "rows": [
+   ["suitable", 1],
+   ["ingredient", 2],
+   ["cut out", 3],
+   ["come about", 4]
+  ],
+  "e": "분석지 2번 어휘 및 연결어 (2번·3번·5번 문장)"
+ },
+ {
+  "n": 10,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Sometimes traditions may change or appear to end because of (convenience / convention) or changes in taste.",
+  "o": [
+   "convenience",
+   "convention"
+  ],
+  "a": "convenience",
+  "e": "분석지 5번 혼동 어휘: convenience는 '편의, 편리', convention은 '관습, 관례'라는 뜻입니다."
+ },
+ {
+  "n": 11,
+  "p": "B",
+  "t": "choice",
+  "s": "문맥상 괄호 안에서 알맞은 어휘를 고르시오.",
+  "c": "Many families choose instead to use vegetable (shortening / shortage).",
+  "o": [
+   "shortening",
+   "shortage"
+  ],
+  "a": "shortening",
+  "e": "분석지 5번 혼동 어휘: shortening은 제빵·요리용 고체 유지(쇼트닝), shortage는 '부족, 결핍'이라는 뜻입니다."
+ },
+ {
+  "n": 12,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>suitable</b>(적절한)의 동의어가 <u>아닌</u> 것은?",
+  "o": [
+   "appropriate",
+   "proper",
+   "fitting",
+   "inappropriate"
+  ],
+  "a": 4,
+  "e": "분석지 5번 심화 어휘: suitable의 동의어는 appropriate, proper, fitting이며, inappropriate는 반의어입니다."
+ },
+ {
+  "n": 13,
+  "p": "B",
+  "t": "mc",
+  "s": "다음 중 분석지 5번 심화 어휘에 제시된 <b>come about</b>(발생하다)의 동의어로만 묶인 것은?",
+  "o": [
+   "occur, happen, take place, arise",
+   "eliminate, reduce, omit, arise",
+   "appropriate, proper, occur, happen",
+   "prefer, lard, take place, occur"
+  ],
+  "a": 1,
+  "e": "분석지 5번 심화 어휘: come about의 동의어는 occur, happen, take place, arise입니다."
+ },
+ {
+  "n": 14,
+  "p": "B",
+  "t": "short",
+  "s": "4번 문장에서 '더 이상 ~않는'이라는 뜻으로 쓰인 두 단어 부사 표현을 본문에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "no longer"
+  ],
+  "show": "no longer",
+  "e": "분석지 2번(4번 문장 어휘 및 연결어): no longer는 '더 이상 ~않는'이라는 뜻입니다."
+ },
+ {
+  "n": 15,
+  "p": "C",
+  "t": "mc",
+  "s": "1번 문장의 <u>to end</u>와 to부정사의 용법이 같은 것은?",
+  "c": "Sometimes traditions may change or appear <u>to end</u> because of convenience or changes in taste.",
+  "o": [
+   "명사적/보어적 용법 (연결동사 appear의 주격 보어)",
+   "부사적 용법 (목적: ~하기 위하여)",
+   "형용사적 용법 (앞의 명사 traditions 수식)",
+   "부사적 용법 (감정의 원인: ~해서)",
+   "명사적 용법 (전치사의 목적어)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(1번 문장 구문 분석): to end는 연결동사 appear의 주격 보어로 쓰인 to부정사의 명사적/보어적 용법입니다."
+ },
+ {
+  "n": 16,
+  "p": "C",
+  "t": "choice",
+  "s": "2번 문장의 전치사 <b>before</b> 뒤에 이어지는 병렬 구조에서 어법상 알맞은 형태를 고르시오.",
+  "c": "All before combining it with other ingredients and (pouring / pour) the mixture into a crust.",
+  "o": [
+   "pouring",
+   "pour"
+  ],
+  "a": "pouring",
+  "e": "분석지 2번(2번 문장 구문 분석): 전치사 before의 목적어로 두 동명사구 combining it ~과 pouring the mixture ~가 and로 병렬 연결됩니다."
+ },
+ {
+  "n": 17,
+  "p": "C",
+  "t": "choice",
+  "s": "3번 문장의 병렬 구조에 맞게 괄호 안에서 어법상 알맞은 형태를 고르시오.",
+  "c": "Now, cooks may choose to use canned pumpkin from the supermarket and (cut / cutting) out a great deal of labor and time.",
+  "o": [
+   "cut",
+   "cutting"
+  ],
+  "a": "cut",
+  "e": "분석지 2번(3번 문장 구문 분석): to use canned pumpkin ~과 (to) cut out ~가 and로 병렬 연결되어 cut 앞의 to가 생략된 동사원형 형태입니다."
+ },
+ {
+  "n": 18,
+  "p": "C",
+  "t": "ox",
+  "s": "3번 문장의 <b>a great deal of</b>는 셀 수 없는 양을 나타내는 수량형용사구로 뒤에 불가산 명사 <i>labor and time</i>이 연결된다.",
+  "a": "O",
+  "e": "분석지 2번(3번 문장 구문 분석): a great deal of는 셀 수 없는 양을 나타내는 수량형용사구로 뒤에 불가산 명사 labor and time이 연결되었습니다."
+ },
+ {
+  "n": 19,
+  "p": "C",
+  "t": "choice",
+  "s": "4번 문장의 명사절(that절) 내부 병렬 구조에서 어법상 알맞은 동사 형태를 고르시오.",
+  "c": "Many families no longer make refried beans by cooking them in lard and (choose / choosing) instead to use vegetable shortening.",
+  "o": [
+   "choose",
+   "choosing"
+  ],
+  "a": "choose",
+  "e": "분석지 2번(4번 문장 구문 분석): 주어 many families에 걸리는 두 현재 시제 본동사구 no longer make ~와 choose instead to use ~가 and로 병렬 연결됩니다."
+ },
+ {
+  "n": 20,
+  "p": "C",
+  "t": "mc",
+  "s": "5번 문장의 <b>has come to prefer</b>와 <b>have changed</b>의 시제와 그 의미로 가장 알맞은 것은?",
+  "o": [
+   "현재완료 시제 — 현재까지 변화가 이루어진 상태를 나타낸다.",
+   "과거완료 시제 — 과거 특정 시점 이전에 완료된 동작을 나타낸다.",
+   "미래완료 시제 — 미래 일정 시점에 완료될 상태를 나타낸다.",
+   "현재진행 수동태 — 주어가 타인에 의해 조종되고 있음을 나타낸다.",
+   "단순과거 시제 — 현재와는 단절된 과거의 일회성 사건을 나타낸다."
+  ],
+  "a": 1,
+  "e": "분석지 2번(5번 문장 구문 분석): has come to prefer와 have changed는 현재까지 변화가 이루어진 상태를 나타내는 현재완료 시제입니다."
+ },
+ {
+  "n": 21,
+  "p": "C",
+  "t": "mc",
+  "s": "2번 문장의 <u>to make a pumpkin pie</u>와 to부정사의 용법이 같은 것은?",
+  "c": "For example, <u>to make a pumpkin pie</u>, a cook used to have to first find a pumpkin of suitable size.",
+  "o": [
+   "부사적 용법 (목적: ~하기 위하여)",
+   "명사적 용법 (동사 choose의 목적어)",
+   "명사적 용법 (연결동사 appear의 주격 보어)",
+   "부사적 용법 (결과: come to-v 구문)",
+   "형용사적 용법 (앞의 명사 수식)"
+  ],
+  "a": 1,
+  "e": "분석지 2번(2번 문장 구문 분석): to make a pumpkin pie는 목적(~하기 위하여)을 나타내는 to부정사의 부사적 용법입니다."
+ },
+ {
+  "n": 22,
+  "p": "C",
+  "t": "short",
+  "s": "2번 문장의 <b>used to have to first find</b>에서 '과거의 규칙적 상태나 의무(~해야만 했다)'를 나타내는 조동사 표현 두 단어를 본문에서 찾아 쓰시오. (원형 제외)",
+  "ans": [
+   "used to"
+  ],
+  "show": "used to",
+  "e": "분석지 2번(2번 문장 구문 분석): used to + 동사원형은 과거의 규칙적 상태나 습관·의무를 나타냅니다."
+ },
+ {
+  "n": 23,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 1번에서 도출한 이 글의 주제로 가장 적절한 것은?",
+  "o": [
+   "편의성의 추구와 입맛·건강 인식의 변화로 인한 음식 조리 전통의 변천",
+   "가공식품 산업의 발달이 전통 농작물 재배 면적 감소에 미친 경제적 영향",
+   "가족 구성원의 건강을 지키기 위해 동물성 지방 섭취를 금지해야 하는 의학적 근거",
+   "고전적인 호박 파이와 리프라이드 빈 조리법을 원형 그대로 복원하는 요리 기법",
+   "국가별 식문화 차이가 슈퍼마켓 유통 구조 변화로 이어지는 과정"
+  ],
+  "a": 1,
+  "e": "분석지 1번 주제: 편의성의 추구와 입맛·건강 인식의 변화로 인한 음식 조리 전통의 변천"
+ },
+ {
+  "n": 24,
+  "p": "D",
+  "t": "short",
+  "s": "분석지 1번에서 이 글의 <b>중심 문장</b>으로 선정된 문장의 번호를 숫자만 쓰시오.",
+  "ans": [
+   "1",
+   "1번",
+   "1번 문장"
+  ],
+  "show": "1",
+  "e": "분석지 1번 중심 문장: 1번 문장(\"Sometimes traditions may change or appear to end because of convenience or changes in taste.\")"
+ },
+ {
+  "n": 25,
+  "p": "D",
+  "t": "match",
+  "s": "각 영어 어구가 속하는 키워드를 「보기」에서 고르세요.",
+  "box": [
+   "키워드 A (음식 전통의 변화)",
+   "키워드 B (편의성과 입맛의 변화)"
+  ],
+  "rows": [
+   ["traditions may change or appear to end", 1],
+   ["cut out a great deal of labor and time", 2],
+   ["changing food tradition", 1],
+   ["prefer the taste of beans without lard", 2]
+  ],
+  "e": "분석지 1번 키워드 A/B 관련 어구 분류"
+ },
+ {
+  "n": 26,
+  "p": "D",
+  "t": "match",
+  "s": "에스 독해법의 각 부분(Chunk)과 그 역할을 알맞게 연결하세요.",
+  "box": [
+   "중심 주장 제시 및 '편의성'에 의한 전통 변화의 구체적 사례 제시 (제1 사례 논증)",
+   "키워드 B의 후반부인 '입맛 및 건강 인식의 변화'를 입증하여 글 전체의 주제를 완성"
+  ],
+  "rows": [
+   ["첫 번째 부분 (1~3번 문장)", 1],
+   ["두 번째 부분 (4~5번 문장)", 2]
+  ],
+  "e": "분석지 2번 각 부분(Chunk) 마무리 - 부분의 역할"
+ },
+ {
+  "n": 27,
+  "p": "D",
+  "t": "mc",
+  "s": "분석지 3번에 정리된 이 글의 <b>서술 전략(글의 전개 방식)</b>으로 가장 적절한 것은?",
+  "o": [
+   "주제문 제시 — 사례 1(편의성) — 사례 2(입맛 변화)의 쌍방 예시 논증",
+   "통념 소개 — 실험 과정 묘사 — 기존 이론의 오류 반박",
+   "역사적 기원 추적 — 시대별 식습관 통계 비교 — 미래 전망",
+   "두 요리사의 상반된 조리 철학 대비 — 절충안 도출",
+   "사회적 문제 제기 — 생물학적 원인 분석 — 정책적 해결책 촉구"
+  ],
+  "a": 1,
+  "e": "분석지 3번 서술 전략: 주제문 제시 - 사례 1(편의성) - 사례 2(입맛 변화)의 쌍방 예시 논증 전개 방식을 취하고 있습니다."
+ },
+ {
+  "n": 28,
+  "p": "D",
+  "t": "match",
+  "s": "지문에 쓰인 각 연결어·부사의 역할을 「보기」에서 고르세요.",
+  "box": [
+   "앞 문장의 원인 중 '편의성 추구'에 해당하는 구체적 음식 조리 사례(호박 파이)를 도입하는 예시 연결어",
+   "과거(used to)의 복잡한 조리 노동과 대비되는 현재의 편리한 시점을 환기하는 시간 대조 부사",
+   "호박 파이에 이어 두 번째 음식 사례(리프라이드 빈)를 덧붙이는 열거 연결어"
+  ],
+  "rows": [
+   ["For example (2번 문장)", 1],
+   ["Now (3번 문장)", 2],
+   ["Another (4번 문장)", 3]
+  ],
+  "e": "분석지 2번(2번·3번·4번 문장 어휘 및 연결어)"
+ },
+ {
+  "n": 29,
+  "p": "E",
+  "t": "mc",
+  "s": "Practice 01번 빈칸 문제에서 <b>⑤ technological advancements and innovation</b>이 오답인 가장 정확한 이유는?",
+  "o": [
+   "지문 후반부의 '가족의 건강과 입맛 선호'라는 주관적 기호 변화를 포괄하지 못하고 한쪽으로만 치우쳤기 때문이다.",
+   "통조림 호박과 식물성 쇼트닝은 기술 발전과 전혀 무관한 자연 식품이기 때문이다.",
+   "기술적 진보가 전통을 변화시킨 사례는 본문에 전혀 등장하지 않기 때문이다.",
+   "빈칸 자리에는 동명사구만 올 수 있어 명사구는 문법적으로 틀리기 때문이다.",
+   "글쓴이가 기술 혁신으로 인한 전통 붕괴를 강하게 비판하고 있기 때문이다."
+  ],
+  "a": 1,
+  "e": "분석지 4번(5단계 오답 소거): 통조림과 쇼트닝이 가공 기술의 산물이긴 하나, 지문 후반부의 '가족의 건강과 입맛 선호'라는 주관적 기호 변화를 설명하지 못하므로 지나치게 한쪽으로 치우친 오답입니다."
+ },
+ {
+  "n": 30,
+  "p": "E",
+  "t": "mc",
+  "s": "원래 빈칸(1번 문장 끝)의 정답 <b>convenience or changes in taste</b>를 도출하기 위한 지문 속 핵심 단서 두 묶음이 바르게 짝지어진 것은?",
+  "o": [
+   "cut out a great deal of labor and time / prefer the taste of beans without lard",
+   "find a pumpkin of suitable size / pouring the mixture into a crust",
+   "cooking them in lard / heart disease",
+   "appear to end / from the supermarket"
+  ],
+  "a": 1,
+  "e": "분석지 4번(3단계) 및 6번 마무리: 호박 통조림의 '노동과 시간 절감(cut out a great deal of labor and time)'과 리프라이드 빈의 '기름 없는 맛 선호(prefer the taste of beans without lard)'가 핵심 단서입니다."
+ },
+ {
+  "n": 31,
+  "p": "E",
+  "t": "short",
+  "s": "Practice 01번 빈칸(1번 문장 끝)에 들어갈 다섯 단어 영어 표현을 분석지 4번에서 찾아 그대로 쓰시오.",
+  "ans": [
+   "convenience or changes in taste"
+  ],
+  "show": "convenience or changes in taste",
+  "e": "분석지 4번(5단계) 및 6번 마무리: 정답은 ① convenience or changes in taste입니다."
+ },
+ {
+  "n": 32,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 많은 가정들이 리프라이드 빈을 만들 때 돼지기름 대신 식물성 쇼트닝을 선택하게 된 세 가지 가능한 이유를 지문 5번 문장을 근거로 우리말로 서술하세요.",
+  "show": "첫째, 가족이 돼지기름 없는 콩의 맛을 선호하게 되었기 때문이고, 둘째, 건강한 요리에 대한 개념이 변화했기 때문이며, 셋째, 가족 중 누군가가 심장 질환이나 높은 콜레스테롤을 가지고 있기 때문이다.",
+  "crit": "① 돼지기름 없는 콩의 맛 선호 ② 건강한 요리에 대한 개념 변화 ③ 가족 중 심장 질환 또는 높은 콜레스테롤 보유 — 세 가지 원인 모두 서술"
+ },
+ {
+  "n": 33,
+  "p": "E",
+  "t": "essay",
+  "s": "<b>[서술형]</b> 원래 빈칸(1번 문장 끝)에 <b>convenience or changes in taste</b>가 들어가야 하는 이유를 지문의 두 음식 사례(호박 파이와 리프라이드 빈)와 연결하여 서술하세요.",
+  "show": "첫 번째 사례인 호박 파이 조리에서는 통조림 호박을 사용해 많은 양의 노동과 시간을 줄이는 '편의성(convenience)'을 택했고, 두 번째 사례인 리프라이드 빈 조리에서는 돼지기름 대신 식물성 쇼트닝을 선택하며 담백한 맛 선호와 건강 인식 변화라는 '입맛의 변화(changes in taste)'를 반영했기 때문이다.",
+  "crit": "① 호박 파이 사례: 통조림 사용으로 노동·시간 절감 → convenience ② 리프라이드 빈 사례: 기름 없는 맛 선호·건강 개념 변화 → changes in taste"
+ }
+];
+// ===== DATA END =====
+</script>
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+<script src="track.js"></script>
+</body>
+</html>
