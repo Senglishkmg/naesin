@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "카페에서의 대화와 거지의 정체 분석지 정독 확인 문항 (#49~#93)",
+  "section": "교과서/보조교재 분석지 · Section 5 (#49~#93)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [49, "I had to tell him all about you: who you are, where you live, what your income is, and what prospects you have.”"],
+    [50, "“My dear Alan,” cried Hughie, “I will probably find him waiting for me when I get home."],
+    [51, "Poor old man!"],
+    [52, "I wish I could do something for him."],
+    [53, "I think it is dreadful that anyone should be so miserable."],
+    [54, "I have piles of old clothes at home."],
+    [55, "Do you think he would care for any of them?"],
+    [56, "His rags were falling to bits.”"],
+    [57, "“But he looks marvelous in them,” said Trevor."],
+    [58, "“I wouldn’t paint him in a fancy coat for anything."],
+    [59, "I’ll tell him about your offer, though."],
+    [60, "By the way, tell me how Laura is."],
+    [61, "The old model was quite interested in her.”"],
+    [62, "“What?"],
+    [63, "Did you even tell him about her?” asked Hughie."],
+    [64, "“Of course!"],
+    [65, "He knows all about the strict colonel, the charming Laura, and the ten thousand pounds.”"],
+    [66, "“You told that old beggar about my private affairs?” cried Hughie, looking very red and irritated."],
+    [67, "“My dear boy,” said Trevor, smiling."],
+    [68, "“That old beggar, as you call him, is one of the richest men in Europe."],
+    [69, "He could buy all of London tomorrow with the money in his account.”"],
+    [70, "“What on earth do you mean?” shouted Hughie."],
+    [71, "“The old man you saw today in the studio,” said Trevor, “was Baron Hausberg."],
+    [72, "He is a great friend of mine, and he buys all my pictures."],
+    [73, "He gave me a commission to paint him as a beggar."],
+    [74, "And I must say he looked magnificent in his rags."],
+    [75, "Or perhaps I should say in my rags; they are an old suit I got in Spain.”"],
+    [76, "“Baron Hausberg!” cried Hughie."],
+    [77, "“Good heavens!"],
+    [78, "I gave him a gold coin!”"],
+    [79, "Hughie sank into the chair in shock."],
+    [80, "“A gold coin!” shouted Trevor and burst out laughing."],
+    [81, "“You should have told me, Alan,” said Hughie."],
+    [82, "“Now I’ve made a fool of myself.”"],
+    [83, "“Well, when you came in, I didn’t know whether Hausberg would like his name mentioned."],
+    [84, "After all, he wasn’t fully dressed.”"],
+    [85, "“What a fool he must think I am!” said Hughie."],
+    [86, "“Not at all."],
+    [87, "He was in the highest spirits after you left."],
+    [88, "He kept smiling to himself and rubbing his old, wrinkled hands together."],
+    [89, "I couldn’t understand why he was so interested to know all about you, but I see it all now.”"],
+    [90, "Hughie sighed."],
+    [91, "“The best thing I can do is go to bed,” he said."],
+    [92, "“And my dear Alan, you mustn’t tell anyone.”"],
+    [93, "Hughie walked home feeling very unhappy."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "본문의 내용과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "트레버는 거지 모델에게 휴이의 신상, 거주지, 수입, 장래 전망까지 전부 이야기했다.",
+      "휴이는 처음에 거지의 누더기가 다 해진 것을 안타까워하며 자신의 헌 옷을 주고 싶어 했다.",
+      "트레버는 거지 모델에게 화려한 코트를 입혀서 그림을 그리겠다고 말했다.",
+      "하우스베르크 남작은 트레버의 모든 그림을 사주는 절친한 친구이자 거지 그림을 의뢰한 장본인이다.",
+      "트레버가 화실에 있던 노인의 정체를 미리 밝히지 않은 것은 남작이 제대로 옷을 갖춰 입지 않은 상태였기 때문이다."
+    ],
+    "a": 3,
+    "e": "#58 “I wouldn’t paint him in a fancy coat for anything.” (화려한 코트를 입혀서 그리는 일은 결코 하지 않겠다고 했다.)"
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "노인 모델이 입고 있던 누더기는 원래 노인 본인이 스페인에서 구해 온 오래된 옷이었다.",
+    "a": "X",
+    "e": "#75 트레버 자신이 스페인에서 구한 오래된 옷(an old suit I got in Spain)이라고 밝혔다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "휴이가 화실을 떠난 뒤 하우스베르크 남작은 기분이 매우 좋아져 혼자 미소 지으며 주름진 손을 비볐다.",
+    "a": "O",
+    "e": "#87~#88 He was in the highest spirits after you left. He kept smiling to himself and rubbing his old, wrinkled hands together."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "tf",
+    "s": "Section 5 Summary 및 본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["Hughie was angry when he learned Trevor had told the beggar about Laura and the ten thousand pounds.", "T"],
+      ["Baron Hausberg was offended by Hughie giving him a gold coin and left in bad spirits.", "F"],
+      ["Trevor burst out laughing when he heard that Hughie had given a gold coin to Baron Hausberg.", "T"],
+      ["Feeling ashamed and unhappy, Hughie asked Alan not to tell anyone about what happened.", "T"]
+    ],
+    "e": "#65~#66, #80, #87, #92~#93 참조"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "mc",
+    "s": "노인의 정체가 하우스베르크 남작이라는 사실을 알게 된 직후 휴이의 반응으로 가장 적절한 것은?",
+    "o": [
+      "남작에게 자신의 헌 옷을 선물할 수 있게 되어 기뻐했다.",
+      "자신이 대부호에게 금화 한 닢을 주어 스스로 바보가 되었다며 충격과 후회에 빠졌다.",
+      "트레버에게 그림 판매 대금의 절반을 자신에게 나누어 달라고 요구했다.",
+      "남작이 로라의 아버지에게 직접 만 파운드를 빌려줄 것이라며 안도했다.",
+      "트레버가 남작의 정체를 끝까지 숨긴 것에 대해 감사를 표했다."
+    ],
+    "a": 2,
+    "e": "#78~#82 금화 한 닢을 주었다는 사실에 충격을 받아 의자에 주저앉으며(sank into the chair in shock), 미리 말해 주지 않은 트레버를 원망하고 스스로 망신당했다고 자책했다."
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "수입, 소득",
+      "전망, 성공 가능성",
+      "끔찍한, 지독한",
+      "주문, 의뢰",
+      "당당한, 웅장한"
+    ],
+    "rows": [
+      ["income", 1],
+      ["prospect", 2],
+      ["dreadful", 3],
+      ["commission", 4],
+      ["magnificent", 5]
+    ],
+    "e": "분석지 #49, #53, #73, #74 단어 정리"
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어·숙어의 <b>동의어(syn.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "dreadful — terrible, awful",
+      "marvelous — splendid, magnificent",
+      "irritated — pleased, lenient",
+      "make a fool of — humiliate, ridicule",
+      "mention — refer to, bring up"
+    ],
+    "a": 3,
+    "e": "#66 irritated(짜증 난, 화가 난)의 동의어는 annoyed, exasperated, vexed이며, pleased는 반의어(ant.)이다."
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 밑줄 친 단어·숙어들의 <b>본문 속 의미</b>로 가장 적절한 것은?",
+    "c": "1) he would <u>care for</u> any of them (#55)<br>2) in a <u>fancy</u> coat (#58)<br>3) Did you <u>even</u> tell him about her? (#63)<br>4) with the money in his <u>account</u> (#69)<br>5) I <u>see</u> it all now (#89)",
+    "o": [
+      "1) ~을 돌보다 — 2) 공상 — 3) 평평한 — 4) 설명 — 5) 보다",
+      "1) ~을 좋아하다, 원하다 — 2) 화려한, 고급의 — 3) 심지어 ~조차 — 4) 계좌, 통장 — 5) 이해하다, 납득하다",
+      "1) ~을 좋아하다, 원하다 — 2) 원하다 — 3) 짝수의 — 4) 계좌, 통장 — 5) 이해하다, 납득하다",
+      "1) ~을 돌보다 — 2) 화려한, 고급의 — 3) 심지어 ~조차 — 4) 이야기 — 5) 목격하다",
+      "1) ~을 원하다 — 2) 공상 — 3) 짝수의 — 4) 설명 — 5) 납득하다"
+    ],
+    "a": 2,
+    "e": "분석지 다의어 정리: care for(~을 좋아하다, 원하다), fancy(화려한, 고급의), even(심지어 ~조차), account(계좌, 통장), see(이해하다, 납득하다)"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 숙어 및 관용 표현의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "산산이 조각나다, 다 해지다",
+      "결코/단연코 ~하지 않겠다",
+      "갑자기 ~하기 시작하다, 와락 ~을 터뜨리다",
+      "기분이 매우 좋은, 의기양양한",
+      "계속해서 ~하다"
+    ],
+    "rows": [
+      ["fall to bits", 1],
+      ["not ~ for anything", 2],
+      ["burst out -ing", 3],
+      ["in high spirits", 4],
+      ["keep -ing", 5]
+    ],
+    "e": "분석지 #56, #58, #80, #87, #88 숙어 정리"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어·숙어의 <b>반의어(ant.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "income — expense, expenditure",
+      "strict — lenient",
+      "charming — repulsive",
+      "private — confidential",
+      "in high spirits — in low spirits"
+    ],
+    "a": 4,
+    "e": "#66 private(사적인, 개인적인)의 반의어는 public이며, confidential은 동의어(syn.)이다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "blanks",
+    "s": "English Summary에 쓰인 단어 중, '(비밀·사생활 등의) 침해, 위반'을 뜻하는 <b>b_________</b>와 '몹시 창피한, 굴욕감을 느끼는'을 뜻하는 <b>m_________</b>를 각각 쓰시오.",
+    "c": "While Hughie is furious at this (A) b_________ of privacy, Trevor shocks him ... Realizing he handed his last gold coin to a multimillionaire, Hughie is utterly (B) m_________.",
+    "blanks": [
+      ["(A)", ["breach"]],
+      ["(B)", ["mortified"]]
+    ],
+    "show": "(A) breach (B) mortified",
+    "e": "Section 5 English Summary 원문 참조"
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#49~#50)",
+    "c": "I had to tell him (what your income is / what is your income), and I will probably find him (waiting / waited) for me when I (get / will get) home.",
+    "o": [
+      "what your income is / waiting / get",
+      "what is your income / waited / will get"
+    ],
+    "a": "what your income is / waiting / get",
+    "e": "#49 간접의문문 어순 [의문사 + 주어 + 동사] / #50 find + 목적어 + 현재분사(waiting), 시간의 부사절(when)에서는 현재시제(get)가 미래를 대신한다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#52~#53)",
+    "c": "I wish I (could do / can do) something for him. I think (it / that) is dreadful (that / what) anyone should be so miserable.",
+    "o": [
+      "could do / it / that",
+      "can do / that / what"
+    ],
+    "a": "could do / it / that",
+    "e": "#52 현재 사실과 반대되거나 실현 가능성이 희박한 소망을 나타내는 I wish 가정법 과거(could do) / #53 가주어 it - 진주어 명사절 접속사 that"
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#57, #60, #61)",
+    "c": "He looks (marvelous / marvelously) in them. By the way, tell me (how Laura is / how is Laura). The old model was quite (interested / interesting) in her.",
+    "o": [
+      "marvelous / how Laura is / interested",
+      "marvelously / how is Laura / interesting"
+    ],
+    "a": "marvelous / how Laura is / interested",
+    "e": "#57 감각동사 look + 형용사 보어(marvelous) / #60 간접의문문 어순(how Laura is) / #61 감정을 느끼는 사람이 주어이므로 과거분사형 형용사 interested"
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#66, #68, #71)",
+    "c": "Cried Hughie, (looking / looked) very red and irritated. “That old beggar is one of the richest (men / man) in Europe. The old man you saw today in the studio (was / were) Baron Hausberg.”",
+    "o": [
+      "looking / men / was",
+      "looked / man / were"
+    ],
+    "a": "looking / men / was",
+    "e": "#66 능동의 동시동작 분사구문 looking / #68 one of the + 최상급 + 복수명사(men) / #71 단수 주어 The old man에 수일치한 단수 동사 was"
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#72, #80, #81)",
+    "c": "He is a great friend of (mine / me). Trevor shouted and burst out (laughing / to laugh). “You (should have told / must have told) me, Alan,” said Hughie.",
+    "o": [
+      "mine / laughing / should have told",
+      "me / to laugh / must have told"
+    ],
+    "a": "mine / laughing / should have told",
+    "e": "#72 이중소유격(a + 명사 + of + 소유대명사 mine) / #80 burst out -ing 관용구(laughing) / #81 과거에 하지 않은 일에 대한 후회·원망을 나타내는 'should have + p.p.'"
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#82, #83, #88)",
+    "c": "“Now I’ve made a fool of (myself / me).” I didn’t know whether Hausberg would like his name (mentioned / mentioning). He kept smiling to himself and (rubbing / rubbed) his old hands.",
+    "o": [
+      "myself / mentioned / rubbing",
+      "me / mentioning / rubbed"
+    ],
+    "a": "myself / mentioned / rubbing",
+    "e": "#82 주어와 목적어가 동일 인물이므로 재귀대명사 myself / #83 목적어 his name이 언급되는 수동 관계이므로 과거분사 mentioned / #88 kept의 목적어인 동명사 smiling과 병렬을 이루는 동명사 rubbing"
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "mc",
+    "s": "문장 #52의 'I wish I could do something for him.'을 직설법으로 바르게 전환한 것으로 분석지에 제시된 것은?",
+    "o": [
+      "I am sorry that I cannot do anything for him.",
+      "I am glad that I could do something for him.",
+      "I was sorry that I could not do anything for him.",
+      "I hope that I will be able to do something for him.",
+      "I am sorry that I did not do anything for him."
+    ],
+    "a": 1,
+    "e": "#52 구문 분석(내신 출제 포인트 ★): I wish 가정법 과거는 현재 사실에 대한 유감을 나타내므로 'I am sorry that I cannot do anything for him.'으로 전환한다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "mc",
+    "s": "다음 중 분석지의 구문 설명과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "#59 문장 맨 끝에 단독으로 쓰인 though는 접속사가 아니라 '하지만, 그래도'라는 뜻의 부사이다.",
+      "#68에서 as you call him은 주어와 동사 사이에 끼어든 양태의 삽입절이다.",
+      "#85에서 What a fool he must think I am!은 감탄문과 간접목적어 구조가 융합된 구문이다.",
+      "#91에서 주어에 do 동작을 수식받는 명사구(The best thing I can do)가 올 때 보어 자리 to부정사의 to를 생략할 수 있다.",
+      "#93에서 feeling의 보어 자리에 부사 unhappily를 써도 어법상 옳다."
+    ],
+    "a": 5,
+    "e": "#93 구문 분석(내신 출제 포인트 ★): 감각동사 feeling의 보어 자리이므로 형용사 unhappy를 써야 하며, 부사 unhappily를 쓰면 오답이다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "short",
+    "s": "문장 #57의 'But he looks marvelous in <u>them</u>'에서 밑줄 친 <u>them</u>이 가리키는 영어 단어를 본문(#56)에서 찾아 1단어로 쓰시오.",
+    "ans": [
+      "rags",
+      "his rags"
+    ],
+    "show": "rags",
+    "e": "#56~#57 거지가 입고 있던 '누더기들(rags)'을 가리킨다."
+  },
+  {
+    "n": 21,
+    "p": "E",
+    "t": "sent",
+    "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오. (#68)",
+    "c": "저 늙은 거지는, 당신이 그를 부르듯이, 유럽에서 가장 부유한 사람들 중 한 명이다.<br><small>「조건」 beggar, as, call, one, rich, Europe 활용 (총 15단어, 어형 변화 가능)</small>",
+    "ans": [
+      "that old beggar as you call him is one of the richest men in europe"
+    ],
+    "show": "That old beggar, as you call him, is one of the richest men in Europe.",
+    "e": "#68 삽입절(as you call him)과 'one of the + 최상급(richest) + 복수명사(men)' 구문을 활용한다."
+  },
+  {
+    "n": 22,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 4개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "“You should have told me, Alan,” said Hughie. “Now I’ve made a fool of me. What a fool he must think I am!” “Not at all. He was in the highest spirits after you left. He kept smiling to himself and rubbed his old, wrinkled hands together.” Hughie sighed. “The best thing I can do is go to bed,” he said. Hughie walked home feeling very unhappily.",
+    "keys": [
+      {
+        "k": "myself",
+        "show": "me → myself"
+      },
+      {
+        "k": "rubbing",
+        "show": "rubbed → rubbing"
+      },
+      {
+        "k": "unhappy",
+        "show": "unhappily → unhappy"
+      }
+    ],
+    "e": "#82 주어와 목적어가 동일 인물이므로 재귀대명사 myself / #88 kept의 목적어인 동명사 smiling과 병렬 구조를 이루는 동명사 rubbing / #93 감각동사 feeling의 보어는 형용사 unhappy"
+  },
+  {
+    "n": 23,
+    "p": "E",
+    "t": "kw",
+    "s": "문장 #83('I didn’t know whether Hausberg would like his name mentioned.')에서 목적어 'his name' 뒤에 'mentioning'이 아니라 과거분사 'mentioned'를 쓴 이유를 쓰시오.",
+    "groups": [
+      [
+        "이름",
+        "목적어",
+        "name"
+      ],
+      [
+        "수동",
+        "언급되는",
+        "거론되는"
+      ]
+    ],
+    "show": "목적어(his name)가 사람에 의해 언급되는 수동의 대상이기 때문이다.",
+    "e": "#83 구문 분석(내신 출제 포인트 ★): 과거분사의 목적격보어"
+  },
+  {
+    "n": 24,
+    "p": "E",
+    "t": "blanks",
+    "s": "다음 요약문의 빈칸 (A), (B)에 들어갈 알맞은 단어를 주어진 첫 글자로 시작하여 쓰시오.",
+    "c": "Trevor reveals that he shared all of Hughie’s private (A) c________ with the old beggar model. While Hughie is furious at this breach of privacy, Trevor shocks him by revealing that the beggar was none other than Baron Hausberg, one of the (B) w________ men in Europe.",
+    "blanks": [
+      ["(A)", ["circumstances"]],
+      ["(B)", ["wealthiest"]]
+    ],
+    "show": "(A) circumstances (B) wealthiest",
+    "e": "Section 5 English Summary 원문 참조"
+  }
+];
+// ===== DATA END =====
+</script>
+
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+
+<script src="track.js"></script>
+
+</body>
+</html>

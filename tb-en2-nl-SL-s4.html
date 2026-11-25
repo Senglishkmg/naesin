@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "카페에서의 재회와 충격적인 진실 분석지 정독 확인 문항 (#45~#48)",
+  "section": "교과서/보조교재 분석지 · Section 4 (#45~#48)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [45, "That night, about eleven o’clock, he wandered into a café and found Trevor sitting by himself."],
+    [46, "“Well, Alan, did you get the picture finished all right?” he asked."],
+    [47, "“Finished and framed, my boy!” answered Trevor."],
+    [48, "“And, by the way, the old model you saw is quite curious about you."]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "본문 및 Section 4 Summary의 내용과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "휴이는 그날 밤 약 11시경에 한 카페에 들어갔다가 혼자 앉아 있는 트레버를 발견했다.",
+      "트레버는 휴이가 물었던 거지 모델 그림을 다 끝마치고 액자에까지 끼워 넣었다.",
+      "트레버는 화실에 있던 늙은 모델이 휴이에 대해 꽤 궁금해하고 있다고 전했다.",
+      "트레버는 휴이의 사적인 비밀을 지키기 위해 모델에게 휴이의 이야기를 일절 하지 않았다.",
+      "화실의 늙은 거지 모델은 사실 유럽에서 가장 부유한 대부호 중 한 명인 하우스베르크 남작이었다."
+    ],
+    "a": 4,
+    "e": "Section 4 Summary: 트레버는 휴이의 가정 형편, 무직 상태, 로라와 결혼하기 위해 만 파운드가 필요하다는 사적인 비밀까지 노인에게 전부 털어놓았다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "휴이가 밤 11시경 카페에 들어갔을 때 트레버는 액자 제작자와 함께 앉아 있었다.",
+    "a": "X",
+    "e": "#45 found Trevor sitting by himself (트레버는 혼자 앉아 있었다)."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "트레버는 그날 낮에 그리던 거지 그림을 완성했을 뿐만 아니라 액자 작업까지 마쳤다.",
+    "a": "O",
+    "e": "#47 “Finished and framed, my boy!” answered Trevor."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "tf",
+    "s": "Section 4 Summary 및 본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["Hughie wandered into a café around eleven o’clock at night and met Trevor.", "T"],
+      ["The old beggar model showed no interest in Hughie at all.", "F"],
+      ["Trevor told the old model about Hughie's love for Laura and the ten-thousand-pound condition.", "T"],
+      ["The beggar in Trevor's studio turned out to be Baron Hausberg, one of the richest men in Europe.", "T"]
+    ],
+    "e": "Section 4 Summary 및 #45, #48(is quite curious about you) 참조"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "mc",
+    "s": "카페에서 트레버와 대화를 나누던 중 휴이가 분노(irritated)하게 된 직접적인 이유로 알맞은 것은?",
+    "o": [
+      "트레버가 자신의 그림을 약속된 기한 내에 완성하지 못했기 때문에",
+      "트레버가 자신의 사적인 형편과 결혼 조건까지 거지 모델에게 전부 털어놓았기 때문에",
+      "트레버가 낮에 거지에게 준 금화를 되돌려 주지 않았기 때문에",
+      "트레버가 로라의 아버지인 대령에게 휴이의 무직 상태를 고자질했기 때문에",
+      "트레버가 약속 시간보다 늦게 카페에 나타나 혼자 술을 마시고 있었기 때문에"
+    ],
+    "a": 2,
+    "e": "Section 4 Summary: 트레버가 휴이의 가정 형편, 무직 상태, 로라와 결혼하기 위해 만 파운드가 필요하다는 사적인 비밀까지 노인에게 전부 털어놓았다고 말하자 휴이가 분노한다."
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어·숙어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "거닐다, 헤매다, 배회하다",
+      "홀로, 혼자서",
+      "제대로, 무사히",
+      "그런데, 그건 그렇고",
+      "궁금해하는, 호기심 많은"
+    ],
+    "rows": [
+      ["wander", 1],
+      ["by oneself", 2],
+      ["all right", 3],
+      ["by the way", 4],
+      ["curious", 5]
+    ],
+    "e": "분석지 #45, #46, #48 단어 정리"
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어·숙어의 <b>동의어(syn.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "wander — stroll, roam, ramble",
+      "by oneself — alone, unaccompanied",
+      "all right — satisfactorily, properly",
+      "quite — fairly, rather",
+      "curious — indifferent, uninterested"
+    ],
+    "a": 5,
+    "e": "#48 curious(궁금해하는, 호기심 많은)의 동의어는 inquisitive, eager to know이며, indifferent는 반의어(ant.)이다."
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 단어의 영영풀이 또는 의미 연결이 본문과 <u>다른</u> 것은?",
+    "o": [
+      "wander: to walk slowly around without any clear purpose or direction",
+      "by oneself: completely alone without anyone else",
+      "all right: in a satisfactory or acceptable manner",
+      "by the way: used to introduce a new subject or change the topic",
+      "curious: having no interest or concern about something"
+    ],
+    "a": 5,
+    "e": "#48 curious는 '궁금해하는, 호기심 많은(inquisitive, eager to know)'이라는 뜻이며, 관심이 없다는 뜻은 반의어 indifferent에 해당한다."
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "blanks",
+    "s": "English Summary에 쓰인 단어 중, '폭탄선언을 하다, 충격적인 소식을 전하다'를 뜻하는 관용 표현 'drops a _________ (b로 시작, 9글자)'의 빈칸을 채우시오.",
+    "c": "When Hughie gets irritated, Trevor drops a (A) b_________: the beggar was actually Baron Hausberg, one of the richest men in Europe.",
+    "blanks": [
+      ["(A)", ["bombshell"]]
+    ],
+    "show": "bombshell",
+    "e": "Section 4 English Summary 원문 참조"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "blanks",
+    "s": "English Summary에 쓰인 단어 중, '짜증 난, 화가 난'을 뜻하는 <b>i_________</b>와 '실제로, 사실은'을 뜻하는 <b>a_________</b>를 각각 쓰시오.",
+    "c": "When Hughie gets (A) i_________, Trevor drops a bombshell: the beggar was (B) a_________ Baron Hausberg, one of the richest men in Europe.",
+    "blanks": [
+      ["(A)", ["irritated"]],
+      ["(B)", ["actually"]]
+    ],
+    "show": "(A) irritated (B) actually",
+    "e": "Section 4 English Summary 원문 참조"
+  },
+  {
+    "n": 11,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#45)",
+    "c": "That night, about eleven o’clock, he wandered into a café and found Trevor (sitting / sat) by (himself / him).",
+    "o": [
+      "sitting / himself",
+      "sat / him"
+    ],
+    "a": "sitting / himself",
+    "e": "#45 구문 분석: 5형식 동사 found 뒤에 목적어 Trevor가 능동적으로 앉아 있는 상태를 나타내는 현재분사 sitting이 오며, '혼자서'를 뜻하는 재귀대명사 관용 표현 by himself를 쓴다."
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#46)",
+    "c": "“Well, Alan, did you get the picture (finished / finishing) all right?” he asked.",
+    "o": [
+      "finished",
+      "finishing"
+    ],
+    "a": "finished",
+    "e": "#46 구문 분석(내신 출제 포인트 ★): get + 목적어 + 과거분사 사역적 구문으로, 목적어(the picture)가 사람에 의해 '완성되는(수동)' 대상이므로 과거분사 finished를 쓴다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#47~#48)",
+    "c": "“(Finished and framed / Finishing and framing), my boy!” answered Trevor. “And, by the way, the old model you saw (is / are) quite curious about you.”",
+    "o": [
+      "Finished and framed / is",
+      "Finishing and framing / are"
+    ],
+    "a": "Finished and framed / is",
+    "e": "#47 'The picture was finished and framed.'에서 주어와 be동사가 생략된 수동 과거분사 병렬 표현이며, #48 주어 the old model이 단수이므로 본동사는 단수 be동사 is를 쓴다."
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "mc",
+    "s": "다음 중 분석지의 구문 설명과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "#45에서 found 뒤에 목적어 Trevor와 목적격보어로 현재분사 sitting이 쓰인 5형식 구문이다.",
+      "#46에서 목적어 the picture가 완성되는 수동의 대상이므로 목적격보어로 과거분사 finished를 썼다.",
+      "#47의 'Finished and framed'는 'The picture was finished and framed.'에서 주어와 be동사가 생략된 표현이다.",
+      "#48에서 the old model과 you saw 사이에는 주격 관계대명사 who가 생략되어 있다.",
+      "#48에서 문장의 주어는 단수 명사구 the old model이므로 본동사로 단수형 is가 쓰였다."
+    ],
+    "a": 4,
+    "e": "#48 구문 분석: the old model과 you saw 사이에는 주격이 아니라 목적격 관계대명사 whom 또는 that이 생략되어 있다."
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "short",
+    "s": "문장 #47의 'Finished and framed, my boy!'에서 생략된 주어와 동사 3단어를 본문(#46)을 참고하여 영어로 쓰시오.",
+    "ans": [
+      "the picture was",
+      "it was"
+    ],
+    "show": "The picture was",
+    "e": "#47 구문 분석: 'The picture was finished and framed.'에서 주어와 be동사가 생략된 구어체 표현이다."
+  },
+  {
+    "n": 16,
+    "p": "E",
+    "t": "sent",
+    "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오. (#46)",
+    "c": "“그래, 앨런, 그 그림이 제대로 다 끝마쳐지도록 만들었는가?”<br><small>「조건」 get, the picture, finish, all right 활용 (총 10단어, 어형 변화 가능)</small>",
+    "ans": [
+      "well alan did you get the picture finished all right",
+      "did you get the picture finished all right"
+    ],
+    "show": "Well, Alan, did you get the picture finished all right?",
+    "e": "#46 get + 목적어(the picture) + 과거분사(finished) 사역적 구문을 활용한다."
+  },
+  {
+    "n": 17,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "That night, about eleven o’clock, he wandered into a café and found Trevor sat by himself. “Well, Alan, did you get the picture finishing all right?” he asked. “Finished and framed, my boy!” answered Trevor. “And, by the way, the old model you saw are quite curious about you.”",
+    "keys": [
+      {
+        "k": "sitting",
+        "show": "sat → sitting"
+      },
+      {
+        "k": "finished",
+        "show": "finishing → finished"
+      },
+      {
+        "k": "is",
+        "show": "are → is"
+      }
+    ],
+    "e": "#45 find + 목적어 + 현재분사(sitting) / #46 get + 목적어 + 과거분사(finished) / #48 단수 주어 the old model에 수일치한 단수 동사 is"
+  },
+  {
+    "n": 18,
+    "p": "E",
+    "t": "kw",
+    "s": "문장 #46('did you get the picture finished all right?')에서 목적격보어 자리에 'finishing'이 아니라 과거분사 'finished'를 쓴 이유를 쓰시오.",
+    "groups": [
+      [
+        "그림",
+        "목적어",
+        "picture"
+      ],
+      [
+        "수동",
+        "완성되는",
+        "끝마쳐지는"
+      ]
+    ],
+    "show": "목적어(the picture)가 사람에 의해 완성되는 수동의 대상이기 때문이다.",
+    "e": "#46 구문 분석(내신 출제 포인트 ★): get + 목적어 + 과거분사"
+  },
+  {
+    "n": 19,
+    "p": "E",
+    "t": "blanks",
+    "s": "다음 요약문의 빈칸 (A), (B)에 들어갈 알맞은 단어를 주어진 첫 글자로 시작하여 쓰시오.",
+    "c": "Meeting Trevor at a café that night, Hughie learns that Trevor revealed all of Hughie's personal matters—including his love for Laura and the ten-thousand-pound (A) c________—to the old beggar model. When Hughie gets irritated, Trevor drops a bombshell: the beggar was actually Baron Hausberg, one of the (B) r________ men in Europe.",
+    "blanks": [
+      ["(A)", ["condition"]],
+      ["(B)", ["richest"]]
+    ],
+    "show": "(A) condition (B) richest",
+    "e": "Section 4 English Summary 원문 참조"
+  }
+];
+// ===== DATA END =====
+</script>
+
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+
+<script src="track.js"></script>
+
+</body>
+</html>

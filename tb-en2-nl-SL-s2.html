@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "화가 트레버의 화실 방문과 거지 모델 분석지 정독 확인 문항 (#15~#30)",
+  "section": "교과서/보조교재 분석지 · Section 2 (#15~#30)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "D": "Part D. 연결어",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [15, "One morning, Hughie dropped in to see a great friend of his, Alan Trevor."],
+    [16, "Trevor was a painter."],
+    [17, "He was a strange, rough fellow with a bushy red beard."],
+    [18, "However, when he took up the brush, he was a real master, and his pictures were eagerly sought after."],
+    [19, "When Hughie came into the studio, he found Trevor putting the finishing touches on a wonderful life-size picture of a beggar."],
+    [20, "The beggar was standing on a raised platform in a corner of the studio."],
+    [21, "He was a wrinkly old man with a pitiful expression."],
+    [22, "He wore a ragged brown cape, and he leaned on a rough stick with one hand while holding out his hat for donations with the other."],
+    [23, "“What an amazing model!” said Hughie, as he shook hands with his friend."],
+    [24, "“How miserable he looks!"],
+    [25, "How much does the model get for posing?”"],
+    [26, "“A penny an hour.”"],
+    [27, "“And how much do you get for your painting, Alan?”"],
+    [28, "“Oh, I get two thousand pounds for this!"],
+    [29, "“Well, I think the model should have a share,” cried Hughie, laughing."],
+    [30, "“He is working just as hard as you!”"]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "본문의 내용과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "앨런 트레버는 더부룩한 붉은 턱수염을 가진 이상하고 거친 외모의 화가였다.",
+      "트레버가 화실에서 마무리 손질을 하고 있던 그림은 거지의 실물 크기 초상화였다.",
+      "화실 구석의 높아진 단 위에 서 있던 거지는 누더기 갈색 망토를 입고 있었다.",
+      "거지 모델은 포즈를 취하는 대가로 시간당 1페니를 받는다.",
+      "트레버는 거지 모델이 그림 판매액의 일정 지분을 당연히 받아야 한다고 주장했다."
+    ],
+    "a": 5,
+    "e": "#29~#30 모델이 한 몫을 가져야 한다('the model should have a share')고 말한 사람은 트레버가 아니라 휴이(Hughie)이다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "트레버는 붓만 잡으면 진정한 대가였으며, 그의 그림은 사람들에게 인기가 많았다.",
+    "a": "O",
+    "e": "#18 when he took up the brush, he was a real master, and his pictures were eagerly sought after."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "화실의 거지 모델은 한 손으로 지팡이에 기대고 다른 손에는 기부금 상자를 들고 있었다.",
+    "a": "X",
+    "e": "#22 기부금 상자가 아니라 자신의 모자(his hat)를 내밀고 있었다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "tf",
+    "s": "Section 2 Summary 및 본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["Alan Trevor is a talented painter whose works are in high demand.", "T"],
+      ["When Hughie entered the studio, Trevor had not started painting the beggar yet.", "F"],
+      ["Trevor gets paid two thousand pounds for his painting of the beggar.", "T"],
+      ["Hughie felt pity for the beggar and thought he worked just as hard as Trevor.", "T"]
+    ],
+    "e": "English Summary 및 #19(putting the finishing touches on), #28(two thousand pounds), #30(working just as hard as you) 참조"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "mc",
+    "s": "휴이가 거지 모델을 보고 보인 반응으로 알맞은 것은?",
+    "o": [
+      "화가보다 훨씬 많은 보수를 받는 것에 불만을 품었다.",
+      "거지의 비참한 모습에 연민을 느끼며 모델도 한 몫을 받아야 한다고 말했다.",
+      "거지의 표정이 너무 밝아서 그림의 분위기와 어울리지 않는다고 지적했다.",
+      "트레버에게 그림의 마무리 손질을 자신이 대신하겠다고 제안했다.",
+      "화실 구석의 단이 너무 낮아서 거지가 잘 보이지 않는다고 말했다."
+    ],
+    "a": 2,
+    "e": "한글 요약 및 #24, #29~#30 참조"
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "거지, 걸인",
+      "가련한, 애처로운",
+      "누더기를 걸친, 해진",
+      "기부, 기부금, 적선",
+      "비참한, 불쌍한"
+    ],
+    "rows": [
+      ["beggar", 1],
+      ["pitiful", 2],
+      ["ragged", 3],
+      ["donation", 4],
+      ["miserable", 5]
+    ],
+    "e": "분석지 #19, #21, #22, #24 단어 정리"
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어의 <b>동의어(syn.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "drop in — visit, stop by",
+      "strange — odd, peculiar",
+      "eagerly — keenly, avidly",
+      "ragged — neat, smooth",
+      "share — portion, quota"
+    ],
+    "a": 4,
+    "e": "#22 ragged(누더기를 걸친, 해진)의 동의어는 tattered, frayed이며, neat는 반의어(ant.)이다."
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 밑줄 친 단어·숙어들의 <b>본문 속 의미</b>로 가장 적절한 것은?",
+    "c": "1) when he <u>took up</u> the brush (#18)<br>2) He wore a ragged brown <u>cape</u> (#22)<br>3) leaned on a rough <u>stick</u> (#22)<br>4) for <u>posing</u> (#25)",
+    "o": [
+      "1) (취미를) 시작하다 — 2) 곶(지형) — 3) 찌르다 — 4) (문제를) 제기하다",
+      "1) (도구를) 손에 잡다 — 2) 망토 — 3) 지팡이 — 4) 포즈를 취하다",
+      "1) (도구를) 손에 잡다 — 2) 망토 — 3) 붙이다 — 4) 자세를 취하다",
+      "1) (일을) 시작하다 — 2) 곶(지형) — 3) 지팡이 — 4) 포즈를 취하다",
+      "1) (도구를) 들다 — 2) 곶(지형) — 3) 막대기 — 4) (문제를) 제기하다"
+    ],
+    "a": 2,
+    "e": "분석지 다의어 정리: take up((도구를) 손에 잡다, 들다), cape(망토), stick(지팡이, 막대기), pose(포즈를 취하다, 자세를 취하다)"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 숙어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "잠깐 들르다, 불쑥 찾아가다",
+      "~에 마무리 손질을 하다, 완성하다",
+      "~에 기대다, 의지하다",
+      "내밀다, 뻗다",
+      "인기 있는, 수요가 많은"
+    ],
+    "rows": [
+      ["drop in", 1],
+      ["sought after", 5],
+      ["put the finishing touches on", 2],
+      ["lean on", 3],
+      ["hold out", 4]
+    ],
+    "e": "분석지 #15, #18, #19, #22 숙어 정리"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어의 <b>반의어(ant.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "strange — normal",
+      "rough — smooth, gentle",
+      "wrinkly — smooth",
+      "pitiful — wretched",
+      "miserable — cheerful"
+    ],
+    "a": 4,
+    "e": "#21 pitiful(가련한, 애처로운)의 반의어는 enviable이며, wretched는 동의어(syn.)이다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "blanks",
+    "s": "English Summary에 쓰인 단어 중, '가난한, 빈곤한'을 뜻하는 <b>i_________</b>와 '불쌍히 여기다, 한탄하다'를 뜻하는 <b>l_________</b>를 각각 쓰시오.",
+    "c": "... a life-size portrait of an (A) i_________ old beggar. Moved by pity, Hughie (B) l_________ how little the model gets paid ...",
+    "blanks": [
+      ["(A)", ["impoverished"]],
+      ["(B)", ["laments", "lament"]]
+    ],
+    "show": "(A) impoverished (B) laments",
+    "e": "Section 2 English Summary 원문 참조"
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#15)",
+    "c": "One morning, Hughie dropped in to see (a great friend of his / a his great friend), Alan Trevor.",
+    "o": [
+      "a great friend of his",
+      "a his great friend"
+    ],
+    "a": "a great friend of his",
+    "e": "#15 구문 분석(내신 출제 포인트 ★): 한정사 a와 소유격 his를 나란히 쓸 수 없으므로 명사 + of + 소유대명사 형태인 이중소유격(a great friend of his)을 쓴다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#18)",
+    "c": "However, when he took up the brush, he was a real master, and his pictures were eagerly (seeking after / sought after).",
+    "o": [
+      "sought after",
+      "seeking after"
+    ],
+    "a": "sought after",
+    "e": "#18 구문 분석(내신 출제 포인트 ★): 주어 his pictures가 '인기 있는, 추구되는' 수동의 의미이므로 seek after의 수동태(were sought after)를 쓴다."
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#19~#20)",
+    "c": "He found Trevor (putting / put) the finishing touches on a picture of a beggar standing on a (raising / raised) platform.",
+    "o": [
+      "putting / raised",
+      "put / raising"
+    ],
+    "a": "putting / raised",
+    "e": "#19 find + 목적어 + 현재분사(putting): 트레버가 능동적으로 마무리 작업을 진행 중인 현장을 목격함을 나타낸다. #20 platform은 인위적으로 '높여진' 수동적 상태이므로 과거분사 raised가 수식한다."
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#22)",
+    "c": "He leaned on a rough stick with one hand while (holding / held) out his hat for donations with (the other / another).",
+    "o": [
+      "holding / the other",
+      "held / another"
+    ],
+    "a": "holding / the other",
+    "e": "#22 구문 분석(내신 출제 포인트 ★): 접속사 while 뒤에 주어가 생략된 능동 분사구문 holding이 와야 하며, 두 손 중 하나(one hand)를 제외한 나머지 한 손은 정관사를 붙여 the other로 받는다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "mc",
+    "s": "문장 #23과 #24의 감탄문 어순으로 옳은 것끼리 바르게 짝지어진 것은?",
+    "c": "ⓐ (What an amazing model / How an amazing model)! (#23)<br>ⓑ (How miserable he looks / How miserably he looks)! (#24)",
+    "o": [
+      "ⓐ What an amazing model — ⓑ How miserable he looks",
+      "ⓐ What an amazing model — ⓑ How miserably he looks",
+      "ⓐ How an amazing model — ⓑ How miserable he looks",
+      "ⓐ How an amazing model — ⓑ How miserably he looks",
+      "ⓐ What amazing a model — ⓑ How miserable he looks"
+    ],
+    "a": 1,
+    "e": "#23 명사 강조 감탄문은 What + a(n) + 형용사 + 명사! 어순이며, #24 감각동사 look 뒤에는 형용사 보어가 오므로 How + 형용사(miserable) + 주어 + 동사! 어순을 쓴다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#29~#30)",
+    "c": "“Well, I think the model should have a share,” cried Hughie, (laughing / laughed). “He is working just as (hard / hardly) as you!”",
+    "o": [
+      "laughing / hard",
+      "laughed / hardly"
+    ],
+    "a": "laughing / hard",
+    "e": "#29 동시동작의 능동 분사구문 laughing(~하면서)을 쓰며, #30 원급 비교 구문(as ~ as)에서는 '열심히'라는 뜻의 부사 원급 hard를 쓴다(hardly는 '거의 ~않는')."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "mc",
+    "s": "다음 중 분석지의 구문 설명과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "#15의 to see는 방문의 목적('만나기 위해')을 나타내는 to부정사의 부사적 용법이다.",
+      "#19에서 found 뒤에 목적어 Trevor와 목적격보어 putting이 온 5형식 구조이다.",
+      "#24에서 감각동사 look의 보어 자리에 형용사 miserable이 쓰였다.",
+      "#26의 an hour는 '시간당(per hour)'이라는 뜻이다.",
+      "#29에서 I think 뒤에는 목적격 관계대명사 which가 생략되어 있다."
+    ],
+    "a": 5,
+    "e": "#29 구문 분석: I think 뒤에는 목적격 관계대명사가 아니라 목적어 절을 이끄는 접속사 that이 생략되어 있다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "short",
+    "s": "문장 #28의 'Oh, I get two thousand pounds for <u>this</u>!'에서 밑줄 친 <u>this</u>가 가리키는 영어 단어를 본문(#27)에서 찾아 1단어로 쓰시오.",
+    "ans": [
+      "painting"
+    ],
+    "show": "painting",
+    "e": "#27~#28 화가 트레버가 작업 중인 '그림(painting)'을 가리킨다."
+  },
+  {
+    "n": 20,
+    "p": "D",
+    "t": "mc",
+    "s": "문장 #18의 연결어 <b>However</b>의 기능과 앞뒤 문장의 관계에 대한 분석지의 설명으로 옳은 것은?",
+    "o": [
+      "앞 문장(#17)과 본문장(#18) 모두 트레버의 거친 외모를 묘사하며 유사한 내용을 나열한다.",
+      "앞 문장(#17)의 기괴하고 투박한 외모와 본문장(#18)의 뛰어난 예술적 실력 및 인기를 대비시키기 위해 쓰였다.",
+      "앞 문장(#17)이 구체적인 사건이고, 본문장(#18)은 이를 포괄하는 추상적인 일반론이다.",
+      "트레버의 외모 때문에 그의 그림이 인기를 끌게 되었다는 인과 관계를 나타낸다.",
+      "앞 문장(#17)의 내용을 부연 설명하며 동일한 관점을 강조하기 위해 사용되었다."
+    ],
+    "a": 2,
+    "e": "#18 연결어 분석: 앞 문장(외모가 기괴하고 투박한 인물이었다)과 본문장(붓만 잡으면 진정한 대가였고 그림이 선풍적인 인기를 끌었다)의 대비를 보여준다."
+  },
+  {
+    "n": 21,
+    "p": "D",
+    "t": "mc",
+    "s": "문장 #17과 문장 #18 사이의 추상성·구체성 관계에 대한 분석지의 설명으로 알맞은 것은?",
+    "o": [
+      "앞 문장은 외적 첫인상이라는 단편적 정보이고, 본문장은 뛰어난 예술적 실력과 사회적 평가라는 구체적인 반전 사실이므로 본문장이 더 구체적이다.",
+      "앞 문장이 구체적 사실이고, 본문장은 이를 요약한 추상적 결론이므로 앞 문장이 더 구체적이다.",
+      "두 문장 모두 동일한 수준의 추상적 평가를 담고 있다.",
+      "본문장은 앞 문장의 외모 묘사를 다른 어휘로 바꾸어 반복한 문장이다.",
+      "앞 문장은 시간적 배경을, 본문장은 공간적 배경을 제시하므로 구체성을 비교할 수 없다."
+    ],
+    "a": 1,
+    "e": "#18 연결어 분석: 앞 문장은 외적 첫인상이라는 단편적 정보이고, 본문장은 그의 뛰어난 예술적 실력과 사회적 평가라는 구체적인 반전 사실이므로 본문장이 더 구체적이다."
+  },
+  {
+    "n": 22,
+    "p": "E",
+    "t":

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "휴이의 처지와 로라와의 사랑 분석지 정독 확인 문항 (#2~#14)",
+  "section": "교과서/보조교재 분석지 · Section 1 (#2~#14)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "D": "Part D. 연결어",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [2, "Hughie Erskine was a wonderfully good-looking man, with crisp brown hair, a sculpture-like profile, and grey eyes."],
+    [3, "He had every accomplishment except that of making money."],
+    [4, "He lived on two hundred pounds a year that an old aunt gave him."],
+    [5, "He had tried everything."],
+    [6, "He had gone to the stock exchange for six months."],
+    [7, "He had been a tea merchant for a little longer."],
+    [8, "Ultimately, he became nothing."],
+    [9, "He was a delightful, incompetent young man with a perfect profile and no profession."],
+    [10, "To make matters worse, he was in love."],
+    [11, "The girl he loved was Laura Merton, the daughter of a retired colonel."],
+    [12, "Laura loved Hughie, too, and the colonel was very fond of him."],
+    [13, "However, he would not hear of any engagement."],
+    [14, "He would say “Come to me, my boy, when you have got ten thousand pounds of your own, and we will talk about it.”"]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "본문의 내용과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "휴이는 곱슬곱슬한 갈색 머리와 회색 눈을 가진 잘생긴 청년이었다.",
+      "휴이는 돈을 버는 재주를 제외한 모든 재능을 가지고 있었다.",
+      "휴이는 늙은 숙모가 주는 연 200파운드로 생활했다.",
+      "휴이는 차 상인으로 6개월 동안 일한 뒤 증권거래소에 다녔다.",
+      "로라의 아버지인 은퇴한 대령은 휴이를 개인적으로 매우 좋아했다."
+    ],
+    "a": 4,
+    "e": "#6~#7 증권거래소에 6개월 동안 다녔고(had gone to the stock exchange for six months), 차 상인은 그보다 조금 더 오래(for a little longer) 했다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "은퇴한 대령은 휴이를 싫어했기 때문에 로라와의 약혼에 대해 일절 들으려 하지 않았다.",
+    "a": "X",
+    "e": "#12~#13 대령은 휴이를 매우 좋아했으나(was very fond of him), 만 파운드를 벌어 오기 전에는 약혼을 허락하지 않으려 했다."
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "휴이는 여러 직업에 도전했지만 결국 아무런 직업적 결실도 거두지 못했다.",
+    "a": "O",
+    "e": "#5~#8 온갖 일을 시도해 보았으나 궁극적으로 아무것도 되지 못했다(Ultimately, he became nothing)."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "tf",
+    "s": "Section 1 Summary 및 본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["Hughie Erskine lacked the ability to earn money and lived off an allowance from his aunt.", "T"],
+      ["Hughie was unpleasant in personality, which made people dislike him.", "F"],
+      ["Laura loved Hughie just as much as he loved her.", "T"],
+      ["The colonel promised to consent to the engagement once Hughie earned ten thousand pounds of his own.", "T"]
+    ],
+    "e": "English Summary 및 #9(delightful, incompetent), #12(Laura loved Hughie, too), #14(ten thousand pounds of your own) 참조"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "mc",
+    "s": "로라의 아버지가 휴이에게 내건 약혼 허락의 조건으로 알맞은 것은?",
+    "o": [
+      "증권거래소에서 6개월 이상 안정적으로 근무할 것",
+      "늙은 숙모로부터 독립하여 연 200파운드 이상을 저축할 것",
+      "휴이 스스로 10,000파운드를 벌어 올 것",
+      "차 상인으로서 성공하여 확실한 전문직을 가질 것",
+      "로라가 직접 아버지를 설득해 동의를 받아 낼 것"
+    ],
+    "a": 3,
+    "e": "#14 when you have got ten thousand pounds of your own, and we will talk about it"
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "상인, 무역상",
+      "유쾌한, 매력 있는",
+      "재능, 기량, 성취",
+      "궁극적으로, 결국에는",
+      "무능한, 능력 없는"
+    ],
+    "rows": [
+      ["accomplishment", 3],
+      ["merchant", 1],
+      ["ultimately", 4],
+      ["delightful", 2],
+      ["incompetent", 5]
+    ],
+    "e": "분석지 #3, #7, #8, #9 단어 정리"
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어의 <b>동의어(syn.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "wonderfully — remarkably, extraordinarily",
+      "except — apart from, excluding",
+      "live on — subsist on, survive on",
+      "incompetent — capable, competent",
+      "profession — occupation, vocation"
+    ],
+    "a": 4,
+    "e": "#9 incompetent(무능한)의 동의어는 incapable, inept, unskilled이며, competent와 capable은 반의어(ant.)이다."
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 밑줄 친 단어들의 <b>본문 속 의미</b>로 가장 적절한 것은?",
+    "c": "1) with <u>crisp</u> brown hair (#2)<br>2) a sculpture-like <u>profile</u> (#2)<br>3) He had gone to the <u>stock</u> exchange (#6)<br>4) with no <u>profession</u> (#9)",
+    "o": [
+      "1) 상쾌한 — 2) 인물 소개 — 3) 재고 — 4) 공언",
+      "1) 바삭바삭한 — 2) 옆모습 — 3) 주식 — 4) 선언",
+      "1) 곱슬곱슬한 — 2) 옆모습 — 3) 주식 — 4) 직업",
+      "1) 곱슬곱슬한 — 2) 개요 — 3) 저장품 — 4) 직업",
+      "1) 상쾌한 — 2) 옆얼굴 — 3) 주식 — 4) 전문직"
+    ],
+    "a": 3,
+    "e": "분석지 다의어 정리: crisp(머리칼이 곱슬곱슬한), profile(옆모습, 옆얼굴), stock(주식; stock exchange=증권거래소), profession(직업, 전문직)"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 숙어 및 표현의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "~을 먹고살다, ~에 의지해 살다",
+      "사랑에 빠진, 반한",
+      "~을 좋아하다",
+      "~에 대해 듣다, 승낙하다, 동의하다"
+    ],
+    "rows": [
+      ["live on", 1],
+      ["in love", 2],
+      ["be fond of", 3],
+      ["hear of", 4]
+    ],
+    "e": "분석지 #4, #10, #12, #13 단어 및 숙어 정리"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어의 <b>반의어(ant.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "wonderfully — terribly",
+      "good-looking — ugly",
+      "except — including",
+      "delightful — pleasant",
+      "perfect — imperfect"
+    ],
+    "a": 4,
+    "e": "#9 delightful(유쾌한)의 반의어는 unpleasant이며, pleasant는 동의어(syn.)이다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "blanks",
+    "s": "English Summary에 쓰인 단어 중, 본문의 'two hundred pounds a year that an old aunt gave him'을 요약하여 표현한 어구 'a _________ _________'의 두 단어를 쓰시오.",
+    "blanks": [
+      ["첫째 칸", ["meager"]],
+      ["둘째 칸", ["allowance"]]
+    ],
+    "show": "meager allowance",
+    "e": "English Summary: lives off a meager allowance from his aunt (숙모가 주는 적은 돈)"
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#3)",
+    "c": "He had every accomplishment except (that / those) of making money.",
+    "o": [
+      "that",
+      "those"
+    ],
+    "a": "that",
+    "e": "#3 구문 분석(내신 출제 포인트 ★): 앞에 나온 단수 명사 accomplishment의 반복을 피하기 위해 단수 지시대명사 that을 쓴다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "mc",
+    "s": "문장 #4의 밑줄 친 <u>that</u>과 쓰임이 같은 것은?",
+    "c": "He lived on two hundred pounds a year <u>that</u> an old aunt gave him.",
+    "o": [
+      "He had every accomplishment except <u>that</u> of making money.",
+      "The girl <u>that</u> he loved was Laura Merton.",
+      "I know <u>that</u> Hughie tried everything to earn money.",
+      "<u>That</u> was a very difficult condition for Hughie.",
+      "He was so incompetent <u>that</u> he became nothing."
+    ],
+    "a": 2,
+    "e": "#4 구문 분석(내신 출제 포인트 ★): #4의 that은 선행사 two hundred pounds를 수식하는 목적격 관계대명사이다. 'The girl that he loved'의 that 역시 목적격 관계대명사로 쓰였다."
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#5)",
+    "c": "He (tried / had tried) everything before he ultimately became nothing.",
+    "o": [
+      "had tried",
+      "tried"
+    ],
+    "a": "had tried",
+    "e": "#5 구문 분석(내신 출제 포인트 ★): 이야기의 기본 서술 시점(과거)보다 더 앞선 과거부터 그때까지 온갖 일을 시도해 보았음을 나타내는 과거완료 시제(had + p.p.)를 쓴다."
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#6~#7)",
+    "c": "He had gone to the stock exchange (for / during) six months, and had been a tea merchant for (a little / very) longer.",
+    "o": [
+      "for / a little",
+      "during / very"
+    ],
+    "a": "for / a little",
+    "e": "#6 숫자가 포함된 명확한 기간(six months) 앞에는 전치사 for를 쓰며, #7 비교급 longer 앞에는 수식어 a little을 쓴다(very는 비교급 수식 불가)."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "mc",
+    "s": "문장 #10의 밑줄 친 <u>To make matters worse</u>와 바꿔 쓸 수 있는 표현으로 분석지에 제시된 것은?",
+    "c": "<u>To make matters worse</u>, he was in love.",
+    "o": [
+      "What is worse",
+      "To tell the truth",
+      "Needless to say",
+      "Strange to say",
+      "So to speak"
+    ],
+    "a": 1,
+    "e": "#10 구문 분석(내신 출제 포인트 ★): 독립부정사 관용구 To make matters worse('설상가상으로, 엎친 데 덮친 격으로')는 What is worse로 바꾸어 쓸 수 있다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#11)",
+    "c": "The girl he loved (was / were) Laura Merton, the daughter of a (retiring / retired) colonel.",
+    "o": [
+      "was / retired",
+      "were / retiring"
+    ],
+    "a": "was / retired",
+    "e": "#11 구문 분석(내신 출제 포인트 ★): 주어 The girl이 단수이므로 본동사는 was를 쓰며, 이미 은퇴를 마친 상태를 뜻하는 완료 의미의 과거분사 retired가 colonel을 수식한다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "mc",
+    "s": "문장 #13의 밑줄 친 <u>would not</u>과 문장 #14의 밑줄 친 <u>would</u>의 의미가 바르게 짝지어진 것은?",
+    "c": "However, he <u>would not</u> hear of any engagement. (#13)<br>He <u>would</u> say “Come to me, my boy...” (#14)",
+    "o": [
+      "#13 과거의 규칙적 습관 — #14 과거의 강한 거부",
+      "#13 과거의 강한 거부·고집 — #14 과거의 규칙적 습관",
+      "#13 현재의 불확실한 추측 — #14 정중한 요청",
+      "#13 과거의 강한 거부·고집 — #14 현재의 불확실한 추측",
+      "#13 조건절의 가정 — #14 과거의 규칙적 습관"
+    ],
+    "a": 2,
+    "e": "#13 구문 분석(내신 출제 포인트 ★): would not은 과거의 강한 거부/고집('결코 ~하려 하지 않았다')을 나타내며, #14의 would say는 과거의 규칙적 습관('~하곤 했다')을 나타낸다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#14)",
+    "c": "Come to me, my boy, when you (have got / will have got) ten thousand pounds of your own, and we will talk about it.",
+    "o": [
+      "have got",
+      "will have got"
+    ],
+    "a": "have got",
+    "e": "#14 구문 분석(내신 출제 포인트 ★): when이 이끄는 시간의 부사절 속에서는 미래 시제를 쓰지 않고 현재(완료) 시제(have got)가 미래를 대신한다."
+  },
+  {
+    "n": 20,
+    "p": "C",
+    "t": "short",
+    "s": "문장 #14의 'and we will talk about <u>it</u>'에서 밑줄 친 <u>it</u>이 가리키는 영어 단어를 본문(#13)에서 찾아 1단어로 쓰시오.",
+    "ans": [
+      "engagement"
+    ],
+    "show": "engagement",
+    "e": "#13~#14 대령이 듣기를 거부했던 '약혼(engagement)'을 가리킨다."
+  },
+  {
+    "n": 21,
+    "p": "C",
+    "t": "mc",
+    "s": "다음 중 분석지의 구문 설명과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "#2에서 부사 wonderfully가 복합형용사 good-looking을 수식하고 있다.",
+      "#3에서 전치사 of 뒤에 목적어로 동명사 making이 위치했다.",
+      "#4의 a year는 '1년에, 연간'을 나타내는 per year의 의미이다.",
+      "#9에서는 profile과 profession의 두운(p-)을 맞춘 압운(Alliteration) 효과가 쓰였다.",
+      "#11에서 The girl과 he loved 사이에는 주격 관계대명사 who가 생략되어 있다."
+    ],
+    "a": 5,
+    "e": "#11 구문 분석(내신 출제 포인트 ★): The girl과 he loved 사이에는 주격이 아니라 목적격 관계대명사 whom 또는 that이 생략되어 있다."
+  },
+  {
+    "n": 22,
+    "p": "D",
+    "t": "mc",
+    "s": "문장 #13의 연결어 <b>However</b>의 기능에 대한 분석지의 설명으로 옳은 것은?",
+    "o": [
+      "앞 문장의 내용에 대한 구체적인 예시를 나열하기 위해 쓰였다.",
+      "앞 문장의 원인으로 인해 발생한 필연적인 결과를 인과적으로 연결한다.",
+      "대령이 휴이를 개인적으로 좋아했다는 내용과 약혼을 단호히 거절한 상반된 태도를 대조한다.",
+      "휴이의 무능함이 결국 직업적 실패로 이어졌음을 요약하여 결론짓는다.",
+      "앞 문장보다 덜 구체적이고 일반적인 원칙을 제시하기 위해 사용되었다."
+    ],
+    "a": 3,
+    "e": "#13 연결어 분석: 앞 문장(대령이 휴이를 개인적으로 매우 좋아했다)과 본문장(약혼에 대해서는 일절 들으려 하지 않았다)의 상반되는 태도를 대조하기 위해 쓰였다."
+  },
+  {
+    "n": 23,
+    "p": "D",
+    "t": "mc",
+    "s": "문장 #12와 문장 #13 사이의 추상성·구체성 관계에 대한 분석지의 설명으로 알맞은 것은?",
+    "o": [
+      "앞 문장(#12)과 본문장(#13) 모두 추상적인 일반론에 해당한다.",
+      "앞 문장(#12)은 인간적 호감이라는 일반적 태도이고, 본문장(#13)은 결혼 허락이라는 중대 사안에 대한 확고한 거절이므로 본문장이 더 구체적이다.",
+      "앞 문장(#12)이 구체적 사건이고, 본문장(#13)은 이를 일반화한 요약문이다.",
+      "본문장(#13)은 앞 문장(#12)의 내용을 단순히 다른 말로 재진술(paraphrase)한 것이다.",
+      "앞 문장(#12)과 본문장(#13)은 시간적 선후 관계만 있을 뿐 구체성의 차이는 없다."
+    ],
+    "a": 2,
+    "e": "#13 연결어 분석: 앞 문장은 인물에 대한 인간적 호감이라는 일반적 태도이고, 본문장은 결혼 허락이라는 법적·사회적 중대 사안에 대한 확고한 거절이므로 본문장이 더 구체적이다."
+  },
+  {
+    "n": 24,
+    "p": "E",
+    "t": "sent",
+    "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오. (#3)",
+    "c": "그는 돈을 버는 재능을 제외한 모든 재능을 가지고 있었다.<br><small>「조건」 accomplishment, except, that, make 활용 (총 9단어, 어형 변화 가능)</small>",
+    "ans": [
+      "he had every accomplishment except that of making money"
+    ],
+    "show": "He had every accomplishment except that of making money.",
+    "e": "#3 단수명사 accomplishment를 받는 대명사 that of ~ 구문과 전치사 뒤 동명사 making을 활용한다."
+  },
+  {
+    "n": 25,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "He had every accomplishment except those of making money. He lived on two hundred pounds a year that an old aunt gave him. To make matters worse, he was in love. The girl he loved were Laura Merton, the daughter of a retired colonel. However, he would not hear of any engagement. He would say “Come to me, my boy, when you will have got ten thousand pounds of your own, and we will talk about it.”",
+    "keys": [
+      {
+        "k": "that",
+        "show": "those → that"
+      },
+      {
+        "k": "was",
+        "show": "were → was"
+      },
+      {
+        "k": "have got",
+        "show": "will have got → have got"
+      }
+    ],
+    "e": "#3 단수명사 accomplishment를 받으므로 that / #11 주어 The girl이 단수이므로 was / #14 시간의 부사절(when)에서는 현재완료(have got)가 미래를 대신한다."
+  },
+  {
+    "n": 26,
+    "p": "E",
+    "t": "kw",
+    "s": "문장 #14의 when절에 미래 시제(will have got) 대신 현재완료 시제(have got)를 쓴 이유를 쓰시오.",
+    "groups": [
+      [
+        "시간",
+        "부사절"
+      ],
+      [
+        "현재",
+        "미래"
+      ]
+    ],
+    "show": "when이 이끄는 시간의 부사절에서는 미래 시제를 쓰지 않고 현재(완료) 시제가 미래를 대신하기 때문이다.",
+    "e": "#14 구문 분석(내신 출제 포인트 ★): 시간의 부사절과 시제"
+  },
+  {
+    "n": 27,
+    "p": "E",
+    "t": "blanks",
+    "s": "다음 요약문의 빈칸 (A), (B)에 들어갈 알맞은 단어를 주어진 첫 글자로 시작하여 쓰시오.",
+    "c": "Hughie Erskine was a handsome man who lacked the ability to earn money and lived off a meager (A) a________ from his aunt. Although he was in love with Laura Merton, her father firmly refused to consent to their (B) e________ until Hughie acquired ten thousand pounds of his own.",
+    "blanks": [
+      ["(A)", ["allowance"]],
+      ["(B)", ["engagement"]]
+    ],
+    "show": "(A) allowance (B) engagement",
+    "e": "Section 1 English Summary 원문 참조"
+  }
+];
+// ===== DATA END =====
+</script>
+
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+
+<script src="track.js"></script>
+
+</body>
+</html>

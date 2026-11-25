@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분석지 확인 문제</title>
+</head>
+<body>
+<script>
+// ===== DATA START =====
+const META = {
+  "title": "뜻밖의 결혼 선물과 진정한 모범적 백만장자 분석지 정독 확인 문항 (#94~#106)",
+  "section": "교과서/보조교재 분석지 · Section 6 (#94~#106)",
+  "parts": {
+    "A": "Part A. 내용 이해",
+    "B": "Part B. 어휘",
+    "C": "Part C. 구문·어법",
+    "E": "Part E. 서술형"
+  },
+  "passage": [
+    [94, "The next morning, as Hughie was at breakfast, a servant brought him a card on which was written “Monsieur Gustave Naudin, messenger from Baron Hausberg.”"],
+    [95, "“I suppose he has come for an apology,” said Hughie to himself, and he told the servant to let the visitor in."],
+    [96, "An old gentleman with gold spectacles and grey hair came into the room and said, “Do I have the honor of addressing Monsieur Erskine?”"],
+    [97, "Hughie bowed."],
+    [98, "“I have come from Baron Hausberg,” continued the messenger."],
+    [99, "“The Baron—”"],
+    [100, "“I beg, sir, that you will offer him my deepest apologies,” stammered Hughie."],
+    [101, "“The Baron,” said the old gentleman, with a smile, “has commissioned me to bring you this letter,” and he handed a sealed envelope to Hughie."],
+    [102, "On the outside was written, “A wedding present to Hughie Erskine and Laura Merton, from an old beggar.”"],
+    [103, "Inside was a check for ten thousand pounds."],
+    [104, "When Hughie and Laura got married, Alan Trevor was the best man and the Baron made a speech at the wedding breakfast."],
+    [105, "“Millionaire models,” remarked Alan, “are quite rare."],
+    [106, "But model millionaires are even rarer.”"]
+  ]
+};
+const Q = [
+  {
+    "n": 1,
+    "p": "A",
+    "t": "mc",
+    "s": "본문 및 Section 6 Summary의 내용과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "다음 날 아침 휴이가 아침 식사를 하고 있을 때 하우스베르크 남작의 전령이 찾아왔다.",
+      "휴이는 처음에 전령이 자신에게 사과를 요구하러 왔다고 추측하여 용서를 구했다.",
+      "전령인 노신사가 건넨 봉인된 봉투 겉면에는 늙은 거지로부터 온 결혼 선물이라고 적혀 있었다.",
+      "봉투 안에는 대령이 결혼 조건으로 내걸었던 만 파운드짜리 수표가 들어 있었다.",
+      "휴이와 로라의 결혼식에서 하우스베르크 남작이 신랑의 들러리 대표를 맡았다."
+    ],
+    "a": 5,
+    "e": "#104 신랑의 들러리 대표(the best man)는 앨런 트레버(Alan Trevor)였고, 남작은 결혼 피로연에서 연설(made a speech)을 했다."
+  },
+  {
+    "n": 2,
+    "p": "A",
+    "t": "ox",
+    "s": "귀스타브 노댕 씨는 금테 안경과 회색 머리카락을 가진 노신사로, 하우스베르크 남작의 위임을 받아 편지를 전달하러 왔다.",
+    "a": "O",
+    "e": "#94, #96, #101 참조"
+  },
+  {
+    "n": 3,
+    "p": "A",
+    "t": "ox",
+    "s": "휴이는 전령을 보자마자 남작이 자신에게 거액의 결혼 선물을 보냈을 것이라고 확신했다.",
+    "a": "X",
+    "e": "#95, #100 휴이는 전령이 사과를 요구하러 왔다고 추측하여(“I suppose he has come for an apology”) 말을 더듬으며 깊은 사죄를 전해 달라고 간청했다."
+  },
+  {
+    "n": 4,
+    "p": "A",
+    "t": "tf",
+    "s": "Section 6 Summary 및 본문의 내용과 일치하면 T, 일치하지 않으면 F를 고르시오.",
+    "items": [
+      ["Expecting severe reproach, Hughie stammered an apology to Baron Hausberg's messenger.", "T"],
+      ["The sealed envelope contained a letter demanding that Hughie return the gold coin.", "F"],
+      ["With the ten-thousand-pound check, Hughie was able to marry Laura.", "T"],
+      ["At the wedding breakfast, Alan Trevor praised the Baron as a model millionaire.", "T"]
+    ],
+    "e": "Section 6 Summary 및 #100~#106 참조"
+  },
+  {
+    "n": 5,
+    "p": "A",
+    "t": "mc",
+    "s": "문장 #105~#106에서 앨런 트레버가 말한 'Millionaire models'와 'model millionaires'의 대비가 의미하는 바로 가장 적절한 것은?",
+    "o": [
+      "화가의 모델로 일하는 백만장자는 많지만, 모델을 직업으로 삼는 빈민은 드물다는 뜻",
+      "백만장자 신분의 화가 모델도 드물지만, 도덕적으로 모범이 되는 인품을 지닌 백만장자는 훨씬 더 드물다는 뜻",
+      "백만장자가 되려면 예술가의 모델이 되어야 하지만, 그 과정에서 성공하기는 어렵다는 뜻",
+      "막대한 재산을 가진 귀족은 흔하지만, 결혼식에서 축사를 잘하는 백만장자는 드물다는 뜻",
+      "외모가 뛰어난 모델은 찾기 쉽지만, 그림을 비싸게 사주는 후원자는 구하기 어렵다는 뜻"
+    ],
+    "a": 2,
+    "e": "#106 구문 분석: Millionaire models(백만장자 신분의 화초 모델)와 model millionaires(도덕적으로 모범적인 백만장자)의 단어 배치를 대조하여, 작은 친절을 거액의 보답으로 갚아준 남작의 훌륭한 인품을 극찬한다."
+  },
+  {
+    "n": 6,
+    "p": "B",
+    "t": "match",
+    "s": "각 단어의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "전령, 심부름꾼, 배달원",
+      "추측하다, 생각하다",
+      "안경",
+      "말을 더듬다",
+      "봉인된, 밀봉된"
+    ],
+    "rows": [
+      ["messenger", 1],
+      ["suppose", 2],
+      ["spectacles", 3],
+      ["stammer", 4],
+      ["sealed", 5]
+    ],
+    "e": "분석지 #94, #95, #96, #100, #101 단어 정리"
+  },
+  {
+    "n": 7,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어·숙어의 <b>동의어(syn.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "messenger — courier, envoy",
+      "suppose — assume, presume",
+      "beg — plead, implore",
+      "commission — authorize, delegate",
+      "rare — common, abundant"
+    ],
+    "a": 5,
+    "e": "#105 rare(드문, 희귀한)의 동의어는 uncommon, scarce, extraordinary이며, common과 abundant는 반의어(ant.)이다."
+  },
+  {
+    "n": 8,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 밑줄 친 단어들의 <b>본문 속 의미</b>로 가장 적절한 것은?",
+    "c": "1) Do I have the honor of <u>addressing</u> Monsieur Erskine? (#96)<br>2) Hughie <u>bowed</u>. (#97)<br>3) he <u>handed</u> a sealed envelope to Hughie (#101)<br>4) Inside was a <u>check</u> for ten thousand pounds. (#103)<br>5) model millionaires are <u>even</u> rarer (#106)",
+    "o": [
+      "1) 주소를 적다 — 2) 나비넥타이 — 3) 손 — 4) 확인, 점검 — 5) 심지어 ~조차",
+      "1) 말을 걸다, 연설하다 — 2) 절하다, 고개를 숙이다 — 3) 건네주다, 넘겨주다 — 4) 수표 — 5) 훨씬 (비교급 강조)",
+      "1) (문제를) 다루다 — 2) 활 — 3) 건네주다 — 4) 수표 — 5) 평평한",
+      "1) 말을 걸다 — 2) 고개를 숙이다 — 3) 손 — 4) 점검하다 — 5) 짝수의",
+      "1) 주소를 적다 — 2) 절하다 — 3) 넘겨주다 — 4) 확인 — 5) 훨씬"
+    ],
+    "a": 2,
+    "e": "분석지 다의어 정리: address(말을 걸다, 연설하다), bow(절하다, 고개를 숙이다), hand(건네주다, 넘겨주다), check(수표), even(훨씬 - 비교급 강조부사)"
+  },
+  {
+    "n": 9,
+    "p": "B",
+    "t": "match",
+    "s": "각 숙어 및 표현의 알맞은 뜻을 「보기」에서 고르세요.",
+    "box": [
+      "아침 식사 중에",
+      "결혼하다",
+      "(신랑의) 들러리 대표",
+      "연설하다, 축사를 하다",
+      "결혼 피로연, 결혼식 후 오찬"
+    ],
+    "rows": [
+      ["at breakfast", 1],
+      ["get married", 2],
+      ["best man", 3],
+      ["make a speech", 4],
+      ["wedding breakfast", 5]
+    ],
+    "e": "분석지 #94, #104 단어 및 숙어 정리"
+  },
+  {
+    "n": 10,
+    "p": "B",
+    "t": "mc",
+    "s": "다음 중 분석지에 제시된 단어의 <b>반의어(ant.)</b> 연결이 <u>잘못된</u> 것은?",
+    "o": [
+      "sealed — open, unsealed",
+      "outside — inside",
+      "rare — common, abundant",
+      "spectacles — glasses",
+      "inside — outside"
+    ],
+    "a": 4,
+    "e": "#96 spectacles(안경)의 동의어(syn.)가 glasses, eyeglasses이다."
+  },
+  {
+    "n": 11,
+    "p": "B",
+    "t": "blanks",
+    "s": "English Summary에 쓰인 단어 중, '비난, 질책'을 뜻하는 <b>r_________</b>와 '축배를 들다, 찬사를 보내다'를 뜻하는 <b>t_________</b>를 각각 쓰시오.",
+    "c": "Expecting severe (A) r_________, Hughie stammers an apology ... With the financial condition met, Hughie happily marries Laura, and Trevor (B) t_________ the Baron as a true \"model millionaire.\"",
+    "blanks": [
+      ["(A)", ["reproach"]],
+      ["(B)", ["toasts", "toast"]]
+    ],
+    "show": "(A) reproach (B) toasts",
+    "e": "Section 6 English Summary 원문 참조"
+  },
+  {
+    "n": 12,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#94)",
+    "c": "A servant brought him a card (on which / which) (was written / wrote) “Monsieur Gustave Naudin, messenger from Baron Hausberg.”",
+    "o": [
+      "on which / was written",
+      "which / wrote"
+    ],
+    "a": "on which / was written",
+    "e": "#94 구문 분석(고등 내신 1등급 핵심 출제 포인트 ★): 선행사 a card 위에 쓰여 있다는 의미이므로 '전치사 + 관계대명사(on which)'를 쓰며, 긴 인용문 주어가 뒤로 빠지면서 수동태 동사(was written)와 주어의 도치가 발생했다."
+  },
+  {
+    "n": 13,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#95~#96)",
+    "c": "He told the servant (to let / letting) the visitor in. An old gentleman said, “Do I have the honor of (addressing / address) Monsieur Erskine?”",
+    "o": [
+      "to let / addressing",
+      "letting / address"
+    ],
+    "a": "to let / addressing",
+    "e": "#95 5형식 구문 'tell + 목적어 + to부정사(to let)' / #96 전치사 of 뒤의 목적어로 동명사 addressing이 와야 한다."
+  },
+  {
+    "n": 14,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#101)",
+    "c": "“The Baron has commissioned me (to bring / bringing) you this letter,” and he handed a (sealed / sealing) envelope (to / for) Hughie.",
+    "o": [
+      "to bring / sealed / to",
+      "bringing / sealing / for"
+    ],
+    "a": "to bring / sealed / to",
+    "e": "#101 구문 분석(내신 출제 포인트 ★): 5형식 'commission + 목적어 + to부정사(to bring)', 봉인된 상태의 과거분사 sealed, 수여동사 hand의 3형식 전환 전치사 to를 쓴다."
+  },
+  {
+    "n": 15,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#102~#103)",
+    "c": "On the outside (was written / wrote), “A wedding present to Hughie Erskine and Laura Merton, from an old beggar.” Inside (was / were) a check for ten thousand pounds.",
+    "o": [
+      "was written / was",
+      "wrote / were"
+    ],
+    "a": "was written / was",
+    "e": "#102~#103 구문 분석(고등 내신 필수 출제 포인트 ★): 장소부사구(On the outside, Inside)가 문두로 나오면서 동사와 주어가 도치된 구문으로, 각각 단수 주어(인용문구, a check)에 수일치하여 단수 동사 was written과 was를 쓴다."
+  },
+  {
+    "n": 16,
+    "p": "C",
+    "t": "choice",
+    "s": "괄호 안에서 어법상 알맞은 것을 고르시오. (#105~#106)",
+    "c": "“Millionaire models,” remarked Alan, “(are / is) quite rare. But model millionaires are (even / very) rarer.”",
+    "o": [
+      "are / even",
+      "is / very"
+    ],
+    "a": "are / even",
+    "e": "#105 복수 주어 Millionaire models에 수일치한 복수 동사 are / #106 비교급 rarer 앞에는 비교급 강조 부사 even(much, far, still, a lot)을 쓰며, very는 원급만 수식한다."
+  },
+  {
+    "n": 17,
+    "p": "C",
+    "t": "mc",
+    "s": "문장 #106의 밑줄 친 <u>even</u> 대신 바꿔 쓸 수 <u>없는</u> 것은?",
+    "c": "But model millionaires are <u>even</u> rarer.",
+    "o": [
+      "much",
+      "far",
+      "still",
+      "a lot",
+      "very"
+    ],
+    "a": 5,
+    "e": "#106 구문 분석(내신 출제 포인트 ★): 비교급 강조 부사로는 even, much, far, still, a lot을 쓸 수 있으며, very는 원급만 꾸밀 수 있으므로 비교급 앞에 쓸 수 없다."
+  },
+  {
+    "n": 18,
+    "p": "C",
+    "t": "mc",
+    "s": "다음 중 분석지의 구문 설명과 일치하지 <u>않는</u> 것은?",
+    "o": [
+      "#94에서 주어가 인용 부호와 동격 어구를 포함해 길고 무거워 on which 뒤에서 동사-주어 도치가 발생했다.",
+      "#99에서 대시(—)는 전령의 말이 휴이에 의해 갑작스럽게 끊겼음을 묘사한다.",
+      "#101의 'handed a sealed envelope to Hughie'는 4형식 'handed Hughie a sealed envelope'를 3형식으로 전환한 문장이다.",
+      "#103에서 문두의 장소부사 Inside로 인해 주어와 동사가 도치되어 단수 동사 was가 먼저 위치했다.",
+      "#105의 'Millionaire models'에서 model은 도덕적으로 모범이 되는 인물을 뜻한다."
+    ],
+    "a": 5,
+    "e": "#105~#106 구문 분석: #105의 Millionaire models에서 model은 '화가의 그림 대상(화초 모델)'을 뜻하며, #106의 model millionaires에서 model이 '도덕적으로 모범적인'이라는 뜻을 갖는다."
+  },
+  {
+    "n": 19,
+    "p": "C",
+    "t": "short",
+    "s": "문장 #95의 'I suppose <u>he</u> has come for an apology'와 문장 #100의 'that you will offer <u>him</u> my deepest apologies'에서 밑줄 친 <u>he</u>와 <u>him</u>이 가리키는 인물을 본문에서 찾아 각각 영어로 쓰시오. (순서대로 쉼표로 구분)",
+    "ans": [
+      "monsieur gustave naudin, baron hausberg",
+      "the visitor, baron hausberg",
+      "the messenger, baron hausberg",
+      "gustave naudin, baron hausberg"
+    ],
+    "show": "Monsieur Gustave Naudin (the visitor), Baron Hausberg",
+    "e": "#94~#100 he는 찾아온 방문객(전령 Monsieur Gustave Naudin)을, him은 사과를 전해 받을 대상인 하우스베르크 남작(Baron Hausberg)을 가리킨다."
+  },
+  {
+    "n": 20,
+    "p": "E",
+    "t": "sent",
+    "s": "우리말과 같은 뜻이 되도록 「조건」에 맞게 영작하시오. (#103)",
+    "c": "안에는 10,000파운드짜리 수표가 들어 있었다.<br><small>「조건」 inside, check, ten, thousand, pound 활용 (총 8단어, 장소부사 도치 구문 적용)</small>",
+    "ans": [
+      "inside was a check for ten thousand pounds"
+    ],
+    "show": "Inside was a check for ten thousand pounds.",
+    "e": "#103 장소부사 Inside가 문두로 도치되어 단수 be동사 was가 주어(a check for ten thousand pounds)보다 먼저 위치한다."
+  },
+  {
+    "n": 21,
+    "p": "E",
+    "t": "fix",
+    "s": "다음 글에서 어법상 틀린 부분 3개를 찾아 바르게 고친 것을 쓰시오. (순서 무관)",
+    "c": "“The Baron,” said the old gentleman, with a smile, “has commissioned me bringing you this letter,” and he handed a sealed envelope to Hughie. On the outside wrote, “A wedding present to Hughie Erskine and Laura Merton, from an old beggar.” Inside was a check for ten thousand pounds. “Millionaire models,” remarked Alan, “are quite rare. But model millionaires are very rarer.”",
+    "keys": [
+      {
+        "k": "to bring",
+        "show": "bringing → to bring"
+      },
+      {
+        "k": "was written",
+        "show": "wrote → was written"
+      },
+      {
+        "k": "even",
+        "show": "very → even (또는 much, far, still, a lot)"
+      }
+    ],
+    "e": "#101 commission + 목적어 + to부정사(to bring) / #102 장소부사구 도치 및 수동태(was written) / #106 비교급 rarer 강조 부사 even(very 불가)"
+  },
+  {
+    "n": 22,
+    "p": "E",
+    "t": "kw",
+    "s": "문장 #94('a card on which was written “Monsieur Gustave Naudin, messenger from Baron Hausberg.”')에서 관계대명사구 'on which' 뒤에 주어가 아닌 동사 'was written'이 먼저 나온 이유를 쓰시오.",
+    "groups": [
+      [
+        "주어",
+        "인용"
+      ],
+      [
+        "길",
+        "무겁",
+        "도치"
+      ]
+    ],
+    "show": "주어가 인용 부호와 동격 어구를 포함해 너무 길고 무겁기 때문에(End-Weight 원칙) 동사와 주어의 도치가 발생했기 때문이다.",
+    "e": "#94 구문 분석(고등 내신 1등급 핵심 출제 포인트 ★): 전치사 + 관계대명사 뒤의 도치"
+  },
+  {
+    "n": 23,
+    "p": "E",
+    "t": "blanks",
+    "s": "다음 요약문의 빈칸 (A), (B)에 들어갈 알맞은 단어를 주어진 첫 글자로 시작하여 쓰시오.",
+    "c": "Expecting severe reproach, Hughie stammers an apology, but the messenger simply hands him a (A) s________ envelope. Inside is a check for ten thousand pounds as a wedding present from \"an old beggar.\" With the financial (B) c________ met, Hughie happily marries Laura.",
+    "blanks": [
+      ["(A)", ["sealed"]],
+      ["(B)", ["condition"]]
+    ],
+    "show": "(A) sealed (B) condition",
+    "e": "Section 6 English Summary 원문 참조"
+  }
+];
+// ===== DATA END =====
+</script>
+
+<script src="https://senglishkmg.github.io/naesin/quiz.js"></script>
+
+<script src="track.js"></script>
+
+</body>
+</html>
